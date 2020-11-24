@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.BomSignCardLossApplyQueryMapper">
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.querysys.entity.BomSignCardLossApplyQuery">
+    <id column="WATER_NO" jdbcType="INTEGER" property="waterNo" />
+    <result column="APPLY_BILL" jdbcType="VARCHAR" property="applyBill" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="BUSNISS_TYPE" jdbcType="CHAR" property="busnissType" />
+    <result column="IDENTIFY_TYPE" jdbcType="CHAR" property="identifyType" />
+    <result column="IDENTITY_ID" jdbcType="VARCHAR" property="identityId" />
+    <result column="CARD_LOGICAL_ID" jdbcType="VARCHAR" property="cardLogicalId" />
+    <result column="LINE_ID" jdbcType="VARCHAR" property="lineId" />
+    <result column="STATION_ID" jdbcType="VARCHAR" property="stationId" />
+    <result column="CARD_MAIN_ID" jdbcType="VARCHAR" property="cardMainId" />
+    <result column="CARD_SUB_ID" jdbcType="VARCHAR" property="cardSubId" />
+  </resultMap>
+  <resultMap id="IdTypeMap" type="com.goldsign.acc.app.querysys.entity.CodePubFlag">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="CODE_TEXT" jdbcType="VARCHAR" property="codeText" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    WATER_NO, APPLY_BILL, to_char(CREATE_TIME,'YYYY-MM-DD HH24:MI:SS') as CREATE_TIME, BUSNISS_TYPE, IDENTIFY_TYPE, IDENTITY_ID,LINE_ID, STATION_ID,CARD_LOGICAL_ID,CARD_MAIN_ID,CARD_SUB_ID
+  </sql>
+  <select id="getBomSignCardLossApplyQuery" parameterType="BomSignCardLossApplyQuery" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from w_acc_st.W_ST_CM_RESULT_REPORT_LOSS
+    where 1 = 1
+      <if test="applyBill != null">
+       and  APPLY_BILL like '%${applyBill}%'
+      </if>
+      <if test="identifyType != null">
+      and  IDENTIFY_TYPE = #{identifyType,jdbcType=CHAR}
+      </if>
+      <if test="identityId != null">
+       and IDENTITY_ID like '%${identityId}%'
+      </if>
+       <if test="beginDatetime != null">
+       and  CREATE_TIME &gt;= to_date(#{beginDatetime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+      </if>
+      <if test="endDatetime != null">
+       and  CREATE_TIME &lt;= to_date(#{endDatetime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+      </if>
+      <if test="busnissType != null">
+       and  BUSNISS_TYPE = #{busnissType,jdbcType=CHAR}
+      </if>
+      ORDER BY water_no DESC
+  </select>
+   <select id = "getIdTypes"  resultMap="IdTypeMap">
+      select code,code_text from W_ACC_TK.W_IC_ET_PUB_FLAG where type='1' order by code
+  </select>
+</mapper>

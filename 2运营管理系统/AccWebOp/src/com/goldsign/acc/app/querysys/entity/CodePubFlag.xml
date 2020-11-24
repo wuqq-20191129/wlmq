@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.CodePubFlagMapper">
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.querysys.entity.CodePubFlag">
+    <id column="TYPE" jdbcType="INTEGER" property="type" />
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="CODE_TEXT" jdbcType="VARCHAR" property="codeText" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+  </resultMap>
+     <select id="getListByType" parameterType="CodePubFlag"  resultMap="BaseResultMap">
+           select * from W_ACC_ST.W_OP_COD_PUB_FLAG  where type = #{type} 
+    </select >
+</mapper>

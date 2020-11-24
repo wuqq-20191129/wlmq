@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.weight.mapper.GenerateDataMapper">
+     <parameterMap type="map" id="MapOdProportion">
+        <parameter property="pResult" jdbcType="INTEGER" mode="OUT"/> 
+        <parameter property="pErrMsg" jdbcType="VARCHAR" mode="OUT"/>  
+    </parameterMap> 
+    
+    <resultMap type="TransferStation" id="rmTransferStation">
+        <result column="line_id" property="line_id" /> 
+        <result column="station_id" property="station_id" /> 
+        <result column="transfer_line_id" property="transfer_line_id" /> 
+        <result column="transfer_station_id" property="transfer_station_id" /> 
+        <result column="record_flag" property="record_flag" />
+        <result column="version_no" property="version_no" />
+    </resultMap>
+    
+    <resultMap type="ParamsStation" id="rmParamsStation">
+        <result column="p_station_id" property="p_station_id" /> 
+        <result column="n_station_id" property="n_station_id" /> 
+        <result column="line_id" property="line_id" /> 
+        <result column="transfer_station_id" property="transfer_station_id" /> 
+        <result column="record_flag" property="record_flag" />
+        <result column="version" property="version" />
+	<result column="mileage" property="mileage" /> 
+        <result column="create_time" property="create_time" /> 
+        <result column="create_operator" property="create_operator" /> 
+        <result column="n_t_station_id" property="n_t_station_id" /> 
+    </resultMap>
+    
+    <resultMap type="PubFlag" id="rmPubFlagType">
+        <id column="code" property="code" />
+        <result column="code_text" property="code_text" />  
+        <result column="code_type" property="code_type" />
+    </resultMap>
+    
+    <select id="getMapOdProportion"  parameterMap="MapOdProportion" statementType="CALLABLE">
+        {call W_ACC_RL.W_UP_RL_GET_OD_PROPORTION (?,?)}
+    </select>
+    
+    <select id="getDistanceODMaxID"  resultType="Integer">
+        select nvl(max(id),0)+1 max_id from w_acc_rl.w_rl_distance_od
+    </select>
+    
+    <select id="getTransferStation"  resultMap="rmTransferStation">
+        select line_id, station_id, transfer_line_id, transfer_station_id from w_acc_st.w_op_prm_transfer_station where record_flag='0'
+    </select>
+    
+    <select id="getParamsStatioin" parameterType="String"  resultMap="rmParamsStation">
+        select p_station_id,n_station_id,line_id,record_flag,version,mileage,create_time,create_operator,n_t_station_id 
+        from w_acc_rl.w_rl_params_station where record_flag=#{record_flag} order by LINE_ID,P_STATION_ID,N_STATION_ID,record_flag
+    </select>
+    
+    <select id="getStations"  resultMap="rmPubFlagType">
+        select LINE_ID code_type,STATION_ID code,CHINESE_NAME code_text  from w_acc_st.W_OP_PRM_STATION where record_flag='0' order by LINE_ID,STATION_ID
+    </select>
+    
+    <update id="updateODVersion">      
+       update w_acc_rl.w_rl_distance_od set record_flag =#{new_record_flag} where record_flag = #{old_record_flag}
+    </update>
+    
+    <insert id="insertOD" parameterType="com.goldsign.acc.app.weight.entity.DistanceOd" >
+        insert into w_acc_rl.w_rl_distance_od
+            (id, o_line_id, o_station_id, e_line_id, e_station_id, change_times,distance, version, record_flag, create_time, create_operator, pass_stations)
+        values (#{id}, #{o_line_id}, #{o_station_id}, #{e_line_id}, #{e_station_id}, #{change_times}, 
+            #{distance}, to_char(sysdate,'yyyyMMddhh24'), #{record_flag}, sysdate, #{create_operator}, #{pass_stations})
+    </insert>
+    
+    <insert id="insertChange" parameterType="com.goldsign.acc.app.weight.entity.DistanceChange" >
+        insert into w_acc_rl.w_rl_distance_change
+        (od_id, pchange_station_id, pass_line_out, pass_line_in, pass_distance, nchange_station_id)
+        values (#{od_id},#{pchange_station_id},#{pass_line_out},#{pass_line_in},#{pass_distance},#{nchange_station_id})
+    </insert>
+</mapper>
+

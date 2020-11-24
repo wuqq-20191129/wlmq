@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.opma.mapper.DevParaVerQryMapper">
+    <resultMap type="DevParaVerQry" id="rmDevParaVerQry">
+        <result column="water_no" property="water_no" /> 
+        <result column="line_id" property="line_id" /> 
+        <result column="station_id" property="station_id" /> 
+        <result column="dev_type_id" property="dev_type_id" /> 
+        <result column="device_id" property="device_id" /> 
+        <result column="status" property="status" /> 
+        <result column="query_date" property="query_date" />
+        <result column="send_date" property="send_date" />
+        <result column="operator_id" property="operator_id" /> 
+        <result column="remark" property="remark" /> 
+        <result column="lcc_line_id" property="lcc_line_id" />        
+    </resultMap>
+
+    <select id="getDevParaVerQry"  parameterType="DevParaVerQry" resultMap="rmDevParaVerQry">
+        select water_no,line_id,station_id,dev_type_id,device_id,status,query_date,send_date,operator_id,remark
+        from w_acc_st.w_op_cm_dev_para_ver_qry where 1=1
+        <if test="beginDatetime != null and beginDatetime !=''">
+       and  query_date &gt;= to_date(#{beginDatetime},'yyyy-MM-dd HH24:mi:ss') 
+      </if>
+      <if test="endDatetime != null and endDatetime !=''">
+       and  query_date &lt;= to_date(#{endDatetime},'yyyy-MM-dd HH24:mi:ss') 
+      </if>
+      <if test="dev_type_id != null and dev_type_id !=''">
+       and dev_type_id  = #{dev_type_id}
+      </if>
+<!--      <if test="lcc_line_id != null and lcc_line_id !=''">
+       and lcc_line_id = #{lcc_line_id}
+      </if>-->
+      <if test="line_id != null and line_id !=''">
+       and line_id  = #{line_id}
+      </if>
+      <if test="station_id != null and station_id !=''">
+       and station_id = #{station_id}
+      </if>
+      <if test="device_id != null and device_id !=''">
+       and device_id = #{device_id}
+      </if>
+      <if test="status != null and status !=''">
+       and status = #{status}
+      </if>
+        order by water_no
+    </select>
+    
+    <insert id="addDevParaVerQry" parameterType="DevParaVerQry">
+        insert into w_acc_st.w_op_cm_dev_para_ver_qry(water_no,line_id,station_id,dev_type_id,device_id,status,query_date,operator_id,remark,lcc_line_id)
+        values(w_acc_st.W_SEQ_W_OP_CM_DEV_PARA_VER_QRY.nextval,#{line_id},#{station_id},#{dev_type_id},#{device_id},#{status},to_date(#{query_date},'yyyy-MM-dd HH24:mi:ss'),#{operator_id},#{remark},#{lcc_line_id})               
+    </insert>
+    
+</mapper>

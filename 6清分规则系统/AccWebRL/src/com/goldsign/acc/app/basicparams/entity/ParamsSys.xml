@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicparams.mapper.ParamsSysMapper">
+    
+    <resultMap type="com.goldsign.acc.app.basicparams.entity.ParamsSys" id="rmParamsSys">
+        
+        <result column="TYPE_CODE" property="typeCode" /> 
+        <result column="TYPE_DESCRIPTION" property="typeDescription" /> 
+        <result column="CODE" property="code" /> 
+        <result column="VALUE" property="value" /> 
+        <result column="DESCRIPTION" property="description" /> 
+        <result column="RECORD_FLAG" property="recordFlag" /> 
+        <result column="VERSION" property="version" /> 
+        <result column="CREATE_TIME" property="createTime" /> 
+        <result column="CREATE_OPERATOR" property="createOperator" /> 
+   
+    </resultMap>
+    
+    <insert id="addPlan" parameterType="com.goldsign.acc.app.basicparams.entity.ParamsSys" >
+        insert into w_acc_rl.w_rl_params_sys (type_code, type_description, code, value, description, record_flag, version, create_time, create_operator)
+        select #{typeCode}, #{typeDescription}, #{code}, #{value}, #{description}, #{recordFlag}, to_char(sysdate,'yyyyMMddhh24mi'), sysdate, #{createOperator}  from dual
+        where not exists( select 1 from w_acc_rl.w_rl_params_sys where type_code= #{typeCode} and code= #{code} and record_flag= '3')
+    </insert>
+    
+    <select id="queryPlan"  parameterType="com.goldsign.acc.app.basicparams.entity.ParamsSys" resultMap="rmParamsSys">
+        select * from w_acc_rl.w_rl_params_sys 
+        <where> 
+            <if test="recordFlag != null and recordFlag !=''" >  
+                RECORD_FLAG = #{recordFlag}
+            </if> 
+            <if test="typeCode != null and typeCode !=''" >  
+                and TYPE_CODE = #{typeCode}
+            </if> 
+            <if test="code != null and code !=''" >  
+                and CODE = #{code}
+            </if> 
+            <if test="beginTime != null and beginTime !=''" >  
+                and CREATE_TIME  &gt;= to_date(#{beginTime},'yyyy-mm-dd hh24:mi:ss')
+            </if> 
+            <if test="endTime != null and endTime !=''" >  
+                and CREATE_TIME  &lt;= to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss')
+            </if> 
+           <if test="aduitList != null " >  
+                and TYPE_CODE||code||RECORD_FLAG in
+                <foreach collection="aduitList" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if> 
+        </where>
+        order by type_code,code,record_flag
+    </select>
+    
+    <select id="getTypeDescriptionByTypeCode"  parameterType="com.goldsign.acc.app.basicparams.entity.ParamsSys" resultMap="rmParamsSys">
+        select * from w_acc_rl.w_rl_params_sys  
+        where TYPE_CODE = #{typeCode} 
+        and ( RECORD_FLAG = '0' or RECORD_FLAG = '3' )
+    </select>
+    
+    <select id="getTypeCodeByTypeDes"  parameterType="com.goldsign.acc.app.basicparams.entity.ParamsSys" resultMap="rmParamsSys">
+        select * from w_acc_rl.w_rl_params_sys  
+        where TYPE_DESCRIPTION = #{typeDescription}
+        and ( RECORD_FLAG = '0' or RECORD_FLAG = '3' )
+    </select>
+    
+    <select id="getValueByCode"  parameterType="com.goldsign.acc.app.basicparams.entity.ParamsSys" resultMap="rmParamsSys">
+        select * from w_acc_rl.w_rl_params_sys  
+        where CODE = #{code}
+        and TYPE_CODE = #{typeCode}
+        and ( RECORD_FLAG = '0' or RECORD_FLAG = '3' )
+    </select>
+    
+    <select id="getCodeByValue"  parameterType="com.goldsign.acc.app.basicparams.entity.ParamsSys" resultMap="rmParamsSys">
+        select * from w_acc_rl.w_rl_params_sys  
+        where VALUE = #{value}
+        and TYPE_CODE = #{typeCode}
+        and ( RECORD_FLAG = '0' or RECORD_FLAG = '3' )
+    </select>
+    
+    <delete id="deletePlan" parameterType="com.goldsign.acc.app.basicparams.entity.ParamsSys" >
+        delete from  w_acc_rl.w_rl_params_sys 
+        where TYPE_CODE = #{typeCode} and CODE = #{code} and VERSION = #{version} and record_flag = #{recordFlag}                          
+    </delete>
+    
+    <update id="modifyPlan" parameterType="com.goldsign.acc.app.basicparams.entity.ParamsSys" >
+        update w_acc_rl.w_rl_params_sys t 
+        set t.type_description= #{typeDescription}, t.value= #{value}, t.description= #{description}, t.create_time = sysdate, t.create_operator= #{createOperator}
+        where t.type_code= #{typeCode} and t.code= #{code} and t.record_flag= #{recordFlag} 
+    </update>
+    
+    <update id="updateCurrentToHistory" parameterType="com.goldsign.acc.app.basicparams.entity.ParamsSys" >
+        update w_acc_rl.w_rl_params_sys 
+        set record_flag= '2' 
+        where type_code = #{typeCode} and code = #{code} and record_flag= '0'
+    </update>
+    
+    <update id="auditUpdate" parameterType="com.goldsign.acc.app.basicparams.entity.ParamsSys" >
+        update w_acc_rl.w_rl_params_sys t
+        set t.record_flag = '0'
+        where t.type_code= #{typeCode} and t.code= #{code} and t.version = #{version} and t.record_flag= '3'
+    </update>
+    
+</mapper>
+

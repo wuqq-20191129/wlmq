@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.BlackListMOCMapper">
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.prminfo.entity.BlackListMOC">
+    <id column="CARD_LOGICAL_ID" jdbcType="VARCHAR" property="cardLogicalId" />
+    <result column="GEN_DATETIME" jdbcType="TIMESTAMP" property="genDatetime" />
+    <result column="BLACK_TYPE" jdbcType="CHAR" property="blackType" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="ACTION_TYPE" jdbcType="VARCHAR" property="actionType" />
+    <result column="CREATE_DATETIME" jdbcType="TIMESTAMP" property="createDatetime" />
+    <result column="OPERATOR_ID" jdbcType="VARCHAR" property="operatorId" />
+    <result column="IS_SET" jdbcType="CHAR" property="isSet" />
+  </resultMap>
+  <select id = "queryNum" resultType="java.lang.Integer">
+        select count(1) from W_ACC_ST.W_OP_PRM_BLACK_LIST_MOC
+    </select>
+    <select id="getBlackListMOC" parameterType="BlackListMOC"  resultMap="BaseResultMap">
+        select to_char(create_datetime,'YYYY-MM-DD HH24:MI:SS') as create_datetime ,to_char(gen_datetime,'YYYY-MM-DD') as gen_datetime,card_logical_id,remark,black_type,operator_id,action_type from W_ACC_ST.W_OP_PRM_BLACK_LIST_MOC
+        where 1 = 1
+        <if test="cardLogicalId !=null and cardLogicalId !=''">
+            and  card_logical_id =#{cardLogicalId}
+        </if>
+        <if test="blackType !=null and blackType !=''">
+             and  black_type =#{blackType}
+        </if>
+        <if test="operatorId !=null and operatorId !=''">
+             and  OPERATOR_ID =#{operatorId}
+        </if>
+        <if test="beginEffectiveTime !=null and beginEffectiveTime !=''">
+             and  gen_datetime &gt;= to_date(#{beginEffectiveTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+        </if>
+        <if test="endEffectiveTime !=null and endEffectiveTime !=''">
+             and  gen_datetime &lt;= to_date(#{endEffectiveTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+        </if>
+    </select >
+    <select id="getDistinctOperatorId"   resultMap="BaseResultMap">
+        select distinct operator_id  from  W_ACC_ST.W_OP_PRM_BLACK_LIST_MOC
+    </select >
+</mapper>

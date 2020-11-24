@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prmdev.mapper.DeviceTypeMapper">
+  <resultMap id="BaseResultMap" type="DeviceType">
+    <constructor>
+      <idArg column="DEV_TYPE_ID" javaType="java.lang.String" jdbcType="CHAR" />
+      <idArg column="VERSION_NO" javaType="java.lang.String" jdbcType="CHAR" />
+      <idArg column="RECORD_FLAG" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="DEV_TYPE_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="INSTALL_LOCATION" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="IS_SALE" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="IS_CHARGE" javaType="java.lang.String" jdbcType="CHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    DEV_TYPE_ID, VERSION_NO, RECORD_FLAG, DEV_TYPE_NAME, INSTALL_LOCATION, IS_SALE, IS_CHARGE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="DeviceTypeKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from W_ACC_ST.W_OP_PRM_DEV_TYPE
+    where DEV_TYPE_ID = #{devTypeId,jdbcType=CHAR}
+      and VERSION_NO = #{versionNo,jdbcType=CHAR}
+      and RECORD_FLAG = #{recordFlag,jdbcType=CHAR}
+  </select>
+  <select id="selectDeviceTypes" parameterType="DeviceType" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from W_ACC_ST.W_OP_PRM_DEV_TYPE
+    where 1=1
+    <if test="installLocation !=null and installLocation !=''">
+        and INSTALL_LOCATION = #{installLocation,jdbcType=CHAR}
+    </if>
+    <if test="devTypeId !=null and devTypeId !=''">
+        and DEV_TYPE_ID = #{devTypeId,jdbcType=CHAR}
+    </if>
+    <!-- 设备类型下拉框  使用的也是ID查询 -->
+    <if test="devTypeName !=null and devTypeName !=''">
+        and DEV_TYPE_ID = #{devTypeName,jdbcType=CHAR}
+    </if>
+    <if test="versionNo !=null and versionNo !=''">
+        and VERSION_NO = #{versionNo,jdbcType=CHAR}
+    </if>
+    <if test="recordFlag !=null and recordFlag !=''">
+        and RECORD_FLAG = #{recordFlag,jdbcType=CHAR}
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="DeviceTypeKey">
+    delete from W_ACC_ST.W_OP_PRM_DEV_TYPE
+    where DEV_TYPE_ID = #{devTypeId,jdbcType=CHAR}
+      and VERSION_NO = #{versionNo,jdbcType=CHAR}
+      and RECORD_FLAG = #{recordFlag,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="DeviceType">
+    insert into W_ACC_ST.W_OP_PRM_DEV_TYPE (DEV_TYPE_ID, VERSION_NO, RECORD_FLAG, 
+      DEV_TYPE_NAME, INSTALL_LOCATION, IS_SALE, IS_CHARGE)
+    values (#{devTypeId,jdbcType=CHAR}, #{versionNo,jdbcType=CHAR}, #{recordFlag,jdbcType=CHAR}, 
+      #{devTypeName,jdbcType=VARCHAR}, #{installLocation,jdbcType=CHAR}, #{isSale,jdbcType=CHAR}, #{isCharge,jdbcType=CHAR})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="DeviceType">
+    update W_ACC_ST.W_OP_PRM_DEV_TYPE
+    set DEV_TYPE_NAME = #{devTypeName,jdbcType=VARCHAR},
+      INSTALL_LOCATION = #{installLocation,jdbcType=CHAR},
+      IS_SALE = #{isSale,jdbcType=CHAR},
+      IS_CHARGE = #{isCharge,jdbcType=CHAR}
+    where DEV_TYPE_ID = #{devTypeId,jdbcType=CHAR}
+      and VERSION_NO = #{versionNo,jdbcType=CHAR}
+      and RECORD_FLAG = #{recordFlag,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="DeviceType">
+    update W_ACC_ST.W_OP_PRM_DEV_TYPE
+    set DEV_TYPE_NAME = #{devTypeName,jdbcType=VARCHAR},
+      INSTALL_LOCATION = #{installLocation,jdbcType=CHAR},
+      IS_SALE = #{isSale,jdbcType=CHAR},
+      IS_CHARGE = #{isCharge,jdbcType=CHAR}
+    where DEV_TYPE_ID = #{devTypeId,jdbcType=CHAR}
+      and VERSION_NO = #{versionNo,jdbcType=CHAR}
+      and RECORD_FLAG = #{recordFlag,jdbcType=CHAR}
+  </update>
+  
+  <!--当前参数、未来参数作历史标识或删除标识 -->
+  <update id="submitToOldFlag" parameterType="PrmVersion" >
+      update W_ACC_ST.W_OP_PRM_DEV_TYPE set record_flag=#{record_flag_old}
+      where record_flag=#{record_flag_new}                                               
+  </update>
+  <!--草稿参数复制为当前或未来参数 -->
+  <insert id="submitFromDraftToCurOrFur" parameterType="PrmVersion" >
+      insert into W_ACC_ST.W_OP_PRM_DEV_TYPE(DEV_TYPE_ID, VERSION_NO, RECORD_FLAG, DEV_TYPE_NAME, INSTALL_LOCATION, IS_SALE, IS_CHARGE)
+      select DEV_TYPE_ID, #{version_no_new}, #{record_flag_new}, DEV_TYPE_NAME, INSTALL_LOCATION, IS_SALE, IS_CHARGE
+      from W_ACC_ST.W_OP_PRM_DEV_TYPE
+      where record_flag=#{record_flag} and version_no=#{version_no}                                   
+  </insert>
+  <!--草稿参数删除 -->
+  <delete id="deleteDeviceTypesForClone" parameterType="PrmVersion">
+      delete from W_ACC_ST.W_OP_PRM_DEV_TYPE where record_flag='3' and version_no='0000000000'                                                      
+  </delete>
+  <!--当前参数或未来参数克隆为草稿参数 -->
+  <insert id="cloneFromCurOrFurToDraft" parameterType="PrmVersion" >
+      insert into W_ACC_ST.W_OP_PRM_DEV_TYPE(DEV_TYPE_ID, VERSION_NO, RECORD_FLAG, DEV_TYPE_NAME, INSTALL_LOCATION, IS_SALE, IS_CHARGE)
+      select DEV_TYPE_ID, '0000000000', '3', DEV_TYPE_NAME, INSTALL_LOCATION, IS_SALE, IS_CHARGE
+      from W_ACC_ST.W_OP_PRM_DEV_TYPE
+      where record_flag=#{record_flag} and version_no=#{version_no}
+  </insert>
+</mapper>

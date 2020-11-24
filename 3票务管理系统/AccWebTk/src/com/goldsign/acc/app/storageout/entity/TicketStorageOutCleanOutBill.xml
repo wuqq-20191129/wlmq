@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.storageout.mapper.TicketStorageOutCleanMapper">
+ 
+    <resultMap type="com.goldsign.acc.app.storageout.entity.TicketStorageOutCleanOutBill" id="rmOutCleanOutBill">
+        
+        <result column="bill_no" property="bill_no" /> 
+        <result column="form_maker" property="form_maker" /> 
+        <result column="bill_date" property="bill_date" /> 
+        <result column="drawer" property="drawer" /> 
+        <result column="administer" property="administer" /> 
+        <result column="accounter" property="accounter" /> 
+        <result column="distribute_bill_no" property="distribute_bill_no" /> 
+        <result column="record_flag" property="record_flag" /> 
+        <result column="verify_date" property="verify_date" /> 
+        <result column="verify_person" property="verify_person" /> 
+        <result column="remark" property="remark" /> 
+        <result column="bill_type" property="bill_type" /> 
+        <result column="in_flag" property="in_flag" /> 
+
+    </resultMap>
+    
+    <resultMap type="com.goldsign.acc.app.storageout.entity.TicketStorageOutCleanOutBill" id="rmOutCleanOutBillDetail">
+        <result column="water_no" property="water_no" />
+        <result column="bill_no" property="bill_no" /> 
+        <result column="reason_id" property="reason_id" /> 
+        <result column="storage_id" property="storage_id" /> 
+        <result column="area_id" property="area_id" /> 
+        <result column="ic_main_type" property="ic_main_type" /> 
+        <result column="ic_sub_type" property="ic_sub_type" /> 
+        <result column="out_num" property="out_num" /> 
+        <result column="valid_date" property="valid_date" /> 
+        <result column="card_money" property="card_money" /> 
+        <result column="line_id" property="line_id" /> 
+        <result column="station_id" property="station_id" /> 
+        <result column="card_type" property="card_type" /> 
+        <result column="make_num" property="make_num" /> 
+        <result column="es_worktype_id" property="es_worktype_id" />
+        <result column="card_money_produce" property="card_money_produce" />
+    
+        <result column="valid_date_produce" property="valid_date_produce" />
+        <result column="card_ava_days" property="card_ava_days" />
+        <result column="exit_line_id" property="exit_line_id" />
+        <result column="exit_station_id" property="exit_station_id" />
+        <result column="model" property="model" />
+    </resultMap>
+    
+    <parameterMap type="map" id="MapBillPlanAudit">  
+        <parameter property="piBillNoPlanTemp" jdbcType="VARCHAR" mode="IN"/>  
+        <parameter property="piOperator" jdbcType="VARCHAR" mode="IN"/> 
+        <parameter property="piBillNoPlanFormal" jdbcType="VARCHAR" mode="OUT"/>   
+        <parameter property="poRetCode" jdbcType="INTEGER" mode="OUT"/> 
+        <parameter property="poRetMsg" jdbcType="VARCHAR" mode="OUT"/>  
+    </parameterMap> 
+
+<!--    <select id="queryPlan"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutCleanOutBill" resultMap="rmOutCleanOutBill">
+        select * from w_acc_tk.w_ic_out_bill A where A.bill_type = 'QC' 
+        <if test="bill_no != null and bill_no !=''" >  
+            and A.bill_no = #{bill_no}
+        </if> 
+        <if test="form_maker != null and form_maker !=''" >  
+            and A.form_maker = #{form_maker}
+        </if> 
+        <if test="begin_date != null and begin_date !=''" >  
+            and A.bill_date  &gt;= to_date(#{begin_date},'yyyy-mm-dd')
+        </if> 
+        <if test="end_date != null and end_date !=''" >  
+            and A.bill_date  &lt;= to_date(#{end_date},'yyyy-mm-dd')
+        </if> 
+        <if test="record_flag != null and record_flag !=''" >  
+            and A.record_flag = #{record_flag}
+        </if> 
+        
+        <if test=" (ic_main_type !=null and  ic_main_type !='')  
+                            or (ic_sub_type !=null and  ic_sub_type !='')                           
+                            or (storage_id !=null and  storage_id !='') ">
+            and exists(select 1 from w_acc_tk.w_ic_out_bill_detail B  where A.bill_no =B.bill_no
+                      
+        </if>
+                
+        <if test=" ic_main_type !=null and  ic_main_type !=''">
+            and  B.ic_main_type =#{ic_main_type}
+        </if>
+                
+        <if test=" ic_sub_type !=null and  ic_sub_type !=''">
+            and  B.ic_sub_type =#{ic_sub_type}
+        </if>
+        <if test=" storage_id !=null and  storage_id !=''">
+            and  B.storage_id =#{storage_id} 
+        </if>
+        <if test=" (ic_main_type !=null and  ic_main_type !='')  
+                            or (ic_sub_type !=null and  ic_sub_type !='')  
+                            or (storage_id !=null and  storage_id !='') ">
+            ) 
+                      
+        </if>
+        order by A.bill_no desc
+    </select>-->
+    
+    <select id="queryPlan"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutCleanOutBill" resultMap="rmOutCleanOutBill">
+        select * from w_acc_tk.w_ic_out_bill A where A.bill_type = 'QC' 
+       
+        <if test="bill_no != null and bill_no !=''" >  
+            and A.bill_no = #{bill_no}
+        </if> 
+        <if test="form_maker != null and form_maker !=''" >  
+            and A.form_maker = #{form_maker}
+        </if> 
+        <if test="begin_date != null and begin_date !=''" >  
+            and A.bill_date  &gt;= to_date(#{begin_date},'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        <if test="end_date != null and end_date !=''" >  
+            and A.bill_date  &lt;= to_date(#{end_date},'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        <if test="record_flag != null and record_flag !=''" >  
+            and A.record_flag = #{record_flag}
+        </if> 
+        
+        <if test=" (ic_main_type !=null and  ic_main_type !='')  
+                            or (ic_sub_type !=null and  ic_sub_type !='')                           
+                            or (storage_id !=null and  storage_id !='') ">
+            and exists(select 1 from w_acc_tk.w_ic_out_bill_detail B  where A.bill_no =B.bill_no
+                      
+        </if>
+                
+        <if test=" ic_main_type !=null and  ic_main_type !=''">
+            and  B.ic_main_type =#{ic_main_type}
+        </if>
+                
+        <if test=" ic_sub_type !=null and  ic_sub_type !=''">
+            and  B.ic_sub_type =#{ic_sub_type}
+        </if>
+        <if test=" storage_id !=null and  storage_id !=''">
+            and  B.storage_id =#{storage_id} 
+        </if>
+        <if test=" (ic_main_type !=null and  ic_main_type !='')  
+                            or (ic_sub_type !=null and  ic_sub_type !='')  
+                            or (storage_id !=null and  storage_id !='') ">
+            ) 
+                      
+        </if>
+        <if test="storage_id ==null or  storage_id ==''" >
+            and ( exists(select 1 from w_acc_tk.w_ic_out_bill_detail B  where A.bill_no =B.bill_no and B.Storage_Id in
+            <foreach collection="storageIds" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            ) 
+       
+            or not exists (select 1 from w_acc_tk.w_ic_out_bill_detail B  where A.bill_no =B.bill_no and B.Storage_Id in
+            <foreach collection="storageAllIds" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            ))
+        </if>
+        order by A.bill_no desc
+    </select>
+    
+    <insert id="addPlan" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutCleanOutBill" >
+        insert into w_acc_tk.w_ic_out_bill (bill_no,bill_date,form_maker,drawer,administer,accounter,remark,record_flag,bill_type,in_flag)
+        values(#{bill_no},sysdate,#{form_maker},#{drawer},#{administer},#{accounter},#{remark},#{record_flag},'QC','0')
+    </insert>
+    
+    <delete id="deletePlan" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutCleanOutBill" >
+        delete from  w_acc_tk.w_ic_out_bill where bill_no=#{bill_no}                            
+    </delete>
+    
+    <select id="queryPlanDetail"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutCleanOutBill" resultMap="rmOutCleanOutBillDetail">
+        select B.bill_no,B.ic_main_type,B.ic_sub_type,B.reason_id,B.out_num,B.storage_id,B.area_id,B.valid_date,B.card_money,B.line_id,
+        B.station_id ,B.water_no ,B.card_type ,A.drawer,A.record_flag 
+        from w_acc_tk.w_ic_out_bill_detail B, w_acc_tk.w_ic_out_bill A
+        where B.bill_no = A.bill_no and B.bill_no = #{bill_no}
+        order by B.water_no
+    </select>
+    
+    <insert id="addPlanDetail" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutCleanOutBill" >
+        insert into w_acc_tk.w_ic_out_bill_detail (bill_no,water_no,storage_id,area_id,ic_main_type,ic_sub_type,out_num,reason_id,card_money)         
+        values(#{bill_no},w_acc_tk.w_seq_w_ic_out_bill_detail.nextval,#{storage_id},#{area_id},#{ic_main_type},
+        #{ic_sub_type},#{out_num},#{reason_id},#{card_money})  
+    </insert>
+    
+    <select id="getDistinctStorage" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutCleanOutBill" resultType="String">
+        select distinct storage_id  from w_acc_tk.w_ic_out_bill_detail where bill_no= #{bill_no}
+        <if test = "flag == 'modify'">
+            and water_no != #{water_no}
+        </if>
+    </select>
+    
+    <update id="modifyPlanDetail" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutCleanOutBill" >
+        update w_acc_tk.w_ic_out_bill_detail 
+        set storage_id = #{storage_id}, area_id = #{area_id}, ic_main_type = #{ic_main_type}, ic_sub_type=#{ic_sub_type}, out_num = #{out_num}
+        where bill_no=#{bill_no} and water_no=#{water_no}                               
+    </update>
+    
+    <delete id="deletePlanDetail" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutCleanOutBill" >
+        delete from  w_acc_tk.w_ic_out_bill_detail where bill_no=#{bill_no} and water_no=#{water_no}                                
+    </delete>
+    
+    <select id="auditPlan" parameterMap="MapBillPlanAudit" statementType="CALLABLE">
+        {call W_ACC_TK.W_UP_IC_OUT_CLEAN_AUDIT(?,?,?,?,?)}                              
+    </select>
+    
+</mapper>
+

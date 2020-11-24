@@ -1,0 +1,593 @@
+.contentbd { background-image: url(../../images/content/content_bg_blue.jpg);
+             background-repeat: no-repeat; background-position: left top;}
+.tableStyle {
+    margin-top: 0px;
+    margin-left: 0px;
+    background-color: #D1D1D1;
+    font-size: 13px;
+    color: #000000;
+}
+body {
+    /* background-image: url(../../images/content/content_bg_blue.jpg);*/
+    /* background-position: left top; */
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+form{
+    margin:1px;
+}
+
+.simpleTable {
+    margin-top: 0px;
+    margin-left: 0px;
+    font-size: 9pt;
+    color: #000000;
+}
+
+.trTitle {
+    color: #000000;
+}
+
+.trContent {
+    color: #000000;
+    background-color: #EFEFEF;
+}
+
+.tdFont {
+    font-size: 10pt;
+    color: #000000;
+}
+
+.trContentIn {
+    color: #000000;
+    background-color: #D2E8FB;
+}
+.trData {
+    background-color: #FDFDFD;
+}
+
+.trDataHead {
+    background-color: #D1D1D1;
+    /*
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    */
+    position: relative; 
+    /* del      top: expression(this.offsetParent.scrollTop);*/
+}
+
+
+.buttonTableStyle{
+    font-size: 9pt;
+    background-color: #FFFFFF;
+}
+
+.buttonStyle{
+    font-size: 9pt;
+    color:#3399FF;
+    background-color:#FFFFFF;
+    text-align:center;
+}
+
+.buttonyes {
+    font-size: 9pt;
+    background-color:#ffffff;
+    cursor:pointer;
+    border-bottom:medium outset #666666;
+    border-left:inset #ffffff;
+    border-right:medium outset #666666;
+    border-top:inset #ffffff;
+    color:#000000;
+    font-size:9pt;
+}
+
+.buttonno {
+    font-size: 9pt;
+    background-color:#cccccc;
+    cursor:pointer;
+    border-bottom:inset #ffffff;
+    border-left:medium outset #999999;
+    border-right:inset #ffffff;
+    border-top:medium outset #999999;
+    color:#000000;
+    font-size:9pt;
+}
+
+.simple {
+    font-size: 13px;
+}
+
+
+.inputStyle {
+    border: 0px none #FFFFFF;
+    cursor: pointer;
+}
+
+
+.opStyle {
+    position:absolute;
+    top:570px;
+    left:27px;
+    margin-top: 0px;
+    margin-left: 0px;
+    font-size: 9pt;
+    color: #000000;
+}
+
+.opStyle_mx {
+    position:absolute;
+    top:570px;
+    left:27px;
+    margin-top: 0px;
+    margin-left: 0px;
+    font-size: 9pt;
+    color: #000000;
+}
+
+.statusStyle {
+    position:absolute;
+    top:610px;
+    left:27px;
+    margin-top: 0px;
+    margin-left: 0px;
+    background-color: #D1D1D1;
+    font-size: 9pt;
+    color: #000000;
+}
+
+.status-font{
+    font-size: 11pt;
+}
+
+.statusStyle_mx {
+    position:absolute;
+    top:610px;
+    left:27px;
+    margin-top: 0px;
+    margin-left: 0px;
+    background-color: #D1D1D1;
+    font-size: 9pt;
+    color: #000000;
+}
+
+.orderByTitle{
+    border:thin outset;
+}
+
+.orderByClo {
+    cursor: pointer;
+}
+
+
+a.orderByClo:link {
+    font-size: 9pt;
+    color: #000000;
+    text-decoration: none;
+}
+a.orderByClo:visited {
+    font-size: 9pt;
+    color: #000000;
+    text-decoration: none;
+}
+a.orderByClo:hover {
+    font-size: 9pt;
+    color: #CC0000;
+    text-decoration: none;
+}
+
+
+
+a.selectRow:link {
+    cursor: pointer;
+    font-size: 9pt;
+    color: #000000;
+    text-decoration: none;
+}
+a.selectRow:visited {
+    cursor: pointer;
+    font-size: 9pt;
+    color: #000000;
+    text-decoration: none;
+}
+a.selectRow:hover {
+    cursor: pointer;
+    font-size: 9pt;
+    color: #CC0000;
+    text-decoration: none;
+}
+
+
+
+<!-- 页面排序 -->
+.listDataTable {
+    font-size: 12px;
+}
+.listTableHead 
+{
+    font-size: 12px; 
+    font-weight:  bold;
+    cursor: pointer;
+}
+.listTableData 
+{
+    font-size: 12px; 
+
+}
+
+.onMouseOnTr {cursor: default; color: #ffffff; background-color: #006699}
+.listTableHeadO {font-weight: bold; cursor: pointer; color: #ffffff; background-color: #006699}
+.listHeadClicked {font-weight: bold; cursor: pointer; color: #ffffff; background-color: #990033}
+.listHeadClicked0 {font-weight: bold; cursor: pointer; color: #ffffff; background-color: #990033}
+
+#spinnerBG {
+    background-color: #D1D1D1;
+    position: absolute;
+    top:0px;left:0px;
+    width:100%;
+    height:100%;
+    filter: Alpha(opacity=50);
+    -moz-opacity:.5;
+    opacity:0.5;
+    z-index:100;
+}
+#spinnerTip {
+    position: absolute;
+    float:right; 
+    top:30%; 
+    left:40%;
+    z-index:1000;
+}
+.divForTableData{
+    position:relative;
+    left:30px;
+    top:0px;
+    margin: 0px;
+    padding:  0px;
+
+    width:95%;
+    /* height:30%; */
+    /*
+    min-height: 200px;
+    max-height: 300px;
+    */
+    height:200px;
+
+    border:thin outset #ffffff;
+    z-index:1; 
+    overflow: auto;
+    table-layout: fixed;
+    word-wrap: normal;
+}
+
+.divForTableBlock{
+    position:relative;
+    left:30px;
+    top:0px;
+    margin: 0px;
+    padding:  0px;
+
+    width:95%;
+    height: 350px;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    word-wrap: break-word;
+    word-break: break-all;
+
+}
+.divForTableBlock_tall{
+    position:relative;
+    left:30px;
+    top:0px;
+    margin: 0px;
+    padding:  0px;
+
+    width:95%;
+    height: 500px;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    word-wrap: break-word;
+    word-break: break-all;
+
+}
+
+.divForTableBlockHead{
+    position:relative;
+    left:0px;
+    top:0px;
+    margin: 0px;
+    padding:  0px;
+
+    width:100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    
+    border-color:#E9F0F8  ;
+    border-top-width:1px;
+    border-bottom-width: 1px;  
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-style: solid;
+    
+   /* border-collapse: collapse;*/
+
+}
+.divForTableBlockData{
+    position:relative;
+    left:0px;
+    top:0px;
+    
+    margin: 0px;
+    padding:  0px;
+
+    width:100%;
+    height:300px;
+
+    /*border:thin outset #ffffff;*/
+    /*
+    border-bottom-color: #000000;
+    border-left-color: #000000;
+    border-right-color: #000000;
+    */
+    border-color:#E9F0F8  ;
+    border-top-width:1px;
+    border-bottom-width: 1px;  
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-style: solid;
+    /* border-collapse: collapse;*/
+    
+    
+    
+
+    z-index:1; 
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+}
+.divForTableBlockData_tall{
+    position:relative;
+    left:0px;
+    top:0px;
+    
+    margin: 0px;
+    padding:  0px;
+
+    width:100%;
+    height:450px;
+
+    /*border:thin outset #ffffff;*/
+    /*
+    border-bottom-color: #000000;
+    border-left-color: #000000;
+    border-right-color: #000000;
+    */
+    border-color:#E9F0F8  ;
+    border-top-width:1px;
+    border-bottom-width: 1px;  
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-style: solid;
+    /* border-collapse: collapse;*/
+    
+    
+    
+
+    z-index:1; 
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+}
+.divForTableDataDetail{
+    position:relative;
+    left:30px;
+    top:0px;
+    margin: 0px;
+    padding:  0px;
+
+    width:95%;
+
+
+    border:thin outset #ffffff;
+    z-index:1; 
+
+}
+
+
+.table_edit {
+    position: relative;
+    margin: 0px;
+    padding:  0px;
+    left: 30px;
+
+    width: 95%;
+    background-color: #E9F0F8;
+    font-size: 13px;
+    color: #000000;
+
+
+
+
+}
+.table_edit_detail {
+    position: relative;
+    margin: 0px;
+    padding:  0px;
+
+
+    width: 100%;
+    background-color: #E9F0F8;
+    font-size: 13px;
+    color: #000000;
+
+
+
+
+}
+
+.table_edit_tr {
+    color: #000000;
+
+
+}
+.table_edit_tr_td_label {
+
+    width: 8%;
+    text-align: right;
+
+
+
+
+}
+.table_edit_tr_td_input {
+
+    width: 10%;
+    text-align: left;
+
+
+
+}
+
+.table_list {
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    font-size: 12px;
+
+    width: 100%;
+
+
+
+}
+.table_list_block {
+    position: relative;
+    top:0px;
+    left:0px;
+    
+    margin: 0px;
+    padding: 0px;
+    font-size: 12px;
+
+
+
+
+
+}
+.table_list_tr_head {
+    background-color: #E9F0F8;
+
+    position:relative; 
+    left:0px;
+    top:0px;
+
+    width: 100%;
+
+    text-align: center;
+    float: top;
+    z-index: 100;
+
+}
+.table_list_tr_head_block {
+    background-color: #E9F0F8;
+
+    position:relative; 
+    left:0px;
+    top:0px;
+
+
+
+    text-align: center;
+    float: top;
+    z-index: 100;
+
+}
+.table_list_tr_data {
+    font-size: 12px;
+    /*
+    background-color: #F5F5F7;
+    */
+    text-align: center;
+
+}
+.table_list_tr_col_data_block {
+    font-size: 12px;
+    /*
+    background-color: #F5F5F7;
+    */
+    text-align: center;
+    width: 66px;
+
+}
+.table_list_tr_col_data_block_w {
+
+    
+    font-size: 12px;
+    /*
+    background-color: #F5F5F7;
+    */
+    text-align: center;
+    width: 136px;
+
+}
+.table_list_tr_col_head 
+{
+    font-size: 12px; 
+    font-weight:  bold;
+    cursor: pointer;
+}
+.table_list_tr_col_head_block
+{
+    font-size: 12px; 
+    font-weight:  bold;
+    cursor: pointer;
+    width: 66px;
+}
+.table_list_tr_col_head_block_w
+{
+    font-size: 12px; 
+    font-weight:  bold;
+    cursor: pointer;
+    width: 136px;
+}
+.table_title {
+    margin: 0px;
+    position: relative;
+    left:30px;
+
+    background-color:rgb(236,239,246);
+    font-size: 13px;
+
+    width:95%;
+    text-align: center;
+
+}
+.table_title_label {
+    margin: 0px;
+    position: relative;
+    left:30px;
+
+    background-color:#0067AC;
+    font-size: 12px;
+
+
+    text-align: center;
+    color:#ffffff;
+
+}
+.table_status {
+    position:relative;
+    top:0px;
+    left:30px;
+    margin: 0px;
+    padding: 0px;
+    width: 95%;
+    background-color: #E9F0F8;
+    font-size: 13px;
+    color: #000000;
+}

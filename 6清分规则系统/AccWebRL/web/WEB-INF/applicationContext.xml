@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+    <!-- 清分规则数据库-->
+    <!--p:url="jdbc:oracle:thin:@172.20.19.29:1521:wacc"-->
+    <!--p:url="jdbc:oracle:thin:@172.20.16.244:1521:wacc"-->
+    <!--p:url="jdbc:oracle:thin:@10.99.11.81:1521:wacctstdb"--> 
+    <bean id="dataSourceST" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close" 
+          p:driverClassName="oracle.jdbc.driver.OracleDriver"
+          p:url="jdbc:oracle:thin:@172.20.19.29:1521:wacc"
+          p:username="w_acc_rl_app" p:password="w_acc_rl_app"
+          p:maxActive="10" p:maxIdle="5"
+          p:validationQuery ="select 1 from dual"
+          p:testWhileIdle="true">
+    </bean>
+    <!-- 清算 运营数据库事务-->
+    <bean id="transactionManagerST" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSourceST" />
+    </bean>
+    <!-- 注入事务策略 -->  
+    <!--
+    <tx:advice id="txAdvice" transaction-manager="transactionManagerST">  
+        <tx:attributes>  
+            <tx:method name="submitByTrans" propagation="REQUIRED" />  
+        </tx:attributes>  
+    </tx:advice> 
+     -->
+     <!-- 配置AOP切点 -->  
+      <!-- 配置AOP切点策略 -->
+      <!-- 注入切点,切点策略 -->
+      <!--
+        <aop:config>  
+            <aop:pointcut expression="execution(public * com.goldsign.acc.app.prmdev.controller.*.*(..))" id="service"/>  
+            <aop:advisor advice-ref="txAdvice" pointcut-ref="service"/>  
+        </aop:config>
+        -->
+    <!--   清算 运营数据库事务支持注解  -->
+    <tx:annotation-driven transaction-manager="transactionManagerST"/>
+    
+    <!--编程式事务使用-->
+    <bean id="txDefinition" class="org.springframework.transaction.support.DefaultTransactionDefinition"></bean>
+    
+    <bean id="sqlSessionFactoryST" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+        <!--dataSource属性指定要用到的连接池--> 
+        <property name="dataSource" ref="dataSourceST"/> 
+        <!--configLocation属性指定mybatis的核心配置文件--> 
+        <property name="configLocation" value="classpath:conf/mybatis-config.xml" />
+        <!-- 所有配置的mapper文件 -->
+        <!-- 
+        <property name="mapperLocations" value="classpath*:com/goldsign/acc/frame/entity/*.xml" />
+        -->
+    </bean> 
+  
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.goldsign.acc" />     
+    </bean>
+
+</beans>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.st.mapper.StTrxIndexMapper">
+    
+    <resultMap type="com.goldsign.acc.app.st.entity.StTrxIndex" id="rmStTrxIndex">
+        
+        <result column="table_name" property="table_name" /> 
+        <result column="date_type" property="date_type" /> 
+        <result column="recd_type" property="recd_type" /> 
+        <result column="begin_date" property="begin_date" /> 
+        <result column="end_date" property="end_date" /> 
+        <result column="recd_count" property="recd_count" />   
+    </resultMap>
+    
+    <select id="queryPlan"  parameterType="com.goldsign.acc.app.st.entity.StTrxIndex" resultMap="rmStTrxIndex">
+        select * from w_acc_st.w_st_idx_trx_history
+        <where> 
+            <if test="table_name != null and table_name !=''" >  
+                table_name like concat(concat('%',#{table_name}),'%')
+            </if>         
+        </where>
+    </select>
+    
+    
+</mapper>
+
+

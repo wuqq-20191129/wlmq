@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.OpLogImportMapper">
+    
+    <resultMap type="OpLogImport" id="rmOpLogImport">
+        <result column="water_no" property="water_no" /> 
+        <result column="operator_id" property="operator_id" /> 
+        <result column="op_time" property="op_time" /> 
+        <result column="op_type" property="op_type" /> 
+        <result column="table_name" property="table_name" /> 
+        <result column="record_count" property="record_count" /> 
+        <result column="version_no" property="version_no" />
+        <result column="remark" property="remark" />
+        <result column="file_name" property="file_name" /> 
+        <result column="begin_logical_id" property="begin_logical_id" />
+        <result column="end_logical_id" property="end_logical_id" />
+    </resultMap>
+
+    <select id="getOpLogImports"  parameterType="OpLogImport" resultMap="rmOpLogImport">
+        select water_no,operator_id,op_time,op_type,table_name,record_count,version_no,remark,file_name,begin_logical_id,end_logical_id
+        from W_ACC_ST.W_OP_LOG_PHY_LOGIC_LIST_IMPORT 
+        where 1=1 
+        <if test="begin_time !=null and begin_time !=''">
+            and op_time  &gt;= to_date(#{begin_time}, 'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        <if test="end_time !=null and end_time !=''">
+            and op_time  &lt;= to_date(#{end_time}, 'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        <if test="water_no !=null and water_no !=''">
+            and water_no =#{water_no} 
+        </if> 
+        <if test="operator_id !=null and operator_id !=''">
+            and operator_id =#{operator_id} 
+        </if>
+        <if test="op_time !=null and op_time !=''">
+            and op_time =#{op_time} 
+        </if>
+        <if test="op_type !=null and op_type !=''">
+            and op_type =#{op_type} 
+        </if>
+        <if test="table_name !=null and table_name !=''">
+            and table_name =#{table_name} 
+        </if>
+        <if test="record_count !=null and record_count !=''">
+            and record_count =#{record_count} 
+        </if>
+        <if test="remark !=null and remark !=''">
+            and remark =#{remark} 
+        </if>
+        <if test="file_name !=null and file_name !=''">
+            and file_name =#{file_name} 
+        </if>
+        <if test="begin_logical_id !=null and begin_logical_id !=''">
+            and begin_logical_id  &gt;= #{begin_logical_id} 
+        </if>
+        <if test="end_logical_id !=null and end_logical_id !=''">
+            and end_logical_id  &lt;= #{end_logical_id} 
+        </if>
+        <if test="version_no !=null and version_no !=''">
+            and version_no =#{version_no}
+        </if>
+         order by op_time desc 
+    </select> 
+    
+    <select id="getOpLogImportsLikeFileName"  parameterType="OpLogImport" resultMap="rmOpLogImport">
+        select water_no,operator_id,op_time,op_type,table_name,record_count,version_no,remark,file_name,begin_logical_id,end_logical_id
+        from W_ACC_ST.W_OP_LOG_PHY_LOGIC_LIST_IMPORT 
+        where 1=1 
+        <if test="begin_time !=null and begin_time !=''">
+            and op_time  &gt;= to_date(#{begin_time}, 'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        <if test="end_time !=null and end_time !=''">
+            and op_time  &lt;= to_date(#{end_time}, 'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        <if test="water_no !=null and water_no !=''">
+            and water_no =#{water_no} 
+        </if> 
+        <if test="operator_id !=null and operator_id !=''">
+            and operator_id =#{operator_id} 
+        </if>
+        <if test="op_time !=null and op_time !=''">
+            and op_time =#{op_time} 
+        </if>
+        <if test="op_type !=null and op_type !=''">
+            and op_type =#{op_type} 
+        </if>
+        <if test="table_name !=null and table_name !=''">
+            and table_name =#{table_name} 
+        </if>
+        <if test="record_count !=null and record_count !=''">
+            and record_count =#{record_count} 
+        </if>
+        <if test="remark !=null and remark !=''">
+            and remark =#{remark} 
+        </if>
+        <if test="file_name !=null and file_name !=''">
+            and file_name like #{file_name} 
+        </if>
+        <if test="begin_logical_id !=null and begin_logical_id !=''">
+            and begin_logical_id  &gt;= #{begin_logical_id} 
+        </if>
+        <if test="end_logical_id !=null and end_logical_id !=''">
+            and end_logical_id  &lt;= #{end_logical_id} 
+        </if>
+        <if test="version_no !=null and version_no !=''">
+            and version_no =#{version_no}
+        </if>
+         order by op_time desc 
+    </select> 
+    
+    <insert id="addOpLogImport" parameterType="OpLogImport" >
+        insert into  W_ACC_ST.W_OP_LOG_PHY_LOGIC_LIST_IMPORT(water_no,operator_id,op_time,op_type,table_name,record_count,version_no,remark,file_name,begin_logical_id,end_logical_id)
+        values(#{water_no},#{operator_id},to_date(#{op_time}, 'yyyy-mm-dd hh24:mi:ss'),#{op_type},#{table_name},#{record_count},#{version_no},#{remark},#{file_name},#{begin_logical_id},#{end_logical_id})        
+    </insert> 
+    
+    <select id="queryToMap"  parameterType="OpLogImport" resultType="map">
+        select water_no,operator_id,to_char(op_time,'YYYY-MM-DD HH24:MI:SS') as op_time,op_type,table_name,record_count,version_no,remark,file_name,begin_logical_id,end_logical_id
+        from W_ACC_ST.W_OP_LOG_PHY_LOGIC_LIST_IMPORT 
+        where 1=1 
+        <if test="begin_time !=null and begin_time !=''">
+            and op_time  &gt;= to_date(#{begin_time}, 'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        <if test="end_time !=null and end_time !=''">
+            and op_time  &lt;= to_date(#{end_time}, 'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        <if test="water_no !=null and water_no !=''">
+            and water_no =#{water_no} 
+        </if> 
+        <if test="operator_id !=null and operator_id !=''">
+            and operator_id =#{operator_id} 
+        </if>
+        <if test="op_time !=null and op_time !=''">
+            and op_time =#{op_time} 
+        </if>
+        <if test="op_type !=null and op_type !=''">
+            and op_type =#{op_type} 
+        </if>
+        <if test="table_name !=null and table_name !=''">
+            and table_name =#{table_name} 
+        </if>
+        <if test="record_count !=null and record_count !=''">
+            and record_count =#{record_count} 
+        </if>
+        <if test="remark !=null and remark !=''">
+            and remark =#{remark} 
+        </if>
+        <if test="file_name !=null and file_name !=''">
+            and file_name like #{file_name} 
+        </if>
+        <if test="begin_logical_id !=null and begin_logical_id !=''">
+            and begin_logical_id  &gt;= #{begin_logical_id} 
+        </if>
+        <if test="end_logical_id !=null and end_logical_id !=''">
+            and end_logical_id  &lt;= #{end_logical_id} 
+        </if>
+        <if test="version_no !=null and version_no !=''">
+            and version_no =#{version_no}
+        </if>
+         order by op_time desc 
+    </select>
+    
+    <delete id="deleteOpLog" parameterType="OpLogImport">
+        delete from W_ACC_ST.W_OP_LOG_PHY_LOGIC_LIST_IMPORT where water_no=#{water_no}
+    </delete>
+    
+</mapper>

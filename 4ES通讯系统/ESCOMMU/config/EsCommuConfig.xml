@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Config>
+	<Common>
+		<!-- windows config -->
+		<BackUpLog>D:/work/新疆/workspace/ESCOMMU/log</BackUpLog>
+		<FtpLocalDir>D:/work/新疆/workspace/ESCOMMU/files/ftp/server</FtpLocalDir>
+		<FtpLocalDirBcp>D:/work/新疆/workspace/ESCOMMU/files/bcp</FtpLocalDirBcp>
+		<FtpLocalDirError>D:/work/新疆/workspace/ESCOMMU/files/error</FtpLocalDirError>
+<!--	
+		<BackUpLog>/export/home/ditie/escommu/files/log</BackUpLog>
+		<FtpLocalDir>/export/home/ditie/escommu/files/ftp</FtpLocalDir>
+		<FtpLocalDirBcp>/export/home/ditie/escommu/files/bcp</FtpLocalDirBcp>
+		<FtpLocalDirError>/export/home/ditie/escommu/files/error</FtpLocalDirError>
+-->			
+		<!--FTP 配置 -->
+		<!--
+		<FtpUserName>administrator</FtpUserName>
+		<FtpUserPassword>iccs99</FtpUserPassword>
+		-->
+		<FtpUserName>ACC_ES</FtpUserName>
+		<FtpUserPassword>ACC_ES0000</FtpUserPassword>
+		
+		<FtpTimeout>5000</FtpTimeout>
+		<FtpRetryWaiting>5000</FtpRetryWaiting>
+		<FtpRetryTimes>3</FtpRetryTimes>
+		
+		<!--APP config -->
+		<MessageClassPrefix>com.goldsign.escommu.message.</MessageClassPrefix>
+		<SendQueryWait>50</SendQueryWait>
+
+                <!--control whether console print true :print false:not print -->	
+		<ConsolePrint>true</ConsolePrint>
+		<ConsolePrintFrequency>1</ConsolePrintFrequency>
+		
+		<!--时间间隔 配置 -->
+		<!--日志级别 配置 -->
+                <IntervalThreadLogLevel>300000</IntervalThreadLogLevel>	
+                <!--文件通知查找间隔 配置 -->
+                <IntervalThreadFindFile>10000</IntervalThreadFindFile>
+    
+                <!--审计文件生成时间-->
+		<AuditFileNextMakeTime>07</AuditFileNextMakeTime>
+                <!--单位小时-->
+                <AuditFileFindInterval>1</AuditFileFindInterval>
+                <!--审计文件生成路径-->
+                <AuditFileMakeDir>D:/work/新疆/workspace/ESCOMMU/files/audit</AuditFileMakeDir>
+                <!--
+                <AuditFileMakeDir>/export/home/ditie/escommu/files/audit</AuditFileMakeDir>
+                -->
+                
+                <!--参数文件生成路径-->
+                <ParmDstrbPathDir>D:/work/新疆/workspace/ESCOMMU/files/param</ParmDstrbPathDir>
+                <!--
+                <ParmDstrbPathDir>/export/home/ditie/escommu/files/param</ParmDstrbPathDir>
+                -->
+                <!--物理卡号与逻辑卡号对照文件生成时间-->
+		<PhyLogictFileNextMakeTime>03</PhyLogictFileNextMakeTime>
+                <!--单位小时-->
+                <PhyLogicFileFindInterval>1</PhyLogicFileFindInterval>
+                <!--物理卡号与逻辑卡号对照文件生成路径-->
+                <PhyLogicFileMakeDir>D:/work/新疆/workspace/ESCOMMU/files/phyLogic</PhyLogicFileMakeDir>
+                <!--socket-->
+                <ReadOneMessageTimeOut>100000</ReadOneMessageTimeOut>
+                <SocketPort>5001</SocketPort>
+	</Common>
+	
+	<!--if file is in ftp root path,no need to define here-->
+	<FtpPaths>
+		<FtpPath id="ES" value="order"/>
+	</FtpPaths>
+	
+	<Messages>
+		<Message id="30" value="Message30"/>
+		<Message id="32" value="Message32"/>
+                <Message id="34" value="Message34"/>
+                <Message id="36" value="Message36"/>
+                <Message id="38" value="Message38"/>
+                <Message id="40" value="Message40"/>
+                <Message id="42" value="Message42"/>
+                <Message id="44" value="Message44"/>
+                <Message id="45" value="Message45"/>
+                <Message id="46" value="Message46"/>
+                <Message id="48" value="Message48"/>
+                <Message id="50" value="Message50"/>
+	</Messages>
+
+	<!--Connection pool name of the 139 database.-->
+	<!--To set user and password, please add "@@" before it. Eg: <User>@@user</User>, <Password>@@password</Password> -->
+	<DataConnectionPool>
+            <Driver>oracle.jdbc.driver.OracleDriver</Driver>
+            <URL>jdbc:oracle:thin:@172.20.19.29:1521:wacc</URL>
+            <User encrypt="false">w_acc_cm</User>
+            <Password encrypt="true">30102D2730162423</Password>
+            <MaxActive>40</MaxActive>
+            <MaxIdle>20</MaxIdle>
+            <MaxWait>20000</MaxWait>
+	</DataConnectionPool>
+
+	<!--thread pool configuration -->
+	<CommunicationThreadPool>
+		<MaxThreadNumber>15</MaxThreadNumber>
+		<ThreadSleepTime>100</ThreadSleepTime>
+		<ThreadPriorityAdd>0</ThreadPriorityAdd>
+		<ReadThreadPriorityAdd>2</ReadThreadPriorityAdd>
+		<MaxSearchNum>2</MaxSearchNum>
+<!--		<UnHanledMsgLogDir>/export/home/ditie/escommu/log/unhandled</UnHanledMsgLogDir>--> 
+		<UnHanledMsgLogDir>D:/work/新疆/workspace/ESCOMMU/log</UnHanledMsgLogDir> 
+		<ThreadBufferCapacity>10000</ThreadBufferCapacity>
+		<ThreadBufferIncrement>1000</ThreadBufferIncrement>
+		<PriorityThreadBufferCapacity>2000</PriorityThreadBufferCapacity>
+		<PriorityThreadBufferIncrement>1000</PriorityThreadBufferIncrement>
+	</CommunicationThreadPool>
+
+	<ConnectionPoolListenerThread>
+	   <CPListenerThreadSleepTime>1000</CPListenerThreadSleepTime>
+	   <TestSqlForData>select 1 from dual</TestSqlForData>
+	   <SqlMsghandleSleepTime>100</SqlMsghandleSleepTime>
+	</ConnectionPoolListenerThread>
+	
+</Config>

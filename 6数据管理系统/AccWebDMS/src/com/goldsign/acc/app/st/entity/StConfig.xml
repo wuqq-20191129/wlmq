@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.st.mapper.StConfigMapper">
+    
+    <resultMap type="com.goldsign.acc.app.st.entity.StConfig" id="rmStConfig">
+        
+        <result column="ORIGIN_TABLE_NAME" property="originTableName" /> 
+        <result column="KEEP_DAYS" property="keepDays" /> 
+        <result column="DIVIDE_RECD_COUNT" property="divideRecdCount" /> 
+        <result column="CLEAR_FLAG" property="clearFlag" /> 
+        <result column="CREATE_SQL" property="createSql" /> 
+        <result column="IS_SQUADDAY" property="isSquadday" /> 
+        <result column="TABLE_COLUMNS" property="tableColumns" /> 
+        <result column="AB_NAME" property="abName" /> 
+        <result column="DB_TYPE" property="dbType" /> 
+        <result column="DATE_TYPE" property="dateType" /> 
+        <result column="PRIMARYTABLE" property="primarytable" /> 
+   
+    </resultMap>
+    
+    <select id="queryPlan"  parameterType="com.goldsign.acc.app.st.entity.StConfig" resultMap="rmStConfig">
+        select * from w_acc_st.w_st_cfg_clear_table
+        <where> 
+            <if test="originTableName != null and originTableName !=''" >  
+                ORIGIN_TABLE_NAME like concat(concat('%',#{originTableName}),'%')
+            </if> 
+            <if test="dbType != null and dbType !=''" >  
+                and DB_TYPE like concat(concat('%',#{dbType}),'%')
+            </if> 
+        </where>
+    </select>
+    
+    <update id="modifyPlan" parameterType="com.goldsign.acc.app.st.entity.StConfig" >
+        update w_acc_st.w_st_cfg_clear_table t
+        set t.keep_days= #{keepDays}, t.divide_recd_count= #{divideRecdCount}
+        where t.origin_table_name= #{originTableName}
+    </update>
+    
+    
+</mapper>
+
+

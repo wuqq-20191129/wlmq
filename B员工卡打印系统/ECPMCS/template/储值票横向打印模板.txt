@@ -1,0 +1,5 @@
+CardType#0202
+Background#signcard.jpg#254#400
+Image#BackPhoto##C:/Users/Administrator/Pictures/little.jpg#0#0#1023#639
+Image#IDPhoto##C:/Users/Administrator/Pictures/xgirl.jpg#560#50#250#320
+Text#Name#梁小#思源黑体#7#1#000000#460#450#300#150#4

@@ -1,0 +1,6 @@
+--更新01-06站点的设备ID，ID首位改为0
+update acc_commu.fm_dev_monitor A set A.Device_Id = '0'||substr(A.Device_Id,2,3)
+WHERE A.line_id='02' and A.station_id in ('01','02','03','04','05','06')
+and A.device_id is not null;
+
+commit;

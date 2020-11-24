@@ -1,0 +1,61 @@
+--1、业务文件路径
+---程序路径、业务文档路径
+------应用目录
+update w_acc_st.w_st_cfg_sys_base a set a.cfg_value='/export/home/acc/settle' where a.cfg_key='path.base.home.app';
+------归档目录
+update w_acc_st.w_st_cfg_sys_base a set a.cfg_value='/data/communfs/settle_file' where a.cfg_key='path.base.home.business.archive';
+------工作目录
+update w_acc_st.w_st_cfg_sys_base a set a.cfg_value='/data/communfs' where a.cfg_key='path.base.home.business.work';
+commit;
+---BCP配置
+update w_acc_st.w_st_cfg_bcp a set a.db_server='10.99.10.11',a.db_sid='waccdb1';
+commit;
+
+--启动脚本
+--orcle_home 路径
+
+--2、应用部署
+--脚本修改
+start.sh/stop.sh
+--配置修改
+SettleConfig.xml
+
+
+--应用基本目录创建
+control
+bcp
+bcplog
+bcpbad
+log
+lib
+
+
+--3、清算处理
+--工作目录
+----LCC
+ftp/receive
+ftp/ftp_audit
+ftp/mtx
+----一卡通
+ftpoct/import/settle
+ftpoct/export/trx
+
+--归档目录
+----lcc文件
+settle_file/lcc/his
+settle_file/lcc/err
+----一卡通文件
+settle_file/oct/import/settle/his
+settle_file/oct/import/settle/file
+settle_file/oct/import/settle/zip
+
+settle_file/oct/export/trx/his
+settle_file/oct/export/trx/file
+settle_file/oct/export/trx/zip
+
+
+---问题
+--ORACLE tnsnames.ora 使用ACC用户不能读并且SID不同与通过客户端访问名称。
+--文件不能移动，不同分区，（解决，使用相同分区）
+
+

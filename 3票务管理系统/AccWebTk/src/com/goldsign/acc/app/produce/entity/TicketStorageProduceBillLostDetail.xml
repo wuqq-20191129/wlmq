@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.produce.mapper.TicketStorageProduceBillLostDetailMapper">
+    
+    <resultMap type="com.goldsign.acc.app.produce.entity.TicketStorageProduceUselessDetail" id="rmUselessDetail">
+        <result column="bill_no" property="bill_no" /> 
+        <result column="order_no" property="order_no" />
+        <result column="card_no" property="card_no" />
+        <result column="card_type" property="card_type" />
+        <result column="ic_main_type" property="ic_main_type" />
+        <result column="ic_sub_type" property="ic_sub_type" />
+        <result column="line_id" property="line_id" />
+        <result column="station_id" property="station_id" />
+        <result column="card_money" property="card_money" />
+        <result column="valid_date" property="valid_date" />
+        <result column="machine_no" property="machine_no" />
+        <result column="flag" property="flag" />
+        <result column="phy_id" property="phy_id" />
+        <result column="exit_line_id" property="exit_line_id" />
+        <result column="exit_station_id" property="exit_station_id" />
+        <result column="model" property="model" />
+        
+    </resultMap>
+    
+    <parameterMap type="map" id="AddLostDetailMap">  
+        <parameter property="pi_billno" jdbcType="VARCHAR" mode="IN"/>  
+        <parameter property="pi_orderno" jdbcType="VARCHAR" mode="IN"/> 
+        <parameter property="pi_cardid" jdbcType="VARCHAR" mode="IN"/> 
+        <parameter property="pi_cardtype" jdbcType="VARCHAR" mode="IN"/> 
+       
+        <parameter property="po_retMsg" jdbcType="VARCHAR" mode="OUT"/> 
+        <parameter property="po_retCode" jdbcType="INTEGER" mode="OUT"/>  
+    </parameterMap>
+    
+    <!--明细增加--> 
+    <select id="addLostDetail" parameterMap="AddLostDetailMap" statementType="CALLABLE">
+        {call w_acc_tk.W_UP_IC_PDU_ADD_LOST(?,?,?,?,?,?)}
+                                  
+    </select>
+    
+    <select id="getProduceBillAuditCount"  parameterType="String" resultType="int">
+        select count(*) from w_acc_tk.w_ic_pdu_produce_bill where record_flag='0' and bill_no = #{bill_no}
+    </select>
+    
+    <select id="getUselessDetailByCardNo"  parameterType="com.goldsign.acc.app.produce.entity.TicketStorageProduceUselessDetail" resultMap="rmUselessDetail">
+        select flag,order_no
+        from w_acc_tk.w_ic_pdu_useless_detail
+        where bill_no =#{bill_no} and card_no=#{card_no} 
+    </select>
+    
+    
+    <select id="getProduceUselessDetailList"  parameterType="com.goldsign.acc.app.produce.entity.TicketStorageProduceUselessDetail" resultMap="rmUselessDetail">
+        select bill_no, card_no,order_no, card_type,ic_main_type,ic_sub_type,line_id,station_id,card_money,
+        <!--valid_date,-->
+        (case when valid_date= to_date('1970-01-01' ,'yyyy-mm-dd')  then '' 
+         else to_char(valid_date,'yyyy-mm-dd')  end) valid_date,
+        machine_no 
+        from w_acc_tk.w_ic_pdu_useless_detail
+        where bill_no =#{bill_no}
+    </select> 
+    
+    <!--删除整盒-->
+    <delete id="deleteUselessDetailForBox" parameterType="com.goldsign.acc.app.produce.entity.TicketStorageProduceUselessDetail" >
+        delete  from  w_acc_tk.w_ic_pdu_useless_detail where bill_no=#{bill_no} and order_no=#{order_no}
+                                  
+    </delete>
+    <!--删除单张票卡-->
+    <delete id="deleteUselessDetailForCardNo" parameterType="com.goldsign.acc.app.produce.entity.TicketStorageProduceUselessDetail" >
+        delete  from  w_acc_tk.w_ic_pdu_useless_detail where bill_no=#{bill_no} and card_no=#{card_no}
+                                  
+    </delete>
+    <!--'3'：遗失票 按票卡类型删除-->
+    <delete id="deleteUselessDetailForCardType" parameterType="com.goldsign.acc.app.produce.entity.TicketStorageProduceUselessDetail" >
+        delete  from  w_acc_tk.w_ic_pdu_useless_detail where bill_no=#{bill_no} and card_type=#{card_type}
+                                  
+    </delete>
+    
+</mapper>

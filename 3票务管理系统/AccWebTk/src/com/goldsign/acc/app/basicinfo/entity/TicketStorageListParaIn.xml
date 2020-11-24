@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper  namespace = "com.goldsign.acc.app.basicinfo.mapper.TicketStorageListParaInMapper">
+    
+    <resultMap type = "com.goldsign.acc.app.basicinfo.entity.TicketStorageListParaIn"  id = "rmTicketStorageListParaIn">
+        <result column="info_id"  property="info_id"/>
+        <result column="ic_main_type"  property="ic_main_type"/>
+        <result column="ic_sub_type"  property="ic_sub_type"/>
+        <result column="card_money"  property="card_money"/>
+        <result column="ic_main_desc"  property="ic_main_desc"/>
+        <result column="ic_sub_desc"  property="ic_sub_desc"/>
+        <result column="input_date"  property="input_date"/>
+        <result column="input_date_start"  property="input_date_start"/>
+        <result column="input_date_end"  property="input_date_end"/>
+        <result column="store_dept"  property="store_dept"/>
+        <result column="station_dept"  property="station_dept"/>
+        <result column="income_dept"  property="income_dept"/>
+        <result column="other_dept"  property="other_dept"/>
+        <result column="remark"  property="remark"/>
+        <result column="storage_id"  property="storage_id"/>
+        <result column="sys_operator_id"  property="sys_operator_id"/>
+        <result column="sys_group_id"  property="sys_group_id"/>
+        <result column="sys_storage_id"  property="sys_storage_id"/>
+    </resultMap>
+    
+    <select id="queryParm"   resultMap="rmTicketStorageListParaIn">
+        SELECT A.info_id,A.ic_main_type,A.card_money,B.ic_main_desc,A.ic_sub_type,C.ic_sub_desc,A.input_date,
+                A.station_dept,A.store_dept,A.income_dept,A.other_dept,A.remark,A.storage_id 
+                FROM w_acc_tk.w_ic_prm_report_storageList  A,w_acc_tk.w_ic_cod_card_main_type B ,w_acc_tk.w_ic_cod_card_sub_type C where 
+                rtrim(A.ic_main_type)=rtrim(B.ic_main_type) AND rtrim(A.ic_sub_type)=rtrim(C.ic_sub_type) 
+                and trim(A.ic_main_type)=trim(C.ic_main_type) 
+        <if test="input_date_start !=null and input_date_start !=''">
+           and to_char(A.input_date,'yyyy-mm-dd') &gt;= #{input_date_start} 
+        </if>
+        <if test="input_date_end !=null and input_date_end !=''">
+           and to_char(A.input_date,'yyyy-mm-dd') &lt;=  #{input_date_end} 
+        </if>
+        <if test="ic_main_type !=null and ic_main_type !=''">
+              and trim(A.ic_main_type) =#{ic_main_type} 
+        </if> 
+        <if test="ic_sub_type !=null and ic_sub_type !=''">
+            and trim(A.ic_sub_type) =#{ic_sub_type}
+        </if> 
+        <if test="storage_id !=null and storage_id !=''">
+            and A.storage_id =#{storage_id}
+        </if>
+         order by info_id
+    </select> 
+    
+   <select id="getListForAdd"   resultMap="rmTicketStorageListParaIn">
+      SELECT A.info_id,A.ic_main_type,A.card_money,B.ic_main_desc,A.ic_sub_type,C.ic_sub_desc,A.input_date,
+                A.station_dept,A.store_dept,A.income_dept,A.other_dept,A.remark,A.storage_id 
+                FROM w_acc_tk.w_ic_prm_report_storageList  A,w_acc_tk.w_ic_cod_card_main_type B ,w_acc_tk.w_ic_cod_card_sub_type C where 
+                rtrim(A.ic_main_type)=rtrim(B.ic_main_type) AND rtrim(A.ic_sub_type)=rtrim(C.ic_sub_type) 
+                and trim(A.ic_main_type)=trim(C.ic_main_type)
+       and info_id = #{info_id} 
+        order by info_id
+    </select>
+    <select id="getInfoId"   resultType="String">
+      SELECT max(info_id)  
+        from w_acc_tk.w_ic_prm_report_storageList 
+    </select>
+
+    
+    <select id="getUserStoreSet"  parameterType="TicketStorageListParaIn" resultMap="rmTicketStorageListParaIn">
+        select sg.sys_group_id,sg.sys_storage_id 
+            from w_acc_st.w_op_sys_group_operator sgo , w_acc_st.w_op_sys_group sg 
+            where sgo.sys_group_id=sg.sys_group_id 
+            and sys_operator_id=#{sys_operator_id}
+    </select>
+   
+    <update id="modifyTicketStorageListParaIn" parameterType="TicketStorageListParaIn" >
+       update w_acc_tk.w_ic_prm_report_storageList set input_date =to_date(#{input_date},'yyyy-mm-dd'),
+        ic_main_type =#{ic_main_type},ic_sub_type =#{ic_sub_type},
+       card_money =#{card_money},station_dept =#{station_dept},
+       store_dept =#{store_dept}, income_dept =#{income_dept},
+       other_dept =#{other_dept},storage_id =#{storage_id},remark =#{remark}
+        where info_id = #{info_id}                                            
+    </update>
+     
+    <insert id="addTicketStorageListParaIn" parameterType="TicketStorageListParaIn" >
+        insert into w_acc_tk.w_ic_prm_report_storageList(info_id,ic_main_type,ic_sub_type,card_money,input_date,station_dept,store_dept,income_dept,other_dept,storage_id,remark)
+        values(w_acc_tk.W_SEQ_W_IC_PRM_REPORT_STORAGE.nextval,#{ic_main_type},#{ic_sub_type},#{card_money},to_date(#{input_date},'yyyy-mm-dd'),#{station_dept},#{store_dept},
+        #{income_dept},#{other_dept},#{storage_id},#{remark})        
+        
+    </insert>
+    
+    <delete id="deleteTicketStorageListParaIn" parameterType="TicketStorageListParaIn">
+        delete from w_acc_tk.w_ic_prm_report_storageList 
+        where info_id = #{info_id}            
+    </delete>
+</mapper>
+
+
+

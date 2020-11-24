@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.password.mapper.SysOperatorMapper" >
+    <resultMap id="BaseResultMap" type="com.goldsign.acc.app.password.entity.SysOperator" >
+        <constructor >
+            <arg column="SYS_OPERATOR_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="SYS_PASSWORD_HASH" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="SYS_OPERATOR_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="SYS_EMPLOYEE_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="SYS_EXPIRED_DATE" jdbcType="CHAR" javaType="java.lang.String" />
+            <arg column="SYS_STATUS" jdbcType="CHAR" javaType="java.lang.String" />
+            <arg column="SYS_GROUP_NAME" jdbcType="CHAR" javaType="java.lang.String" />      
+            <arg column="SYS_GROUP_ID" jdbcType="CHAR" javaType="java.lang.String" />
+            <arg column="LOGIN_NUM" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+            <arg column="FAILED_NUM" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+            <arg column="SESSION_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="PASSWORD_EDIT_DATE" jdbcType="CHAR" javaType="java.lang.String" />
+            <arg column="EDIT_PAST_DAYS" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+        </constructor>
+    </resultMap>
+  
+    <insert id="insert" parameterType="com.goldsign.acc.app.password.entity.SysOperator" >
+        insert into w_acc_st.W_OP_SYS_OPERATOR (SYS_OPERATOR_ID, SYS_PASSWORD_HASH, SYS_OPERATOR_NAME, 
+        SYS_EMPLOYEE_ID, SYS_EXPIRED_DATE, SYS_STATUS, 
+        LOGIN_NUM, FAILED_NUM, SESSION_ID, 
+        PASSWORD_EDIT_DATE, EDIT_PAST_DAYS)
+        values (#{sysOperatorId,jdbcType=VARCHAR}, #{sysPasswordHash,jdbcType=VARCHAR}, #{sysOperatorName,jdbcType=VARCHAR}, 
+        #{sysEmployeeId,jdbcType=VARCHAR}, #{sysExpiredDate,jdbcType=CHAR}, #{sysStatus,jdbcType=CHAR}, 
+        #{loginNum,jdbcType=DECIMAL}, #{failedNum,jdbcType=DECIMAL}, #{sessionId,jdbcType=VARCHAR}, 
+        #{passwordEditDate,jdbcType=CHAR}, #{editPastDays,jdbcType=DECIMAL})
+    </insert>
+    <insert id="insertSelective" parameterType="com.goldsign.acc.app.password.entity.SysOperator" >
+        insert into w_acc_st.W_OP_SYS_OPERATOR
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="sysOperatorId != null" >
+                SYS_OPERATOR_ID,
+            </if>
+            <if test="sysPasswordHash != null" >
+                SYS_PASSWORD_HASH,
+            </if>
+            <if test="sysOperatorName != null" >
+                SYS_OPERATOR_NAME,
+            </if>
+            <if test="sysEmployeeId != null" >
+                SYS_EMPLOYEE_ID,
+            </if>
+            <if test="sysExpiredDate != null" >
+                SYS_EXPIRED_DATE,
+            </if>
+            <if test="sysStatus != null" >
+                SYS_STATUS,
+            </if>
+            <if test="loginNum != null" >
+                LOGIN_NUM,
+            </if>
+            <if test="failedNum != null" >
+                FAILED_NUM,
+            </if>
+            <if test="sessionId != null" >
+                SESSION_ID,
+            </if>
+            <if test="passwordEditDate != null" >
+                PASSWORD_EDIT_DATE,
+            </if>
+            <if test="editPastDays != null" >
+                EDIT_PAST_DAYS,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="sysOperatorId != null" >
+                #{sysOperatorId,jdbcType=VARCHAR},
+            </if>
+            <if test="sysPasswordHash != null" >
+                #{sysPasswordHash,jdbcType=VARCHAR},
+            </if>
+            <if test="sysOperatorName != null" >
+                #{sysOperatorName,jdbcType=VARCHAR},
+            </if>
+            <if test="sysEmployeeId != null" >
+                #{sysEmployeeId,jdbcType=VARCHAR},
+            </if>
+            <if test="sysExpiredDate != null" >
+                #{sysExpiredDate,jdbcType=CHAR},
+            </if>
+            <if test="sysStatus != null" >
+                #{sysStatus,jdbcType=CHAR},
+            </if>
+            <if test="loginNum != null" >
+                #{loginNum,jdbcType=DECIMAL},
+            </if>
+            <if test="failedNum != null" >
+                #{failedNum,jdbcType=DECIMAL},
+            </if>
+            <if test="sessionId != null" >
+                #{sessionId,jdbcType=VARCHAR},
+            </if>
+            <if test="passwordEditDate != null" >
+                #{passwordEditDate,jdbcType=CHAR},
+            </if>
+            <if test="editPastDays != null" >
+                #{editPastDays,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+    <select id="find" parameterType="map" resultMap="BaseResultMap">
+        select * from (select A1.*,rownum rn from (select A.SYS_OPERATOR_ID,A.SYS_PASSWORD_HASH,A.SYS_OPERATOR_NAME,
+        A.SYS_EMPLOYEE_ID,A.SYS_EXPIRED_DATE,A.SYS_STATUS,A.LOGIN_NUM,
+        A.FAILED_NUM,A.SESSION_ID,A.PASSWORD_EDIT_DATE,A.EDIT_PAST_DAYS, 
+        WM_CONCAT( C.SYS_GROUP_NAME ) SYS_GROUP_NAME,
+        WM_CONCAT(C.SYS_GROUP_ID) SYS_GROUP_ID
+        from w_acc_st.W_OP_SYS_OPERATOR A,w_acc_st.W_OP_SYS_GROUP_OPERATOR B,w_acc_st.W_OP_SYS_GROUP C
+        where A.SYS_OPERATOR_ID = B.SYS_OPERATOR_ID(+)
+        and B.SYS_GROUP_ID = C.SYS_GROUP_ID(+)
+        group by
+        A.SYS_OPERATOR_ID,A.SYS_PASSWORD_HASH,A.SYS_OPERATOR_NAME,A.SYS_EMPLOYEE_ID,A.SYS_EXPIRED_DATE,A.SYS_STATUS,A.LOGIN_NUM,
+        A.FAILED_NUM,A.SESSION_ID,A.PASSWORD_EDIT_DATE,A.EDIT_PAST_DAYS
+        order by A.SYS_OPERATOR_ID) A1) A2
+        where A2.rn between #{pageOffset} and #{pageSize} 
+    </select>
+    <select id="count" parameterType="map" resultType="int">
+        select count(*) from w_acc_st.W_OP_SYS_OPERATOR 
+        <where>
+            <if test="sysOperatorId != null" >
+                SYS_OPERATOR_ID = #{sysOperatorId,jdbcType=CHAR}
+            </if>
+            <if test="sysPasswordHash != null" >
+                AND SYS_PASSWORD_HASH = #{sysPasswordHash,jdbcType=VARCHAR}
+            </if>
+        </where>
+                      
+    </select>
+     <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
+       select A1.*,rownum rn from (select A.SYS_OPERATOR_ID,A.SYS_PASSWORD_HASH,A.SYS_OPERATOR_NAME,
+        A.SYS_EMPLOYEE_ID,substr(A.SYS_EXPIRED_DATE,0,4) || '-' || substr(A.SYS_EXPIRED_DATE,5,2) || '-' || substr(A.SYS_EXPIRED_DATE,7,2) as SYS_EXPIRED_DATE,A.SYS_STATUS,A.LOGIN_NUM,
+        A.FAILED_NUM,A.SESSION_ID,A.PASSWORD_EDIT_DATE,A.EDIT_PAST_DAYS, 
+        WM_CONCAT( C.SYS_GROUP_NAME ) SYS_GROUP_NAME,
+        WM_CONCAT(C.SYS_GROUP_ID) SYS_GROUP_ID
+        from w_acc_st.W_OP_SYS_OPERATOR A,w_acc_st.W_OP_SYS_GROUP_OPERATOR B,w_acc_st.W_OP_SYS_GROUP C
+        where A.SYS_OPERATOR_ID = B.SYS_OPERATOR_ID(+)
+        and B.SYS_GROUP_ID = C.SYS_GROUP_ID(+)
+        group by
+        A.SYS_OPERATOR_ID,A.SYS_PASSWORD_HASH,A.SYS_OPERATOR_NAME,A.SYS_EMPLOYEE_ID,A.SYS_EXPIRED_DATE,A.SYS_STATUS,A.LOGIN_NUM,
+        A.FAILED_NUM,A.SESSION_ID,A.PASSWORD_EDIT_DATE,A.EDIT_PAST_DAYS
+        order by A.SYS_OPERATOR_ID) A1
+    </select>
+    <select id="selectByOprId" parameterType="map" resultMap="BaseResultMap">
+        select A.SYS_OPERATOR_ID,A.SYS_PASSWORD_HASH,A.SYS_OPERATOR_NAME,
+        A.SYS_EMPLOYEE_ID,substr(A.SYS_EXPIRED_DATE,0,4) || '-' || substr(A.SYS_EXPIRED_DATE,5,2) || '-' || substr(A.SYS_EXPIRED_DATE,7,2) as SYS_EXPIRED_DATE,A.SYS_STATUS,A.LOGIN_NUM,
+        A.FAILED_NUM,A.SESSION_ID,A.PASSWORD_EDIT_DATE,A.EDIT_PAST_DAYS,
+        WM_CONCAT( C.SYS_GROUP_NAME ) SYS_GROUP_NAME,<!--分组函数，连接相同记录的组名称,mysql使用CONCAT-->
+        WM_CONCAT(C.SYS_GROUP_ID)  SYS_GROUP_ID<!--分组函数，连接相同记录的组ID,mysql使用CONCAT-->
+        from w_acc_st.W_OP_SYS_OPERATOR A,w_acc_st.W_OP_SYS_GROUP_OPERATOR B,w_acc_st.W_OP_SYS_GROUP C<!--三表关联-->
+        where A.SYS_OPERATOR_ID = B.SYS_OPERATOR_ID(+)<!--左连接,没有权限组的操作员也被查询出来-->
+        and   B.SYS_GROUP_ID = C.SYS_GROUP_ID(+)<!--左连接,没有权限组的操作员也被查询出来-->
+        and A.SYS_OPERATOR_ID
+        in<!--查询条件：操作员列表-->
+        <foreach item="item" index="index" collection="oprIds" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by A.SYS_OPERATOR_ID,A.SYS_PASSWORD_HASH,A.SYS_OPERATOR_NAME,<!--分组条件-->
+        A.SYS_EMPLOYEE_ID,A.SYS_EXPIRED_DATE,A.SYS_STATUS,A.LOGIN_NUM,
+        A.FAILED_NUM,A.SESSION_ID,A.PASSWORD_EDIT_DATE,A.EDIT_PAST_DAYS
+        order by A.SYS_OPERATOR_ID
+        <!-- select * from w_acc_st.W_OP_SYS_OPERATOR where SYS_OPERATOR_ID in <foreach item="item" 
+        index="index" collection="oprIds" open="(" separator="," close=")"> #{item} 
+        </foreach> -->
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from w_acc_st.W_OP_SYS_OPERATOR
+        where SYS_OPERATOR_ID = #{sysOperatorId,jdbcType=CHAR}
+    </delete>
+    <update id="updateByPrimaryKeySelective" parameterType="com.goldsign.acc.app.password.entity.SysOperator" >
+        update w_acc_st.W_OP_SYS_OPERATOR
+  
+        <set >
+     
+            <if test="sysPasswordHash != null" >
+                SYS_PASSWORD_HASH = #{sysPasswordHash,jdbcType=VARCHAR},
+            </if>
+            <if test="sysOperatorName != null" >
+                SYS_OPERATOR_NAME = #{sysOperatorName,jdbcType=VARCHAR},
+            </if>
+            <if test="sysEmployeeId != null" >
+                SYS_EMPLOYEE_ID = #{sysEmployeeId,jdbcType=VARCHAR},
+            </if>
+            <if test="sysExpiredDate != null" >
+                SYS_EXPIRED_DATE = #{sysExpiredDate,jdbcType=CHAR},
+            </if>
+            <if test="sysStatus != null" >
+                SYS_STATUS = #{sysStatus,jdbcType=CHAR},
+            </if>
+            <if test="loginNum != null" >
+                LOGIN_NUM = #{loginNum,jdbcType=DECIMAL},
+            </if>
+            <if test="failedNum != null" >
+                FAILED_NUM = #{failedNum,jdbcType=DECIMAL},
+            </if>
+            <if test="sessionId != null" >
+                SESSION_ID = #{sessionId,jdbcType=VARCHAR},
+            </if>
+            <if test="passwordEditDate != null" >
+                PASSWORD_EDIT_DATE = #{passwordEditDate,jdbcType=CHAR},
+            </if>
+            <if test="editPastDays != null" >
+                EDIT_PAST_DAYS = #{editPastDays,jdbcType=DECIMAL},
+            </if>
+        </set>
+        where SYS_OPERATOR_ID = #{sysOperatorId,jdbcType=CHAR}
+    </update>
+    
+    <sql id="Base_Column_List">
+        sys_operator_id, sys_password_hash, sys_operator_name, sys_employee_id, sys_expired_date, sys_status, login_num, failed_num, session_id, password_edit_date, edit_past_days, '' SYS_GROUP_NAME, '' SYS_GROUP_ID
+    </sql>
+    <select id="selectByOperatorId" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select A.SYS_OPERATOR_ID,A.SYS_PASSWORD_HASH,A.SYS_OPERATOR_NAME,
+        A.SYS_EMPLOYEE_ID,substr(A.SYS_EXPIRED_DATE,0,4) || '-' || substr(A.SYS_EXPIRED_DATE,5,2) || '-' || substr(A.SYS_EXPIRED_DATE,7,2) as SYS_EXPIRED_DATE,A.SYS_STATUS,A.LOGIN_NUM,
+        A.FAILED_NUM,A.SESSION_ID,A.PASSWORD_EDIT_DATE,A.EDIT_PAST_DAYS,
+        WM_CONCAT( C.SYS_GROUP_NAME ) SYS_GROUP_NAME,<!--分组函数，连接相同记录的组名称,mysql使用CONCAT-->
+        WM_CONCAT(C.SYS_GROUP_ID)  SYS_GROUP_ID<!--分组函数，连接相同记录的组ID,mysql使用CONCAT-->
+        from w_acc_st.W_OP_SYS_OPERATOR A,w_acc_st.W_OP_SYS_GROUP_OPERATOR B,w_acc_st.W_OP_SYS_GROUP C<!--三表关联-->
+        where A.SYS_OPERATOR_ID = B.SYS_OPERATOR_ID(+)<!--左连接,没有权限组的操作员也被查询出来-->
+        and   B.SYS_GROUP_ID = C.SYS_GROUP_ID(+)<!--左连接,没有权限组的操作员也被查询出来-->
+        and A.SYS_OPERATOR_ID = #{operatorId,jdbcType=CHAR}
+        group by A.SYS_OPERATOR_ID,A.SYS_PASSWORD_HASH,A.SYS_OPERATOR_NAME,<!--分组条件-->
+        A.SYS_EMPLOYEE_ID,A.SYS_EXPIRED_DATE,A.SYS_STATUS,A.LOGIN_NUM,
+        A.FAILED_NUM,A.SESSION_ID,A.PASSWORD_EDIT_DATE,A.EDIT_PAST_DAYS
+        order by A.SYS_OPERATOR_ID
+    </select>
+</mapper>

@@ -1,0 +1,18 @@
+2018-05-07 11:01:45 ACCAPI_Open Finished!
+2018-05-07 11:01:45 启动灯亮
+2018-05-07 11:01:45 Call ACCAPI_SendCard() Status:
+2018-05-07 11:01:45 Card[0].CurrSite=0; Card[0].TagSite=0; Card[0].CardNo=0; Card[0].State=0; Card[0].RecyBox=0;
+2018-05-07 11:01:45 Card[1].CurrSite=0; Card[1].TagSite=0; Card[1].CardNo=0; Card[1].State=0; Card[1].RecyBox=0;
+2018-05-07 11:01:45 Card[2].CurrSite=0; Card[2].TagSite=0; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2018-05-07 11:01:45 Card[3].CurrSite=0; Card[3].TagSite=0; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2018-05-07 11:01:45 Card[4].CurrSite=0; Card[4].TagSite=0; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2018-05-07 11:01:45 Card[5].CurrSite=0; Card[5].TagSite=0; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2018-05-07 11:01:45 Card[6].CurrSite=0; Card[6].TagSite=0; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2018-05-07 11:01:46 发卡成功
+2018-05-07 11:01:46 Card[0].CurrSite=1; Card[0].TagSite=2; Card[0].CardNo=12; Card[0].State=1; Card[0].RecyBox=0;
+2018-05-07 11:01:46 Card[1].CurrSite=0; Card[1].TagSite=0; Card[1].CardNo=0; Card[1].State=0; Card[1].RecyBox=0;
+2018-05-07 11:01:46 Card[2].CurrSite=0; Card[2].TagSite=0; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2018-05-07 11:01:46 Card[3].CurrSite=0; Card[3].TagSite=0; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2018-05-07 11:01:46 Card[4].CurrSite=0; Card[4].TagSite=0; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2018-05-07 11:01:46 Card[5].CurrSite=0; Card[5].TagSite=0; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2018-05-07 11:01:46 Card[6].CurrSite=0; Card[6].TagSite=0; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.storageout.mapper.TicketStorageOutDestroyMapper">
+    <resultMap id="rmOutDestroyOutBill" type="com.goldsign.acc.app.storageout.entity.TicketStorageOutDestroyOutBill">
+        <id column="BILL_NO" jdbcType="CHAR" property="billNo" />
+        <result column="FORM_MAKER" jdbcType="VARCHAR" property="formMaker" />
+        <result column="BILL_DATE" jdbcType="VARCHAR" property="billDate" />
+        <result column="DRAWER" jdbcType="VARCHAR" property="drawer" />
+        <result column="ADMINISTER" jdbcType="VARCHAR" property="administer" />
+        <result column="ACCOUNTER" jdbcType="VARCHAR" property="accounter" />
+        <result column="DISTRIBUTE_BILL_NO" jdbcType="CHAR" property="distributeBillNo" />
+        <result column="RECORD_FLAG" jdbcType="CHAR" property="recordFlag" />
+        <result column="VERIFY_DATE" jdbcType="VARCHAR" property="verifyDate" />
+        <result column="VERIFY_PERSON" jdbcType="VARCHAR" property="verifyPerson" />
+        <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+        <result column="BILL_TYPE" jdbcType="CHAR" property="billType" />
+        <result column="IN_FLAG" jdbcType="CHAR" property="inFlag" />
+    </resultMap> 
+    <resultMap id="rmOutDestroyOutBillDetail" type="com.goldsign.acc.app.storageout.entity.TicketStorageOutDestroyOutBill">
+        <result column="WATER_NO" jdbcType="INTEGER" property="waterNo" />
+        <result column="RECORD_FLAG" jdbcType="CHAR" property="recordFlag" />
+        <result column="BILL_NO" jdbcType="CHAR" property="billNo" />
+        <result column="REASON_ID" jdbcType="CHAR" property="reasonId" />
+        <result column="STORAGE_ID" jdbcType="CHAR" property="storageId" />
+        <result column="AREA_ID" jdbcType="CHAR" property="areaId" />
+        <result column="IC_MAIN_TYPE" jdbcType="VARCHAR" property="icMainType" />
+        <result column="IC_SUB_TYPE" jdbcType="VARCHAR" property="icSubType" />
+        <result column="OUT_NUM" jdbcType="INTEGER" property="outNum" />
+        <result column="VALID_DATE" jdbcType="VARCHAR" property="validDate" />
+        <result column="CARD_MONEY" jdbcType="INTEGER" property="cardMoney" />
+        <result column="LINE_ID" jdbcType="VARCHAR" property="lineId" />
+        <result column="STATION_ID" jdbcType="VARCHAR" property="stationId" />
+        <result column="CARD_TYPE" jdbcType="VARCHAR" property="cardType" />
+        <result column="ES_WORKTYPE_ID" jdbcType="CHAR" property="esWorktypeId" />
+        <result column="MAKE_NUM" jdbcType="INTEGER" property="makeNum" />
+        <result column="CARD_MONEY_PRODUCE" jdbcType="INTEGER" property="cardMoneyProduce" />
+        <result column="TEMP_ID" jdbcType="VARCHAR" property="tempId" />
+        <result column="VAILD_DATE_PRODUCE" jdbcType="VARCHAR" property="vaildDateProduce" />
+        <result column="CARD_AVA_DAYS" jdbcType="VARCHAR" property="cardAvaDays" />
+        <result column="EXIT_LINE_ID" jdbcType="VARCHAR" property="exitLineId" />
+        <result column="EXIT_STATION_ID" jdbcType="VARCHAR" property="exitStationId" />
+        <result column="MODEL" jdbcType="VARCHAR" property="model" />
+        <result column="SALE_FLAG" jdbcType="VARCHAR" property="saleFlag" />
+        <result column="TEST_FLAG" jdbcType="VARCHAR" property="testFlag" />
+        <result column="ORDER_TYPE" jdbcType="CHAR" property="orderType" />
+    </resultMap>
+    <parameterMap type="map" id="MapOutBillAudit">  
+        <parameter property="piBillNoPlanTemp" jdbcType="VARCHAR" mode="IN"/>  
+        <parameter property="piOperator" jdbcType="VARCHAR" mode="IN"/> 
+        <parameter property="piBillNoPlanFormal" jdbcType="VARCHAR" mode="OUT"/>   
+        <parameter property="poRetCode" jdbcType="INTEGER" mode="OUT"/> 
+        <parameter property="poRetMsg" jdbcType="VARCHAR" mode="OUT"/>  
+    </parameterMap> 
+    <select id="queryOutBill"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDestroyOutBill" resultMap="rmOutDestroyOutBill">
+        select 
+        A.bill_no,A.distribute_bill_no,A.record_flag,A.form_maker,
+        A.bill_date,A.verify_person,A.verify_date,A.drawer,
+        A.accounter,A.administer,A.remark 
+        from w_acc_tk.W_IC_OUT_BILL A where  A.bill_type = 'XC'  
+        <if test="billNo !=null and billNo !=''">
+            and bill_no =#{billNo}
+        </if>  
+        <if test="formMaker !=null and formMaker !=''">
+            and A.form_maker =#{formMaker}
+        </if>
+        <if test="recordFlag !=null and recordFlag !=''">
+            and A.record_flag =#{recordFlag}
+        </if>
+        <if test="beginDateTime !=null and beginDateTime !=''">
+            and A.bill_date &gt;= to_date(#{beginDateTime},'yyyy-mm-dd HH24:mi:ss')
+        </if>
+        <if test="endDateTime !=null and endDateTime !=''">
+            and A.bill_date &lt;= to_date(#{endDateTime},'yyyy-mm-dd HH24:mi:ss')
+        </if>
+        and (exists(select 1 from w_acc_tk.W_ic_out_bill_detail B  where A.bill_no =B.bill_no
+        <if test=" icMainType !=null and  icMainType !=''">
+            and  B.ic_main_type =#{icMainType}
+        </if>
+        <if test=" icSubType !=null and  icSubType !=''">
+            and  B.ic_sub_type =#{icSubType}
+        </if>
+        and  B.storage_id in
+        <foreach item="storageId" index="index" collection="storageIdList" open="(" separator="," close=")">
+            #{storageId}
+        </foreach>
+        )  or not exists (select B.bill_no from w_acc_tk.W_ic_out_bill_detail B where A.bill_no=B.Bill_No ))
+        order by A.bill_no desc
+    </select>
+    <insert id="addBill" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDestroyOutBill" >
+        insert into w_acc_tk.w_ic_out_bill
+        (bill_no,bill_date,form_maker,drawer,administer,
+        accounter,remark,record_flag,bill_type)
+        values
+        (#{billNo},to_date(#{billDate},'yyyy-mm-dd hh24:mi:ss'),#{formMaker},#{drawer},#{administer},
+        #{accounter},#{remark},#{recordFlag},#{billType})
+    </insert>
+    <delete id="deleteOutBill" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDestroyOutBill" >
+        delete from  w_acc_tk.w_ic_out_bill where bill_no=#{billNo} and record_flag = '3'
+    </delete>
+    <insert id="addOutBillDetail" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDestroyOutBillDetail" >
+        insert into W_ACC_TK.w_ic_out_bill_detail(water_no,bill_no,storage_id,area_id,ic_main_type,ic_sub_type,
+        reason_id,out_num,card_money,card_type,es_worktype_id) 
+        values(W_ACC_TK.W_SEQ_W_IC_OUT_BILL_DETAIL.nextval,#{billNo},#{storageId},#{areaId},#{icMainType},#{icSubType},
+        #{reasonId},#{outNum},#{cardMoney},#{cardType},#{esWorktypeId})
+    </insert>
+    <select id="queryOutBillDetail"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDestroyOutBill" resultMap="rmOutDestroyOutBillDetail">
+        select B.bill_no,B.ic_main_type,B.ic_sub_type,B.reason_id,B.out_num,B.storage_id,B.area_id,
+        B.valid_date,B.card_money，
+        B.line_id,B.station_id ,B.water_no ,B.card_type ,A.drawer,A.record_flag from W_ACC_TK.w_ic_out_bill_detail B ,W_ACC_TK.w_ic_out_bill A
+        where B.bill_no = A.bill_no and B.bill_no =#{billNo}
+        order by B.water_no
+    </select>
+    <update id="modifyOutBillDetail" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDestroyOutBillDetail" >
+        update W_ACC_TK.w_ic_out_bill_detail 
+        set 
+        ic_main_type=#{icMainType},
+        ic_sub_type=#{icSubType},
+        out_num=#{outNum},
+        storage_id=#{storageId},area_id=#{areaId}
+        where bill_no=#{billNo} and water_no=#{waterNo}
+    </update>
+    <delete id="deleteOutBillDetail" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDestroyOutBillDetail" >
+        delete from  W_ACC_TK.w_ic_out_bill_detail where bill_no=#{billNo} and water_no=#{waterNo}                             
+    </delete>
+    <select id="auditOutBill" parameterMap="MapOutBillAudit" statementType="CALLABLE">
+        {call W_ACC_TK.W_UP_IC_OUT_DESTROY_AUDIT(?,?,?,?,?)}
+                                  
+    </select>
+    
+    <select id="getExistStorage"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDestroyOutBillDetail" resultMap="rmOutDestroyOutBillDetail">
+        select distinct storage_id  from w_acc_tk.w_ic_out_bill_detail
+        where bill_no=#{billNo}
+        <if test=" operType !=null and operType ='modify'">
+            and  water_no &lt;&gt; #{waterNo} 
+        </if>
+    </select>
+    
+    <select id="getDetailRecordNum"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDestroyOutBill" resultType="java.lang.String">
+        select  count(1)  from w_acc_tk.w_ic_out_bill_detail
+        where bill_no=#{billNo}
+    </select>
+</mapper>

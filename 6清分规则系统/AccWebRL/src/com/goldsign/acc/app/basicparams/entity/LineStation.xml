@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicparams.mapper.LineStationMapper">
+    
+    <resultMap type="com.goldsign.acc.app.basicparams.entity.LineStation" id="rmLineStation">   
+        <result column="line_name" property="line_name" /> 
+        <result column="chinese_name" property="chinese_name" /> 
+        <result column="english_name" property="english_name" /> 
+        <result column="record_flag" property="record_flag" /> 
+    </resultMap>
+    
+    <select id="getLineStation"  parameterType="LineStation" resultMap="rmLineStation">
+        select distinct* from (
+        select a.line_id,b.station_id,a.line_name,b.chinese_name,b.english_name,b.record_flag from w_acc_st.w_op_prm_line a,w_acc_st.w_op_prm_station b 
+        where a.line_id=b.line_id and b.record_flag in ('0','2','3')
+        <if test="line_id !=null and line_id !=''">
+            and a.line_id =#{line_id} 
+        </if>
+        <if test="station_id !=null and station_id !=''">
+            and b.station_id =#{station_id} 
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and b.record_flag =#{record_flag} and a.record_flag=#{record_flag}
+        </if>
+        ) order by line_id,station_id,record_flag
+    </select>
+ 
+    <select id="getTransferStation"  parameterType="LineStation" resultMap="rmLineStation">
+        select * from  w_acc_st.w_op_prm_transfer_station  where line_id =#{line_id} and station_id =#{station_id} and record_flag in ('0','2','3')
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag =#{record_flag} 
+        </if>
+        order by line_id,station_id,record_flag
+    </select>
+    
+    <select id="getTransferLineStation"  parameterType="LineStation" resultMap="rmLineStation">
+        select distinct*from 
+        (select distinct d.line_id,d.station_id,d.chinese_name,d.english_name,d.record_flag,e.line_name from w_acc_st.w_op_prm_transfer_station c,w_acc_st.w_op_prm_station d, 
+        w_acc_st.w_op_prm_line e  where c.transfer_station_id = d.station_id  and c.transfer_line_id = d.line_id and d.line_id = e.line_id and  d.record_flag in ('0','2','3')
+        and c.line_id =#{line_id} and c.station_id =#{station_id}
+        <if test="record_flag !=null and record_flag !=''">
+            and d.record_flag =#{record_flag} 
+        </if>
+        ) order by line_id,station_id,record_flag
+    </select>
+    
+</mapper>

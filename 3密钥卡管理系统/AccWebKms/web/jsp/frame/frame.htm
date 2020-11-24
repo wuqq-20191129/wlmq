@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <!--add by zhongzq 20180608-->
+        <meta http-equiv="X-UA-Compatible" content="IE=9,Chrome=1" />
+        <title>乌市轨道交通自动售检票系统--密钥卡管理系统</title>
+        <link rel="stylesheet" href="css/frame/frame.css">
+        <script src="js/jquery-1.12.4.min.js"></script>
+        <!--[if lt IE 9]> 
+            <script src="js/css3-mediaqueries.min.js" type="text/javascript"></script>
+        <![endif]--> 
+    </head>
+    <body onbeforeunload="checkLeave()">
+        <div class="topMenu">
+
+            <iframe name="ifTop" class="iframeTop" src="topMenu"></iframe>
+        </div>
+        <div class="container">
+            <div class="inlineContainerLeft" >
+                <div class="leftMenu">
+
+                    <iframe  name="ifLeft" scrolling="yes" class="iframeScroll" src="leftMenu"></iframe>
+                </div>
+
+            </div>
+            <div class="inlineContainerRight">
+                <div class="mainContent">
+                    <!-- mainContent-->
+
+                    <iframe name="ifRight" scrolling="yes" class="iframeScroll" src="mainContent"></iframe>
+                </div>
+
+            </div>
+        </div>
+        <div class="footerz" id="version"></div>
+    </body>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //显示版本号
+            $.get("SysVersion", function(data){
+                $("#version").html("v."+data);
+            });
+        })
+        
+        function checkLeave(){ 
+            window.location.href = "logout";
+        }
+    </script>
+</html>

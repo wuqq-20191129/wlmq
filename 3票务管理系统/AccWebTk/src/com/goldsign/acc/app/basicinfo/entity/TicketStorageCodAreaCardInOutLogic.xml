@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper  namespace = "com.goldsign.acc.app.basicinfo.mapper.TicketStorageCodAreaCardInOutLogicMapper">
+    
+    <resultMap type = "com.goldsign.acc.app.basicinfo.entity.TicketStorageCodAreaCardInOutLogic"  id = "rmTicketStorageCodAreaCardInOutLogic">
+        <result column="storage_id"  property="storage_id"/>
+        <result column="ic_main_type"  property="ic_main_type"/>
+        <result column="ic_sub_type"  property="ic_sub_type"/>
+        <result column="area_id"  property="area_id"/>
+        <result column="out_logic_flag"  property="out_logic_flag"/>
+        <result column="remark"  property="remark"/>
+        
+    </resultMap>
+    
+    <select id="queryParm"   resultMap="rmTicketStorageCodAreaCardInOutLogic">
+        SELECT storage_id ,area_id ,ic_main_type ,out_logic_flag ,remark from w_acc_tk.W_IC_COD_AREA_CARD_IN_OUT_LOGI
+        where 1=1
+        <if test="storage_id !=null and storage_id !=''">
+            and storage_id=#{storage_id}
+        </if>
+        <if test="area_id !=null and area_id !=''">
+            and area_id=#{area_id}
+        </if>
+        <if test="ic_main_type !=null and ic_main_type !=''">
+            and ic_main_type =#{ic_main_type} 
+        </if> 
+        order by storage_id,area_id,ic_main_type
+    </select> 
+    
+    <!--查询管理到盒的记录 storage_id、area_id、ic_main_type不能为空-->
+    <select id="getAreaCardInOutLogicCountForLogic"  parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageCodAreaCardInOutLogic" resultType="int">
+        select count(*) from w_acc_tk.W_IC_COD_AREA_CARD_IN_OUT_LOGI 
+        where out_logic_flag ='1' 
+            and storage_id=#{storage_id} 
+            and area_id=#{area_id} 
+            and ic_main_type =#{ic_main_type}
+    </select>
+    
+
+</mapper>
+
+
+

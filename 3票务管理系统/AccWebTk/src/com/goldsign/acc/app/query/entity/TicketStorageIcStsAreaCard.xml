@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.query.mapper.TicketStorageIcStsAreaCardMapper" >
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.query.entity.TicketStorageIcStsAreaCard" >
+    <constructor >
+      <arg column="WATER_NO" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="STORAGE_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="AREA_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IC_MAIN_TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="IC_SUB_TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CARD_NUM" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="CARD_MONEY" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="VALID_DATE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="LINE_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="STATION_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="FLAG" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="EXIT_LINE_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="EXIT_STATION_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="MODEL" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.goldsign.acc.app.query.entity.TicketStorageIcStsAreaCard" >
+    insert into W_IC_STS_AREA_CARD (WATER_NO, STORAGE_ID, AREA_ID, 
+      IC_MAIN_TYPE, IC_SUB_TYPE, CARD_NUM, 
+      CARD_MONEY, VALID_DATE, LINE_ID, 
+      STATION_ID, FLAG, EXIT_LINE_ID, 
+      EXIT_STATION_ID, MODEL)
+    values (#{waterNo,jdbcType=DECIMAL}, #{storageId,jdbcType=CHAR}, #{areaId,jdbcType=CHAR}, 
+      #{icMainType,jdbcType=VARCHAR}, #{icSubType,jdbcType=VARCHAR}, #{cardNum,jdbcType=DECIMAL}, 
+      #{cardMoney,jdbcType=DECIMAL}, #{validDate,jdbcType=VARCHAR}, #{lineId,jdbcType=VARCHAR}, 
+      #{stationId,jdbcType=VARCHAR}, #{flag,jdbcType=CHAR}, #{exitLineId,jdbcType=VARCHAR}, 
+      #{exitStationId,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.query.entity.TicketStorageIcStsAreaCard" >
+    insert into W_IC_STS_AREA_CARD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="waterNo != null" >
+        WATER_NO,
+      </if>
+      <if test="storageId != null" >
+        STORAGE_ID,
+      </if>
+      <if test="areaId != null" >
+        AREA_ID,
+      </if>
+      <if test="icMainType != null" >
+        IC_MAIN_TYPE,
+      </if>
+      <if test="icSubType != null" >
+        IC_SUB_TYPE,
+      </if>
+      <if test="cardNum != null" >
+        CARD_NUM,
+      </if>
+      <if test="cardMoney != null" >
+        CARD_MONEY,
+      </if>
+      <if test="validDate != null" >
+        VALID_DATE,
+      </if>
+      <if test="lineId != null" >
+        LINE_ID,
+      </if>
+      <if test="stationId != null" >
+        STATION_ID,
+      </if>
+      <if test="flag != null" >
+        FLAG,
+      </if>
+      <if test="exitLineId != null" >
+        EXIT_LINE_ID,
+      </if>
+      <if test="exitStationId != null" >
+        EXIT_STATION_ID,
+      </if>
+      <if test="model != null" >
+        MODEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="waterNo != null" >
+        #{waterNo,jdbcType=DECIMAL},
+      </if>
+      <if test="storageId != null" >
+        #{storageId,jdbcType=CHAR},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=CHAR},
+      </if>
+      <if test="icMainType != null" >
+        #{icMainType,jdbcType=VARCHAR},
+      </if>
+      <if test="icSubType != null" >
+        #{icSubType,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNum != null" >
+        #{cardNum,jdbcType=DECIMAL},
+      </if>
+      <if test="cardMoney != null" >
+        #{cardMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="validDate != null" >
+        #{validDate,jdbcType=VARCHAR},
+      </if>
+      <if test="lineId != null" >
+        #{lineId,jdbcType=VARCHAR},
+      </if>
+      <if test="stationId != null" >
+        #{stationId,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=CHAR},
+      </if>
+      <if test="exitLineId != null" >
+        #{exitLineId,jdbcType=VARCHAR},
+      </if>
+      <if test="exitStationId != null" >
+        #{exitStationId,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="qryCardArea" parameterType="map" resultMap="BaseResultMap">
+      select *
+      from  (select * from w_acc_tk.w_ic_sts_area_card where area_id not in ('02','03') union select * from w_acc_tk.w_ic_sts_area_card where area_id = '02' and ic_main_type = '12')
+      
+      <if test="q_storages != null">    
+          <trim prefix="where (" suffix=")" suffixOverrides=" and ">
+           storage_id in         
+          <foreach item="item" index="index" collection="q_storages" open="(" separator="," close=")">  
+              #{item}  
+          </foreach>  
+            and
+              <if test="q_area_id != null">
+                   area_id = #{q_area_id,jdbcType=CHAR} and
+              </if>
+              <if test="q_cardMainCode != null">
+                   ic_main_type = #{q_cardMainCode,jdbcType=CHAR} and
+              </if>
+              <if test="q_cardSubCode != null">
+                   ic_sub_type = #{q_cardSubCode,jdbcType=CHAR} and
+              </if>
+              <if test="q_cardMoney != null">
+                   card_money = #{q_cardMoney,jdbcType=CHAR} and
+              </if>
+              <if test="q_validDate != null">
+                   valid_date = to_date(#{q_validDate},'yyyy-mm-dd') and
+              </if>
+
+              </trim>  
+      </if>
+      <if test="q_storages == null">    
+          <trim prefix="where (" suffix=")" suffixOverrides=" and ">
+                   
+              <if test="q_area_id != null">
+                  area_id = #{q_area_id,jdbcType=CHAR} and
+              </if>
+              <if test="q_cardMainCode != null">
+                  ic_main_type = #{q_cardMainCode,jdbcType=CHAR} and
+              </if>
+              <if test="q_cardSubCode != null">
+                  ic_sub_type = #{q_cardSubCode,jdbcType=CHAR} and
+              </if>
+              <if test="q_cardMoney != null">
+                  card_money = #{q_cardMoney,jdbcType=CHAR} and
+              </if>
+              <if test="q_validDate != null">
+                  valid_date = to_date(#{q_validDate},'yyyy-mm-dd') and
+              </if>
+              <if test="q_storage != null" >
+                  storage_id = #{q_storage,jdbcType=CHAR} and
+              </if>
+
+          </trim>    
+      </if> 
+  </select> 
+
+  <select id="qryCardBox" parameterType="map" resultType="map">
+      select *
+      from  w_acc_tk.w_ic_sts_storage A,w_acc_tk.w_ic_cod_box_info B
+      where A.box_id=B.box_id
+      <if test="q_storages != null">    
+          <trim   prefixOverrides=" and ">
+             and A.storage_id in         
+              <foreach item="item" index="index" collection="q_storages" open="(" separator="," close=")">  
+                  #{item}  
+              </foreach>  
+              
+              <if test="q_area_id != null">
+                and  A.area_id = #{q_area_id,jdbcType=CHAR} 
+              </if>
+              <if test="q_boxId != null">
+                and  A.box_id = #{q_boxId,jdbcType=CHAR} 
+              </if>
+              <if test="q_cardMainCode != null">
+                 and B.ic_main_type = #{q_cardMainCode,jdbcType=CHAR} 
+              </if>
+              <if test="q_cardSubCode != null">
+                and  B.ic_sub_type = #{q_cardSubCode,jdbcType=CHAR} 
+              </if>
+              <if test="q_cardMoney != null">
+                and  B.card_money = #{q_cardMoney,jdbcType=CHAR} 
+              </if>
+              <if test="q_validDate != null">
+                and  B.valid_date = to_date(#{q_validDate},'yyyy-mm-dd')
+              </if>
+              <if test="q_beginTime != null">                
+                  and A.produce_date &gt;= to_date(#{q_beginTime},'yyyy-mm-dd')
+              </if>
+              <if test="q_endTime != null">                
+                  and A.produce_date &lt;= to_date(#{q_endTime},'yyyy-mm-dd hh24:mi:ss')
+              </if>
+           
+          </trim>
+                
+      </if>
+      <if test="q_storages == null">    
+         <trim   prefixOverrides=" and ">
+                   
+              <if test="q_area_id != null">
+                and  A.area_id = #{q_area_id,jdbcType=CHAR} 
+              </if>
+              <if test="q_boxId != null">
+                and  A.box_id = #{q_boxId,jdbcType=CHAR} 
+              </if>
+              <if test="q_cardMainCode != null">
+                 and B.ic_main_type = #{q_cardMainCode,jdbcType=CHAR} 
+              </if>
+              <if test="q_cardSubCode != null">
+                and  B.ic_sub_type = #{q_cardSubCode,jdbcType=CHAR} 
+              </if>
+              <if test="q_cardMoney != null">
+                and  B.card_money = #{q_cardMoney,jdbcType=CHAR} 
+              </if>
+              <if test="q_validDate != null">
+                and  B.valid_date = to_date(#{q_validDate},'yyyy-mm-dd') 
+              </if>
+              <if test="q_beginTime != null">                
+                  and A.produce_date &gt;= to_date(#{q_beginTime},'yyyy-mm-dd')
+              </if>
+              <if test="q_endTime != null">                
+                  and A.produce_date &lt;= to_date(#{q_endTime},'yyyy-mm-dd hh24:mi:ss')
+              </if>
+               <if test="q_storage != null" >
+                  and storage_id = #{q_storage,jdbcType=CHAR} 
+              </if>
+          </trim>    
+      </if> 
+  </select> 
+</mapper>

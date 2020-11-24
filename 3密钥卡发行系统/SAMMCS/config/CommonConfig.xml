@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Config> 
+    <Common>
+        <StationId>9900</StationId>
+        <DeviceType>09</DeviceType>
+        <DeviceNo>163</DeviceNo>
+        <SystemFlag>08</SystemFlag>
+        
+    </Common>
+    <DataConnectionPool>
+        <Driver>oracle.jdbc.driver.OracleDriver</Driver>
+        <URL>jdbc:oracle:thin:@172.20.19.29:1521:wacc</URL>
+       <!-- <User encrypt="true">30102D2730163325</User>
+        <Password encrypt="true">30102D2730163325</Password>-->
+        <User encrypt="true">30102D2730163325</User>
+        <Password encrypt="true">30102D2730163325</Password>
+        <MaxActive>40</MaxActive>
+        <MaxIdle>20</MaxIdle>
+        <MaxWait>7000</MaxWait>
+    </DataConnectionPool>
+     <KmsCommu>
+        <KmIp>172.20.16.21</KmIp>
+        <KmPort>8</KmPort>
+        <KmPin>83000991</KmPin>
+        <KmVersion>00</KmVersion> 
+    </KmsCommu>
+    <SamIssue>
+        <KeyVerstion>00</KeyVerstion>
+        <PsamCardVersion>00</PsamCardVersion>
+        <KeyIndex>01</KeyIndex>
+        <IssuerId>4100073100000000</IssuerId>
+        <ReceiverId>4100073100000000</ReceiverId>
+        <StartDate>20171109</StartDate>
+        <ValidDate>20271109</ValidDate>
+    </SamIssue>
+    <Backup>
+        <MakeCard>/data/backup/markcard</MakeCard>
+    </Backup>
+</Config>

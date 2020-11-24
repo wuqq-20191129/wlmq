@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.TransferStationCodeMapper">
+    
+    <!-- 还差一个线路维文名称 -->
+    <resultMap type="TransferStationCode" id="rmTransferStationCode">
+        <result column="line_id" property="line_id" /> 
+        <result column="station_id" property="station_id" /> 
+        <result column="transfer_line_id" property="transfer_line_id" /> 
+        <result column="transfer_station_id" property="transfer_station_id" /> 
+        <result column="record_flag" property="record_flag" />
+        <result column="version_no" property="version_no" />
+    </resultMap>
+    
+    <resultMap type="PubFlag" id="rmPubFlag">
+        <id column="code" property="code" />
+        <result column="code_text" property="code_text" />  
+    </resultMap>
+    <resultMap type="PubFlag" id="rmPubFlagType">
+        <id column="code" property="code" />
+        <result column="code_text" property="code_text" />  
+        <result column="code_type" property="code_type" />
+    </resultMap>
+
+    <select id="getTransferStationCodes"  parameterType="TransferStationCode" resultMap="rmTransferStationCode">
+        select line_id,station_id,transfer_line_id,transfer_station_id,record_flag,version_no
+        from W_ACC_ST.W_OP_PRM_TRANSFER_STATION 
+        where 1=1   
+        <if test="line_id !=null and line_id !=''">
+            and line_id =#{line_id} 
+        </if> 
+        <if test="station_id !=null and station_id !=''">
+            and station_id =#{station_id} 
+        </if>
+        <if test="transfer_line_id !=null and transfer_line_id !=''">
+            and transfer_line_id =#{transfer_line_id} 
+        </if>
+        <if test="transfer_station_id !=null and transfer_station_id !=''">
+            and transfer_station_id =#{transfer_station_id} 
+        </if>
+        <if test="version_no !=null and version_no !=''">
+            and version_no =#{version_no}
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag =#{record_flag}
+        </if> 
+    </select>
+    
+    <!--草稿参数删除 -->
+     <delete id="deleteTransferStationCodeForClone" parameterType="TransferStationCode">
+            delete from W_ACC_ST.W_OP_PRM_TRANSFER_STATION where  record_flag='3' and version_no='0000000000'                                                      
+    </delete>
+    
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="TransferStationCode" >
+        insert into  W_ACC_ST.W_OP_PRM_TRANSFER_STATION(line_id,station_id,transfer_line_id,transfer_station_id,record_flag,version_no)
+               select line_id,station_id,transfer_line_id,transfer_station_id,'3','0000000000'
+               from   W_ACC_ST.W_OP_PRM_TRANSFER_STATION  
+               where record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    <update id="submitToOldFlag" parameterType="TransferStationCode" >
+        update W_ACC_ST.W_OP_PRM_TRANSFER_STATION set record_flag=#{record_flag_old}
+                    where record_flag=#{record_flag_new}                                               
+    </update>
+    
+    <!--草稿参数复制为当前或未来参数 -->
+     <insert id="submitFromDraftToCurOrFur" parameterType="TransferStationCode" >
+        insert into  W_ACC_ST.W_OP_PRM_TRANSFER_STATION(line_id,station_id,transfer_line_id,transfer_station_id,record_flag,version_no)
+               select line_id,station_id,transfer_line_id,transfer_station_id,#{record_flag_new},#{version_no_new}
+               from   W_ACC_ST.W_OP_PRM_TRANSFER_STATION  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    
+    
+    <!-- 修改保存线路信息 没有这个方法-->
+    <update id="modifyTransferStationCode" parameterType="TransferStationCode" >
+        update W_ACC_ST.W_OP_PRM_TRANSFER_STATION set 
+            line_name=#{line_name},lcc_ip=#{lcc_ip},
+            lcc_line_id=#{lcc_line_id},sequence=#{sequence}
+        where line_id=#{line_id} and record_flag=#{record_flag} and version_no=#{version_no} 
+    </update>
+    
+    <!-- 增加保存线路信息-->
+    <insert id="addTransferStationCode" parameterType="TransferStationCode" >
+        insert into  W_ACC_ST.W_OP_PRM_TRANSFER_STATION(line_id,station_id,transfer_line_id,transfer_station_id,record_flag,version_no)
+        values(#{line_id},#{station_id},#{transfer_line_id},#{transfer_station_id},#{record_flag},#{version_no})        
+    </insert> 
+    
+    <delete id="deleteTransferStationCode" parameterType="TransferStationCode">
+        delete from W_ACC_ST.W_OP_PRM_TRANSFER_STATION where line_id=#{line_id} and station_id=#{station_id} and transfer_line_id=#{transfer_line_id} and transfer_station_id=#{transfer_station_id} and record_flag=#{record_flag} and version_no=#{version_no}  
+    </delete>
+    
+    <!--查询下拉框线路-->
+    <select id="getTransferStationCodeLines"  parameterType="TransferStationCode" resultMap="rmPubFlag">
+        select a.line_id code,(select line_name from w_acc_st.w_op_prm_line where record_flag='3' and line_id=a.line_id) code_text
+        from W_ACC_ST.W_OP_PRM_TRANSFER_STATION a
+        where 1=1 
+        <if test="version_no !=null and version_no !=''">
+            and a.version_no =#{version_no}
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and a.record_flag =#{record_flag}
+        </if> 
+        group by a.line_id order by a.line_id
+    </select>
+    
+    <!--查询下拉框车站-->
+    <select id="getTransferStationCodeStations"  parameterType="TransferStationCode" resultMap="rmPubFlagType">
+        select a.line_id code_type,a.station_id code ,
+            (select CHINESE_NAME from w_acc_st.W_OP_PRM_STATION where record_flag='3' and LINE_ID=a.line_id and STATION_ID=a.station_id ) code_text
+        from W_ACC_ST.W_OP_PRM_TRANSFER_STATION a
+        where 1=1   
+        <if test="version_no !=null and version_no !=''">
+            and a.version_no =#{version_no}
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and a.record_flag =#{record_flag}
+        </if> 
+        order by a.LINE_ID,a.STATION_ID
+    </select>
+    
+    <select id="queryToMap"  parameterType="TransferStationCode" resultType="map">
+        select line_id,station_id,transfer_line_id,transfer_station_id,record_flag,version_no
+        from W_ACC_ST.W_OP_PRM_TRANSFER_STATION 
+        where 1=1   
+        <if test="line_id !=null and line_id !=''">
+            and line_id =#{line_id} 
+        </if> 
+        <if test="station_id !=null and station_id !=''">
+            and station_id =#{station_id} 
+        </if>
+        <if test="transfer_line_id !=null and transfer_line_id !=''">
+            and transfer_line_id =#{transfer_line_id} 
+        </if>
+        <if test="transfer_station_id !=null and transfer_station_id !=''">
+            and transfer_station_id =#{transfer_station_id} 
+        </if>
+        <if test="version_no !=null and version_no !=''">
+            and version_no =#{version_no}
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag =#{record_flag}
+        </if> 
+    </select>
+</mapper>

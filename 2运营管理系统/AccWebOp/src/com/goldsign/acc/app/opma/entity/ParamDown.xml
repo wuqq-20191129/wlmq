@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.opma.mapper.ParamDownMapper">
+    <resultMap type="ParamDown" id="rmParamDown">
+        
+        <result column="parm_type_name" property="parm_type_name" />         
+        <result column="parm_type_id" property="parm_type_id" />       
+        <result column="distribute_times" property="distribute_times" />
+        <result column="down_all_line" property="selectLccLine" />
+        <result column="version_no" property="version_no" />  
+        <result column="record_flag" property="record_flag" />  
+        <result column="parm_type_down_type" property="parm_type_down_type" />
+        <result column="lcc_line_id" property="lcc_line_id" />
+        <result column="lcc_line_name" property="lccLineName" />     
+        <result column="st_water_no" property="st_water_no" /> 
+        <result column="water_no" property="water_no" /> 
+        <result column="distribute_datetime" property="distribute_datetime" /> 
+        <result column="operator_id" property="operator_id" /> 
+        <result column="distribute_result" property="distribute_result" /> 
+        <result column="version_type" property="version_type" /> 
+        <result column="gen_result" property="gen_result" /> 
+        <result column="station_id" property="station_id" /> 
+        <result column="inform_result" property="inform_result" />
+        <result column="app_line_name" property="app_line_name" />  
+    </resultMap>
+    <resultMap type="ParamDown" id="rmFindLineTypesDescription">
+        <result column="line_id" property="line_id" /> 
+        <result column="line_name" property="line_name" />
+        <result column="description" property="description" /> 
+         
+    </resultMap>
+    
+     
+    <select id="getAllPriviledges"  parameterType="ParamDown" resultMap="rmParamDown">
+        select b.parm_type_name,a.version_no,a.parm_type_id,a.record_flag,a.distribute_times,b.down_all_line 
+        from w_acc_st.w_op_prm_para_ver a,w_acc_st.w_op_cod_parm_type b 
+        where a.parm_type_id=b.parm_type_id 
+        and (a.record_flag='1' or a.record_flag='0') 
+        and (distribute_times=0)
+        and b.down_all_line!='2' 
+        order by a.parm_type_id,a.record_flag
+    </select>
+    
+    <select id="getparamDown"  parameterType="ParamDown" resultMap="rmParamDown">
+        select b.parm_type_name,a.version_no,a.parm_type_id,a.record_flag,a.distribute_times,b.down_all_line 
+        from w_acc_st.w_op_prm_para_ver a,w_acc_st.w_op_cod_parm_type b 
+        where a.parm_type_id=b.parm_type_id 
+        and (a.record_flag='1' or a.record_flag='0') 
+        and (distribute_times=0 )
+        and b.down_all_line!='2'
+        <if test="parm_type_name !=null and parm_type_name !=''"> 
+           and b.parm_type_name like concat(concat('%',#{parm_type_name}),'%')
+        </if>
+        <if test="version_no !=null and version_no !=''"> 
+           and  a.version_no like concat(concat('%',#{version_no}),'%')
+        </if>
+        order by a.parm_type_id,a.record_flag
+    </select>
+    
+    <select id ="getParmDownTypes" resultMap="rmParamDown">
+        select parm_type_id, parm_type_down_type 
+        from w_acc_st.w_OP_COD_PARM_DOWN_TYPE
+        
+    </select>
+    
+    <select id ="findLineTypesDescription" parameterType="ParamDown" resultMap="rmFindLineTypesDescription">
+        select line_id ,description from w_acc_st.w_op_cod_line_type order by line_id,description
+        
+    </select>
+    
+    <select id ="findLineNames" parameterType="ParamDown" resultMap="rmFindLineTypesDescription">
+        select  line_id,line_name from w_acc_st.w_op_cod_line_type order by line_id,line_name
+        
+    </select>
+    
+    <select id ="findDegradeModeRecd" resultType="String">
+        select version_no from w_acc_st.w_op_prm_degrade_mode_recd where version_no='0000000000'
+        
+    </select>
+    
+    <select id ="findLogicIccList" resultType="String">
+        select logic_no from w_acc_st.w_op_prm_logic_icc_list where record_flag='3' 
+        
+    </select>
+    
+    <select id ="getVersionNo" resultType="String">
+       select version_no from w_acc_st.w_op_prm_para_ver where record_flag ='0' and parm_type_id = '0305'
+        
+    </select>
+    
+    <select id ="getLccLineID" resultType="String">
+        select lcc_line_id from w_acc_st.w_st_cod_lcc_line  
+    </select>
+    
+    <update id="updateWaterNo" parameterType="ParamDown" >
+        update w_acc_st.w_st_water_no set water_no=water_no+1 where water_no_key='param'                                             
+    </update>
+    <!--获取流水号-->
+    <select id ="getWaterNo" resultType="String">
+        select water_no from w_acc_st.w_st_water_no where water_no_key='param'  
+    </select>
+    <!--插入w_op_prm_para_distribute_dtl-->
+    <insert id="insterDistribute" parameterType="ParamDown" >
+        insert into w_acc_st.w_op_prm_para_distribute_dtl(water_no,distribute_datetime,operator_id,distribute_result)
+        values(#{water_no},
+        to_date(#{distribute_datetime,jdbcType=VARCHAR}, 'YYYY-MM-DD HH24:MI:SS'),
+        #{operator_id},
+        #{distribute_result})       
+    </insert>
+    
+     <!--插入w_op_prm_para_gen_dtl-->
+    <insert id="insterGenDtl" parameterType="ParamDown" >
+        insert into w_acc_st.w_op_prm_para_gen_dtl(water_no,version_no,parm_type_id,version_type,gen_result)
+        values(#{water_no},
+        #{version_no},
+        #{parm_type_id},
+        #{version_type},
+        #{gen_result})       
+    </insert>
+    
+    <!--插入w_op_prm_para_inform_dtl-->
+    <insert id="insterInformDtl" parameterType="ParamDown" >
+        insert into w_acc_st.w_op_prm_para_inform_dtl(water_no,station_id,line_id,inform_result)
+        values(#{water_no},
+        #{station_id},
+        #{line_id},
+        #{inform_result})       
+    </insert>
+    <!--更新参数对应应用线路中文-->
+    <update id="updateDevProgram" parameterType="ParamDown" >
+        update w_acc_st.w_op_prm_para_ver set app_line_name=#{app_line_name} where version_no=#{version_no} and parm_type_id=#{parm_type_id} and record_flag=#{version_type}                                       
+    </update>
+    <!--更新w_op_prm_dev_program参数表-->
+    
+    <update id="updateDevProgram1" parameterType="ParamDown" >
+        update w_acc_st.w_op_prm_dev_program set app_line_name=#{app_line_name} where version_no=#{version_no} and parm_type_id=#{parm_type_id} and record_flag=#{version_type}                                       
+    </update>
+    
+    <select id ="getWaterNoForDegrade" resultType="String">
+        select water_no water_no from w_acc_st.w_st_water_no where water_no_key='dmode' 
+    </select>
+    
+    
+    
+     <update id="updateDrgardeModRecd"  parameterType="java.lang.String" >
+        update w_acc_st.w_op_prm_degrade_mode_recd set version_no= #{verNum,jdbcType=CHAR}
+                     where version_no ='0000000000'
+    </update>
+     
+<insert id="insertWaterNo" parameterType="java.lang.String" >
+        insert into w_acc_st.w_st_water_no values('dmode',#{verNum,jdbcType=CHAR})    
+    </insert>
+    
+    <update id="updateWaterNoForDegrade"  parameterType="java.lang.String" >
+        update w_acc_st.w_st_water_no set water_no=#{verNum,jdbcType=CHAR}  where water_no_key='dmode'
+    </update>
+    
+    <select id ="findVersionNo" resultType="String">
+        select version_no from w_acc_st.w_op_prm_para_ver where record_flag ='0' and parm_type_id = '0305'
+    </select>
+    
+    <update id="updateLogicIccList"  parameterType="java.lang.String" >
+       update w_acc_st.w_op_prm_logic_icc_list set record_flag='0' where record_flag ='3'
+    </update>
+
+
+  <select id ="getlccLineId" resultType="String">
+        select lcc_line_id   from w_acc_st.w_ST_COD_LCC_LINE where lcc_line_name = #{lccLineName}
+    </select>
+    <!--获取降级模式记录 -->
+<select id="getDegradeModeRecd" resultType="String">
+        select version_no from w_acc_st.w_op_prm_degrade_mode_recd where version_no='0000000000'                                         
+    </select>
+</mapper>

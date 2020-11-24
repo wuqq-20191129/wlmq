@@ -1,0 +1,61 @@
+a:link       { color: #ff0000; font-size: 9pt; text-decoration: none }
+a:visited    { color: #333300; font-size: 9pt; text-decoration: none }
+A:active  { color: #800080; font-size: 9pt; text-decoration: none }
+
+A:hover   { COLOR: #196ed7; FONT-SIZE: 9pt; TEXT-DECORATION: underline }
+
+.mon:link       { color: #0717AC; font-size: 9pt; text-decoration: none }
+.mon:visited    { color: #333300; font-size: 9pt; text-decoration: none }
+.mon:active  { color: #800080; font-size: 9pt; text-decoration: none }
+
+.mon:hover   { COLOR: #196ed7; FONT-SIZE: 9pt; TEXT-DECORATION: underline }
+
+.TD { FONT-FAMILY: ''; FONT-SIZE: 9pt; LINE-HEIGHT: 17pt }
+
+.titlebg           { background-image: url('../images/img_new_banner.gif') }
+
+.buttonbg           { background-image: url('../images/img_new_bg.gif') }
+
+.caption  { font-size: 10.5pt; LINE-HEIGHT: 18pt; color: #6D5315; word-spacing: 5; letter-spacing: 5pt; font-weight: bold; text-align: center }
+
+.font1   { font-size: 9pt; color: #CC6600; }
+
+.font2 {FONT-FAMILY: ''; FONT-SIZE: 9pt; LINE-HEIGHT: 15pt;color: #000000;}
+
+.font3 {FONT-FAMILY: ''; FONT-SIZE: 9pt; LINE-HEIGHT: 12pt}
+
+.button      { background-color: #F1F0F0; color: #4C4C4C; font-size: 9pt; font-family: 宋体; 
+               cursor: hand; border: 1 groove #A5873F; padding-top:3;
+               background-position: center 70% }
+                              
+.list_td_title { color: #FFFFFF; background-color: #A58433; text-align: center; LINE-HEIGHT: 16pt}
+.list_td_title1 { color: #FFFFFF; background-color: #6699CC; text-align: left }
+
+.list_td_tier { background-color: #E8E8E8; text-align: center; color: #000000 }
+.list_td_tier1 { background-color: #E8E8E8; text-align: left; color: #000000 }
+
+.list_td_context { background-color: #E8E8E8; text-align: left; color: #000000 }
+.list_td_context1 { background-color: #ffffff; text-align: left; color: #000000 }
+.list_td_context2 { background-color: #E8E8E8; color: #1652AB}
+
+.input_content { background-color: #ffffff; text-align: left; color: #000000 }
+.input_content1 { background-color: #E8E8E8; text-align: left; color: #000000 }
+
+.td_line {color: #FFFFFF; background-color: #A58433; text-align: center}
+.box {
+	border-top-style: 1;
+	border-right-style: 1;
+	border-bottom-style: 1;
+	border-left-style: 1;
+	border-top-color: #000000;
+	border-right-color: #000000;
+	border-bottom-color: #000000;
+	border-left-color: #000000;
+	background-color: E3E2E2;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+}
+
+.body {background-image: url('../images/img_dot2.gif')}

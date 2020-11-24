@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.samin.mapper.ProduceSamInMapper">
+    
+    <resultMap type="com.goldsign.acc.app.samin.entity.ProduceSamIn" id="rmProduceSamIn">
+        
+        <result column="ORDER_NO" property="orderNo" /> 
+        <result column="ISSUE_ORDER_NO" property="issueOrderNo" /> 
+        <result column="SAM_TYPE" property="samType" /> 
+        <result column="START_LOGIC_NO" property="startLogicNo" /> 
+        <result column="ORDER_NUM" property="orderNum" /> 
+        <result column="IN_STOCK_OPER" property="inStockOper" /> 
+        <result column="IN_STOCK_TIME" property="inStockTime" /> 
+        <result column="GET_CARD_OPER" property="getCardOper" /> 
+        <result column="ORDER_STATE" property="orderState" /> 
+        <result column="AUDIT_ORDER_OPER" property="auditOrderOper" /> 
+        <result column="AUDIT_ORDER_TIME" property="auditOrderTime" /> 
+        <result column="REMARK" property="remark" /> 
+   
+    </resultMap>
+    
+    <select id="queryPlan"  parameterType="com.goldsign.acc.app.samin.entity.ProduceSamIn" resultMap="rmProduceSamIn">
+        select * from w_acc_tk.w_ic_sam_in_make
+        <where> 
+            <if test="orderNo != null and orderNo !=''" >  
+                order_no = #{orderNo}
+            </if> 
+            <if test="samType != null and samType !=''" >  
+                AND sam_type like #{samType}
+            </if>
+            <if test="orderState != null and orderState !=''" >  
+                AND order_state like #{orderState}
+            </if>
+            <if test="issueOrderNo != null and issueOrderNo !=''" >  
+                AND issue_order_no = #{issueOrderNo}
+            </if>
+            <if test="orderNolist != null and orderNolist.size() > 0 " >  
+                and order_no in
+                <foreach collection="orderNolist" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by order_no desc
+    </select>
+    
+    <select id="checkStock"  parameterType="com.goldsign.acc.app.samin.entity.ProduceSamIn" resultType="String">
+        select r.logic_no
+        from ( select DISTINCT i.logic_no
+        from w_acc_tk.w_ic_sam_logic_nos s, w_acc_tk.w_ic_sam_stock i
+        where s.order_no =
+        ( select T.PDU_ORDER_NO
+        from w_acc_tk.w_ic_sam_out_issue T
+        WHERE T.ORDER_NO = #{issueOrderNo}
+        AND T.in_stock_state !=
+        '2')
+        AND i.is_instock = '0'
+        AND i.stock_state = '06'
+        AND to_number(substr(i.logic_no, 10, 7)) &gt;=
+        to_number(substr(s.start_logic_no, 10, 7))
+        AND to_number(substr(i.logic_no, 10, 7)) &lt;=
+        to_number(substr(s.end_logic_no, 10, 7))
+        AND substr(i.logic_no, 1, 9) = substr(s.start_logic_no, 1, 9)
+        order by i.logic_no) r
+        where 1 = 1
+        <if test="startLogicNo != null and startLogicNo !=''" >  
+            AND to_number(substr(r.logic_no,10,7))&gt;=to_number( #{fStartLogicNo} )
+            and substr(r.logic_no,1,9)= #{eStartLogicNo}
+        </if> 
+        <if test="orderNum != null and orderNum !=''" >  
+            AND rownum &lt;= #{orderNum}
+        </if>
+      
+    </select>
+    
+    <insert id="addPlan" parameterType="com.goldsign.acc.app.samin.entity.ProduceSamIn" >
+        insert into w_acc_tk.w_ic_sam_in_make (
+        order_no, issue_order_no, sam_type, start_logic_no, order_num, in_stock_oper, 
+        in_stock_time,get_card_oper, order_state, remark)
+        select #{orderNo}, #{issueOrderNo}, a.sam_type, nvl( #{startLogicNo}, a.start_logic_no), nvl( #{orderNum}, a.order_num),
+        #{inStockOper}, SYSDATE, #{getCardOper}, #{orderState}, #{remark} 
+        from w_acc_tk.w_ic_sam_out_issue a, w_acc_tk.w_ic_sam_type b 
+        where order_no = #{issueOrderNo} and a.sam_type = b.sam_type_code
+
+    </insert>
+    
+    <delete id="deletePlan" parameterType="com.goldsign.acc.app.samin.entity.ProduceSamIn" >
+        delete from  w_acc_tk.w_ic_sam_in_make where order_no = #{orderNo} and order_state = #{orderState}                          
+    </delete>
+    
+    <update id="modifyPlan" parameterType="com.goldsign.acc.app.samin.entity.ProduceSamIn" >
+        update w_acc_tk.w_ic_sam_in_make set start_logic_no= #{startLogicNo}, order_num= #{orderNum}, get_card_oper = #{getCardOper}, remark = #{remark} 
+        where order_no = #{orderNo} and order_state= #{orderState}        
+    </update>
+    
+    <insert id="insertLogicNo" parameterType="com.goldsign.acc.app.samin.entity.ProduceSamIn" >
+        insert into w_acc_tk.w_ic_sam_logic_nos ( order_no, start_logic_no, end_logic_no ) values ( #{orderNo}, #{startLogicNo}, #{endLogicNo}) 
+    </insert>
+
+    <update id="updateOrderState" parameterType="com.goldsign.acc.app.samin.entity.ProduceSamIn" >
+        update w_acc_tk.w_ic_sam_in_make set start_logic_no = #{startLogicNo}, order_state = #{orderState}, audit_order_oper= #{auditOrderOper}, audit_order_time = SYSDATE 
+        where order_no = #{orderNo} and order_state = '0'
+    </update>
+    
+    <update id="updateStock" parameterType="com.goldsign.acc.app.samin.entity.ProduceSamIn" >
+        update w_acc_tk.w_ic_sam_stock set  stock_state = #{stockState} , is_instock = #{isInstock}
+        where logic_no in 
+        <foreach collection="logicNos" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    
+    <update id="updateOutBill" parameterType="com.goldsign.acc.app.samin.entity.ProduceSamIn" >
+        update w_acc_tk.w_ic_sam_out_issue SET in_stock_state = (
+        case when NOT EXISTS (              
+        select r.logic_no from (
+        select DISTINCT i.logic_no from w_acc_tk.w_ic_sam_logic_nos s, w_acc_tk.w_ic_sam_stock i 
+        where s.order_no =( select T.PDU_ORDER_NO from w_acc_tk.w_ic_sam_out_issue T where T.ORDER_NO = #{issueOrderNo} )
+        AND i.is_instock= '0'
+        AND to_number(substr(i.logic_no,10,7)) &gt;= to_number(substr(s.start_logic_no,10,7))
+        AND to_number(substr(i.logic_no,10,7)) &lt;= to_number(substr(s.end_logic_no,10,7))
+        AND substr(i.logic_no,1,9) = substr(s.start_logic_no,1,9)
+        ORDER BY i.logic_no )r WHERE 1=1  
+        <if test="startLogicNo != null and startLogicNo !=''" >  
+            AND to_number(substr(r.logic_no,10,7)) &gt;= to_number( #{fStartLogicNo} )
+            and substr(r.logic_no,1,9)= #{eStartLogicNo}
+        </if>
+       
+        ) then '2' when EXISTS ( 
+                    
+        select r.logic_no FROM (
+        select DISTINCT i.logic_no from w_acc_tk.w_ic_sam_logic_nos s, w_acc_tk.w_ic_sam_stock i 
+        where s.order_no=( select T.PDU_ORDER_NO from w_acc_tk.w_ic_sam_out_issue T where T.ORDER_NO = #{issueOrderNo} )
+        AND i.is_instock= '0'
+        AND to_number(substr(i.logic_no,10,7)) &gt;= to_number(substr(s.start_logic_no,10,7))
+        AND to_number(substr(i.logic_no,10,7)) &lt; to_number(substr(s.end_logic_no,10,7))
+        AND substr(i.logic_no,1,9) = substr(s.start_logic_no,1,9)
+        ORDER BY i.logic_no )r WHERE 1=1  
+        <if test="orderNum != null and orderNum !=''" >  
+            AND rownum &lt;= #{orderNum}
+        </if>
+        ) then '1' end )
+                    
+        WHERE order_no = #{issueOrderNo}
+    </update>
+    
+</mapper>
+

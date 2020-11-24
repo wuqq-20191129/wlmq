@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.move.mapper.TicketStorageIcOutBillDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.move.entity.TicketStorageIcOutBillDetail" >
+    <constructor >
+      <arg column="WATER_NO" jdbcType="DECIMAL" javaType="java.lang.Long" />
+      <arg column="BILL_NO" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="REASON_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="STORAGE_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="AREA_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IC_MAIN_TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="IC_SUB_TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="OUT_NUM" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="VALID_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="CARD_MONEY" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="LINE_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="STATION_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CARD_TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ES_WORKTYPE_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="MAKE_NUM" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="CARD_MONEY_PRODUCE" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="TEMP_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="VAILD_DATE_PRODUCE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="CARD_AVA_DAYS" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="EXIT_LINE_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="EXIT_STATION_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="MODEL" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="SALE_FLAG" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="TEST_FLAG" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ORDER_TYPE" jdbcType="CHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.goldsign.acc.app.move.entity.TicketStorageIcOutBillDetail" >
+    insert into W_IC_OUT_BILL_DETAIL (WATER_NO, BILL_NO, REASON_ID, 
+      STORAGE_ID, AREA_ID, IC_MAIN_TYPE, 
+      IC_SUB_TYPE, OUT_NUM, VALID_DATE, 
+      CARD_MONEY, LINE_ID, STATION_ID, 
+      CARD_TYPE, ES_WORKTYPE_ID, MAKE_NUM, 
+      CARD_MONEY_PRODUCE, TEMP_ID, VAILD_DATE_PRODUCE, 
+      CARD_AVA_DAYS, EXIT_LINE_ID, EXIT_STATION_ID, 
+      MODEL, SALE_FLAG, TEST_FLAG, 
+      ORDER_TYPE)
+    values (#{waterNo,jdbcType=DECIMAL}, #{billNo,jdbcType=CHAR}, #{reasonId,jdbcType=CHAR}, 
+      #{storageId,jdbcType=CHAR}, #{areaId,jdbcType=CHAR}, #{icMainType,jdbcType=VARCHAR}, 
+      #{icSubType,jdbcType=VARCHAR}, #{outNum,jdbcType=DECIMAL}, #{validDate,jdbcType=TIMESTAMP}, 
+      #{cardMoney,jdbcType=DECIMAL}, #{lineId,jdbcType=VARCHAR}, #{stationId,jdbcType=VARCHAR}, 
+      #{cardType,jdbcType=VARCHAR}, #{esWorktypeId,jdbcType=CHAR}, #{makeNum,jdbcType=DECIMAL}, 
+      #{cardMoneyProduce,jdbcType=DECIMAL}, #{tempId,jdbcType=VARCHAR}, #{vaildDateProduce,jdbcType=TIMESTAMP}, 
+      #{cardAvaDays,jdbcType=VARCHAR}, #{exitLineId,jdbcType=VARCHAR}, #{exitStationId,jdbcType=VARCHAR}, 
+      #{model,jdbcType=VARCHAR}, #{saleFlag,jdbcType=VARCHAR}, #{testFlag,jdbcType=VARCHAR}, 
+      #{orderType,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.move.entity.TicketStorageIcOutBillDetail" >
+    insert into W_IC_OUT_BILL_DETAIL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="waterNo != null" >
+        WATER_NO,
+      </if>
+      <if test="billNo != null" >
+        BILL_NO,
+      </if>
+      <if test="reasonId != null" >
+        REASON_ID,
+      </if>
+      <if test="storageId != null" >
+        STORAGE_ID,
+      </if>
+      <if test="areaId != null" >
+        AREA_ID,
+      </if>
+      <if test="icMainType != null" >
+        IC_MAIN_TYPE,
+      </if>
+      <if test="icSubType != null" >
+        IC_SUB_TYPE,
+      </if>
+      <if test="outNum != null" >
+        OUT_NUM,
+      </if>
+      <if test="validDate != null" >
+        VALID_DATE,
+      </if>
+      <if test="cardMoney != null" >
+        CARD_MONEY,
+      </if>
+      <if test="lineId != null" >
+        LINE_ID,
+      </if>
+      <if test="stationId != null" >
+        STATION_ID,
+      </if>
+      <if test="cardType != null" >
+        CARD_TYPE,
+      </if>
+      <if test="esWorktypeId != null" >
+        ES_WORKTYPE_ID,
+      </if>
+      <if test="makeNum != null" >
+        MAKE_NUM,
+      </if>
+      <if test="cardMoneyProduce != null" >
+        CARD_MONEY_PRODUCE,
+      </if>
+      <if test="tempId != null" >
+        TEMP_ID,
+      </if>
+      <if test="vaildDateProduce != null" >
+        VAILD_DATE_PRODUCE,
+      </if>
+      <if test="cardAvaDays != null" >
+        CARD_AVA_DAYS,
+      </if>
+      <if test="exitLineId != null" >
+        EXIT_LINE_ID,
+      </if>
+      <if test="exitStationId != null" >
+        EXIT_STATION_ID,
+      </if>
+      <if test="model != null" >
+        MODEL,
+      </if>
+      <if test="saleFlag != null" >
+        SALE_FLAG,
+      </if>
+      <if test="testFlag != null" >
+        TEST_FLAG,
+      </if>
+      <if test="orderType != null" >
+        ORDER_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="waterNo != null" >
+        #{waterNo,jdbcType=DECIMAL},
+      </if>
+      <if test="billNo != null" >
+        #{billNo,jdbcType=CHAR},
+      </if>
+      <if test="reasonId != null" >
+        #{reasonId,jdbcType=CHAR},
+      </if>
+      <if test="storageId != null" >
+        #{storageId,jdbcType=CHAR},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=CHAR},
+      </if>
+      <if test="icMainType != null" >
+        #{icMainType,jdbcType=VARCHAR},
+      </if>
+      <if test="icSubType != null" >
+        #{icSubType,jdbcType=VARCHAR},
+      </if>
+      <if test="outNum != null" >
+        #{outNum,jdbcType=DECIMAL},
+      </if>
+      <if test="validDate != null" >
+        #{validDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cardMoney != null" >
+        #{cardMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="lineId != null" >
+        #{lineId,jdbcType=VARCHAR},
+      </if>
+      <if test="stationId != null" >
+        #{stationId,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="esWorktypeId != null" >
+        #{esWorktypeId,jdbcType=CHAR},
+      </if>
+      <if test="makeNum != null" >
+        #{makeNum,jdbcType=DECIMAL},
+      </if>
+      <if test="cardMoneyProduce != null" >
+        #{cardMoneyProduce,jdbcType=DECIMAL},
+      </if>
+      <if test="tempId != null" >
+        #{tempId,jdbcType=VARCHAR},
+      </if>
+      <if test="vaildDateProduce != null" >
+        #{vaildDateProduce,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cardAvaDays != null" >
+        #{cardAvaDays,jdbcType=VARCHAR},
+      </if>
+      <if test="exitLineId != null" >
+        #{exitLineId,jdbcType=VARCHAR},
+      </if>
+      <if test="exitStationId != null" >
+        #{exitStationId,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="saleFlag != null" >
+        #{saleFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="testFlag != null" >
+        #{testFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="qryOutBillDetail" resultType="java.util.Map" parameterType="com.goldsign.acc.app.move.entity.TicketStorageIcOutBillDetail" >
+    select 
+    *
+    from w_acc_tk.W_IC_OUT_BILL_DETAIL a,w_acc_tk.W_IC_OUT_BILL_DETAIL_BOX b   
+    where a.water_no = b.water_no(+)
+    and a.BILL_NO = b.BILL_NO(+)
+    and a.BILL_NO = #{billNo,jdbcType=CHAR}
+     
+  </select>
+</mapper>

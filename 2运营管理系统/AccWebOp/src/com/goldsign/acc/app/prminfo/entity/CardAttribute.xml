@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.CardAttributeMapper">
+    <resultMap type="CardAttribute" id="rmCardAttribute">
+        
+        <result column="card_main_id" property="card_main_id" /> 
+        <result column="card_sub_id" property="card_sub_id" /> 
+        <result column="purse_value_type" property="purse_value_type" /> 
+        <result column="max_store_val" property="max_store_val" /> 
+        <result column="is_overdraw" property="is_overdraw" /> 
+        <result column="overdraw_limit" property="overdraw_limit" /> 
+        <result column="is_recharge" property="is_recharge" /> 
+        <result column="max_recharge_val" property="max_recharge_val" /> 
+        <result column="update_fee_type" property="update_fee_type" /> 
+        <result column="is_chk_cur_station" property="is_chk_cur_station" /> 
+        <result column="is_chk_cur_date" property="is_chk_cur_date" /> 
+        <result column="is_refund" property="is_refund" /> 
+        <result column="refund_limit" property="refund_limit" />  
+        <result column="daily_trip_cnt_lmt" property="daily_trip_cnt_lmt" /> 
+        
+        <result column="month_trip_cnt_lmt" property="month_trip_cnt_lmt" /> 
+        <result column="exp_date" property="exp_date" /> 
+        <result column="is_allow_postpone" property="is_allow_postpone" /> 
+        <result column="extend_expire_day" property="extend_expire_day" /> 
+        <result column="deposit_amnt" property="deposit_amnt" /> 
+        <result column="card_cost" property="card_cost" /> 
+        <result column="auxiliary_expenses" property="auxiliary_expenses" /> 
+        <result column="is_activation" property="is_activation" /> 
+        <result column="is_chk_blk" property="is_chk_blk" /> 
+        <result column="is_chk_remain" property="is_chk_remain" /> 
+        <result column="is_chk_valid_phy_logic" property="is_chk_valid_phy_logic" /> 
+        <result column="is_chk_sequ" property="is_chk_sequ" />  
+        <result column="is_chk_exce_time" property="is_chk_exce_time" /> 
+        
+        <result column="is_chk_exce_st" property="is_chk_exce_st" /> 
+        <result column="is_limit_entry_exit" property="is_limit_entry_exit" /> 
+        <result column="is_limit_station" property="is_limit_station" /> 
+        <result column="add_val_equi_type" property="add_val_equi_type" /> 
+        <result column="use_on_equi" property="use_on_equi" /> 
+        <result column="is_limit_sale_entry" property="is_limit_sale_entry" /> 
+        <result column="refund_limit_balance" property="refund_limit_balance" /> 
+        <result column="refund_auxiliary_expense" property="refund_auxiliary_expense" /> 
+        <result column="version_no" property="version_no" /> 
+        <result column="record_flag" property="record_flag" /> 
+        <result column="is_lmt_daily_trip" property="is_lmt_daily_trip" /> 
+        <result column="is_preexamine" property="is_preexamine" />  
+        <result column="preexamine_cnt_lmt" property="preexamine_cnt_lmt" /> 
+        
+        <result column="is_chk_exp_date" property="is_chk_exp_date" /> 
+        <result column="is_limit_line" property="is_limit_line" /> 
+        <result column="limit_intime" property="limit_intime" /> 
+        <result column="is_limit_intime" property="is_limit_intime" />  
+        <result column="entry_control" property="entry_control" /> 
+        
+        <result column="sale_equi_type" property="sale_equi_type" /> 
+        <result column="is_deposit_refund" property="is_deposit_refund" />  
+        
+        <result column="is_chk_valid_day" property="is_chk_valid_day" /> 
+        <result column="valid_day" property="valid_day" />  
+
+    </resultMap>
+
+    
+    <select id="getCardAttributesBySubId"  parameterType="CardAttribute" resultMap="rmCardAttribute">
+        select * from W_ACC_ST.W_OP_PRM_CARD_PARA where card_sub_id =#{card_sub_id} and card_main_id=#{card_main_id} and record_flag in('3','0','1')
+    </select>
+   
+    <select id="getCardAttributes"  parameterType="CardAttribute" resultMap="rmCardAttribute">
+        select * from W_ACC_ST.W_OP_PRM_CARD_PARA where record_flag=#{record_flag} and version_no=#{version_no}  
+        <if test="card_main_id !=null and card_main_id !=''">
+            and card_main_id = #{card_main_id}
+        </if> 
+        <if test="card_sub_id !=null and card_sub_id !=''">
+            and card_sub_id = #{card_sub_id}
+        </if>
+        order by card_main_id,card_sub_id
+    </select>
+    
+     <select id="queryToMap"  parameterType="CardAttribute" resultType="map">
+        select * from W_ACC_ST.W_OP_PRM_CARD_PARA where record_flag=#{record_flag} and version_no=#{version_no}  
+        <if test="card_main_id !=null and card_main_id !=''">
+            and card_main_id = #{card_main_id}
+        </if> 
+        <if test="card_sub_id !=null and card_sub_id !=''">
+            and card_sub_id = #{card_sub_id}
+        </if>
+        order by card_main_id,card_sub_id
+    </select>
+    
+    <select id="getCardAttributeById"  parameterType="CardAttribute" resultMap="rmCardAttribute">
+        select * from W_ACC_ST.W_OP_PRM_CARD_PARA where card_sub_id =#{card_sub_id} and card_main_id=#{card_main_id} and record_flag=#{record_flag} and version_no=#{version_no}  
+    </select>
+    
+    <insert id="addCardAttributes" parameterType="CardAttribute" >
+        insert into W_ACC_ST.W_OP_PRM_CARD_PARA values
+        (#{card_main_id},#{card_sub_id},#{purse_value_type},#{max_store_val},#{is_overdraw},#{overdraw_limit},#{is_recharge},#{max_recharge_val},#{update_fee_type},
+        #{is_chk_cur_station},#{is_chk_cur_date},#{is_refund},#{refund_limit},#{daily_trip_cnt_lmt},#{month_trip_cnt_lmt},#{exp_date},#{is_allow_postpone},#{extend_expire_day},
+        #{deposit_amnt},#{card_cost},#{auxiliary_expenses},#{is_activation},#{is_chk_blk},#{is_chk_remain},#{is_chk_valid_phy_logic},#{is_chk_sequ},#{is_chk_exce_time},
+        #{is_chk_exce_st},#{is_limit_entry_exit},#{is_limit_station},#{add_val_equi_type},#{use_on_equi},#{is_limit_sale_entry},#{refund_limit_balance},#{refund_auxiliary_expense},#{version_no},
+        #{record_flag},#{is_lmt_daily_trip},#{is_preexamine},#{preexamine_cnt_lmt},#{is_chk_exp_date},#{is_limit_line},#{limit_intime},#{is_limit_intime},#{entry_control},
+        #{sale_equi_type},#{is_deposit_refund},#{is_chk_valid_day},#{valid_day})
+    </insert>
+    
+    <delete id="deleteCardAttributes" parameterType="CardAttribute">
+        delete from W_ACC_ST.W_OP_PRM_CARD_PARA where card_main_id = #{card_main_id} and card_sub_id = #{card_sub_id}　and record_flag=#{record_flag} and version_no=#{version_no}            
+    </delete>
+    
+    <update id="modifyCardAttribute" parameterType="CardAttribute" >
+        update W_ACC_ST.W_OP_PRM_CARD_PARA set 
+        purse_value_type=#{purse_value_type},max_store_val=#{max_store_val},is_overdraw=#{is_overdraw},overdraw_limit=#{overdraw_limit}, is_recharge=#{is_recharge},max_recharge_val=#{max_recharge_val},
+        update_fee_type=#{update_fee_type},is_chk_cur_station=#{is_chk_cur_station},is_chk_cur_date=#{is_chk_cur_date},is_refund=#{is_refund}, refund_limit=#{refund_limit},daily_trip_cnt_lmt=#{daily_trip_cnt_lmt},
+        month_trip_cnt_lmt=#{month_trip_cnt_lmt},exp_date=#{exp_date},is_allow_postpone=#{is_allow_postpone},extend_expire_day=#{extend_expire_day}, deposit_amnt=#{deposit_amnt},card_cost=#{card_cost},
+        auxiliary_expenses=#{auxiliary_expenses},is_activation=#{is_activation},is_chk_blk=#{is_chk_blk},is_chk_remain=#{is_chk_remain}, is_chk_valid_phy_logic=#{is_chk_valid_phy_logic},is_chk_sequ=#{is_chk_sequ},
+        is_chk_exce_time=#{is_chk_exce_time},is_chk_exce_st=#{is_chk_exce_st},is_limit_entry_exit=#{is_limit_entry_exit},is_limit_station=#{is_limit_station}, add_val_equi_type=#{add_val_equi_type},use_on_equi=#{use_on_equi},
+        is_limit_sale_entry=#{is_limit_sale_entry},refund_limit_balance=#{refund_limit_balance},refund_auxiliary_expense=#{refund_auxiliary_expense},sale_equi_type=#{sale_equi_type}, is_deposit_refund=#{is_deposit_refund},
+        is_chk_valid_day = #{is_chk_valid_day}, valid_day = #{valid_day}
+        where card_main_id = #{card_main_id} and card_sub_id = #{card_sub_id}　and record_flag=#{record_flag} and version_no=#{version_no}           
+    </update>
+    
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    
+    <update id="submitToOldFlag" parameterType="CardAttribute" >
+        update W_ACC_ST.W_OP_PRM_CARD_PARA set record_flag=#{record_flag_old} where  record_flag=#{record_flag_new}                                               
+    </update>
+    
+    <!--草稿参数复制为当前或未来参数 -->
+    <insert id="submitFromDraftToCurOrFur" parameterType="CardAttribute" >
+        insert into  W_ACC_ST.W_OP_PRM_CARD_PARA
+        (card_main_id,card_sub_id,purse_value_type,max_store_val,is_overdraw, overdraw_limit,is_recharge,max_recharge_val,update_fee_type,is_chk_cur_station,
+        is_chk_cur_date,is_refund,refund_limit,daily_trip_cnt_lmt, month_trip_cnt_lmt,exp_date,is_allow_postpone,extend_expire_day,deposit_amnt,
+        card_cost,auxiliary_expenses,is_activation,is_chk_blk,is_chk_remain, is_chk_valid_phy_logic,is_chk_sequ,is_chk_exce_time,is_chk_exce_st,is_limit_entry_exit,
+        is_limit_station,add_val_equi_type,use_on_equi,is_limit_sale_entry,refund_limit_balance, refund_auxiliary_expense,is_lmt_daily_trip,is_preexamine,preexamine_cnt_lmt,is_chk_exp_date,
+        is_limit_line,limit_intime,is_limit_intime,entry_control,sale_equi_type, is_deposit_refund,record_flag,version_no,is_chk_valid_day,valid_day)
+        select card_main_id,card_sub_id,purse_value_type,max_store_val,is_overdraw, overdraw_limit,is_recharge,max_recharge_val,update_fee_type,is_chk_cur_station,
+        is_chk_cur_date,is_refund,refund_limit,daily_trip_cnt_lmt, month_trip_cnt_lmt,exp_date,is_allow_postpone,extend_expire_day,deposit_amnt,
+        card_cost,auxiliary_expenses,is_activation,is_chk_blk,is_chk_remain, is_chk_valid_phy_logic,is_chk_sequ,is_chk_exce_time,is_chk_exce_st,is_limit_entry_exit,
+        is_limit_station,add_val_equi_type,use_on_equi,is_limit_sale_entry,refund_limit_balance, refund_auxiliary_expense,is_lmt_daily_trip,is_preexamine,preexamine_cnt_lmt,is_chk_exp_date,
+        is_limit_line,limit_intime,is_limit_intime,entry_control,sale_equi_type, is_deposit_refund,#{record_flag_new},#{version_no_new},is_chk_valid_day,valid_day
+        from   W_ACC_ST.W_OP_PRM_CARD_PARA  
+        where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+     
+    <!--草稿参数删除 -->
+    <delete id="deleteCardAttributesForClone" parameterType="CardAttribute">
+        delete from W_ACC_ST.W_OP_PRM_CARD_PARA where  record_flag='3' and version_no='0000000000'                                                      
+    </delete>
+    
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="CardAttribute" >
+        insert into  W_ACC_ST.W_OP_PRM_CARD_PARA
+        (card_main_id,card_sub_id,purse_value_type,max_store_val,is_overdraw, overdraw_limit,is_recharge,max_recharge_val,update_fee_type,is_chk_cur_station,
+        is_chk_cur_date,is_refund,refund_limit,daily_trip_cnt_lmt, month_trip_cnt_lmt,exp_date,is_allow_postpone,extend_expire_day,deposit_amnt,
+        card_cost,auxiliary_expenses,is_activation,is_chk_blk,is_chk_remain, is_chk_valid_phy_logic,is_chk_sequ,is_chk_exce_time,is_chk_exce_st,is_limit_entry_exit,
+        is_limit_station,add_val_equi_type,use_on_equi,is_limit_sale_entry,refund_limit_balance, refund_auxiliary_expense,is_lmt_daily_trip,is_preexamine,preexamine_cnt_lmt,is_chk_exp_date,
+        is_limit_line,limit_intime,is_limit_intime,entry_control,sale_equi_type, is_deposit_refund,record_flag,version_no,is_chk_valid_day,valid_day)
+        select card_main_id,card_sub_id,purse_value_type,max_store_val,is_overdraw, overdraw_limit,is_recharge,max_recharge_val,update_fee_type,is_chk_cur_station,
+        is_chk_cur_date,is_refund,refund_limit,daily_trip_cnt_lmt, month_trip_cnt_lmt,exp_date,is_allow_postpone,extend_expire_day,deposit_amnt,
+        card_cost,auxiliary_expenses,is_activation,is_chk_blk,is_chk_remain, is_chk_valid_phy_logic,is_chk_sequ,is_chk_exce_time,is_chk_exce_st,is_limit_entry_exit,
+        is_limit_station,add_val_equi_type,use_on_equi,is_limit_sale_entry,refund_limit_balance, refund_auxiliary_expense,is_lmt_daily_trip,is_preexamine,preexamine_cnt_lmt,is_chk_exp_date,
+        is_limit_line,limit_intime,is_limit_intime,entry_control,sale_equi_type, is_deposit_refund,'3','0000000000',is_chk_valid_day,valid_day
+        from   W_ACC_ST.W_OP_PRM_CARD_PARA  
+        where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+</mapper>
+

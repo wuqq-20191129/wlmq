@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.storageout.mapper.TicketStorageOutDistributeMapper">
+    <resultMap id="rmOutDistributePlan" type="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributePlan">
+        <id column="BILL_NO" jdbcType="CHAR" property="billNo" />
+        <result column="OUT_BILL_NO" jdbcType="CHAR" property="outBillNo" />
+        <result column="DISTRIBUTE_BILL_NO" jdbcType="CHAR" property="distributeBillNo" />
+        <result column="FORM_MAKER" jdbcType="VARCHAR" property="formMaker" />
+        <result column="BILL_DATE" jdbcType="VARCHAR" property="billDate" />
+        <result column="RECORD_FLAG" jdbcType="CHAR" property="recordFlag" />
+        <result column="VERIFY_DATE" jdbcType="VARCHAR" property="verifyDate" />
+        <result column="VERIFY_PERSON" jdbcType="CHAR" property="verifyPerson" />
+        <result column="RECEIVE_UNIT" jdbcType="CHAR" property="receiveUnit" />
+        <result column="DISTRIBUTE_MAN" jdbcType="CHAR" property="distributeMan" />
+        <result column="RECEIVE_MAN" jdbcType="CHAR" property="receiveMan" />
+        <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    </resultMap>
+    <resultMap id="rmOutDistributePlanDetail" type="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributePlan">
+        <id column="WATER_NO" jdbcType="INTEGER" property="waterNo" />
+        <result column="DISTRIBUTE_LINE_ID" jdbcType="VARCHAR" property="distributeLineId" />
+        <result column="DISTRIBUTE_STATION_ID" jdbcType="VARCHAR" property="distributeStationId" />
+        <result column="IC_MAIN_TYPE" jdbcType="VARCHAR" property="icMainType" />
+        <result column="IC_SUB_TYPE" jdbcType="VARCHAR" property="icSubType" />
+        <result column="RECORD_FLAG" jdbcType="CHAR" property="recordFlag" />
+        <result column="BILL_NO" jdbcType="VARCHAR" property="billNo" />
+        <result column="DISTRIBUTE_QUANTITY" jdbcType="DECIMAL" property="distributeQuantity" />
+        <result column="CARD_MONEY" jdbcType="DECIMAL" property="cardMoney" />
+        <result column="VALID_DATE" jdbcType="VARCHAR" property="validDate" />
+        <result column="RESTRICT_FLAG" jdbcType="CHAR" property="restrictFlag" />
+        <result column="STORAGE_ID" jdbcType="CHAR" property="storageId" />
+        <result column="AREA_ID" jdbcType="CHAR" property="areaId" />
+        <result column="START_LOGICAL_ID" jdbcType="VARCHAR" property="startLogicalId" />
+        <result column="END_LOGICAL_ID" jdbcType="VARCHAR" property="endLogicalId" />
+        <result column="REASON_ID" jdbcType="CHAR" property="reasonId" />
+        <result column="BOX_ID" jdbcType="VARCHAR" property="boxId" />
+        <result column="LINE_ID" jdbcType="VARCHAR" property="lineId" />
+        <result column="STATION_ID" jdbcType="VARCHAR" property="stationId" />
+        <result column="EXIT_LINE_ID" jdbcType="VARCHAR" property="exitLineId" />
+        <result column="EXIT_STATION_ID" jdbcType="VARCHAR" property="exitStationId" />
+        <result column="MODEL" jdbcType="VARCHAR" property="model" />
+    </resultMap>
+
+    <resultMap id="rmOutDistributeOutBillDetail" type="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributeOutBillDetail">
+        <result column="WATER_NO" jdbcType="INTEGER" property="waterNo" />
+        <result column="BILL_NO" jdbcType="CHAR" property="billNo" />
+        <result column="REASON_ID" jdbcType="CHAR" property="reasonId" />
+        <result column="STORAGE_ID" jdbcType="CHAR" property="storageId" />
+        <result column="AREA_ID" jdbcType="CHAR" property="areaId" />
+        <result column="IC_MAIN_TYPE" jdbcType="VARCHAR" property="icMainType" />
+        <result column="IC_SUB_TYPE" jdbcType="VARCHAR" property="icSubType" />
+        <result column="OUT_NUM" jdbcType="INTEGER" property="outNum" />
+        <result column="CARD_MONEY" jdbcType="INTEGER" property="cardMoney" />
+        <result column="VALID_DATE" jdbcType="VARCHAR" property="validDate" />
+        <result column="LINE_ID" jdbcType="VARCHAR" property="lineId" />
+        <result column="STATION_ID" jdbcType="VARCHAR" property="stationId" />
+        <result column="START_BOX_ID" jdbcType="CHAR" property="startBoxId" />
+        <result column="END_BOX_ID" jdbcType="CHAR" property="endBoxId" />
+        <result column="START_LOGICAL_ID" jdbcType="VARCHAR" property="startLogicalId" />
+        <result column="END_LOGICAL_ID" jdbcType="VARCHAR" property="endLogicalId" />
+        <result column="CARD_TYPE" jdbcType="CHAR" property="cardType" />
+        <result column="EXIT_LINE_ID" jdbcType="VARCHAR" property="exitLineId" />
+        <result column="EXIT_STATION_ID" jdbcType="VARCHAR" property="exitStationId" />
+        <result column="MODEL" jdbcType="VARCHAR" property="model" />
+        <result column="DETAIL_PLACE" jdbcType="VARCHAR" property="detailPlace" />
+        <result column="SECTION_NUM" jdbcType="INTEGER" property="sectionNum" />
+    </resultMap>
+
+    <resultMap id="rmOutDistributeBillDetail" type="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributeBillDetail">
+        <result column="BILL_NO" jdbcType="CHAR" property="billNo" />
+        <result column="STORAGE_ID" jdbcType="CHAR" property="storageId" />
+        <result column="AREA_ID" jdbcType="CHAR" property="areaId" />
+        <result column="IC_MAIN_TYPE" jdbcType="VARCHAR" property="icMainType" />
+        <result column="IC_SUB_TYPE" jdbcType="VARCHAR" property="icSubType" />
+        <result column="DISTRIBUTE_QUANTITY" jdbcType="INTEGER" property="distributeQuantity" />
+        <result column="CARD_MONEY" jdbcType="INTEGER" property="cardMoney" />
+        <result column="VALID_DATE" jdbcType="VARCHAR" property="validDate" />
+        <result column="LINE_ID" jdbcType="VARCHAR" property="lineId" />
+        <result column="STATION_ID" jdbcType="VARCHAR" property="stationId" />
+        <result column="START_BOX_ID" jdbcType="CHAR" property="startBoxId" />
+        <result column="END_BOX_ID" jdbcType="CHAR" property="endBoxId" />
+        <result column="START_LOGICAL_ID" jdbcType="VARCHAR" property="startLogicalId" />
+        <result column="END_LOGICAL_ID" jdbcType="VARCHAR" property="endLogicalId" />
+        <result column="DISTRIBUTE_LINE_ID" jdbcType="VARCHAR" property="distributeLineId" />
+        <result column="DISTRIBUTE_STATION_ID" jdbcType="VARCHAR" property="distributeStationId" />
+        <result column="EXIT_LINE_ID" jdbcType="VARCHAR" property="exitLineId" />
+        <result column="EXIT_STATION_ID" jdbcType="VARCHAR" property="exitStationId" />
+        <result column="MODEL" jdbcType="VARCHAR" property="model" />
+        <result column="DETAIL_PLACE" jdbcType="VARCHAR" property="detailPlace" />
+        <result column="SECTION_NUM" jdbcType="INTEGER" property="sectionNum" />
+    </resultMap>
+    <parameterMap type="map" id="MapBillPlanAudit">
+        <parameter property="piBillNoPlanTemp" jdbcType="VARCHAR" mode="IN"/>
+        <parameter property="piOperator" jdbcType="VARCHAR" mode="IN"/>
+        <parameter property="piBillNoPlanFormal" jdbcType="VARCHAR" mode="OUT"/>
+        <parameter property="poRetCode" jdbcType="INTEGER" mode="OUT"/>
+        <parameter property="poRetMsg" jdbcType="VARCHAR" mode="OUT"/>
+    </parameterMap>
+    <select id="queryPlan"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributePlan" resultMap="rmOutDistributePlan">
+        select
+        A.bill_no,A.out_bill_no,A.bill_date,A.distribute_bill_no,A.record_flag,
+        A.form_maker,A.bill_date,A.verify_person,A.verify_date,A.receive_unit,
+        A.receive_man,A.distribute_man,A.remark
+        from w_acc_tk.W_IC_OUT_DISTRIBUTE_PLAN_BILL A where  1 = 1
+        <if test="billNo !=null and billNo !=''">
+            and bill_no =#{billNo}
+        </if>
+        <if test="formMaker !=null and formMaker !=''">
+            and A.form_maker =#{formMaker}
+        </if>
+        <if test="recordFlag !=null and recordFlag !=''">
+            and A.record_flag =#{recordFlag}
+        </if>
+        <if test="beginDateTime !=null and beginDateTime !=''">
+            and A.bill_date &gt;= to_date(#{beginDateTime},'yyyy-mm-dd HH24:mi:ss')
+        </if>
+        <if test="endDateTime !=null and endDateTime !=''">
+            and A.bill_date &lt;= to_date(#{endDateTime},'yyyy-mm-dd HH24:mi:ss')
+        </if>
+        and (exists(select 1 from w_acc_tk.w_ic_out_distribute_plan_dtl B  where A.bill_no =B.bill_no
+        <if test=" icMainType !=null and  icMainType !=''">
+            and  B.ic_main_type =#{icMainType}
+        </if>
+        <if test=" icSubType !=null and  icSubType !=''">
+            and  B.ic_sub_type =#{icSubType}
+        </if>
+        <if test=" reasonId !=null and  reasonId !=''">
+            and  B.reason_id =#{reasonId}
+        </if>
+        and   B.storage_id in
+        <foreach item="storageId" index="index" collection="storageIdList" open="(" separator="," close=")">
+            #{storageId}
+        </foreach>
+        )  or not exists (select B.bill_no from w_acc_tk.w_ic_out_distribute_plan_dtl B where A.bill_no=B.Bill_No ))
+        order by A.bill_no desc
+    </select>
+    <insert id="addPlan" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributePlan" >
+        insert into w_acc_tk.w_ic_out_distribute_plan_bill
+        (bill_no,out_bill_no,distribute_bill_no,form_maker,bill_date,
+        record_flag,distribute_man,receive_man,remark)
+        values
+        (#{billNo},#{outBillNo},#{distributeBillNo},#{formMaker},sysdate,
+        #{recordFlag},#{distributeMan},#{receiveMan},#{remark})
+    </insert>
+    <delete id="deletePlan" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributePlan" >
+        delete from  w_acc_tk.w_ic_out_distribute_plan_bill where bill_no=#{billNo} and record_flag ='3'
+    </delete>
+    <select id="auditPlan" parameterMap="MapBillPlanAudit" statementType="CALLABLE">
+        {call W_ACC_TK.W_UP_IC_OUT_DISTRIBUTE_AUDIT(?,?,?,?,?)}
+    </select>
+    <select id="queryPlanDetail"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributePlan" resultMap="rmOutDistributePlanDetail">
+        select A.record_flag,B.water_no,B.bill_no,B.distribute_line_id,
+        B.distribute_station_id,B.ic_main_type,B.ic_sub_type,
+        B.distribute_quantity,B.card_money,case when to_char(valid_date,'yyyy-mm-dd')  = '1970-01-01' then ''
+        else to_char(valid_date,'yyyy-mm-dd') end valid_date,B.restrict_flag,
+        B.storage_id,B.area_id,B.start_logical_id,B.end_logical_id ,B.reason_id,B.box_id,
+        B.line_id,B.station_id,B.exit_line_id,B.exit_station_id,B.model
+        from w_acc_tk.w_ic_out_distribute_plan_bill A,w_acc_tk.w_ic_out_distribute_plan_dtl B
+        where B.bill_no = A.bill_no and B.bill_no =#{billNo}
+        order by B.water_no desc
+    </select>
+
+    <select id="getExistStorage"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributePlan" resultMap="rmOutDistributePlanDetail">
+        select distinct storage_id  from w_acc_tk.w_ic_out_distribute_plan_dtl
+        where bill_no=#{billNo}
+        <if test=" operType !=null and operType ='modify'">
+            and  water_no &lt;&gt; #{waterNo}
+        </if>
+    </select>
+    <select id="getExistReason"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributePlan" resultMap="rmOutDistributePlanDetail">
+        select distinct reason_id  from w_acc_tk.w_ic_out_distribute_plan_dtl
+        where bill_no=#{billNo}
+        <if test=" operType !=null and operType ='modify'">
+            and  water_no &lt;&gt; #{waterNo}
+        </if>
+    </select>
+    <insert id="addPlanDetailForLine" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributePlan" >
+        insert into w_acc_tk.w_ic_out_distribute_plan_dtl
+        (water_no,bill_no,distribute_line_id,distribute_station_id,ic_main_type,
+        ic_sub_type,distribute_quantity,card_money,valid_date,restrict_flag,
+        storage_id,area_id,start_logical_id,end_logical_id,reason_id,
+        line_id,station_id,exit_line_id,exit_station_id,model)
+        values
+        (w_acc_tk.W_SEQ_W_IC_OUT_DISTRIBUTE_DTL.nextval,#{billNo},#{distributeLineId},#{distributeStationId},#{icMainType},
+        #{icSubType},#{distributeQuantity},#{cardMoney},to_date(nvl(#{validDate},'1970-01-01'),'yyyy-mm-dd'),#{restrictFlag},
+        #{storageId},#{areaId},#{startLogicalId},#{endLogicalId},#{reasonId},
+        nvl(#{lineId},' '), nvl(#{stationId},' '), nvl(#{exitLineId},' '),  nvl(#{exitStationId},' '),#{model})
+    </insert>
+    <insert id="addPlanDetail" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributePlan" >
+        insert into w_acc_tk.w_ic_out_distribute_plan_dtl
+        (water_no,bill_no,distribute_line_id,distribute_station_id,ic_main_type,
+        ic_sub_type,distribute_quantity,card_money,valid_date,restrict_flag,
+        storage_id,area_id,start_logical_id,end_logical_id,reason_id,box_id,
+        line_id,station_id,exit_line_id,exit_station_id,model)
+        values
+        (w_acc_tk.W_SEQ_W_IC_OUT_DISTRIBUTE_DTL.nextval,#{billNo},#{distributeLineId},#{distributeStationId},#{icMainType},
+        #{icSubType},#{distributeQuantity},#{cardMoney},to_date(nvl(#{validDate},'1970-01-01'),'yyyy-mm-dd'),#{restrictFlag},
+        #{storageId},#{areaId},#{startLogicalId},#{endLogicalId},#{reasonId},#{boxId},
+        nvl(#{lineId},' '), nvl(#{stationId},' '), nvl(#{exitLineId},' '),  nvl(#{exitStationId},' '),#{model})
+    </insert>
+    <update id="modifyPlanDetail" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributePlan" >
+        update w_acc_tk.w_ic_out_distribute_plan_dtl
+        set
+        distribute_line_id=#{distributeLineId} ,distribute_station_id=#{distributeStationId},
+        ic_main_type=#{icMainType},ic_sub_type=#{icSubType},distribute_quantity=#{distributeQuantity},
+        card_money=#{cardMoney},valid_date=to_date(nvl(#{validDate},'1970-01-01'),'yyyy-mm-dd'),
+        storage_id=#{storageId},area_id=#{areaId},start_logical_id=#{startLogicalId},
+        end_logical_id=#{endLogicalId},reason_id=#{reasonId},box_id=#{boxId} ,line_id=nvl(#{lineId},' '), station_id=nvl(#{stationId},' '), exit_line_id=nvl(#{exitLineId},' '),  exit_station_id=nvl(#{exitStationId},' '),model=#{model}
+        where bill_no=#{billNo} and water_no=#{waterNo}
+    </update>
+    <delete id="deletePlanDetail" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributePlan" >
+        delete from  w_acc_tk.w_ic_out_distribute_plan_dtl where bill_no=#{billNo} and water_no=#{waterNo}
+    </delete>
+    <select id="queryOutBillDetailByTotal"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributeOutBillDetail" resultMap="rmOutDistributeOutBillDetail">
+        select A.water_no,A.bill_no,A.ic_main_type,A.ic_sub_type,A.reason_id,
+        A.storage_id,A.area_id,case when to_char(valid_date,'yyyy-mm-dd')  = '1970-01-01' then ''
+        else to_char(valid_date,'yyyy-mm-dd') end valid_date,A.card_money,
+        A.line_id,A.station_id,A.card_type,
+        A.exit_line_id,A.exit_station_id,A.model,
+        B.detail_place, B.start_box_id,B.end_box_id,B.start_logical_id,B.end_logical_id,
+        case when B.section_num is not null and B.section_num &lt;&gt; 0 then
+        B.section_num  else
+        A.out_num   end out_num
+        from w_acc_tk.w_ic_out_bill_detail     A,
+        w_acc_tk.w_ic_out_bill_detail_box B
+        where  A.bill_no = B.bill_no(+)
+        and A.water_no = B.water_no(+)
+        and A.bill_no=#{billNo}
+        order by water_no
+    </select>
+
+    <select id="queryDistributeBill"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributeBillDetail" resultMap="rmOutDistributeBillDetail">
+        select B.bill_no,B.ic_main_type, B.ic_sub_type,
+        case when section_num is not null and section_num &lt;&gt; 0 then section_num
+        else  B.distribute_quantity end distribute_quantity,
+        B.card_money,
+        case when to_char(valid_date, 'yyyy-mm-dd') = '1970-01-01' then ''
+        else to_char(valid_date, 'yyyy-mm-dd') end valid_date,
+        B.line_id,B.station_id,B.exit_line_id,B.exit_station_id,B.model,
+        B.distribute_line_id,B.distribute_station_id,C.detail_place,
+        C.start_box_id, C.end_box_id,C.start_logical_id,C.end_logical_id,
+        C.section_num
+        from w_acc_tk.w_ic_out_distribute_detail  B,
+        w_acc_tk.w_ic_out_distribute_dtl_box C
+        where B.bill_no = #{billNo} and B.bill_no = C.bill_no(+)
+        and B.water_no = C.water_no(+)
+    </select>
+    <select id="getContainDataByLogicalId"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributePlan" resultMap="rmOutDistributePlanDetail">
+        select
+        B.start_logical_id,B.end_logical_id
+        from w_acc_tk.w_ic_out_distribute_plan_dtl B, w_acc_tk.w_ic_out_distribute_plan_bill A
+        where B.bill_no = A.bill_no and B.bill_no =#{billNo}
+        and  B.End_Logical_Id &gt;= #{startLogicalId}
+        and  B.Start_Logical_Id &lt;= #{endLogicalId}
+        <if test=" operType !=null and operType ='modify'">
+            and  water_no &lt;&gt; #{waterNo}
+        </if>
+        order by B.start_logical_id
+    </select>
+    <select id="getContainDataByBox"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributePlan" resultMap="rmOutDistributePlanDetail">
+        select
+        B.box_id
+        from w_acc_tk.w_ic_out_distribute_plan_dtl B,
+        w_acc_tk.w_ic_out_distribute_plan_bill A
+        where B.bill_no = A.bill_no and B.bill_no =#{billNo}
+        and  B.box_id &gt;= #{boxId}
+        and  B.box_id &lt;= #{endBoxId}
+        <if test=" operType !=null and operType ='modify'">
+            and  water_no &lt;&gt; #{waterNo}
+        </if>
+        order by B.box_id
+    </select>
+    <select id="getBoxRecordNum"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributePlanDetail" resultType="int">
+        select  count(1)
+        from w_acc_tk.w_ic_cod_box_info B
+        where B.ic_main_type = #{icMainType}
+        and B.ic_sub_type = #{icSubType}
+        and B.card_money = #{cardMoney}
+        <if test=" validDate ='1970-01-01' ">
+            and B.Valid_Date >= to_date('1970-01-01', 'yyyy-mm-dd')
+        </if>
+        <if test=" validDate !='1970-01-01' ">
+            and B.Valid_Date = to_date(#{validDate}, 'yyyy-mm-dd')
+        </if>
+        and B.Model = #{model}
+        and B.Line_Id = nvl(#{lineId},' ')
+        and B.Station_Id = nvl(#{stationId},' ')
+        and B.Exit_Line_Id = nvl(#{exitLineId},' ')
+        and B.Exit_Station_Id = nvl(#{exitStationId},' ')
+        and B.flag = '0'
+        and B.box_id =#{boxId}
+    </select>
+    <select id="getBoxNum"  parameterType="java.lang.String" resultType="int">
+        select card_num from w_acc_tk.W_IC_COD_BOX_INFO
+        where box_id = #{value}
+    </select>
+    <select id="getDetailRecordNum"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutDistributePlan" resultType="java.lang.String">
+        select  count(1)  from w_acc_tk.w_ic_out_distribute_plan_dtl
+        where bill_no=#{billNo}
+    </select>
+</mapper>

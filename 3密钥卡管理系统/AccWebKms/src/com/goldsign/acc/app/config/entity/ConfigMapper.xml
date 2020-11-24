@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.config.mapper.ConfigMapper">
+  <resultMap id="BaseResultMap" type="Config">
+    <constructor>
+      <idArg column="TYPE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <idArg column="TYPE_SUB" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <idArg column="CONFIG_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TYPE_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TYPE_SUB_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CONFIG_VALUE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="REMARK" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    TYPE, TYPE_SUB, CONFIG_NAME, TYPE_NAME, TYPE_SUB_NAME, CONFIG_VALUE, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="ConfigKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from W_ACC_ST.W_OP_CFG_SYS
+    where TYPE = #{type,jdbcType=VARCHAR}
+      and TYPE_SUB = #{typeSub,jdbcType=VARCHAR}
+      and CONFIG_NAME = #{configName,jdbcType=VARCHAR}
+  </select>
+  <select id="selectConfigs" parameterType="ConfigKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from W_ACC_ST.W_OP_CFG_SYS
+    where TYPE = #{type,jdbcType=VARCHAR}
+      and TYPE_SUB = #{typeSub,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="ConfigKey">
+    delete from W_ACC_ST.W_OP_CFG_SYS
+    where TYPE = #{type,jdbcType=VARCHAR}
+      and TYPE_SUB = #{typeSub,jdbcType=VARCHAR}
+      and CONFIG_NAME = #{configName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="Config">
+    insert into W_ACC_ST.W_OP_CFG_SYS (TYPE, TYPE_SUB, CONFIG_NAME, 
+      TYPE_NAME, TYPE_SUB_NAME, CONFIG_VALUE, 
+      REMARK)
+    values (#{type,jdbcType=VARCHAR}, #{typeSub,jdbcType=VARCHAR}, #{configName,jdbcType=VARCHAR}, 
+      #{typeName,jdbcType=VARCHAR}, #{typeSubName,jdbcType=VARCHAR}, #{configValue,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="Config">
+    insert into W_ACC_ST.W_OP_CFG_SYS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="typeSub != null">
+        TYPE_SUB,
+      </if>
+      <if test="configName != null">
+        CONFIG_NAME,
+      </if>
+      <if test="typeName != null">
+        TYPE_NAME,
+      </if>
+      <if test="typeSubName != null">
+        TYPE_SUB_NAME,
+      </if>
+      <if test="configValue != null">
+        CONFIG_VALUE,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="typeSub != null">
+        #{typeSub,jdbcType=VARCHAR},
+      </if>
+      <if test="configName != null">
+        #{configName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null">
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeSubName != null">
+        #{typeSubName,jdbcType=VARCHAR},
+      </if>
+      <if test="configValue != null">
+        #{configValue,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="Config">
+    update W_ACC_ST.W_OP_CFG_SYS
+    <set>
+      <if test="typeName != null">
+        TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeSubName != null">
+        TYPE_SUB_NAME = #{typeSubName,jdbcType=VARCHAR},
+      </if>
+      <if test="configValue != null">
+        CONFIG_VALUE = #{configValue,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TYPE = #{type,jdbcType=VARCHAR}
+      and TYPE_SUB = #{typeSub,jdbcType=VARCHAR}
+      and CONFIG_NAME = #{configName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Config">
+    update W_ACC_ST.W_OP_CFG_SYS
+    set TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      TYPE_SUB_NAME = #{typeSubName,jdbcType=VARCHAR},
+      CONFIG_VALUE = #{configValue,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where TYPE = #{type,jdbcType=VARCHAR}
+      and TYPE_SUB = #{typeSub,jdbcType=VARCHAR}
+      and CONFIG_NAME = #{configName,jdbcType=VARCHAR}
+  </update>
+</mapper>

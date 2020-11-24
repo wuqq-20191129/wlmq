@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.frame.mapper.MtrConfigMapper">
+    
+    <resultMap type="com.goldsign.acc.frame.entity.Config" id="rmConfig">
+       
+        <result column="TYPE" property="type" /> 
+        <result column="CONFIG_NAME" property="configName" /> 
+        <result column="CONFIG_VALUE" property="configValue" /> 
+        <result column="REMARK" property="remark" /> 
+      
+    </resultMap>
+    
+    <select id="getConfigValue"  parameterType="String" resultType="String">
+        select t.config_value from W_ACC_MN.W_MTR_CONFIG t where t.config_name = #{name}
+    </select>
+
+    <select id="getServerMsg" resultType="Map">
+        select t.ip, t.name from w_acc_mn.w_mtr_device_code t order by t.ip
+    </select>
+
+    <select id="getModuleMsg" resultType="Map">
+        select replace(t.class,'com.goldsign.acc.systemmonitor.handler.','') class_name,b.module_name from w_acc_mn.w_mtr_class_module_mapping t
+        left join w_acc_st.w_op_sys_module B on t.module_id = b.module_id and b.sys_flag = '12' order by t.module_id
+    </select>
+
+    <select id="execProcedure" statementType="CALLABLE">
+        {call ${sql}}
+    </select>
+</mapper>
+
+
+
+
+

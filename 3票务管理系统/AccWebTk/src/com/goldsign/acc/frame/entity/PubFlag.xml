@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.frame.mapper.PubFlagMapper">
+    <resultMap type="PubFlag" id="rmPubFlag">
+        <id column="code" property="code" />
+        <result column="code_text" property="code_text" />  
+    </resultMap>
+    <resultMap type="PubFlag" id="rmPubFlagType">
+        <id column="code" property="code" />
+        <result column="code_text" property="code_text" />  
+        <result column="code_type" property="code_type" />
+    </resultMap>
+    
+    <!--IC线路 -->
+    <select id="getLinesForIc"  resultMap="rmPubFlag">
+        select line_id code,line_name code_text  from w_acc_tk.w_ic_cod_line   order by line_id
+    </select>
+    <!--IC车站 -->
+    <select id="getStationsForIc"  resultMap="rmPubFlagType">
+        select line_id code_type,station_id code,chinese_name code_text  from w_acc_tk.w_ic_cod_station  order by line_id,station_id
+    </select>
+    <!--IC卡主类型 -->
+    <select id="getCardMainTypesForIc"  resultMap="rmPubFlag">
+        select ic_main_type code,ic_main_desc code_text  from w_acc_tk.w_ic_cod_card_main_type  order by ic_main_type
+    </select>
+    <!--IC卡主类型限制 -->
+    <select id="getCardMainTypesForIcLimit"  resultMap="rmPubFlag">
+        select ic_main_type code,ic_main_desc code_text  from w_acc_tk.w_ic_cod_card_main_type where ic_main_type in('1','2','12','40','7','8','10') order by ic_main_type
+    </select>
+    <!--IC卡子类型 -->
+    <select id="getCardSubTypesForIc"  resultMap="rmPubFlagType">
+        select ic_main_type code_type, ic_sub_type code, ic_sub_desc code_text  from w_acc_tk.w_ic_cod_card_sub_type  order by ic_main_type , ic_sub_type
+    </select>
+    
+    <select id="getButtons"  resultMap="rmPubFlag">
+        select BTN_ID code,BTN_NAME code_text  from w_acc_st.W_OP_COD_BTN_TYPE  order by BTN_ID
+    </select>
+
+    <select id="getCodesByType"  parameterType="int" resultType="PubFlag">
+        select  code, code_text  from w_acc_tk.w_ic_cod_pub_flag where type=#{type} order by code
+    </select>
+    <!--出入库原因 -->
+    <select id="getInOutReasonByFlag"  parameterType="String" resultType="PubFlag">
+        select es_worktype_id code_type, reason_id code, reason_describe code_text  
+        from w_acc_tk.w_ic_cod_in_out  where in_out_flag=#{flag}
+        order by es_worktype_id , reason_id   
+    </select>
+<!--    出入库类型 add by yaosw
+    <select id="getInOutTypes"  parameterType="String" resultType="PubFlag">
+        select   distinct in_out_flag code,in_out_desc code_text 
+        from w_acc_tk.w_ic_cod_in_out  where  1=1       
+    </select>-->
+        <!--出入库主类型 add by ldz-->
+    <select id="getInOutTypes"  parameterType="String" resultType="PubFlag">
+        select   distinct in_out_flag code,in_out_desc code_text 
+        from w_acc_tk.w_ic_cod_in_out  where  1=1  order by code     
+    </select>
+        <!--出入库子类型 add by ldz-->
+    <select id="getInOutSubTypes"  parameterType="String" resultType="PubFlag">
+
+        select distinct in_out_flag code_type, in_out_sub_type code,in_out_sub_type_desc code_text 
+        from w_acc_tk.w_ic_cod_in_out  where  1=1 order by code_type,code        
+    </select>
+
+    <!--ES操作员 -->
+    <select id="getEsOperators"   resultType="PubFlag">
+        select distinct sys_operator_id code, sys_operator_id code_text from  w_acc_st.w_op_sys_group_operator  
+        where sys_group_id='71' or sys_group_id='72'  
+    </select>
+    <!--仓库 -->
+    <select id="getStoragesAll"   resultType="PubFlag">
+        select storage_id code, storage_name code_text  from  w_acc_tk.w_ic_cod_storage    
+    </select>
+    <!--仓库（操作员） -->
+    <select id="getStoragesForOperator"  parameterType="String"  resultType="PubFlag">
+        select distinct b.sys_storage_id code, b.sys_storage_id code_text from w_acc_st.w_op_sys_group_operator a , w_acc_st.w_op_sys_group b 
+        where a.sys_group_id=b.sys_group_id and a.sys_operator_id=#{operatorId}    
+    </select>
+    <!--票区 -->
+    <select id="getStoragesAreas"   resultType="PubFlag">
+        select storage_id code_type ,area_id code,area_name code_text from W_ACC_TK.w_ic_cod_area order by storage_id,area_id 
+    </select>
+    <!--回收票区 -->
+    <select id="getStoragesAreasRecover"   resultType="PubFlag">
+        select storage_id code_type ,area_id code,area_name code_text from W_ACC_TK.w_ic_cod_area where area_id = '07'
+    </select>
+    
+    <!--待注销票区 -->
+    <select id="getStoragesAreasCancel"   resultType="PubFlag">
+        select storage_id code_type ,area_id code,area_name code_text from W_ACC_TK.w_ic_cod_area where area_id = '05'
+    </select>
+    <select id="getStoragesAreasBorrowIn"   resultType="PubFlag">
+        select storage_id code_type ,area_id code,area_name code_text from W_ACC_TK.w_ic_cod_area where area_id in ('05','01')
+    </select>
+    <select id="getStoragesAreasDestroy"   resultType="PubFlag">
+        select storage_id code_type ,area_id code,area_name code_text from W_ACC_TK.w_ic_cod_area where area_id = '06'
+    </select>
+    <!--es 工作类型 -->
+    <select id="getEsWorkTypes"   resultType="PubFlag">
+        select es_worktype_id code,es_worktype_name code_text from W_ACC_TK.w_ic_cod_es_work_type order by es_worktype_id  
+    </select>
+    <!--清洗入库出库单 -->
+    <select id="getCleanOutBills"   resultType="PubFlag">
+        select bill_no code,bill_no code_text from W_ACC_TK.w_ic_out_bill A  where record_flag = '0' and bill_type = 'QC' and in_flag ='0' 
+        and exists (select 1 from W_ACC_TK.w_ic_out_bill_detail B  where A.bill_no =B.bill_no and B.Storage_Id in 
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        )
+        order by code
+    </select>
+    <!--核查入库出库单 -->
+    <select id="getCancelOutBills"   resultType="PubFlag" parameterType="java.util.List">
+        select bill_no code,bill_no code_text from W_ACC_TK.w_ic_out_bill A where record_flag = '0' and bill_type = 'HC' and in_flag ='0' 
+        and exists (select 1 from W_ACC_TK.w_ic_out_bill_detail B  where A.bill_no =B.bill_no and B.Storage_Id in 
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        )
+        order by code
+    </select>
+    <!--AFC线路 -->
+    <select id="getLinesForAfc"  resultMap="rmPubFlag">
+        select a.line_id code,a.line_name code_text from w_acc_st.w_op_prm_line a
+        where a.record_flag='0' order by a.line_id
+    </select>
+    <!--AFC车站 -->
+    <select id="getStationsForAfc"  resultMap="rmPubFlagType">
+        select a.line_id code_type,a.station_id code,a.chinese_name code_text from w_acc_st.w_op_prm_station a 
+        where a.record_flag='0' order by a.line_id,a.station_id
+       
+    </select>
+    <!--AFC卡主类型 -->
+    <select id="getCardMainTypesForAfc"  resultMap="rmPubFlag">
+        select a.card_main_id code ,a.card_main_name code_text from w_acc_st.w_op_prm_card_main a 
+        where a.record_flag='0' order by a.card_main_id
+    </select>
+    <!--AFC卡子类型 -->
+    <select id="getCardSubTypesForAfc"  resultMap="rmPubFlagType">
+        select a.card_main_id code_type,a.card_sub_id code,a.card_sub_name code_text from w_acc_st.w_op_prm_card_sub a 
+        where a.record_flag='0' order by a.card_main_id,a.card_sub_id
+       
+    </select>
+    
+    <!--生产工作单-->
+    <select id="getPduProduceBills"  parameterType="String" resultMap="rmPubFlagType">
+        select bill_no code,bill_no code_text  from w_acc_tk.w_ic_pdu_produce_bill  
+        where record_flag='0' and  in_flag='0' and verify_person=#{operatorId}
+        order by bill_no
+    </select>
+    
+    <!--查询出库原因，用于生产入库的入库原因 -->
+    <select id="getInOutReasonForInProduces"  resultType="PubFlag">
+        select es_worktype_id code_type, reason_id code, reason_describe code_text  
+        from w_acc_tk.w_ic_cod_in_out  where in_out_flag='2' and reason_id in ('02','04','05','06','07')
+        order by es_worktype_id , reason_id   
+    </select>
+    
+    <!--借票单位 -->
+    <select id="getBorrowUnits" resultMap="rmPubFlag">
+        select a.unit_id code,a.unit_name code_text from w_acc_tk.w_ic_cod_borrow_unit a order by a.unit_id
+    </select>
+    <!--配票出库原因-->
+    <select id="getInOutReasonForDistribute"  resultType="PubFlag">
+        select es_worktype_id code_type, reason_id code, reason_describe code_text  
+        from w_acc_tk.w_ic_cod_in_out  where in_out_flag='2' and reason_id in ('17','18','19')
+        order by es_worktype_id , reason_id   
+    </select>
+    <!--借票出库原因-->
+    <select id="getInOutReasonForBorrow"  resultType="PubFlag">
+        select es_worktype_id code_type, reason_id code, reason_describe code_text  
+        from w_acc_tk.w_ic_cod_in_out  where in_out_flag='2' and reason_id ='21'
+        order by es_worktype_id , reason_id   
+    </select>
+    <!--线路 -->
+    <select id="getLines"  resultMap="rmPubFlag">
+        select line_id code,line_name code_text from w_acc_st.w_op_prm_line where record_flag='0'
+    </select>
+    
+    <!--线路车站 -->
+    <select id="getStations"  resultMap="rmPubFlag">
+        select line_id code_type,station_id code,chinese_name code_text  from w_acc_st.w_op_prm_station where record_flag='0'
+    </select>
+     
+    <!-- 仓库线路 -->
+    <select id="getStorageLines"  resultMap="rmPubFlag">
+        select a.storage_id code_type,b.line_id code,b.line_name code_text from w_acc_tk.W_IC_COD_STORAGE_LINE a,w_acc_tk.W_ic_cod_line b where to_number(a.line_id)=to_number(b.line_id)
+    </select>
+    <!--编码区赋值区-->
+    <select id="getStoragesAreasEncodeAndValue" resultType="PubFlag"> select storage_id code_type ,area_id code,area_name code_text from W_ACC_TK.w_ic_cod_area where area_id in ('02','03') </select>
+    <!-- 生产厂商 -->
+    <select id="getProduceFactory"  resultMap="rmPubFlag">
+        select factory_code code,factory_name code_text  from w_acc_tk.w_ic_cod_factory
+    </select>
+    <!-- ic线路-->
+    <select id="getLinesByStorageId"  parameterType="java.lang.String" resultMap="rmPubFlag">
+        select line_id code,line_name code_text from w_acc_tk.w_ic_cod_line 
+        where exists (select 1 from w_acc_tk.W_IC_COD_STORAGE_LINE  
+        where to_number(w_ic_cod_line.line_id)=to_number(W_IC_COD_STORAGE_LINE.line_id) 
+        and W_IC_COD_STORAGE_LINE.storage_id = #{storageId})  
+        order by to_number(w_ic_cod_line.line_id)
+    </select>
+    
+    <!-- 出入差额原因 -->
+    <select id="getDiffReasons"  resultMap="rmPubFlag">
+        select diff_id code, diff_desc code_text  from w_acc_tk.w_ic_cod_diff_reason
+    </select>
+    
+    <!--回收入库明细筛选票卡类型 -->
+    <select id="getCardMainTypesForReturn"  resultType="PubFlag">
+        select ic_main_type code_type,ic_main_type code,ic_main_desc code_text  from w_acc_tk.w_ic_cod_card_main_type  order by ic_main_type
+    </select>
+    <!--借票单号-->
+    <select id="getLendBillNos"  resultMap="rmPubFlag">
+        select A.bill_no code,A.bill_no  code_text from w_acc_tk.w_ic_out_lend_bill A where A.return_flag='0' and A.record_flag='0'  order by code 
+    </select>
+    
+    <!--ES机器号 -->
+    <select id="getDevCodeES"   resultType="PubFlag">
+        select device_id code, device_id code_text  from  w_acc_st.w_op_prm_dev_code_acc
+            where record_flag ='0' and dev_type_id ='09'
+    </select>
+    
+    <!--单据名称 -->
+    <select id="getBillName"   resultType="PubFlag">
+        select bill_name code, bill_name code_text  from  W_ACC_TK.W_IC_COD_BILL_TYPE
+            order by code
+    </select>
+    
+</mapper>

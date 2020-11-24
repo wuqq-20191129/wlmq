@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.produceorder.mapper.LogicNosMapper">
+    
+    <resultMap type="com.goldsign.acc.app.produceorder.entity.LogicNos" id="rmLogicNos">
+        <result column="order_no" property="order_no" /> 
+        <result column="start_logic_no" property="start_logic_no" /> 
+        <result column="end_logic_no" property="end_logic_no" /> 
+    </resultMap>
+    
+    <select id="getLogicNos"  parameterType="LogicNos" resultMap="rmLogicNos">
+        SELECT order_no,start_logic_no,end_logic_no 
+        FROM w_acc_tk.w_ic_sam_logic_nos where 1=1
+        <if test="order_no != null and order_no !=''" >  
+            and order_no = #{order_no}
+        </if> 
+    </select>
+    
+</mapper>

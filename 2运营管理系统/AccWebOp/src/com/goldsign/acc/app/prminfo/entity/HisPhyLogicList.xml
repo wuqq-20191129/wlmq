@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.HisPhyLogicListMapper">
+    
+   <resultMap type="HisPhyLogicList" id="rmHisPhyLogicList">
+        <result column="water_no" property="water_no" /> 
+        <result column="physic_no" property="physic_no" /> 
+        <result column="logic_no" property="logic_no" /> 
+        <result column="insert_time" property="insert_time" /> 
+    </resultMap>
+
+    <select id="getHisPhyLogicLists"  parameterType="HisPhyLogicList" resultMap="rmHisPhyLogicList">
+        select physic_no,water_no,logic_no,insert_time
+        from W_ACC_ST.W_OP_HIS_PHY_LOGIC_LIST 
+        where 1=1 
+        <if test="water_no !=null and water_no !=''">
+            and water_no =#{water_no} 
+        </if>
+    </select>
+    
+    <select id="getHisPhyLogicListsByInWaterNos"  parameterType="HisPhyLogicList" resultMap="rmHisPhyLogicList">
+        select physic_no,water_no,logic_no,insert_time
+        from W_ACC_ST.W_OP_HIS_PHY_LOGIC_LIST 
+        where 1=1 
+        <if test="waterNoList != '' and waterNoList != null">  
+            and physic_no in  
+            <foreach item="item" index="index" collection="waterNoList" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach>  
+        </if> 
+    </select>
+    
+    <select id="getHisPhyLogicListsByInPhysicNos"  parameterType="HisPhyLogicList" resultMap="rmHisPhyLogicList">
+        select physic_no,water_no,logic_no,insert_time
+        from W_ACC_ST.W_OP_HIS_PHY_LOGIC_LIST 
+        where 1=1 
+        <if test="physicNoList != '' and physicNoList != null">  
+            and physic_no in  
+            <foreach item="item" index="index" collection="physicNoList" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach>  
+        </if> 
+    </select>
+    
+    <select id="getHisPhyLogicListsByInLogicNos"  parameterType="HisPhyLogicList" resultMap="rmHisPhyLogicList">
+        select physic_no,water_no,logic_no,insert_time
+        from W_ACC_ST.W_OP_HIS_PHY_LOGIC_LIST 
+        where 1=1 
+        <if test="logicNoList != '' and logicNoList != null">  
+            and logic_no in  
+            <foreach item="item" index="index" collection="logicNoList" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach>  
+        </if> 
+    </select>
+    
+    <insert id="addHisPhyLogicList" parameterType="HisPhyLogicList" >
+        insert into  W_ACC_ST.W_OP_HIS_PHY_LOGIC_LIST(physic_no,water_no,logic_no,insert_time)
+        values(#{physic_no},#{water_no},#{logic_no},#{insert_time})        
+    </insert> 
+    
+    <delete id="deleteHisPhyLogicList" parameterType="HisPhyLogicList">
+        delete from W_ACC_ST.W_OP_HIS_PHY_LOGIC_LIST where water_no=#{water_no}
+    </delete>
+    
+</mapper>

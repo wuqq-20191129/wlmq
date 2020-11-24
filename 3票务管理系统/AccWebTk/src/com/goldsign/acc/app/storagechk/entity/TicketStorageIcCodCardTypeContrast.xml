@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.storagechk.mapper.TicketStorageIcCodCardTypeContrastMapper" >
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.storagechk.entity.TicketStorageIcCodCardTypeContrast" >
+    <constructor >
+      <idArg column="IC_MAIN_TYPE" jdbcType="CHAR" javaType="java.lang.String" />
+      <idArg column="IC_SUB_TYPE" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CARD_MAIN_TYPE" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CARD_SUB_TYPE" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="BOX_UNIT" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    IC_MAIN_TYPE, IC_SUB_TYPE, CARD_MAIN_TYPE, CARD_SUB_TYPE, BOX_UNIT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcCodCardTypeContrastKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from W_IC_COD_CARD_TYPE_CONTRAST
+    where IC_MAIN_TYPE = #{icMainType,jdbcType=CHAR}
+      and IC_SUB_TYPE = #{icSubType,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcCodCardTypeContrastKey" >
+    delete from W_IC_COD_CARD_TYPE_CONTRAST
+    where IC_MAIN_TYPE = #{icMainType,jdbcType=CHAR}
+      and IC_SUB_TYPE = #{icSubType,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcCodCardTypeContrast" >
+    insert into W_IC_COD_CARD_TYPE_CONTRAST (IC_MAIN_TYPE, IC_SUB_TYPE, CARD_MAIN_TYPE, 
+      CARD_SUB_TYPE, BOX_UNIT)
+    values (#{icMainType,jdbcType=CHAR}, #{icSubType,jdbcType=CHAR}, #{cardMainType,jdbcType=CHAR}, 
+      #{cardSubType,jdbcType=CHAR}, #{boxUnit,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcCodCardTypeContrast" >
+    insert into W_IC_COD_CARD_TYPE_CONTRAST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="icMainType != null" >
+        IC_MAIN_TYPE,
+      </if>
+      <if test="icSubType != null" >
+        IC_SUB_TYPE,
+      </if>
+      <if test="cardMainType != null" >
+        CARD_MAIN_TYPE,
+      </if>
+      <if test="cardSubType != null" >
+        CARD_SUB_TYPE,
+      </if>
+      <if test="boxUnit != null" >
+        BOX_UNIT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="icMainType != null" >
+        #{icMainType,jdbcType=CHAR},
+      </if>
+      <if test="icSubType != null" >
+        #{icSubType,jdbcType=CHAR},
+      </if>
+      <if test="cardMainType != null" >
+        #{cardMainType,jdbcType=CHAR},
+      </if>
+      <if test="cardSubType != null" >
+        #{cardSubType,jdbcType=CHAR},
+      </if>
+      <if test="boxUnit != null" >
+        #{boxUnit,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcCodCardTypeContrast" >
+    update W_IC_COD_CARD_TYPE_CONTRAST
+    <set >
+      <if test="cardMainType != null" >
+        CARD_MAIN_TYPE = #{cardMainType,jdbcType=CHAR},
+      </if>
+      <if test="cardSubType != null" >
+        CARD_SUB_TYPE = #{cardSubType,jdbcType=CHAR},
+      </if>
+      <if test="boxUnit != null" >
+        BOX_UNIT = #{boxUnit,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where IC_MAIN_TYPE = #{icMainType,jdbcType=CHAR}
+      and IC_SUB_TYPE = #{icSubType,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcCodCardTypeContrast" >
+    update W_IC_COD_CARD_TYPE_CONTRAST
+    set CARD_MAIN_TYPE = #{cardMainType,jdbcType=CHAR},
+      CARD_SUB_TYPE = #{cardSubType,jdbcType=CHAR},
+      BOX_UNIT = #{boxUnit,jdbcType=DECIMAL}
+    where IC_MAIN_TYPE = #{icMainType,jdbcType=CHAR}
+      and IC_SUB_TYPE = #{icSubType,jdbcType=CHAR}
+  </update>
+</mapper>

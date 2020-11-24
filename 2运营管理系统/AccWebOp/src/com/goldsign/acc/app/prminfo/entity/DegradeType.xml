@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.DegradeTypeMapper">
+    <resultMap type="DegradeType" id="rmDegradeType">
+        
+        <result column="status_id" property="status_id" /> 
+        <result column="status_name" property="status_name" />
+        <result column="hdl_flag" property="hdl_flag" />
+    </resultMap>
+
+    
+     
+    <select id="getDegradeType"  parameterType="DegradeType" resultMap="rmDegradeType">
+        select status_id,status_name,hdl_flag
+        from W_ACC_ST.W_OP_COD_DEGRADE_TYPE where hdl_flag=#{hdl_flag} 
+        <if test="status_id !=null and status_id !=''">
+            and status_id =#{status_id} 
+        </if> 
+        <if test="status_name !=null and status_name !=''">
+            or status_name =#{status_name} 
+        </if>
+        order by status_id
+    </select>
+    
+    <select id="getDegradeTypeById"  parameterType="DegradeType" resultMap="rmDegradeType">
+        select status_id,status_name,hdl_flag from W_ACC_ST.W_OP_COD_DEGRADE_TYPE 
+        where hdl_flag=#{hdl_flag} and status_id=#{status_id}        
+    </select>
+    
+    <select id="getDegradeTypeByName"  parameterType="DegradeType" resultMap="rmDegradeType">
+        select status_id,status_name,hdl_flag from W_ACC_ST.W_OP_COD_DEGRADE_TYPE 
+        where hdl_flag=#{hdl_flag} and status_name=#{status_name}  
+        <if test="status_id !=null and status_id !=''">
+            and status_id !=#{status_id} 
+        </if>  
+    </select>
+    
+    <insert id="addDegradeType" parameterType="DegradeType" >
+        insert into W_ACC_ST.W_OP_COD_DEGRADE_TYPE(status_id,status_name,hdl_flag)
+        values(#{status_id},#{status_name},#{hdl_flag})               
+    </insert>
+    
+    <update id="modifyDegradeType" parameterType="DegradeType" >
+        update W_ACC_ST.W_OP_COD_DEGRADE_TYPE set status_name=#{status_name} 
+        where hdl_flag=#{hdl_flag} and status_id=#{status_id}                                                 
+    </update>
+    
+    <delete id="deleteDegradeType" parameterType="DegradeType">
+            delete from W_ACC_ST.W_OP_COD_DEGRADE_TYPE where hdl_flag=#{hdl_flag} and status_id=#{status_id}             
+    </delete>     
+    
+</mapper>

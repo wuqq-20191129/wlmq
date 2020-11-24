@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicparams.mapper.ParamsThresMapper">
+    
+    <resultMap type="com.goldsign.acc.app.basicparams.entity.ParamsThres" id="rmParamsThres">
+        
+        <result column="ID" property="id" /> 
+        <result column="DISTANCE_THRES" property="distanceThres" /> 
+        <result column="STATION_THRES" property="stationThres" /> 
+        <result column="CHANGE_THRES" property="changeThres" /> 
+        <result column="TIME_THRES" property="timeThres" /> 
+        <result column="DESCRIPTION" property="description" /> 
+        <result column="RECORD_FLAG" property="recordFlag" /> 
+        <result column="VERSION" property="version" /> 
+        <result column="UPDATE_TIME" property="updateTime" /> 
+        <result column="UPDATE_OPERATOR" property="updateOperator" /> 
+   
+    </resultMap>
+    
+    <insert id="addPlan" parameterType="com.goldsign.acc.app.basicparams.entity.ParamsThres" >
+        insert into w_acc_rl.w_rl_params_threshold (id, distance_thres, station_thres, change_thres, time_thres,
+        description, record_flag, version, update_time, update_operator)
+        values(  w_acc_rl.W_SEQ_W_RL_PARAMS_THRESHOLD.Nextval,  #{distanceThres}, #{stationThres}, #{changeThres}, #{timeThres}, #{description}, #{recordFlag}, to_char(sysdate,'yyyyMMddhh24mi'), sysdate, #{updateOperator}  )
+    </insert>
+    
+    <select id="queryPlan"  parameterType="com.goldsign.acc.app.basicparams.entity.ParamsThres" resultMap="rmParamsThres">
+        select * from w_acc_rl.w_rl_params_threshold 
+        <where> 
+            <if test="recordFlag != null and recordFlag !=''" >  
+                RECORD_FLAG = #{recordFlag}
+            </if> 
+            <if test="id != null and id !=''" >  
+                and id = #{id}
+            </if> 
+        </where>
+        order by id desc
+    </select>
+    
+    <select id="getMaxId" resultType="String">
+        select max(id) from w_acc_rl.w_rl_params_threshold 
+    </select>
+    
+    <delete id="deletePlan" parameterType="com.goldsign.acc.app.basicparams.entity.ParamsThres" >
+        delete from  w_acc_rl.w_rl_params_threshold where id = #{id} and record_flag = #{recordFlag}                          
+    </delete>
+    
+    <update id="modifyPlan" parameterType="com.goldsign.acc.app.basicparams.entity.ParamsThres" >
+        update w_acc_rl.w_rl_params_threshold 
+        set distance_thres = #{distanceThres}, station_thres = #{stationThres}, change_thres = #{changeThres},
+        time_thres = #{timeThres}, description = #{description}, update_time = sysdate, update_operator= #{updateOperator} 
+        where id = #{id} and record_flag = #{recordFlag} 
+    </update>
+    
+    <update id="updateCurrentToHistory" parameterType="com.goldsign.acc.app.basicparams.entity.ParamsThres" >
+        update w_acc_rl.w_rl_params_threshold 
+        set update_time = sysdate, update_operator = #{updateOperator}, record_flag = '2'
+        where record_flag = '0'
+    </update>
+    
+    <update id="auditUpdate" parameterType="com.goldsign.acc.app.basicparams.entity.ParamsThres" >
+        update w_acc_rl.w_rl_params_threshold 
+        set update_time = sysdate, update_operator = #{updateOperator}, record_flag = '0'
+        where id = #{id}
+    </update>
+ 
+    
+</mapper>
+

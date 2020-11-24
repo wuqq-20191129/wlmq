@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.AdminHandleQueryMapper">
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.querysys.entity.AdminHandleQuery">
+    <result column="WATER_NO" jdbcType="INTEGER" property="waterNo" />
+    <result column="LINE_ID" jdbcType="CHAR" property="lineId" />
+    <result column="STATION_ID" jdbcType="CHAR" property="stationId" />
+    <result column="DEV_TYPE_ID" jdbcType="CHAR" property="devTypeId" />
+    <result column="DEVICE_ID" jdbcType="CHAR" property="deviceId" />
+    <result column="ADMIN_DATETIME" jdbcType="VARCHAR" property="adminDatetime" />
+    <result column="ADMIN_WAY_ID" jdbcType="CHAR" property="adminWayId" />
+    <result column="CARD_MAIN_ID" jdbcType="CHAR" property="cardMainId" />
+    <result column="CARD_SUB_ID" jdbcType="CHAR" property="cardSubId" />
+    <result column="RETURN_FEE" jdbcType="DECIMAL" property="returnFee" />
+    <result column="PENALTY_FEE" jdbcType="DECIMAL" property="penaltyFee" />
+    <result column="ADMIN_REASON_ID" jdbcType="CHAR" property="adminReasonId" />
+    <result column="DESCRIBE" jdbcType="CHAR" property="describe" />
+    <result column="PASSENGER_NAME" jdbcType="CHAR" property="passengerName" />
+    <result column="OPERATOR_ID" jdbcType="CHAR" property="operatorId" />
+    <result column="SHIFT_ID" jdbcType="CHAR" property="shiftId" />
+    <result column="BALANCE_WATER_NO" jdbcType="CHAR" property="balanceWaterNo" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="CHECK_FLAG" jdbcType="CHAR" property="checkFlag" />
+  </resultMap>
+  <select id = "getAdminHandleQuery" parameterType= "com.goldsign.acc.app.querysys.entity.AdminHandleQuery" resultMap="BaseResultMap">
+      select WATER_NO, LINE_ID, STATION_ID,
+      DEV_TYPE_ID, DEVICE_ID, TO_CHAR(ADMIN_DATETIME,'YYYY-MM-DD HH24:MI:SS') ADMIN_DATETIME,
+      ADMIN_WAY_ID, CARD_MAIN_ID, CARD_SUB_ID,
+      RETURN_FEE, PENALTY_FEE, ADMIN_REASON_ID,
+      DESCRIBE, PASSENGER_NAME, OPERATOR_ID,
+      SHIFT_ID, BALANCE_WATER_NO, FILE_NAME,
+      CHECK_FLAG from w_acc_st_his.W_ST_HIS_ADMIN
+      where 1 = 1
+      <if test="beginDatetime != null">
+       and  ADMIN_DATETIME &gt;= to_date(#{beginDatetime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+      </if>
+      <if test="endDatetime != null">
+       and  ADMIN_DATETIME &lt;= to_date(#{endDatetime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+      </if>
+      <if test="adminReasonId != null">
+       and ADMIN_REASON_ID  = #{adminReasonId}
+      </if>
+      <if test="cardMainId != null">
+       and CARD_MAIN_ID = #{cardMainId}
+      </if>
+      <if test="cardSubId != null">
+       and CARD_SUB_ID = #{cardSubId}
+      </if>
+  </select>
+
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.query.mapper.BoxLogicalDetailMapper">
+    
+    <resultMap type="com.goldsign.acc.app.query.entity.BoxLogicalDetail" id="rmBoxLogicalDetail">
+        <result column="box_id" property="box_id" /> 
+        <result column="start_logical_id" property="start_logical_id" /> 
+        <result column="end_logical_id" property="end_logical_id" /> 
+    </resultMap>
+    
+    <select id="query"  parameterType="com.goldsign.acc.app.query.entity.BoxLogicalDetail" resultMap="rmBoxLogicalDetail">
+        select box_id,start_logical_id,end_logical_id from w_acc_tk.w_ic_cod_box_detail 
+        <where> 
+            <if test="box_id != null and box_id !=''" >  
+                box_id = #{box_id}
+            </if> 
+        </where>
+        order by start_logical_id
+    </select>
+    
+    
+</mapper>
+
+

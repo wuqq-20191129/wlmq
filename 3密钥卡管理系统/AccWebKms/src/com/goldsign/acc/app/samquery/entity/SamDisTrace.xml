@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.samquery.mapper.SamDisTraceMapper">
+    <resultMap type="SamDisTrace" id="rmSamDisTrace">
+        <result column="sam_type" property="sam_type" /> 
+        <result column="logic_no" property="logic_no" />
+        <result column="distribute_place" property="distribute_place" /> 
+    </resultMap>
+     
+    <select id="getSamDisTrace"  parameterType="SamDisTrace" resultMap="rmSamDisTrace">
+        select sam_type,logic_no,distribute_place from  W_ACC_TK.W_IC_SAM_STOCK where stock_state='04'
+        <if test="sam_type !=null and sam_type !=''">
+            and sam_type =#{sam_type} 
+        </if>
+        <if test="beginLogicNo !=null and beginLogicNo !=''">
+            and logic_no &gt;= #{beginLogicNo} 
+        </if>
+        <if test="endLogicNo !=null and endLogicNo !=''">
+            and logic_no &lt;= #{endLogicNo} 
+        </if>
+        <if test="distribute_place !=null and distribute_place !=''">
+            and distribute_place =#{distribute_place} 
+        </if>
+        order by sam_type,logic_no
+    </select>
+    
+</mapper>

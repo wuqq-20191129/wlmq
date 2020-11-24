@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.sysconfig.mapper.TaskConfigMapper">
+    
+    <resultMap type="com.goldsign.acc.app.sysconfig.entity.TaskConfig" id="rmTaskConfig">      
+        <result column="CLASSNAME" property="className" /> 
+        <result column="TASKNAME" property="taskName" /> 
+        <result column="INTERVAL" property="interval" />
+        <result column="STARTTIME" property="startTime" />   
+        <result column="STATUS" property="status" /> 
+        <result column="REMARK" property="remark" />                  
+    </resultMap>
+    
+    <select id="queryTaskConfig" parameterType="com.goldsign.acc.app.sysconfig.entity.TaskConfig" resultMap="rmTaskConfig">
+        select * from  w_acc_st.w_op_dm_task_config where 1=1 
+        <if test="taskName != '' and taskName != null">
+            and TASKNAME like concat(concat('%',#{taskName}),'%')
+        </if>
+        <if test="status != '' and status != null">
+            and STATUS = #{status}
+        </if>        
+    </select>
+    <select id="queryTaskStatus" parameterType="com.goldsign.acc.app.sysconfig.entity.TaskConfig" resultMap="rmTaskConfig">
+        select STATUS from  w_acc_st.w_op_dm_task_config where 1=1 
+        <if test="taskName != '' and taskName != null">
+            and TASKNAME like concat(concat('%',#{taskName}),'%')
+        </if>
+               
+    </select>
+    
+    <update id="modifyTaskConfig" parameterType="com.goldsign.acc.app.sysconfig.entity.TaskConfig">
+        update w_acc_st.w_op_dm_task_config t set  t.STARTTIME=#{startTime} where t.TASKNAME=#{taskName}
+    </update>
+    
+    <update id="modifyStatus" parameterType="com.goldsign.acc.app.sysconfig.entity.TaskConfig">
+        update w_acc_st.w_op_dm_task_config set STATUS = #{status}  where TASKNAME = #{taskName}
+    </update>
+    
+    <insert id="addTaskConfig" parameterType="com.goldsign.acc.app.sysconfig.entity.TaskConfig">
+        insert into w_acc_st.w_op_dm_task_config (CLASSNAME,TASKNAME,INTERVAL,STARTTIME,STATUS,REMARK) 
+        values (#{className},#{taskName},#{interval},#{startTime},#{status},#{remark})
+    </insert>
+    <!--added by zhongzq 20171211-->
+    <update id="updateTaskStatus" parameterType="com.goldsign.acc.app.sysconfig.entity.TaskConfig">
+        update w_acc_st.w_op_dm_task_config set STATUS = #{status}  
+        <if test="taskName != '' and taskName != null">
+            where TASKNAME = #{taskName}
+        </if>
+    </update>
+</mapper>

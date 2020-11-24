@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper  namespace = "com.goldsign.acc.app.basicinfo.mapper.TicketStorageBorrowUnitDefManageMapper">
+    
+    <resultMap type = "com.goldsign.acc.app.basicinfo.entity.TicketStorageBorrowUnitDefManage"  id = "rmTicketStorageBorrowUnitDefManage">
+        <result column="unit_id"  property="unit_id"/>
+        <result column="unit_name"  property="unit_name"/>
+    </resultMap>
+    
+    <select id="getTicketStorageBorrowUnitDefManage"   resultMap="rmTicketStorageBorrowUnitDefManage">
+        select unit_id ,unit_name  from w_acc_tk.w_ic_cod_borrow_unit where 1=1
+        <if test ="unit_id !=null and unit_id != ''">
+            and trim(unit_id) =#{unit_id}
+        </if> 
+        <if test ="unit_name !=null and unit_name != ''">
+            and unit_name  like  concat(concat('%',#{unit_name}),'%')
+        </if>
+        order by unit_id
+    </select>
+    
+    <select id="getBorrowUnitDefManageForAdd"   resultMap="rmTicketStorageBorrowUnitDefManage">
+        select unit_id ,unit_name  from w_acc_tk.w_ic_cod_borrow_unit where 1=1
+        <if test="unit_id !=null and unit_id != ''">
+           and trim(unit_id) =#{unit_id}
+        </if>
+        order by unit_id
+    </select>
+    
+    <select id="getListForAdd"   resultMap="rmTicketStorageBorrowUnitDefManage">
+        select unit_id   from w_acc_tk.w_ic_cod_borrow_unit  where trim(unit_id)=trim(#{unit_id}) 
+    </select>
+    
+     <select id="getListForAddName"   resultMap="rmTicketStorageBorrowUnitDefManage">
+        select unit_name  from w_acc_tk.w_ic_cod_borrow_unit  where  unit_name = #{unit_name}
+    </select>
+    
+    <select id="getListForModify"   resultMap="rmTicketStorageBorrowUnitDefManage">
+        select * from w_acc_tk.w_ic_cod_borrow_unit  where  trim(unit_id)=trim(#{unit_id}) 
+    </select>
+    
+    <select id="getListForModifyName"   resultType="java.lang.String">
+        select trim(unit_name) from w_acc_tk.w_ic_cod_borrow_unit  
+    </select>
+    
+    <select id="getOutLendBillName"   resultType="java.lang.String">
+        select unit_id from w_acc_tk.W_IC_OUT_LEND_BILL  
+    </select>
+ 
+    <update id="modifyTicketStorageBorrowUnitDefManage" parameterType="TicketStorageBorrowUnitDefManage" >
+       update w_acc_tk.w_ic_cod_borrow_unit set unit_name=#{unit_name} where trim(unit_id)=#{unit_id}                                                
+    </update>
+    
+    <insert id="addTicketStorageBorrowUnitDefManage" parameterType="TicketStorageBorrowUnitDefManage" >
+        insert into w_acc_tk.w_ic_cod_borrow_unit(unit_id,unit_name)
+        values(#{unit_id},#{unit_name})        
+        
+    </insert>
+    
+    <delete id="deleteTicketStorageBorrowUnitDefManage" parameterType="TicketStorageBorrowUnitDefManage">
+        delete from w_acc_tk.w_ic_cod_borrow_unit
+        where trim(unit_id)=trim(#{unit_id})             
+    </delete>
+</mapper>
+
+
+

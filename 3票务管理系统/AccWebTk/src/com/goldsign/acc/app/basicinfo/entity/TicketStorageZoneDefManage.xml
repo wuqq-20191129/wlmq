@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicinfo.mapper.TicketStorageZoneDefManageMapper">
+    <resultMap type="TicketStorageZoneDefManage" id="rmTicketStorageZoneDefManage">
+        <result column="area_id" property="area_id" /> 
+        <result column="area_name" property="area_name" />
+        <result column="storage_id" property="storage_id" />
+        <result column="storage_name" property="storage_name" />
+        <result column="real_num" property="real_num" />
+        <result column="upper_num" property="upper_num" />
+    </resultMap>
+     
+    <select id="getTicketStorageZoneDefManage"  parameterType="TicketStorageZoneDefManage" resultMap="rmTicketStorageZoneDefManage">
+        select a.area_id,a.area_name,sto.storage_id,sto.storage_name,real_num,upper_num from W_ACC_TK.W_ic_cod_area a,W_ACC_TK.W_ic_cod_storage sto where a.storage_id=sto.storage_id
+        <if test="area_id != null and area_id != ''">
+            and a.area_id like #{area_id}
+        </if>
+        <if test="storage_id != null and storage_id != ''">
+            and a.storage_id = #{storage_id}
+        </if>
+        order by a.area_id
+    </select>
+     
+    <select id="isExistRecord"  parameterType="TicketStorageZoneDefManage" resultMap="rmTicketStorageZoneDefManage">
+        select * from W_ACC_TK.W_ic_cod_area where area_name=#{area_name}
+    </select>
+     
+    <select id="getAreaIdCount" resultType="java.lang.String" >
+        select count(area_id) as Rcount from W_ACC_TK.W_ic_cod_area
+    </select>
+     
+    <select id="getAreaIdCountNew" resultType="java.lang.String" >
+       select max(area_id)+1 RcheckNo from W_ACC_TK.W_ic_cod_area
+    </select>
+    
+    <select id="getRealNum" parameterType="TicketStorageZoneDefManage" resultMap="rmTicketStorageZoneDefManage" >
+       select real_num from W_ACC_TK.W_ic_cod_area where area_id=#{area_id} and storage_id=#{storage_id}
+    </select>
+    
+    <insert id="addTicketStorageZoneDefManage" parameterType="TicketStorageZoneDefManage" >
+        insert into W_ACC_TK.W_ic_cod_area(area_id,area_name,storage_id,real_num,upper_num)
+        values(#{area_id},#{area_name},#{storage_id},#{real_num},#{upper_num})             
+    </insert>
+    
+    <update id="modifyTicketStorageZoneDefManage" parameterType="TicketStorageZoneDefManage" >
+        update W_ACC_TK.W_ic_cod_area set  upper_num=#{upper_num},area_name=#{area_name}  where area_id=#{area_id} and storage_id=#{storage_id}                                               
+    </update>
+    
+    <delete id="deleteTicketStorageZoneDefManage" parameterType="TicketStorageZoneDefManage">
+        delete from W_ACC_TK.W_ic_cod_area where area_id=#{area_id} and storage_id=#{storage_id} and real_num=0        
+    </delete>     
+    
+</mapper>
+

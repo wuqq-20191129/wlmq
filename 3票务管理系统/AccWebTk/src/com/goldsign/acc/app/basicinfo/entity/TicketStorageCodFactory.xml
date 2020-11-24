@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicinfo.mapper.TicketStorageCodFactoryMapper">
+    <resultMap type="com.goldsign.acc.app.basicinfo.entity.TicketStorageCodFactory" id="rmTicketStorageCodFactory">
+        
+        <result column="factory_code" property="factory_code" /> 
+        <result column="factory_name" property="factory_name" />
+        <result column="factory_description" property="factory_description" />
+    </resultMap>
+     
+    <select id="queryIcCodFactory"  parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageCodFactory" resultMap="rmTicketStorageCodFactory">
+        select factory_code,factory_name,factory_description  from  W_ACC_TK.W_IC_COD_FACTORY where 1=1 
+        <if test="factory_code !=null and factory_code !=''">
+            and factory_code =#{factory_code} 
+        </if> 
+        <if test="factory_name !=null and factory_name !=''">
+            and factory_name like concat(concat('%',#{factory_name}),'%') 
+        </if>  
+        order by factory_code
+    </select>
+    <select id="getListForAddName"   resultMap="rmTicketStorageCodFactory">
+        select factory_name  from W_ACC_TK.W_IC_COD_FACTORY  where  factory_name = #{factory_name}
+    </select>
+    
+    <select id="queryIcCodFactoryById"  parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageCodFactory" resultMap="rmTicketStorageCodFactory">
+        select factory_code,factory_name,factory_description  from  W_ACC_TK.W_IC_COD_FACTORY where  factory_code =#{factory_code}        
+    </select>
+    
+    <select id="queryIcCodFactoryByName"  parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageCodFactory" resultMap="rmTicketStorageCodFactory">
+        select factory_name  from  W_ACC_TK.W_IC_COD_FACTORY 
+    </select>
+    
+    <insert id="addIcCodFactory" parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageCodFactory" >
+        insert into W_ACC_TK.W_IC_COD_FACTORY(factory_code,factory_name,factory_description) values(#{factory_code},#{factory_name},#{factory_description})               
+    </insert>
+    
+    <update id="modifyIcCodFactory" parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageCodFactory" >
+        update W_ACC_TK.W_IC_COD_FACTORY set factory_name =#{factory_name} , factory_description=#{factory_description} where factory_code =#{factory_code}                                                 
+    </update>
+    
+    <delete id="deleteIcCodFactory" parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageCodFactory">
+        delete from W_ACC_TK.W_IC_COD_FACTORY where factory_code =#{factory_code}          
+    </delete>     
+    
+</mapper>
+

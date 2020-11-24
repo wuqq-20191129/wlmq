@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.frame.mapper.PubFlagMapper">
+    <resultMap type="PubFlag" id="rmPubFlag">
+        <id column="code" property="code" />
+        <result column="code_text" property="code_text" />
+    </resultMap>
+    <resultMap type="PubFlag" id="rmPubFlagType">
+        <id column="code" property="code" />
+        <result column="code_text" property="code_text" />
+        <result column="code_type" property="code_type" />
+    </resultMap>
+
+
+    <select id="getLines"  resultMap="rmPubFlag">
+        select line_id code,line_name code_text  from w_acc_st.w_op_prm_line where record_flag='3' order by line_id
+    </select>
+    <select id="getLinesForRptQry"  resultMap="rmPubFlag">
+        select line_id code,line_name code_text  from w_acc_st.w_op_prm_line
+        where record_flag='3' and line_id not in (select line_id from w_acc_st.w_op_cod_line_no_qry) order by line_id
+    </select>
+    <select id="getStations"  resultMap="rmPubFlagType">
+        select LINE_ID code_type,STATION_ID code,CHINESE_NAME code_text  from w_acc_st.W_OP_PRM_STATION where record_flag='3' order by LINE_ID,STATION_ID
+    </select>
+    <select id="getDevTypes"  resultMap="rmPubFlag">
+        select DEV_TYPE_ID code,DEV_TYPE_NAME code_text  from w_acc_st.W_OP_PRM_DEV_TYPE where record_flag='3' order by DEV_TYPE_ID
+    </select>
+    <!--线路标识-->
+    <select id="getLineFlags"  resultMap="rmPubFlag">
+        select code, code_text  from w_acc_st.w_op_cod_pub_flag where type='75' order by code
+    </select>
+    <!--参数模块设备类型过滤-->
+    <select id="getFilDevTypes"  resultMap="rmPubFlag">
+        select DEV_TYPE_ID code,DEV_TYPE_NAME code_text   from w_acc_st.W_OP_PRM_DEV_TYPE
+        where record_flag='3' and DEV_TYPE_ID not in('09','98','99') order by DEV_TYPE_ID
+    </select>
+    <select id="getButtons"  resultMap="rmPubFlag">
+        select BTN_ID code,BTN_NAME code_text  from w_acc_st.W_OP_COD_BTN_TYPE  order by BTN_ID
+    </select>
+    <select id="getMerchants"  resultMap="rmPubFlag">
+        select STORE_ID code,STORE_NAME code_text  from w_acc_st.w_op_cod_store where record_flag='0' order by STORE_ID
+    </select>
+    <select id="getRecordFlags"  parameterType="String" resultType="PubFlag">
+        select  code, code_text  from w_acc_st.w_op_cod_pub_flag where type='45' and code=#{id}
+    </select>
+
+    <!-- 票卡主类型 zhouyang 20170607-->
+    <select id="getCardMains"  resultMap="rmPubFlag">
+        select card_main_id code,card_main_name code_text from w_acc_st.W_OP_PRM_CARD_MAIN where record_flag='3' order by card_main_id
+    </select>
+    <!-- 票卡子类型 zhouyang 20170607-->
+    <select id="getCardSubs"  resultMap="rmPubFlagType">
+        select CARD_MAIN_ID code_type,CARD_SUB_ID code,CARD_SUB_NAME code_text  from w_acc_st.W_OP_PRM_CARD_SUB where record_flag='3' order by CARD_MAIN_ID,CARD_SUB_ID
+    </select>
+    <!-- 是否优惠票 zhouyang 20170607-->
+    <select id="getDiscounts"  resultMap="rmPubFlag">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type = '28' order by code
+    </select>
+    <!-- 是否启用语音提示 zhouyang 20170607-->
+    <select id="getSounds"  resultMap="rmPubFlag">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type = '29' order by code
+    </select>
+    <!-- 版本标志 zhouyang 20170609-->
+    <select id="getRecordFlagAll"  resultMap="rmPubFlag">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type = '30' order by code
+    </select>
+
+    <!-- 节假日时间表类型 zhouyang 20170611-->
+    <select id="getTimeTableIds"  resultMap="rmPubFlag">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type = '40' and code not in('01','02') order by code
+    </select>
+
+    <!-- 获取所有时间表类型 zhouyang 20170615-->
+    <select id="getTimeTableAllIds"  resultMap="rmPubFlag">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type = '40' order by code
+    </select>
+
+    <select id="getFareNames"  resultMap="rmPubFlag">
+        select fare_id code,fare_name code_text  from w_acc_st.w_op_prm_fare_name order by to_number(fare_id)
+    </select>
+
+    <!-- 钱包值类型 luck 201706013-->
+    <select id="getPurseValueTypes"  resultMap="rmPubFlag">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type = '37' order by code
+    </select>
+
+    <!-- 收费方式 luck 201706013-->
+    <select id="getFeeTypes"  resultMap="rmPubFlag">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type = '4' order by code
+    </select>
+
+    <!-- 逻辑及物理有效期检查 luck 201706013-->
+    <select id="getChkValidPhyLogics"  resultMap="rmPubFlag">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type = '38' order by code
+    </select>
+
+    <!-- 进出站次序检查 luck 201706013-->
+    <select id="getCheckInOutSequences"  resultMap="rmPubFlag">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type = '36' order by code
+    </select>
+
+    <!-- 票卡属性可用设备 luck 201706013-->
+    <select id="getDeviceTypes"  resultMap="rmPubFlag">
+        select rownum code,dev_type_name code_text from W_ACC_ST.W_OP_PRM_DEV_TYPE where record_flag='3' and install_location in ('1','3')
+    </select>
+
+    <!-- 票卡属性充值设备 luck 20170620-->
+    <select id="getRechargeDeviceTypes"  resultMap="rmPubFlag">
+        select rownum code,dev_type_name code_text from W_ACC_ST.W_OP_PRM_DEV_TYPE where record_flag='3' and is_charge='1'
+    </select>
+
+    <!-- 票卡属性发售设备 luck 20170620-->
+    <select id="getSaleDeviceTypes"  resultMap="rmPubFlag">
+        select rownum code,dev_type_name code_text from W_ACC_ST.W_OP_PRM_DEV_TYPE where record_flag='3' and is_sale='1'
+    </select>
+
+    <!-- 票卡属性是否 luck 201706013-->
+    <select id="getCardAttrYesOrNo"  resultMap="rmPubFlag">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type = '3' order by code
+    </select>
+
+    <!--     Lcc 线路
+    <select id="getLccLines"  resultMap="rmPubFlag">
+        select lcc_line_id code,lcc_line_name code_text  from w_acc_st.w_ST_COD_LCC_LINE
+    </select>-->
+    <!-- Lc 线路 -->
+    <select id="getLccLines"  resultMap="rmPubFlag">
+        select lcc_line_id code,lcc_line_name code_text  from w_acc_st.w_ST_COD_LCC_LINE order by lcc_line_id
+    </select>
+
+    <!-- 运营商 -->
+    <select id="getContcs"  resultMap="rmPubFlag">
+        select contc_id code,contc_name code_text  from w_acc_st.w_op_prm_contc where record_flag='0'
+    </select>
+
+    <!-- 代理商 -->
+    <select id="getAgents"  resultMap="rmPubFlag">
+        select agent_id code,agent_name code_text  from w_acc_st.w_op_cod_agent where record_flag='3'
+    </select>
+
+    <!-- 设备优先级 -->
+    <select id="getChargeServerTypes"  resultMap="rmPubFlag">
+        select code code,code_text code_text  from w_acc_st.w_op_cod_pub_flag where type = '41' order by code
+    </select>
+
+    <!-- 操作员-->
+    <select id="getOperators"  resultMap="rmPubFlag">
+        select sys_operator_id code,sys_operator_name code_text  from w_acc_st.w_op_sys_operator order by sys_operator_name
+    </select>
+
+    <!--行政处理原因-->
+    <select id = "getAdminHandleReasons" parameterType="java.lang.String" resultMap="rmPubFlag">
+        select admin_manager_id as code,admin_manager_name as code_text from w_acc_st.w_op_prm_admin_reason  where RECORD_FLAG = #{id}
+    </select>
+
+    <select id="getFareRideTypes"  resultMap="rmPubFlag">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type = '39' order by code
+    </select>
+
+    <!-- 根据类型取配置 -->
+    <select id="getPubFlagsByType" parameterType="string" resultMap="rmPubFlag">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type = #{type} order by code
+    </select>
+
+    <!-- 降级模式 -->
+    <select id="getModeTypes"  resultMap="rmPubFlag">
+        select status_id code,status_name code_text  from w_acc_st.W_OP_COD_DEGRADE_TYPE where hdl_flag='0'
+    </select>
+
+    <!-- 节假日代码 -->
+    <select id="getHolidayTypes"  resultMap="rmPubFlag">
+        select holiday_type code,holiday_desc code_text  from w_acc_st.W_OP_COD_HOLIDAY_TYPE order by holiday_type
+    </select>
+
+    <!-- 星期名称 -->
+    <select id="getDayOfWeeks"  resultMap="rmPubFlag">
+        select day_of_week code,day_chinese_desc code_text  from w_acc_st.W_OP_COD_DAY_OF_WEEK order by day_of_week
+    </select>
+
+    <!-- 设备运营状态 -->
+    <select id="getAccStatusValues"  resultMap="rmPubFlag">
+        select  code, code_text  from w_acc_st.w_op_cod_pub_flag where type='25'
+    </select>
+
+    <!--票价表-->
+    <select id="getFareTables"  resultMap="rmPubFlag">
+        select distinct(fare_table_id) code,'' code_text  from w_acc_st.w_op_prm_fare_table where record_flag='3' order by fare_table_id
+    </select>
+
+    <!--乘车时间类型-->
+    <select id="getTimeCodes"  resultMap="rmPubFlag">
+        select time_code code,time_desc code_text  from w_acc_st.w_op_cod_time order by time_code
+    </select>
+
+    <!--操作类型 zhouyang 20170622-->
+    <select id="getOpTypes"  resultMap="rmPubFlag">
+        select operation_type code,btn_name code_text  from w_acc_st.w_op_cod_btn_type order by btn_id
+    </select>
+
+    <!--参数类型 zhouyang 20170622-->
+    <select id="getParamLogParamTypes"  resultMap="rmPubFlag">
+        select parm_type_id code,parm_type_name code_text from w_acc_st.w_op_cod_parm_type
+        where parm_type_id not in('0701','0702','0703','0704','0600') order by parm_type_name
+    </select>
+
+    <!--操作类型 liudz 20170622-->
+    <select id="getParmTypeIds" resultMap="rmPubFlag">
+        select parm_type_id code, parm_type_name code_text from w_acc_st.w_op_cod_parm_type
+        where  down_all_line in ('0','1') or parm_type_id in ('0601','0602','0603','0604','0605','0606')
+        order by parm_type_id
+    </select>
+    <!--操作类型 liudz 20170622-->
+    <select id="getDevRecordFlags" resultMap="rmPubFlag">
+        select code code, code_text code_text from w_acc_st.w_op_cod_pub_flag where type='45' and description like '%设备%'
+    </select>
+
+    <!--设备参数生效情况（是否有效） zhouyang 20170623-->
+    <select id="getIsEffectFlags" resultMap="rmPubFlag">
+        select code code, code_text code_text from w_acc_st.w_op_cod_pub_flag where type='34' order by code desc
+    </select>
+
+    <!--参数类型-->
+    <select id="getParmTypes"  resultMap="rmPubFlag">
+        select parm_type_id code,parm_type_name code_text from  w_acc_st.w_op_cod_parm_type where down_all_line !='2'
+        order by parm_type_id
+    </select>
+
+    <!--请求状态-->
+    <select id="getStatuses"  resultMap="rmPubFlag">
+        select  code, code_text  from w_acc_st.w_op_cod_pub_flag where type='32'
+    </select>
+
+    <!--罚款原因-->
+    <select id="getPenatlyResaons"  resultMap="rmPubFlag">
+        select penalty_id code, penalty_name code_text  from w_acc_st.w_st_cod_penalty_reason order by code
+    </select>
+
+    <!--报表模板-->
+    <select id="getReportModules"  resultMap="rmPubFlag">
+        select report_module code, description code_text  from w_acc_st.w_rp_cfg_module_mapping order by report_module asc
+    </select>
+
+    <!--大线路-->
+    <select id="getLineTypes"  resultMap="rmPubFlag">
+        select type_id code,description code_text  from w_acc_st.w_op_cod_line_type group by type_id,description order by type_id
+    </select>
+
+    <!-- 是否优惠票 zhouyang 20170607-->
+    <select id="getPubFlags"  parameterType="Integer" resultMap="rmPubFlag">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type =#{type} order by code
+    </select>
+
+    <!-- ACC状态 zhouyang 20171128-->
+    <select id="getACCStatusValue" resultMap="rmPubFlag">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type ='25' order by code
+    </select>
+
+    <!--报表代码-->
+    <select id="getReportCodes" parameterType="String" resultMap="rmPubFlag">
+        <!--select substr(code,1,instr(code,#{code})-2) code, report_code code_text from w_acc_st.W_OP_COD_REPORT where code like concat('%',#{code})-->
+
+        select listagg(code,';') within GROUP (order by code)||';'  code,
+        listagg(code,';') within GROUP (order by code)||';'  code_text
+        from
+        (
+        select substr(code,1,instr(code,#{code})-2) || '#'||report_code code
+        from w_acc_st.W_OP_COD_REPORT
+        where code like concat('%',#{code})
+        ) a
+    </select>
+
+    <select id="getALLReportCodes"  resultMap="rmPubFlag">
+        select distinct report_code code, description code_text  from w_acc_st.W_OP_COD_REPORT order by report_code asc
+    </select>
+
+    <select id="getAdminWays"  resultMap="rmPubFlag">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type = '73' order by code
+    </select>
+    
+    <select id="getDevsOrder"  resultMap="rmPubFlag">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type = '74' order by code
+    </select>
+    
+    <select id="getFareTimeId" resultMap="rmPubFlag">
+        select time_id code,time_id code_text from w_acc_st.W_OP_PRM_FARE_TIME_INTERVAL where version_no = '0000000000' 
+    </select>
+    
+    <select id="getFareDealId" resultMap="rmPubFlag">
+        select deal_id code,deal_id code_text from w_acc_st.W_OP_PRM_FARE_DEAL_TOTAL where version_no = '0000000000'  
+    </select>
+</mapper>

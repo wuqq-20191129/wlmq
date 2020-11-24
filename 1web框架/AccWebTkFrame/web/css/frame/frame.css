@@ -1,0 +1,104 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2017-5-13, 10:43:44
+    Author     : hejj
+*/
+/*
+一级菜单区域样式
+*/
+.topMenu{
+    height: 130px;
+    padding: 0px;
+    margin: 0px;
+}
+.container{
+    margin: -8px -7px;
+    height:600px;
+    /*overflow:hidden;*/
+}
+/* 设置了浏览器高度不小于901pxpx时 显示770px高度 */ 
+@media screen and (min-height: 901px) { 
+.container {height: 770px}
+} 
+/* 设置了浏览器高度不大于900px时 显示600px高度 */ 
+@media screen and (max-height: 900px) { 
+.container {height: 600px}
+} 
+
+.inlineContainerLeft{
+    float: left;
+    width: 18%;
+    height:100%;
+    /*
+    border: none;
+    */
+}
+.inlineContainerRight{
+    float: right;
+    width: 82%;
+    height:100%;
+    /*
+    border: none;
+    */
+}
+/*
+左菜单区域样式
+*/
+.leftMenu{
+    position: relative;
+    padding: 0px;
+    margin: 0px;
+    height:100%;
+}
+/*
+操作区域样式
+*/
+.mainContent{
+    position: relative;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+/*
+一级菜单iframe样式
+*/
+.iframeTop{
+    position: absolute;
+    left: 0px;
+    top:0px;
+    width: 100%;
+    height: 100%;
+}
+/*
+左菜单、操作区iframe样式
+*/
+.iframeScroll{
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    left: 0px;
+    top:0px;
+    width: 100%;
+    height: 100%;
+
+}
+/*
+底部
+*/
+.footerz{
+    position: absolute;
+    background:#f5fff4;
+    color: #222;
+    font-size: 12px;
+    height: 28px;
+    line-height: 28px;
+    margin: 10px 0px;;
+    text-align: center;
+    width: 100%;
+}
+

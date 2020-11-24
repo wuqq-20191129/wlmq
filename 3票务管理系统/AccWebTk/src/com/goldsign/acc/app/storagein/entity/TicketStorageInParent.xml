@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.storagein.mapper.TicketStorageInParentMapper">
+    
+    <resultMap type="com.goldsign.acc.app.storagein.entity.TicketStorageIcIdxHistory" id="rmIcIdxHistory">
+        
+        <result column="his_table" property="his_table" /> 
+        <result column="begin_recd" property="begin_recd" /> 
+        <result column="end_recd" property="end_recd" /> 
+        
+
+    </resultMap>
+
+    <resultMap type="com.goldsign.acc.app.storagein.entity.TicketStorageInBill" id="rmInBill">
+        
+        <result column="bill_no" property="bill_no" /> 
+        <result column="bill_date" property="bill_date" /> 
+        <result column="form_maker" property="form_maker" /> 
+        <result column="hand_man" property="hand_man" /> 
+        <result column="administer" property="administer" /> 
+        <result column="accounter" property="accounter" /> 
+        <result column="related_bill_no" property="related_bill_no" /> 
+        <result column="record_flag" property="record_flag" /> 
+        <result column="verify_date" property="verify_date" /> 
+        <result column="verify_person" property="verify_person" /> 
+        <result column="remark" property="remark" />  
+        
+        <result column="out_in_diff" property="out_in_diff" />  <!--w_ic_in_out_diff_produce表-->
+        
+        <result column="in_type" property="in_type" />  
+        <result column="bill_date_begin" property="bill_date_begin" />  
+        <result column="bill_date_end" property="bill_date_end" />  
+        <result column="ic_main_type" property="ic_main_type" />  
+        <result column="ic_sub_type" property="ic_sub_type" />  
+        <result column="reason_id" property="reason_id" />  
+        <result column="storage_id" property="storage_id" />  
+        <result column="remark" property="remark" />  
+        
+
+    </resultMap>
+    
+    <select id="getIcIdxHistoryListForIn"  resultMap="rmIcIdxHistory">
+        
+        select his_table,begin_recd,end_recd
+        from w_acc_tk.w_ic_idx_history
+        where origin_table_name='w_ic_in_store_detail'
+        order by his_table desc
+         
+    </select>
+    
+    <select id="getIcInDetailCount"  parameterType="String" resultType="int">
+        
+        select count(*) from w_acc_tk.w_ic_in_store_detail where bill_no=#{billNo}
+         
+    </select>
+    
+    
+    <select id="queryForNotExistsSubTb"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInBill" resultMap="rmInBill">
+        
+        <if test="in_type =='SR'">
+            select a.bill_no,a.bill_date,a.form_maker,a.hand_man ,a.administer ,
+            a.accounter,a.related_bill_no,a.record_flag,a.verify_date,a.verify_person,b.out_in_diff,a.remark
+            from w_acc_tk.w_ic_in_store_bill a, w_acc_tk.w_ic_in_out_diff_produce b
+            where   a.bill_no=b.in_bill_no(+) and substr(a.bill_no,1,2)=#{in_type}
+        </if>
+        
+        <if test="in_type =='CR' or in_type =='QR'">
+            select distinct a.bill_no,a.bill_date ,a.form_maker ,a.hand_man ,a.administer ,
+            a.accounter ,a.related_bill_no,a.record_flag ,a.verify_date ,a.verify_person,b.out_in_diff,a.remark 
+            from w_acc_tk.w_ic_in_store_bill a , w_acc_tk.w_ic_in_out_diff b
+            where  a.related_bill_no=out_bill_no(+) and a.bill_no=b.in_bill_no(+) and substr(a.bill_no,0,2)=#{in_type}
+        </if>
+        <if test="in_type =='GH'">
+            select a.bill_no,a.lend_bill_no,a.in_bill_no ,a.bill_date,a.return_man,a.receive_man ,a.unit_id,a.remark,
+            a.record_flag,a.verify_person ,a.verify_date,b.record_flag record_in 
+            from ic_in_return_bill a , ic_in_store_bill b
+            where a.in_bill_no=b.bill_no(+) and substr(a.bill_no,1,2)=#{in_type} and delete_flag = '0'
+        </if>
+        
+        <!--<if test="in_type !='SR' and in_type !='GH' and in_type !='CR' and in_type !='QR'">-->
+        <if test="in_type =='TR' or in_type =='XR' or in_type =='HR'">    
+            select bill_no,bill_date,form_maker,hand_man ,administer ,
+            accounter ,related_bill_no,record_flag ,verify_date ,verify_person,remark 
+            from w_acc_tk.w_ic_in_store_bill a where substr(a.bill_no,1,2)=#{in_type} 
+        </if>
+        
+        <!--主表查询条件-->
+        <if test="bill_no !=null and bill_no !=''">
+            and A.bill_no like concat('%',concat(#{bill_no},'%'))
+        </if>  
+                
+        <if test="(in_type =='SR' or in_type =='TR' or in_type =='CR' or in_type =='QR') and related_bill_no !=null and related_bill_no !=''">
+            and A.related_bill_no like concat('%',concat(#{related_bill_no},'%'))
+        </if>
+                
+        <if test="record_flag !=null and record_flag !=''">
+            and A.record_flag =#{record_flag}
+        </if>
+                
+        <if test="bill_date_begin !=null and bill_date_begin !=''">
+            and A.bill_date &gt;= to_date(#{bill_date_begin},'yyyy-mm-dd  hh24:mi:ss')
+        </if>
+                
+        <if test="bill_date_end !=null and bill_date_end !=''">
+            and A.bill_date &lt;= to_date(#{bill_date_end},'yyyy-mm-dd  hh24:mi:ss')
+        </if>
+         
+        and not exists(select d.bill_no from w_acc_tk.w_ic_in_store_detail d where a.bill_no=d.bill_no)
+        
+        <foreach item="icIdxHistory" index="index" collection="icIdxHisList" open="" separator="" close="">
+            and not exists(select bill_no from w_acc_tk.${icIdxHistory.his_table} d${index} where a.bill_no=d${index}.bill_no)
+        </foreach>
+         
+        order by A.bill_no desc
+         
+    </select>
+
+    
+    <select id="queryForExistsSubTb"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInBill" resultMap="rmInBill">
+        
+        <if test="in_type =='SR'">
+            select a.bill_no,a.bill_date,a.form_maker,a.hand_man ,a.administer ,
+            a.accounter,a.related_bill_no,a.record_flag,a.verify_date,a.verify_person,b.out_in_diff,a.remark
+            from w_acc_tk.w_ic_in_store_bill a, w_acc_tk.w_ic_in_out_diff_produce b
+            where   a.bill_no=b.in_bill_no(+) and substr(a.bill_no,1,2)=#{in_type}
+        </if>
+        
+        <if test="in_type =='CR' or in_type =='QR'">
+            select distinct a.bill_no,a.bill_date ,a.form_maker ,a.hand_man ,a.administer ,
+            a.accounter ,a.related_bill_no,a.record_flag ,a.verify_date ,a.verify_person,b.out_in_diff,a.remark 
+            from w_acc_tk.w_ic_in_store_bill a , w_acc_tk.w_ic_in_out_diff b
+            where  a.related_bill_no=out_bill_no(+) and a.bill_no=b.in_bill_no(+) and substr(a.bill_no,0,2)=#{in_type}
+        </if>
+        <if test="in_type =='GH'">
+            select a.bill_no,a.lend_bill_no,a.in_bill_no ,a.bill_date,a.return_man,a.receive_man ,a.unit_id,a.remark,
+            a.record_flag,a.verify_person ,a.verify_date,b.record_flag record_in 
+            from ic_in_return_bill a , ic_in_store_bill b
+            where a.in_bill_no=b.bill_no(+) and substr(a.bill_no,1,2)=#{in_type} and delete_flag = '0'
+        </if>
+        
+        <!--<if test="in_type !='SR' and in_type !='GH' and in_type !='CR' and in_type !='QR'">-->
+        <if test="in_type =='TR' or in_type =='XR' or in_type =='HR'">    
+            select bill_no,bill_date,form_maker,hand_man ,administer ,
+            accounter ,related_bill_no,record_flag ,verify_date ,verify_person,remark 
+            from w_acc_tk.w_ic_in_store_bill a where substr(a.bill_no,1,2)=#{in_type}
+        </if>
+        
+        
+        <!--        <if test="(bill_no !=null and bill_no !='') 
+                       or (form_maker !=null and form_maker !='') 
+                       or (record_flag !=null and record_flag !='') 
+                       or (bill_date_begin !=null and bill_date_begin !='') 
+                       or (bill_date_end !=null and bill_date_end !='') 
+                       or (ic_main_type !=null and  ic_main_type !='' ) 
+                       or (ic_sub_type !=null and  ic_sub_type !='') 
+                       or (reason_id !=null and  reason_id !='')
+                       or ( storage_id !=null and  storage_id !='')
+                   ">
+            where  A.bill_no like '%'
+        </if>-->
+                
+                
+        
+        
+        <!--主表查询条件-->              
+        <if test="bill_no !=null and bill_no !=''">
+            and A.bill_no like concat('%',concat(#{bill_no},'%'))
+        </if>  
+                
+        <!--生产入库、调账入库、核销入库-->        
+        <if test="(in_type =='SR' or in_type =='TR' or in_type =='CR' or in_type =='QR') and related_bill_no !=null and related_bill_no !=''">
+            and A.related_bill_no like concat('%',concat(#{related_bill_no},'%'))
+        </if>
+                
+        <if test="record_flag !=null and record_flag !=''">
+            and A.record_flag =#{record_flag}
+        </if>
+                
+            <if test="bill_date_begin !=null and bill_date_begin !=''">
+            and A.bill_date &gt; to_date(#{bill_date_begin},'yyyy-mm-dd hh24:mi:ss')
+        </if>
+                
+        <if test="bill_date_end !=null and bill_date_end !=''">
+            and A.bill_date &lt;= to_date(#{bill_date_end},'yyyy-mm-dd  hh24:mi:ss')
+        </if>
+        
+        
+        <!--子表查询条件 storage_id仓库条件是肯定有的，是根据权限的仓库过虑-->
+        <!--        <if test="(ic_main_type !=null and ic_main_type !='') 
+            or (ic_sub_type !=null and ic_sub_type !='') 
+            or (reason_id !=null and reason_id !='') 
+            or (storage_id !=null and  storage_id !='')
+        ">-->
+        <!--明细表、分表之间or关系-->
+        and((
+        exists (select c.bill_no from w_acc_tk.w_ic_in_store_detail c
+        where a.bill_no=c.bill_no  
+        
+        <if test="ic_main_type !=null and ic_main_type !=''">
+            and trim(c.ic_main_type) =#{ic_main_type}
+        </if>
+        
+        <if test="ic_sub_type !=null and ic_sub_type !=''">
+            and trim(c.ic_sub_type) =#{ic_sub_type}
+        </if>
+        
+        <if test="reason_id !=null and reason_id !=''">
+            and trim(c.reason_id) =#{reason_id}
+        </if>
+        
+        and c.storage_id  in
+        <foreach item="storageId" index="index" collection="storageIdList" open="(" separator="," close=")">
+            #{storageId}
+        </foreach> 
+        
+        )         
+        <!--) and exists-->
+        
+        ) 
+        <!--查询分表-->
+        <foreach item="icIdxHistory" index="index" collection="icIdxHisList" open="" separator="" close="">
+            <if test="icIdxHistory.begin_recd !=null and icIdxHistory.begin_recd !='' 
+                      and icIdxHistory.end_recd !=null and icIdxHistory.end_recd !='' ">
+                or (
+                a.record_flag='0' and substr(a.bill_no,1,3)!= concat(#{in_type},'T')
+                and substr(a.bill_no,3,10) between #{icIdxHistory.begin_recd}  and #{icIdxHistory.end_recd} 
+                and exists (select c.bill_no from w_acc_tk.${icIdxHistory.his_table} c
+                where a.bill_no=c.Bill_No  
+                
+                <!--分表查询条件 storage_id仓库条件是肯定有的，是根据权限的仓库过虑-->
+                <if test="ic_main_type !=null and ic_main_type !=''">
+                    and trim(c.ic_main_type) =#{ic_main_type}
+                </if>
+
+                <if test="ic_sub_type !=null and ic_sub_type !=''">
+                    and trim(c.ic_sub_type) =#{ic_sub_type}
+                </if>
+
+                <if test="reason_id !=null and reason_id !=''">
+                    and trim(c.reason_id) =#{reason_id}
+                </if>
+
+                and c.storage_id  in
+                <foreach item="storageId" index="index" collection="storageIdList" open="(" separator="," close=")">
+                    #{storageId}
+                </foreach>
+                            
+                )         
+                <!--) and exists-->
+                )
+                <!--end or (-->
+            </if>
+        </foreach>
+        
+        )        
+        <!--) 明细表、分表之间or关系-->
+        order by A.bill_no desc
+         
+    </select>
+    
+    <select id="validStorageZone"  parameterType="String" resultType="map">
+        select  b.upper_num-nvl(b.real_num,0)-a.sum_in_num remain_num
+        from (
+            select sum(nvl(in_num,0)) sum_in_num,storage_id,area_id from w_acc_tk.w_ic_in_store_detail
+            where bill_no=#{bill_no}
+            group by storage_id,area_id) a, 
+        w_acc_tk.w_ic_cod_area b
+        where a.storage_id=b.storage_id 
+        and a.area_id=b.area_id
+    </select>
+    
+    
+    
+    
+    
+</mapper>

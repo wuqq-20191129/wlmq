@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases> 
+
+        <!--基本信息开始 -->
+        <!--基本定义 -->
+        <typeAlias alias="TicketStorageBorrowUnitDefManage" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageBorrowUnitDefManage"/>
+        <typeAlias alias="TicketStorageZoneDefManage" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageZoneDefManage"/>
+        <typeAlias alias="TicketStorageStationContrastManage" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageStationContrastManage"/>
+        <typeAlias alias="TicketStorageLineDefManage" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageLineDefManage"/>
+        <!-- 票柜定义 -->
+        <typeAlias alias="TicketStorageChestDefManage" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageChestDefManage"/>
+        <!--票卡类型 -->
+        <!--票库票卡主类型 -->
+        <typeAlias alias="TicketStorageCardMainTypeManage" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageCardMainTypeManage"/>
+        <!--票库票卡子类型 -->
+        <typeAlias alias="TicketStorageCardSubTypeManage" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageCardSubTypeManage"/>
+        <!--票卡类型对照表 -->
+        <typeAlias alias="TicketStorageCardTypeContrastManage" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageCardTypeContrastManage"/>
+    
+        <!--设备对照表 -->
+        <!--票库线路 -->
+        <typeAlias alias="TicketStorageLineManage" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageLineManage" />
+        <!--票库车站 -->
+        <typeAlias alias="TicketStorageStationManage" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageStationManage" />   
+        <!--代码 -->
+        <typeAlias alias="TicketStorageAdjustReasonManage" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageAdjustReasonManage"/>
+        <typeAlias alias="TicketStorageInOutReasonManage" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageInOutReasonManage"/>
+        <typeAlias alias="TicketStorageBillTypeManage" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageBillTypeManage"/>
+        <typeAlias alias="TicketStorageCodFactory" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageCodFactory"/>
+        <typeAlias alias="TicketStorageCodAreaCardInOutLogic" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageCodAreaCardInOutLogic"/>
+        <!--参数 -->
+        <typeAlias alias="TicketStorageDistributeStationParm" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageDistributeStationParm"/>
+        <typeAlias alias="TicketStorageDistributeCardParm" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageDistributeCardParm"/>
+        <typeAlias alias="TicketStorageParaIn" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageParaIn"/>
+        <typeAlias alias="TicketStorageListParaIn" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageListParaIn"/>
+        <typeAlias alias="TicketStorageParaAbandon" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageParaAbandon"/>
+        <typeAlias alias="TicketStorageDistributeReserveManage" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageDistributeReserveManage"/>
+        <!--基本信息结束 -->
+    
+        <!--车票入库开始 -->
+        <!--新票入库 -->
+        <typeAlias alias="TicketStorageInNew" type="com.goldsign.acc.app.storagein.entity.TicketStorageInNew"/>
+        <!--新票入库明细 -->
+        <typeAlias alias="TicketStorageInNewDetail" type="com.goldsign.acc.app.storagein.entity.TicketStorageInNewDetail"/>
+        <!--回收入库 -->
+        <typeAlias alias="TicketStorageInReturn" type="com.goldsign.acc.app.storagein.entity.TicketStorageInReturn"/>
+        <!--回收入库明细 -->
+        <typeAlias alias="TicketStorageInReturnDetail" type="com.goldsign.acc.app.storagein.entity.TicketStorageInReturnDetail"/>
+        <!--车票入库结束 -->
+    
+        <typeAlias alias="PubFlag" type="com.goldsign.acc.frame.entity.PubFlag"/>
+        <typeAlias alias="OperationLog" type="com.goldsign.acc.frame.entity.OperationLog"/>
+        <typeAlias alias="OperationLogForPrm" type="com.goldsign.acc.frame.entity.OperationLogForPrm"/>   
+        <typeAlias alias="Config" type="com.goldsign.acc.app.config.entity.Config"/>
+        <typeAlias alias="ConfigKey" type="com.goldsign.acc.app.config.entity.ConfigKey"/>
+
+        <!--空白卡订单管理 -->
+        <typeAlias alias="TicketStorageBlankCardManage" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageBlankCardManage"/>
+    </typeAliases> 
+    <!--
+   <environments default="development">
+       <environment id="development">
+           <transactionManager type="JDBC"/>
+           <dataSource type="POOLED">
+               <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+               <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
+               <property name="username" value="acc_st"/>
+               <property name="password" value="acc_st"/>
+           </dataSource>
+       </environment>
+   </environments>
+    -->  
+    <mappers>
+    
+        <!--基本信息开始 -->
+        <!--基本定义 -->
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageBorrowUnitDefManage.xml"/> 
+        <!-- 票柜定义 -->
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageChestDefManage.xml"/> 
+        <!-- 票区定义 -->
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageZoneDefManage.xml"/> 
+        <!--仓库线路定义-->
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageLineDefManage.xml"/>
+        <!-- 车站对照表 -->
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageStationContrastManage.xml"/> 
+        <!--票卡类型 -->
+        <!--票库票卡主类型 -->
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageCardMainTypeManage.xml"/> 
+        <!--票库票卡子类型 -->
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageCardSubTypeManage.xml"/> 
+        <!--票卡类型对照表 -->
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageCardTypeContrastManage.xml"/> 
+    
+        <!--设备对照表 -->
+        <!--票库线路 -->
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageLineManage.xml"/> 
+        <!--票库车站 -->
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageStationManage.xml"/>   
+        <!--代码 -->
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageAdjustReasonManage.xml"/>
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageInOutReasonManage.xml"/>
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageBillTypeManage.xml"/>
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageCodFactory.xml"/>
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageCodAreaCardInOutLogic.xml"/>
+        <!--参数 -->
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageDistributeStationParm.xml"/> 
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageDistributeCardParm.xml"/>
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageParaIn.xml"/> 
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageListParaIn.xml"/> 
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageParaAbandon.xml"/>  
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageDistributeReserveManage.xml"/>
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageSignCard.xml"/>
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageStListSignCard.xml"/>
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageLineStockWarnPara.xml"/>
+        <!--基本信息结束 --> 
+        <!--基本信息结束 -->
+    
+        <!--软件版本 -->
+        <mapper resource="com/goldsign/acc/frame/entity/Version.xml"/> 
+    
+        <!--公共参数 线路、车站、票卡主类型、票卡子类型、设备类型 -->
+        <mapper resource="com/goldsign/acc/frame/entity/PubFlag.xml"/> 
+        <!--操作日志 参数操作日志 -->
+        <mapper resource="com/goldsign/acc/frame/entity/OperationLog.xml"/> 
+    
+        <!--车票入库开始-->
+        <!--入库父类-->
+        <mapper resource="com/goldsign/acc/app/storagein/entity/TicketStorageInParent.xml"/>
+        <mapper resource="com/goldsign/acc/app/storagein/entity/TicketStorageInDetailParent.xml"/>
+        <!--新票入库-->
+        <mapper resource="com/goldsign/acc/app/storagein/entity/TicketStorageInNew.xml"/>
+        <!--新票入库明细-->
+        <mapper resource="com/goldsign/acc/app/storagein/entity/TicketStorageInNewDetail.xml"/>
+        <!--回收入库-->
+        <mapper resource="com/goldsign/acc/app/storagein/entity/TicketStorageInReturn.xml"/>
+        <!--回收入库明细-->
+        <mapper resource="com/goldsign/acc/app/storagein/entity/TicketStorageInReturnDetail.xml"/>
+        <!--借票归还 -->
+        <mapper resource="com/goldsign/acc/app/storagein/entity/TicketStorageInBorrow.xml"/>
+        <!--核销入库-->
+        <mapper resource="com/goldsign/acc/app/storagein/entity/TicketStorageInCancelInBill.xml"/>
+        <!--清洗入库-->
+        <mapper resource="com/goldsign/acc/app/storagein/entity/TicketStorageInCleanInBill.xml"/>
+        <!--生产入库 -->
+        <mapper resource="com/goldsign/acc/app/storagein/entity/TicketStorageInProduce.xml"/>
+        <mapper resource="com/goldsign/acc/app/storagein/entity/TicketStorageInProduceDetail.xml"/>
+        <!--调账入库 -->
+        <mapper resource="com/goldsign/acc/app/storagein/entity/TicketStorageInAdjust.xml"/>
+        <mapper resource="com/goldsign/acc/app/storagein/entity/TicketStorageInAdjustCheck.xml"/>
+        <mapper resource="com/goldsign/acc/app/storagein/entity/TicketStorageInAdjustDetail.xml"/>
+    
+        <!--车票入库结束-->
+        <!--车票出库开始-->
+        <!--生产出库 计划单、出库单、订单 -->
+        <mapper resource="com/goldsign/acc/app/storageout/entity/TicketStorageOutProducePlan.xml"/> 
+        <!-- 配票出库-->
+        <mapper resource="com/goldsign/acc/app/storageout/entity/TicketStorageOutDistribute.xml"/>
+        <mapper resource="com/goldsign/acc/app/storageout/entity/TicketStorageOutWay.xml"/>
+        <!--借票出库-->
+        <mapper resource="com/goldsign/acc/app/storageout/entity/TicketStorageOutBorrow.xml"/>
+        <!--销毁出库 出库单 -->
+        <mapper resource="com/goldsign/acc/app/storageout/entity/TicketStorageOutDestroy.xml"/>
+        <!--核销出库 出库单 -->
+        <mapper resource="com/goldsign/acc/app/storageout/entity/TicketStorageOutCancelPlan.xml"/> 
+        <!--清洗出库 出库单 -->
+        <mapper resource="com/goldsign/acc/app/storageout/entity/TicketStorageOutCleanOutBill.xml"/> 
+        <!--调账出库 -->
+        <mapper resource="com/goldsign/acc/app/storageout/entity/TicketStorageOutAdjust.xml"/>
+        <!--车票出库结束-->
+        <!--单据 -->
+        <mapper resource="com/goldsign/acc/frame/entity/Bill.xml"/> 
+        <!--单据导出用户 -->
+        <mapper resource="com/goldsign/acc/frame/entity/ReportUser.xml"/> 
+    
+        <mapper resource="com/goldsign/acc/app/password/entity/SysOperator.xml"/> 
+        <!--  <mapper resource="com/goldsign/acc/test/model/UserInterface.xml"/> -->
+        <!--系统配置 -->
+        <mapper resource="com/goldsign/acc/app/config/entity/ConfigMapper.xml"/> 
+    
+        <!--票库盘点-->
+        <mapper resource="com/goldsign/acc/app/storagechk/entity/TicketStorageIcChkStorageDetailCard.xml"/> 
+        <mapper resource="com/goldsign/acc/app/storagechk/entity/TicketStorageIcChkStorageDetail.xml"/> 
+        <mapper resource="com/goldsign/acc/app/storagechk/entity/TicketStorageIcChkStorage.xml"/>
+        <mapper resource="com/goldsign/acc/app/storagechk/entity/TicketStorageIcCodBoxDetail.xml"/>
+        <mapper resource="com/goldsign/acc/app/storagechk/entity/TicketStorageIcCodCardTypeContrast.xml"/>
+        <!--票卡查询-->
+        <mapper resource="com/goldsign/acc/app/query/entity/TicketStorageTkQry.xml"/>
+        <mapper resource="com/goldsign/acc/app/query/entity/TicketStorageIcStsAreaCard.xml"/>
+        <mapper resource="com/goldsign/acc/app/query/entity/TicketStorageUchkBill.xml"/>
+        <mapper resource="com/goldsign/acc/app/query/entity/TicketStoragePduOrder.xml"/>
+        <mapper resource="com/goldsign/acc/app/query/entity/TicketStorageMbInitiInfo.xml"/>
+        <mapper resource="com/goldsign/acc/app/query/entity/BoxLogicalDetail.xml"/>
+        <!--线路库存预警查询-->
+        <mapper resource="com/goldsign/acc/app/query/entity/TicketStorageLineQry.xml"/>
+    
+    
+        <mapper resource="com/goldsign/acc/app/move/entity/TicketStorageTicketMove.xml"/>
+    
+        <mapper resource="com/goldsign/acc/app/move/entity/TicketStorageIcOutBillDetail.xml"/>
+        <mapper resource="com/goldsign/acc/app/move/entity/TicketStorageInStoreBillDetail.xml"/>
+        <!--生产工作单 -->
+        <mapper resource="com/goldsign/acc/app/produce/entity/TicketStorageProduceBill.xml"/>
+        <mapper resource="com/goldsign/acc/app/produce/entity/TicketStorageProduceBillDetail.xml"/>
+        <mapper resource="com/goldsign/acc/app/produce/entity/TicketStorageProduceBillLostDetail.xml"/>
+        
+   
+        <!--空白卡订单管理 -->
+        <mapper resource="com/goldsign/acc/app/basicinfo/entity/TicketStorageBlankCardManage.xml"/>
+    </mappers>
+</configuration>

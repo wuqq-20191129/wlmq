@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.system.mapper.NtpLccSynMapper">
+    <resultMap id="BaseResultMap" type="com.goldsign.acc.app.system.entity.NtpLccSyn">
+        <result column="STATUS_DATE" jdbcType="VARCHAR" property="statusDate" />
+        <result column="IP" jdbcType="VARCHAR" property="ip" />
+        <result column="IP_SOURCE" jdbcType="VARCHAR" property="ipSource" />
+        <result column="STATUS_DATE_SYN" jdbcType="VARCHAR" property="statusDateSyn" />
+        <result column="DIFF" jdbcType="VARCHAR" property="diff" />
+        <result column="STATUS" jdbcType="VARCHAR" property="status" />
+        <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+        <result column="NAME" jdbcType="VARCHAR" property="name" />
+        <result column="TYPE" jdbcType="VARCHAR" property="type" />
+        <result column="IP_VALUE" jdbcType="VARCHAR" property="ipValue" />
+        <result column="DiFF_FLAG" jdbcType="VARCHAR" property="diffFlag" />
+    </resultMap>
+    <insert id="insertCur" parameterType="com.goldsign.acc.app.system.entity.NtpLccSyn">
+        insert into  w_acc_mn.w_mtr_current_ntplccsyn_info (STATUS_DATE, IP, IP_SOURCE, 
+        STATUS_DATE_SYN, DIFF, STATUS, 
+        REMARK)
+        values (to_date(#{statusDate,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss'), #{ip,jdbcType=VARCHAR}, #{ipSource,jdbcType=VARCHAR}, 
+        to_date(#{statusDateSyn,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss'), #{diff,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertHis" parameterType="com.goldsign.acc.app.system.entity.NtpLccSyn">
+        insert into  w_acc_mn.w_mtr_his_ntplccsyn_info (STATUS_DATE, IP, IP_SOURCE, 
+        STATUS_DATE_SYN, DIFF, STATUS, 
+        REMARK)
+        values (to_date(#{statusDate,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss'), #{ip,jdbcType=VARCHAR}, #{ipSource,jdbcType=VARCHAR}, 
+        to_date(#{statusDateSyn,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss'), #{diff,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR})
+    </insert>
+    <update id="update" parameterType="com.goldsign.acc.app.system.entity.NtpLccSyn" >
+        update w_acc_mn.w_mtr_current_ntplccsyn_info set status_date=to_date(#{statusDate},'yyyy-mm-dd hh24:mi:ss'), status=#{status},remark= #{remark,jdbcType=VARCHAR},
+        ip_source=#{ipSource},status_date_syn=to_date(#{statusDateSyn},'yyyy-mm-dd hh24:mi:ss') ,diff=#{diff,jdbcType=VARCHAR} where ip=#{ip}
+    </update>
+    <select id = "getNtpLccSynQuery" resultMap="BaseResultMap">
+        select to_char(A.status_date,'yyyy-mm-dd hh24:mi:ss') status_date,A.ip,A.status,A.remark,A.ip_source,to_char(A.status_date_syn,'yyyy-mm-dd hh24:mi:ss') status_date_syn,A.diff,B.name,
+        B.type,B.ip_value ,case when to_number(abs(A.Diff))-to_number(C.CONFIG_VALUE) &gt;= 0 then '1' else '0' end diff_flag
+        from w_acc_mn.w_mtr_current_ntplccsyn_info A,w_acc_mn.w_mtr_device_code B ,w_acc_mn.W_MTR_CONFIG C
+        where A.ip =B.ip(+) and C.config_name ='SYN_MAX_DIFF_INTERVAL' order by ip_value
+
+    </select>
+</mapper>

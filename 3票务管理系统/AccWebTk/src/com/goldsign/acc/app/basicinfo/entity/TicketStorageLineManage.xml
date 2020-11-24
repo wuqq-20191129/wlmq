@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicinfo.mapper.TicketStorageLineManageMapper">
+    <resultMap type="TicketStorageLineManage" id="rmTicketStorageLineManage">
+        
+        <result column="line_id" property="line_id" /> 
+        <result column="line_name" property="line_name" />
+    </resultMap>
+
+    
+    <select id="getTicketStorageLineManage"  parameterType="TicketStorageLineManage" resultMap="rmTicketStorageLineManage">
+        select line_id,line_name from w_acc_tk.w_ic_cod_line where 1=1
+        <if test="line_id !=null and line_id !=''">
+            and line_id =#{line_id} 
+        </if>
+        <if test="line_name !=null and line_name !=''">
+            or line_name =#{line_name} 
+        </if>
+        order by line_id
+    </select>
+    
+    <select id="getTicketStorageLineManageById"  parameterType="TicketStorageLineManage" resultMap="rmTicketStorageLineManage">
+        select line_id,line_name from w_acc_tk.w_ic_cod_line where line_id=#{line_id}        
+    </select>
+    
+    <!-- 检查票库线路是否有对应的票库车站 -->
+    <select id="checkTicketStorageLineStationsManage" parameterType="TicketStorageLineManage" resultMap="rmTicketStorageLineManage"> 
+        select a.line_id, a.line_name from w_acc_tk.w_ic_cod_line a, w_acc_tk.w_ic_cod_station b where a.line_id = b.line_id and 
+        a.line_id = #{line_id} and b.line_id = #{line_id}
+    </select>     
+        
+    <select id="getTicketStorageLineManageByName"  parameterType="TicketStorageLineManage" resultMap="rmTicketStorageLineManage">
+        select line_id,line_name from w_acc_tk.w_ic_cod_line where line_name=#{line_name}  
+        <if test="line_id !=null and line_id !=''">
+            and line_id !=#{line_id} 
+        </if>
+    </select>
+    
+    <insert id="addTicketStorageLineManage" parameterType="TicketStorageLineManage" >
+        insert into w_acc_tk.w_ic_cod_line(line_id,line_name)
+        values(#{line_id},#{line_name})               
+    </insert>
+    
+    <update id="modifyTicketStorageLineManage" parameterType="TicketStorageLineManage">
+        update w_acc_tk.w_ic_cod_line set line_name=#{line_name}  where line_id=#{line_id}                                                 
+    </update>
+    
+    <delete id="deleteTicketStorageLineManage" parameterType="TicketStorageLineManage">
+        delete from w_acc_tk.w_ic_cod_line where line_id=#{line_id}          
+    </delete>  
+    
+</mapper>

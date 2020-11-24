@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.PrmDevProgramMapper" >
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.prminfo.entity.PrmDevProgram" >
+    <constructor >
+      <idArg column="WATER_NO" jdbcType="DECIMAL" javaType="java.lang.Long" />
+      <arg column="PARM_TYPE_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="FILE_PATH" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="OPERATOR_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="VERSION_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="RECORD_FLAG" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="APP_LINE_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    WATER_NO, PARM_TYPE_ID, FILE_PATH, OPERATOR_ID, VERSION_NO, RECORD_FLAG, APP_LINE_NAME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from w_acc_st.W_OP_PRM_DEV_PROGRAM
+    where WATER_NO = #{waterNo,jdbcType=DECIMAL}
+  </select>
+  <select id="selectByType" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from w_acc_st.W_OP_PRM_DEV_PROGRAM
+    where PARM_TYPE_ID = #{type,jdbcType=DECIMAL}
+  </select>
+  <select id="qDevsByCon" resultMap="BaseResultMap"
+            parameterType="com.goldsign.acc.app.prminfo.entity.PrmDevProgram">
+        select
+        <include refid="Base_Column_List" />
+        from w_acc_st.W_OP_PRM_DEV_PROGRAM
+        <trim prefix="where (" suffix=")" suffixOverrides=" and ">
+            <if test="parmTypeId != null">
+                PARM_TYPE_ID = #{parmTypeId,jdbcType=CHAR} and
+            </if>
+            <if test="versionNo != null">
+                VERSION_NO = #{versionNo,jdbcType=CHAR} and
+            </if>
+            <if test="recordFlag != null">
+                RECORD_FLAG = #{recordFlag,jdbcType=CHAR} and
+            </if>
+         
+        </trim>
+    </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from w_acc_st.W_OP_PRM_DEV_PROGRAM
+    where WATER_NO = #{waterNo,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.goldsign.acc.app.prminfo.entity.PrmDevProgram" >
+    insert into w_acc_st.W_OP_PRM_DEV_PROGRAM (WATER_NO, PARM_TYPE_ID, FILE_PATH, 
+      OPERATOR_ID, VERSION_NO, RECORD_FLAG, 
+      APP_LINE_NAME)
+    values (#{waterNo,jdbcType=DECIMAL}, #{parmTypeId,jdbcType=CHAR}, #{filePath,jdbcType=VARCHAR}, 
+      #{operatorId,jdbcType=VARCHAR}, #{versionNo,jdbcType=VARCHAR}, #{recordFlag,jdbcType=CHAR}, 
+      #{appLineName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.prminfo.entity.PrmDevProgram" >
+      <selectKey keyProperty="waterNo" resultType="long" order="BEFORE">
+          select w_acc_st.W_SEQ_W_OP_PRM_DEV_PROGRAM.nextval from dual
+      </selectKey>
+    insert into w_acc_st.W_OP_PRM_DEV_PROGRAM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="waterNo != null" >
+        WATER_NO,
+      </if>
+      <if test="parmTypeId != null" >
+        PARM_TYPE_ID,
+      </if>
+      <if test="filePath != null" >
+        FILE_PATH,
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID,
+      </if>
+      <if test="versionNo != null" >
+        VERSION_NO,
+      </if>
+      <if test="recordFlag != null" >
+        RECORD_FLAG,
+      </if>
+      <if test="appLineName != null" >
+        APP_LINE_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="waterNo != null" >
+        #{waterNo,jdbcType=DECIMAL},
+      </if>
+      <if test="parmTypeId != null" >
+        #{parmTypeId,jdbcType=CHAR},
+      </if>
+      <if test="filePath != null" >
+        #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNo != null" >
+        #{versionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordFlag != null" >
+        #{recordFlag,jdbcType=CHAR},
+      </if>
+      <if test="appLineName != null" >
+        #{appLineName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.goldsign.acc.app.prminfo.entity.PrmDevProgram" >
+    update w_acc_st.W_OP_PRM_DEV_PROGRAM
+    <set >
+      <if test="parmTypeId != null" >
+        PARM_TYPE_ID = #{parmTypeId,jdbcType=CHAR},
+      </if>
+      <if test="filePath != null" >
+        FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID = #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNo != null" >
+        VERSION_NO = #{versionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordFlag != null" >
+        RECORD_FLAG = #{recordFlag,jdbcType=CHAR},
+      </if>
+      <if test="appLineName != null" >
+        APP_LINE_NAME = #{appLineName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where WATER_NO = #{waterNo,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.goldsign.acc.app.prminfo.entity.PrmDevProgram" >
+    update w_acc_st.W_OP_PRM_DEV_PROGRAM
+    set PARM_TYPE_ID = #{parmTypeId,jdbcType=CHAR},
+      FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      OPERATOR_ID = #{operatorId,jdbcType=VARCHAR},
+      VERSION_NO = #{versionNo,jdbcType=VARCHAR},
+      RECORD_FLAG = #{recordFlag,jdbcType=CHAR},
+      APP_LINE_NAME = #{appLineName,jdbcType=VARCHAR}
+    where WATER_NO = #{waterNo,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByCon" parameterType="com.goldsign.acc.app.prminfo.entity.PrmDevProgram" >
+    update w_acc_st.W_OP_PRM_DEV_PROGRAM
+    <set >
+      <if test="parmTypeId != null" >
+        PARM_TYPE_ID = #{parmTypeId,jdbcType=CHAR},
+      </if>
+      <if test="filePath != null" >
+        FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID = #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNo != null" >
+        VERSION_NO = #{versionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordFlag1 != null" >
+        RECORD_FLAG = #{recordFlag1,jdbcType=CHAR},
+      </if>
+      <if test="appLineName != null" >
+        APP_LINE_NAME = #{appLineName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <trim prefix="where (" suffix=")" suffixOverrides=" and ">
+            <if test="parmTypeId != null">
+                PARM_TYPE_ID = #{parmTypeId,jdbcType=CHAR} and
+            </if>
+            <if test="versionNo != null">
+                VERSION_NO = #{versionNo,jdbcType=CHAR} and
+            </if>
+            <if test="recordFlag != null">
+                RECORD_FLAG = #{recordFlag,jdbcType=CHAR} and
+            </if>
+         
+        </trim>
+  </update>
+  <delete id="delByCon" parameterType="com.goldsign.acc.app.prminfo.entity.PrmDevProgram" >
+    delete from w_acc_st.W_OP_PRM_DEV_PROGRAM
+  
+    <trim prefix="where (" suffix=")" suffixOverrides=" and ">
+            <if test="parmTypeId != null">
+                PARM_TYPE_ID = #{parmTypeId,jdbcType=CHAR} and
+            </if>
+            <if test="versionNo != null">
+                VERSION_NO = #{versionNo,jdbcType=CHAR} and
+            </if>
+            <if test="recordFlag != null">
+                RECORD_FLAG = #{recordFlag1,jdbcType=CHAR} and
+            </if>
+         
+        </trim>
+  </delete>
+</mapper>

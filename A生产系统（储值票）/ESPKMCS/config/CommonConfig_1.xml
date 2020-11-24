@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Config> 
+    <Common>
+        <StationId>0007</StationId>
+        <DeviceType>07</DeviceType>
+        <DeviceNo>250</DeviceNo>
+        <!-- 0:正常，1：手工，2：空跑 -->
+        <RunMode>0</RunMode>
+    </Common>
+    <EsCommu>
+        <ServerIp>127.0.0.1</ServerIp>
+        <ServerPort>5001</ServerPort>
+    </EsCommu>
+    <EsDevice>
+        <PkChannelPort>1</PkChannelPort>
+        <PkBoxPort>2</PkBoxPort>
+        <PtPort>4</PtPort>
+        <PtComRate>9600</PtComRate>
+    </EsDevice>
+    <RwDevice>
+        <RwPort>COM7</RwPort>
+        <ExRwPort>COM8</ExRwPort>
+    </RwDevice>
+    <KmsCommu>
+        <KmIp>10.200.48.138</KmIp>
+        <KmPort>88</KmPort>
+        <KmPin>FFFFFFFF</KmPin>
+    </KmsCommu>
+    <Download>
+        <FtpServerIp>127.0.0.1</FtpServerIp>
+        <FtpUserName>ES_ACC250</FtpUserName>
+        <FtpUserPassword>ES_ACC250</FtpUserPassword>
+        <!--<FtpServerIp>127.0.0.1</FtpServerIp>
+        <FtpUserName>ES_ACC</FtpUserName>
+        <FtpUserPassword>ES_ACC0000</FtpUserPassword>-->
+        <FtpTimeout>5000</FtpTimeout>
+        <FtpRetryTimes>3</FtpRetryTimes>
+        <FtpRetryWaiting>5000</FtpRetryWaiting>
+        <FtpAuditRemotePath>audit</FtpAuditRemotePath>
+        <FtpParamRemotePath>param</FtpParamRemotePath>
+        <FtpPhyLogicRemotePath>phyLogic</FtpPhyLogicRemotePath>
+        <FtpPhyLogicLocalPath>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/download/phyLogic</FtpPhyLogicLocalPath>
+        <FtpAuditLocalPath>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/download/audit</FtpAuditLocalPath>
+        <FtpParamLocalPath>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/download/param</FtpParamLocalPath> 
+    </Download>
+    <Upload>
+        <LocalFtpServerIp>127.0.0.1</LocalFtpServerIp>
+        <LocalFtpUserName>ACC_ES000</LocalFtpUserName>
+        <LocalFtpUserPassword>ACC_ES000</LocalFtpUserPassword>
+        <MakingPath>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/upload/making</MakingPath>
+        <FinishPath>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/upload/finish</FinishPath>
+        <OrderPath>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/upload/order</OrderPath>
+        <BadCardPath>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/upload/badcard</BadCardPath>
+        <GoodCardPath>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/upload/goodcard</GoodCardPath>
+        <AuditFile>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/upload/audit</AuditFile>
+        <ErrorFile>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/upload/error</ErrorFile>
+    </Upload>
+     <DataConnectionPool>
+        <Driver>oracle.jdbc.driver.OracleDriver</Driver>
+        <URL>jdbc:oracle:thin:@//10.99.10.15:1521/waccdb</URL>
+        <UserName encrypt="false">W_ACC_TK_APP</UserName>
+        <PassWord encrypt="true">App#68tk06</PassWord>
+        <MaxActive>20</MaxActive>
+        <MaxIdle>10</MaxIdle>
+        <MaxWait>20000</MaxWait>
+    </DataConnectionPool>
+</Config>

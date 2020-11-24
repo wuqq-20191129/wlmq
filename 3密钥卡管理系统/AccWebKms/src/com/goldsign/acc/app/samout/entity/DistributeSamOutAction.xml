@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.samout.mapper.DistributeSamOutActionMapper">
+    
+    <resultMap type="com.goldsign.acc.app.samout.entity.DistributeSamOutAction" id="rmDistributeSamOutAction">
+        
+        <result column="order_no" property="order_no" /> 
+        <result column="sam_type" property="sam_type" /> 
+        <result column="line_es" property="line_es" /> 
+        <result column="start_logic_no" property="start_logic_no" /> 
+        <result column="end_logic_no" property="end_logic_no" /> 
+        <result column="order_num" property="order_num" /> 
+        <result column="out_stock_time" property="out_stock_time" /> 
+        <result column="out_stock_oper" property="out_stock_oper" /> 
+        <result column="order_state" property="order_state" /> 
+        <result column="audit_order_oper" property="audit_order_oper" /> 
+        <result column="audit_order_time" property="audit_order_time" /> 
+        <result column="remark" property="remark" /> 
+        <result column="get_card_oper" property="get_card_oper" /> 
+        <result column="e_start_logic_no" property="e_start_logic_no" /> 
+        <result column="f_start_logic_no" property="f_start_logic_no" /> 
+        
+   
+    </resultMap>
+ <resultMap type="com.goldsign.acc.app.samin.entity.RecycleSamIn" id="rmSamLogicNos">
+        
+        <result column="ORDER_NO" property="orderNo" /> 
+        <result column="START_LOGIC_NO" property="startLogicNo" /> 
+        <result column="END_LOGIC_NO" property="endLogicNo" /> 
+
+    </resultMap>
+    
+     <select id="checkLogicNo"  parameterType="com.goldsign.acc.app.samout.entity.DistributeSamOutAction"  resultType="String">
+        SELECT logic_no FROM w_acc_tk.w_ic_sam_stock WHERE is_bad = #{is_bad} and is_instock = #{is_instock}
+        and produce_type = #{produce_type} and sam_type = #{sam_type}  
+
+         <if test="distribute_place != null and distribute_place !=''" >  
+            and distribute_place = #{line_es}
+            
+        </if> 
+        <if test="e_start_logic_no != null and e_start_logic_no !=''" >  
+            and substr(logic_no,1,9) = #{e_start_logic_no}
+            
+        </if> 
+        <if test="f_start_logic_no != null and f_start_logic_no !=''" >  
+            and to_number(substr(logic_no,10,7)) >= to_number(#{f_start_logic_no})
+            
+        </if> 
+        <if test="stock_state != null and stock_state !=''" >  
+            and stock_state in('03','05')
+        </if> 
+        
+        order by logic_no
+    </select>
+
+    <select id="checkLogicNoForAudit"  parameterType="com.goldsign.acc.app.samout.entity.DistributeSamOutAction"  resultType="String">
+        SELECT logic_no FROM (SELECT logic_no FROM w_acc_tk.w_ic_sam_stock WHERE is_bad = #{is_bad} and is_instock = #{is_instock}
+        and produce_type = #{produce_type} and sam_type = #{sam_type}  
+
+        <if test="e_start_logic_no != null and e_start_logic_no !=''" >  
+            and substr(logic_no,1,9) = #{e_start_logic_no}
+            
+        </if> 
+        <if test="f_start_logic_no != null and f_start_logic_no !=''" >  
+            and to_number(substr(logic_no,10,7)) >= to_number(#{f_start_logic_no})
+            
+        </if> 
+        <if test="stock_state != null and stock_state !=''" >  
+            and stock_state in('03','05')
+        </if> 
+        
+        order by logic_no) where ROWNUM &lt;=#{order_num}
+    </select>
+    
+    <insert id="addPlan" parameterType="com.goldsign.acc.app.samout.entity.DistributeSamOutAction" >
+        INSERT INTO w_acc_tk.w_ic_sam_out_distribute (get_card_oper, order_no, sam_type, start_logic_no, order_num, out_stock_oper, 
+        out_stock_time, line_es, order_state, remark)
+        SELECT #{get_card_oper}, #{order_no}, a.sam_type_code, #{start_logic_no}, #{order_num}, #{out_stock_oper}, 
+        SYSDATE, b.line_es_code, #{order_state}, #{remark}
+        FROM w_acc_tk.w_ic_sam_type a,w_acc_tk.w_ic_sam_line_es b WHERE a.sam_type_code=#{sam_type} AND b.line_es_code=#{line_es}
+    </insert>
+    
+    
+    
+    
+    <update id="updateOrderStock" parameterType="com.goldsign.acc.app.samout.entity.DistributeSamOutAction" >
+        UPDATE w_acc_tk.w_ic_sam_out_distribute SET order_state = #{order_state}, audit_order_oper=#{audit_order_oper}, audit_order_time = SYSDATE,start_logic_no = #{start_logic_no}
+                WHERE order_no = #{order_no} and order_state = '0' and exists
+                (SELECT 1 FROM w_acc_tk.w_ic_sam_stock b WHERE b.sam_type=#{sam_type} and (b.stock_state='03' or b.stock_state='05') 
+               and b.produce_type='01'
+               and b.is_instock=#{is_instock} and b.is_bad=#{is_bad} and to_number(substr(b.logic_no,10,7))>=#{f_start_logic_no} and 
+              substr(b.logic_no,1,9)=#{e_start_logic_no}
+               GROUP BY b.sam_type HAVING COUNT(b.logic_no)>=#{order_num})
+    </update>
+    
+    <update id="updateStock" parameterType="com.goldsign.acc.app.samout.entity.DistributeSamOutAction" >
+        update w_acc_tk.w_ic_sam_stock set distribute_place = #{line_es} , stock_state = #{stock_state} , is_instock = #{is_instock},
+        <if test="is_bad != null and is_bad !=''" >  
+            is_bad = #{is_bad}
+        </if> 
+        where logic_no in 
+        <foreach collection="logic_no" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="queryPlan"  parameterType="com.goldsign.acc.app.samout.entity.DistributeSamOutAction" resultMap="rmDistributeSamOutAction">
+        SELECT b.sam_type_desc,c.line_es_desc,d.code_text,a.* 
+        FROM w_acc_tk.w_ic_sam_out_distribute a,w_acc_tk.w_ic_sam_type b,w_acc_tk.w_ic_sam_line_es c,w_acc_tk.w_ic_sam_pub_flag d 
+        WHERE a.sam_type=b.sam_type_code(+) AND a.line_es= c.line_es_code(+) 
+        AND a.order_state= d.code(+) AND d.type='0' 
+        
+            <if test="order_no != null and order_no !=''" >  
+                and a.order_no like concat('%',trim(#{order_no}))
+            </if> 
+            <if test="sam_type != null and sam_type !=''" >  
+                AND sam_type = #{sam_type}
+            </if>
+            <if test="order_state != null and order_state !=''" >  
+                AND order_state = #{order_state}
+            </if>
+        
+        order by order_no desc
+    </select>
+    
+    <delete id="deletePlan" parameterType="com.goldsign.acc.app.samout.entity.DistributeSamOutAction" >
+        DELETE FROM w_acc_tk.w_ic_sam_out_distribute WHERE order_no = #{order_no} and order_state = #{order_state}                        
+    </delete>
+    
+    <update id="modifyPlan" parameterType="com.goldsign.acc.app.samout.entity.DistributeSamOutAction" >
+        UPDATE w_acc_tk.w_ic_sam_out_distribute SET sam_type = #{sam_type}, start_logic_no=#{start_logic_no}, 
+        order_num=#{order_num}, line_es=#{line_es}, remark=#{remark}
+        WHERE order_no = #{order_no} AND order_state = #{order_state}
+        AND EXISTS( SELECT 1 FROM w_acc_tk.w_ic_sam_type a,w_acc_tk.w_ic_sam_line_es b 
+        WHERE a.sam_type_code=#{sam_type} AND b.line_es_code=#{line_es})              
+    </update>
+    
+    <insert id="insertLogicNo" parameterType="com.goldsign.acc.app.samout.entity.DistributeSamOutAction" >
+        insert into w_acc_tk.w_ic_sam_logic_nos (order_no, start_logic_no, end_logic_no) 
+        values ( #{order_no}, #{e_start_logic_no}, #{f_start_logic_no}) 
+    </insert>
+   
+   
+   <select id="getLogicNos"  parameterType="com.goldsign.acc.app.samout.entity.DistributeSamOutAction" resultMap="rmDistributeSamOutAction">
+        SELECT order_no,start_logic_no,end_logic_no 
+        FROM w_acc_tk.w_ic_sam_logic_nos where 1=1
+        <if test="order_no != null and order_no !=''" >  
+            and order_no = #{order_no}
+        </if> 
+    </select>
+    
+    <select id="queryPlanDetail"  parameterType="com.goldsign.acc.app.samout.entity.DistributeSamOutAction" resultMap="rmDistributeSamOutAction">
+        select order_no,start_logic_no,end_logic_no from w_acc_tk.w_ic_sam_logic_nos where order_no = #{order_no}
+    </select>
+    
+</mapper>

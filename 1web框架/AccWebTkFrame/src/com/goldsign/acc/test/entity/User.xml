@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.goldsign.acc.test.mapper.UserMapper">
+    <resultMap type="User" id="rmUser">
+        <id column="sys_operator_id" property="sys_operator_id" />
+        <result column="sys_password_hash" property="sys_password_hash" />
+        <result column="sys_operator_name" property="sys_operator_name" />
+        <result column="sys_employee_id" property="sys_employee_id" />
+        <result column="sys_expired_date" property="sys_expired_date" />
+        <result column="sys_status" property="sys_status" />
+        
+        <result column="login_num" property="login_num" />
+        <result column="failed_num" property="failed_num" />
+        
+        <result column="session_id" property="session_id" />
+        <result column="password_edit_date" property="password_edit_date" />
+        
+        <result column="edit_past_days" property="edit_past_days" />
+       
+    </resultMap>
+
+    <select id="selectUserByID" parameterType="String" resultType="User">
+        select * from w_acc_st.W_OP_SYS_OPERATOR where sys_operator_id = #{id}
+    </select>
+    <select id="selectUsers"  resultMap="rmUser">
+        select * from w_acc_st.W_OP_SYS_OPERATOR
+    </select>
+    <insert id="addUser" parameterType="User" > 
+        insert into w_acc_st.W_OP_SYS_OPERATOR(sys_operator_id,sys_password_hash,
+        sys_operator_name,sys_employee_id,sys_expired_date,sys_status,login_num,
+        failed_num,session_id,password_edit_date,edit_past_days)  
+        values(#{sys_operator_id},#{sys_password_hash},#{sys_operator_name},#{sys_employee_id},
+        #{sys_expired_date},#{sys_status},#{login_num},#{failed_num},#{session_id},#{password_edit_date},#{edit_past_days})  
+    </insert>
+    <update id="updateUser" parameterType="User" > 
+        update w_acc_st.W_OP_SYS_OPERATOR set sys_operator_name=#{sys_operator_name} where sys_operator_id=#{sys_operator_id}
+    </update>
+    <delete id="deleteUser" parameterType="int" > 
+        delete from w_acc_st.W_OP_SYS_OPERATOR  where sys_operator_id=#{sys_operator_id}
+    </delete>
+</mapper>

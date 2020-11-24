@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Config>
+	<Common>
+            <!-- windows config -->		
+		
+		<BackUpLog>/home/acc/settle/log</BackUpLog>
+                <!--运行模式 1：开发 2：生产及测试环境 -->
+                <RunMode>2</RunMode>		
+    </Common>
+
+    <!--Connection pool name of the 17 database.-->
+    <!--To set user and password, please add "@@" before it. Eg: <User>@@user</User>, <Password>@@password</Password> -->
+	
+    <DataConnectionPool>
+        <Driver>oracle.jdbc.driver.OracleDriver</Driver>
+        <URL>jdbc:oracle:thin:@10.99.10.81:1521:wacctstdb</URL>
+         <!-- <URL>jdbc:oracle:thin:@localhost:1521:orcl</URL>-->
+        <!--   <Database></Database>  -->
+        <User encrypt="true">30102D273016343A182E3C34</User>
+        <Password encrypt="true">30102D273016343A182E3C34</Password>
+        <MaxActive>40</MaxActive>
+        <MaxIdle>20</MaxIdle>
+        <MaxWait>20000</MaxWait>
+    </DataConnectionPool>
+    
+  <!--交易文件线程池   -->  
+    <ThreadPoolFile>
+        <MaxThreadNumber>12</MaxThreadNumber>
+        <ThreadSleepTime>100</ThreadSleepTime>
+        <ThreadPriorityAdd>0</ThreadPriorityAdd>
+        <ReadThreadPriorityAdd>2</ReadThreadPriorityAdd>
+        <MaxSearchNum>2</MaxSearchNum>
+        <UnHanledMsgLogDir>/home/acc/settle/log</UnHanledMsgLogDir> 
+        <!--		<UnHanledMsgLogDir>e:/temp/commu/log</UnHanledMsgLogDir> -->
+        <ThreadBufferCapacity>10000</ThreadBufferCapacity>
+        <ThreadBufferIncrement>1000</ThreadBufferIncrement>
+        <PriorityThreadBufferCapacity>2000</PriorityThreadBufferCapacity>
+        <PriorityThreadBufferIncrement>1000</PriorityThreadBufferIncrement>
+    </ThreadPoolFile>
+    <!--交易文件BCP线程池   -->  
+    <ThreadPoolBcp>
+        <MaxThreadNumber>12</MaxThreadNumber>
+        <ThreadSleepTime>100</ThreadSleepTime>
+        <ThreadPriorityAdd>0</ThreadPriorityAdd>
+        <ReadThreadPriorityAdd>2</ReadThreadPriorityAdd>
+        <MaxSearchNum>2</MaxSearchNum>
+        <UnHanledMsgLogDir>/home/acc/settle/log</UnHanledMsgLogDir> 
+        <!--		<UnHanledMsgLogDir>e:/temp/commu/log</UnHanledMsgLogDir> -->
+        <ThreadBufferCapacity>10000</ThreadBufferCapacity>
+        <ThreadBufferIncrement>1000</ThreadBufferIncrement>
+        <PriorityThreadBufferCapacity>2000</PriorityThreadBufferCapacity>
+        <PriorityThreadBufferIncrement>1000</PriorityThreadBufferIncrement>
+    </ThreadPoolBcp>
+     <!--交易数据TAC码校验线程池   --> 
+    <ThreadPoolTac>
+        <MaxThreadNumber>12</MaxThreadNumber>
+        <ThreadSleepTime>100</ThreadSleepTime>
+        <ThreadPriorityAdd>0</ThreadPriorityAdd>
+        <ReadThreadPriorityAdd>2</ReadThreadPriorityAdd>
+        <MaxSearchNum>2</MaxSearchNum>
+        <UnHanledMsgLogDir>/home/acc/settle/log</UnHanledMsgLogDir> 
+        <!--		<UnHanledMsgLogDir>e:/temp/commu/log</UnHanledMsgLogDir> -->
+        <ThreadBufferCapacity>10000</ThreadBufferCapacity>
+        <ThreadBufferIncrement>1000</ThreadBufferIncrement>
+        <PriorityThreadBufferCapacity>2000</PriorityThreadBufferCapacity>
+        <PriorityThreadBufferIncrement>1000</PriorityThreadBufferIncrement>
+    </ThreadPoolTac>
+    
+     <!--收益文件、寄存器文件、审计文件、外部系统文件处理线程池   --> 
+    <ThreadPoolFileOther>
+        <MaxThreadNumber>3</MaxThreadNumber>
+        <ThreadSleepTime>100</ThreadSleepTime>
+        <ThreadPriorityAdd>0</ThreadPriorityAdd>
+        <ReadThreadPriorityAdd>2</ReadThreadPriorityAdd>
+        <MaxSearchNum>2</MaxSearchNum>
+        <UnHanledMsgLogDir>/home/acc/settle/log</UnHanledMsgLogDir> 
+        <!--		<UnHanledMsgLogDir>e:/temp/commu/log</UnHanledMsgLogDir> -->
+        <ThreadBufferCapacity>10000</ThreadBufferCapacity>
+        <ThreadBufferIncrement>1000</ThreadBufferIncrement>
+        <PriorityThreadBufferCapacity>2000</PriorityThreadBufferCapacity>
+        <PriorityThreadBufferIncrement>1000</PriorityThreadBufferIncrement>
+    </ThreadPoolFileOther>
+    
+    <!--手机支付交易文件线程池   -->  
+    <ThreadPoolFileMobile>
+        <MaxThreadNumber>5</MaxThreadNumber>
+        <ThreadSleepTime>100</ThreadSleepTime>
+        <ThreadPriorityAdd>0</ThreadPriorityAdd>
+        <ReadThreadPriorityAdd>2</ReadThreadPriorityAdd>
+        <MaxSearchNum>2</MaxSearchNum>
+        <UnHanledMsgLogDir>/home/acc/settle/log</UnHanledMsgLogDir> 
+        <!--		<UnHanledMsgLogDir>e:/temp/commu/log</UnHanledMsgLogDir> -->
+        <ThreadBufferCapacity>10000</ThreadBufferCapacity>
+        <ThreadBufferIncrement>1000</ThreadBufferIncrement>
+        <PriorityThreadBufferCapacity>2000</PriorityThreadBufferCapacity>
+        <PriorityThreadBufferIncrement>1000</PriorityThreadBufferIncrement>
+    </ThreadPoolFileMobile>
+    <!--手机支付对账文件线程池  -->  
+    <ThreadPoolFileOtherMobile>
+        <MaxThreadNumber>2</MaxThreadNumber>
+        <ThreadSleepTime>100</ThreadSleepTime>
+        <ThreadPriorityAdd>0</ThreadPriorityAdd>
+        <ReadThreadPriorityAdd>2</ReadThreadPriorityAdd>
+        <MaxSearchNum>2</MaxSearchNum>
+        <UnHanledMsgLogDir>/home/acc/settle/log</UnHanledMsgLogDir> 
+        <!--		<UnHanledMsgLogDir>e:/temp/commu/log</UnHanledMsgLogDir> -->
+        <ThreadBufferCapacity>10000</ThreadBufferCapacity>
+        <ThreadBufferIncrement>1000</ThreadBufferIncrement>
+        <PriorityThreadBufferCapacity>2000</PriorityThreadBufferCapacity>
+        <PriorityThreadBufferIncrement>1000</PriorityThreadBufferIncrement>
+    </ThreadPoolFileOtherMobile>
+    
+     <!--互联网支付交易文件线程池   -->  
+    <ThreadPoolFileNetPaid>
+        <MaxThreadNumber>5</MaxThreadNumber>
+        <ThreadSleepTime>100</ThreadSleepTime>
+        <ThreadPriorityAdd>0</ThreadPriorityAdd>
+        <ReadThreadPriorityAdd>2</ReadThreadPriorityAdd>
+        <MaxSearchNum>2</MaxSearchNum>
+        <UnHanledMsgLogDir>/home/acc/settle/log</UnHanledMsgLogDir> 
+        <!--		<UnHanledMsgLogDir>e:/temp/commu/log</UnHanledMsgLogDir> -->
+        <ThreadBufferCapacity>10000</ThreadBufferCapacity>
+        <ThreadBufferIncrement>1000</ThreadBufferIncrement>
+        <PriorityThreadBufferCapacity>2000</PriorityThreadBufferCapacity>
+        <PriorityThreadBufferIncrement>1000</PriorityThreadBufferIncrement>
+    </ThreadPoolFileNetPaid>
+    <!--互联网支付对账文件线程池  -->  
+    <ThreadPoolFileOtherNetPaid>
+        <MaxThreadNumber>2</MaxThreadNumber>
+        <ThreadSleepTime>100</ThreadSleepTime>
+        <ThreadPriorityAdd>0</ThreadPriorityAdd>
+        <ReadThreadPriorityAdd>2</ReadThreadPriorityAdd>
+        <MaxSearchNum>2</MaxSearchNum>
+        <UnHanledMsgLogDir>/home/acc/settle/log</UnHanledMsgLogDir> 
+        <!--		<UnHanledMsgLogDir>e:/temp/commu/log</UnHanledMsgLogDir> -->
+        <ThreadBufferCapacity>10000</ThreadBufferCapacity>
+        <ThreadBufferIncrement>1000</ThreadBufferIncrement>
+        <PriorityThreadBufferCapacity>2000</PriorityThreadBufferCapacity>
+        <PriorityThreadBufferIncrement>1000</PriorityThreadBufferIncrement>
+    </ThreadPoolFileOtherNetPaid>
+	
+   
+	
+</Config>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.produce.mapper.TicketStorageProduceBillDetailMapper">
+    
+    <resultMap type="com.goldsign.acc.app.produce.entity.TicketStorageProduceBillDetail" id="rmProduceBillDetail">
+        <result column="water_no" property="water_no" /> 
+        <result column="bill_no" property="bill_no" /> 
+        <result column="ic_main_type" property="ic_main_type" />
+        <result column="ic_sub_type" property="ic_sub_type" />
+        <result column="card_money" property="card_money" />
+        <result column="valid_date" property="valid_date" />
+        <result column="line_id" property="line_id" />
+        <result column="station_id" property="station_id" />
+        <result column="draw_quantity" property="draw_quantity" />
+        <result column="start_box_id" property="start_box_id" />
+        <result column="end_box_id" property="end_box_id" />
+        <result column="machine_no" property="machine_no" />
+        <result column="card_ava_days" property="card_ava_days" />
+        <result column="exit_line_id" property="exit_line_id" />
+        <result column="exit_station_id" property="exit_station_id" />
+        <result column="model" property="model" />
+        
+    </resultMap>
+    
+    
+    <select id="getProduceBillDetailList"  parameterType="com.goldsign.acc.app.produce.entity.TicketStorageProduceBillDetail" resultMap="rmProduceBillDetail">
+        select bill_no,water_no,ic_main_type,ic_sub_type,card_money,
+<!--        (case when valid_date is null then null
+             else to_char(valid_date,'yyyy-MM-dd')
+        end) valid_date,-->
+        (case when valid_date= to_date('1970-01-01' ,'yyyy-mm-dd')  then '' 
+         else to_char(valid_date,'yyyy-mm-dd')  end) valid_date,
+        line_id,station_id,
+               draw_quantity,start_box_id,end_box_id,machine_no,card_ava_days,exit_line_id,exit_station_id,model
+        from w_acc_tk.w_ic_pdu_produce_bill_detail
+        where bill_no =#{bill_no}
+        order by bill_no,water_no
+    </select> 
+    
+</mapper>

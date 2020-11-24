@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+    <OtherDb>
+	<Driver>oracle.jdbc.driver.OracleDriver</Driver>
+    	 <!--<URL>jdbc:oracle:thin:@10.99.11.81:1521:wacctstdb</URL>-->
+        <URL>jdbc:oracle:thin:@172.20.19.29:1521:wacc</URL>
+        <!--w_acc_mn-->
+    	<UserName encrypt="true">30102D2730162A20</UserName>
+	<Password encrypt="true">30102D2730162A20</Password>
+        
+        <!--w_acc_st-->
+        <UserName2>30102D273016343A</UserName2>
+	<Password2>30102D273016343A</Password2>
+    </OtherDb>
+    
+    <ScreenSize>
+        <height>768</height>
+        <width>1366</width>
+    </ScreenSize>
+</Config>

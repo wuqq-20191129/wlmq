@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.QueryPhyLogicListMapper">
+    
+    <resultMap type="QueryPhyLogicList" id="rmQueryPhyLogicList">
+        <result column="physic_no" property="physic_no" />
+        <result column="logic_no" property="logic_no" />  
+        <result column="water_no" property="water_no" />
+    </resultMap>
+    
+    <select id="getQueryPhyLogicLists"  parameterType="QueryPhyLogicList" resultMap="rmQueryPhyLogicList">
+        select physic_no ,logic_no,water_no from w_acc_st.w_op_prm_phy_logic_list
+        <where>
+        <if test="physic_no !=null and physic_no !=''">
+             physic_no like CONCAT(CONCAT('%', #{physic_no}), '%')
+        </if> 
+        <if test="logic_no !=null and logic_no !=''">
+            and logic_no like CONCAT(CONCAT('%', #{logic_no}), '%')
+        </if> 
+        <if test="water_no !=null and water_no !=''">
+            and water_no like CONCAT(CONCAT('%', #{water_no}), '%')
+        </if> 
+        </where>
+    </select>
+    
+    <select id="queryToMap"  parameterType="QueryPhyLogicList" resultType="map">
+        select physic_no ,logic_no,water_no from w_acc_st.w_op_prm_phy_logic_list
+        <where>
+        <if test="physic_no !=null and physic_no !=''">
+             physic_no like CONCAT(CONCAT('%', #{physic_no}), '%')
+        </if> 
+        <if test="logic_no !=null and logic_no !=''">
+            and logic_no like CONCAT(CONCAT('%', #{logic_no}), '%')
+        </if> 
+        <if test="water_no !=null and water_no !=''">
+            and water_no like CONCAT(CONCAT('%', #{water_no}), '%')
+        </if> 
+        </where>
+    </select>
+   
+
+</mapper>
+

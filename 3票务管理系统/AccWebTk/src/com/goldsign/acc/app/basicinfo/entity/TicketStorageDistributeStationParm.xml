@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper  namespace = "com.goldsign.acc.app.basicinfo.mapper.TicketStorageDistributeStationParmMapper">
+    
+    <resultMap type = "com.goldsign.acc.app.basicinfo.entity.TicketStorageDistributeStationParm"  id = "rmTicketStorageDistributeStationParm">
+        <result column="line_id"  property="line_id"/>
+        <result column="station_id"  property="station_id"/>
+        <result column="storage_id"  property="storage_id"/>
+        <result column="tvm_store_num"  property="tvm_store_num"/>
+        <result column="tvm_num"  property="tvm_num"/>
+        <result column="itm_store_num"  property="itm_store_num"/>
+        <result column="itm_num"  property="itm_num"/>
+        <result column="bom_store_num"  property="bom_store_num"/>
+        <result column="bom_num"  property="bom_num"/>
+        <result column="reverve_num"  property="reverve_num"/>
+        <result column="remark"  property="remark"/>
+    </resultMap>
+    
+    <select id="queryParm"   resultMap="rmTicketStorageDistributeStationParm">
+        select line_id,station_id,storage_id,tvm_store_num,
+         tvm_num,itm_store_num,itm_num,bom_store_num,bom_num,remark 
+             	from w_acc_tk.w_ic_prm_distribute_param where 1=1
+        <if test="line_id !=null and line_id !=''">
+              and line_id =#{line_id} 
+        </if> 
+        <if test="station_id !=null and station_id !=''">
+            and station_id =#{station_id} 
+        </if>
+        <if test="storage_id !=null and storage_id !=''">
+            and storage_id =#{storage_id} 
+        </if>
+         order by line_id,station_id
+    </select>
+    
+   <select id="getListForAdd"   resultMap="rmTicketStorageDistributeStationParm">
+         select line_id,station_id,storage_id,tvm_store_num,tvm_num,itm_store_num,itm_num,bom_store_num,bom_num,remark 
+             	from w_acc_tk.w_ic_prm_distribute_param  
+       where line_id =#{line_id} and station_id =#{station_id}
+    </select>
+   
+    <update id="modifyTicketStorageDistributeStationParm" parameterType="TicketStorageDistributeStationParm" >
+       update w_acc_tk.w_ic_prm_distribute_param set tvm_store_num=#{tvm_store_num},tvm_num=#{tvm_num},itm_store_num=#{itm_store_num},itm_num=#{itm_num},
+        bom_store_num=#{bom_store_num},bom_num=#{bom_num},remark=#{remark} 
+        where line_id =#{line_id} and station_id =#{station_id} and storage_id=#{storage_id}                                               
+    </update>
+    
+    <insert id="addTicketStorageDistributeStationParm" parameterType="TicketStorageDistributeStationParm" >
+        insert into w_acc_tk.w_ic_prm_distribute_param(line_id,station_id,storage_id,tvm_store_num,tvm_num,itm_store_num,itm_num,bom_store_num,bom_num,remark )
+        values(#{line_id},#{station_id},#{storage_id},#{tvm_store_num},#{tvm_num},#{itm_store_num},#{itm_num},#{bom_store_num},#{bom_num},#{remark})        
+        
+    </insert>
+    
+    <delete id="deleteTicketStorageDistributeStationParm" parameterType="TicketStorageDistributeStationParm">
+        delete from w_acc_tk.w_ic_prm_distribute_param
+         where line_id =#{line_id} and station_id =#{station_id} and storage_id=#{storage_id}           
+    </delete>
+</mapper>
+
+
+

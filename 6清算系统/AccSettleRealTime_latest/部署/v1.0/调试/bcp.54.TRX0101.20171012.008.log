@@ -1,0 +1,92 @@
+
+SQL*Loader: Release 11.2.0.4.0 - Production on Thu Oct 12 19:29:11 2017
+
+Copyright (c) 1982, 2011, Oracle and/or its affiliates.  All rights reserved.
+
+Control File:   /home/wweb/settle/control/54.ctl
+Data File:      /home/wweb/settle/bcp/2017101101/bcp.54.TRX0101.20171012.008
+  Bad File:     /home/wweb/settle/bcpbad/2017101101/bcp.54.TRX0101.20171012.008.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 50
+Bind array:     64 rows, maximum of 256000 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table W_ACC_ST.W_ST_BUF_DEAL, loaded from every logical record.
+Insert option in effect for this table: APPEND
+TRAILING NULLCOLS option in effect
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+LINE_ID                             FIRST     *   ,       CHARACTER            
+STATION_ID                           NEXT     *   ,       CHARACTER            
+DEV_TYPE_ID                          NEXT     *   ,       CHARACTER            
+DEVICE_ID                            NEXT     *   ,       CHARACTER            
+SAM_LOGICAL_ID                       NEXT     *   ,       CHARACTER            
+SAM_TRADE_SEQ                        NEXT     *   ,       CHARACTER            
+DEAL_DATETIME                        NEXT     *   ,       DATE yyyymmddhh24miss
+CARD_MAIN_ID                         NEXT     *   ,       CHARACTER            
+CARD_SUB_ID                          NEXT     *   ,       CHARACTER            
+CARD_LOGICAL_ID                      NEXT     *   ,       CHARACTER            
+CARD_PHYSICAL_ID                     NEXT     *   ,       CHARACTER            
+CARD_STATUS_ID                       NEXT     *   ,       CHARACTER            
+DEAL_FEE                             NEXT     *   ,       CHARACTER            
+DEAL_BALANCE_FEE                     NEXT     *   ,       CHARACTER            
+CARD_CHARGE_SEQ                      NEXT     *   ,       CHARACTER            
+CARD_CONSUME_SEQ                     NEXT     *   ,       CHARACTER            
+PAY_MODE_ID                          NEXT     *   ,       CHARACTER            
+RECEIPT_ID                           NEXT     *   ,       CHARACTER            
+TAC                                  NEXT     *   ,       CHARACTER            
+ENTRY_LINE_ID                        NEXT     *   ,       CHARACTER            
+ENTRY_STATION_ID                     NEXT     *   ,       CHARACTER            
+ENTRY_SAM_LOGICAL_ID                 NEXT     *   ,       CHARACTER            
+ENTRY_DATETIME                       NEXT     *   ,       DATE yyyymmddhh24miss
+OPERATOR_ID                          NEXT     *   ,       CHARACTER            
+SHIFT_ID                             NEXT     *   ,       CHARACTER            
+LAST_SAM_LOGICAL_ID                  NEXT     *   ,       CHARACTER            
+LAST_DEAL_DATETIME                   NEXT     *   ,       DATE yyyymmddhh24miss
+DEAL_NO_DISCOUNT_FEE                 NEXT     *   ,       CHARACTER            
+CARD_APP_FLAG                        NEXT     *   ,       CHARACTER            
+LIMIT_MODE                           NEXT     *   ,       CHARACTER            
+LIMIT_ENTRY_STATION                  NEXT     *   ,       CHARACTER            
+LIMIT_EXIT_STATION                   NEXT     *   ,       CHARACTER            
+WORK_MODE                            NEXT     *   ,       CHARACTER            
+CITY_CODE                            NEXT     *   ,       CHARACTER            
+BUSINESS_CODE                        NEXT     *   ,       CHARACTER            
+TAC_DEAL_TYPE                        NEXT     *   ,       CHARACTER            
+TAC_DEV_ID                           NEXT     *   ,       CHARACTER            
+CARD_APP_MODE                        NEXT     *   ,       CHARACTER            
+BALANCE_WATER_NO                     NEXT     *   ,       CHARACTER            
+BALANCE_WATER_NO_SUB                 NEXT     *   ,       CHARACTER            
+FILE_NAME                            NEXT     *   ,       CHARACTER            
+CHECK_FLAG                           NEXT     *   ,       CHARACTER            
+WATER_NO                             NEXT     *   ,       CHARACTER            
+    SQL string for column : "W_ACC_ST.W_SEQ_W_ST_BUF_DEAL.nextval"
+
+value used for ROWS parameter changed from 64 to 23
+
+Table W_ACC_ST.W_ST_BUF_DEAL:
+  2 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                 255162 bytes(23 rows)
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:             2
+Total logical records rejected:         0
+Total logical records discarded:        0
+
+Run began on Thu Oct 12 19:29:11 2017
+Run ended on Thu Oct 12 19:29:11 2017
+
+Elapsed time was:     00:00:00.31
+CPU time was:         00:00:00.04

@@ -1,0 +1,467 @@
+
+<HTML>
+    <HEAD>
+        <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=gb2312">
+        <link rel="stylesheet" href="./css/oaapp.css" type="text/css">
+        <SCRIPT LANGUAGE="JavaScript">
+            var SelectTime
+            var Selected_Month; 
+            var Selected_Year; 
+            var Current_Date = new Date(); 
+            //全局变量当前月
+            var Current_Month = Current_Date.getMonth(); 
+
+            //全局变量每月的天数   
+            var Days_in_Month = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31); 
+            var Month_Label = new Array('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'); 
+            //全局变量当前年
+            var Current_Year = Current_Date.getYear(); 
+            //全局变量当前日期
+            var Today = Current_Date.getDate(); 
+            //
+            function Header(Year, Month) { 
+     
+                if (Month == 1) { 
+                    if ((Year % 400 == 0) || ((Year % 4 == 0) && (Year % 100 != 0))) { 
+                        Days_in_Month[1] = 29; 
+                    } 
+                } 
+                var Header_String = Year + '年' + Month_Label[Month]; 
+                return Header_String; 
+            } 
+     
+     
+     
+            function Make_Calendar(Year,Month) { 
+                var First_Date = new Date(Year, Month, 1); 
+                var Heading = Header(Year, Month); 
+                var First_Day = First_Date.getDay() + 1; 
+                //计算日期显示的行数
+                if (((Days_in_Month[Month] == 31) && (First_Day >= 6)) || 
+                    ((Days_in_Month[Month] == 30) && (First_Day == 7))) { 
+                    var Rows = 6; 
+                } 
+                else if ((Days_in_Month[Month] == 28) && (First_Day == 1)) { 
+                    var Rows = 4; 
+                } 
+                else { 
+                    var Rows = 5; 
+                } 
+                //显示日期头
+                var tmpw = new Array("日","一","二","三","四","五","六");
+                var HTML_String = '<table topmargin=0 class=td align=center border=1><tr><td valign=center align=center><table BORDER=0 CELLSPACING=3 cellpadding=1 frame=box class=td align=center valign=center>'; 
+
+                //HTML_String += '<tr><td colspan=7 class=td align=center><b>'+ Heading + '</b></td></tr>';      
+                //HTML_String += '<tr>';
+
+                for(var i=0;i<7;i++){
+                    HTML_String += '<td ALIGN="CENTER" bgcolor="#97CBFF" class=td><b>'+tmpw[i]+'</b></td>';
+                }     
+                HTML_String +='</tr>'; 
+     
+                var Day_Counter = 1; 
+                var Loop_Counter = 1; 
+                var Month_Temp=Month;
+                var Timeall;
+                Month_Temp++;
+                //显示日期
+                for (var j = 1; j <= Rows; j++) { 
+                    HTML_String += '<tr ALIGN="left" VALIGN="top">'; 
+                    for (var i = 1; i < 8; i++) {
+                        Timeall=Year.toString()+','+Month_Temp.toString()+','+Day_Counter.toString();
+                        if ((Loop_Counter >= First_Day) && (Day_Counter <= Days_in_Month[Month])) { 
+                            if ((Day_Counter == form1.timeday.value) && (Year == form1.timeyear.value) && (Month == form1.timemonth.value)){				    if (Month_Temp>=10&&Day_Counter>=10) { 
+                                    HTML_String += '<td height=14  BORDERCOLOR="000000"><strong><a style="text-decoration:none" href="#" onclick=TimeSubmit('+Year+','+Month_Temp+','+Day_Counter+')><font color="red">'+ Day_Counter + '</font></strong></td>'; 
+                                }else if (Month_Temp<10&&Day_Counter<10) { 
+                                    HTML_String += '<td height=14  BORDERCOLOR="000000"><strong><a style="text-decoration:none" href="#" onclick=TimeSubmit('+Year+','+Month_Temp+','+Day_Counter+')><font color="red">'+'0'+ Day_Counter + '</font></strong></td>'; 
+                                }else if (Month_Temp>=10&&Day_Counter<10) { 
+                                    HTML_String += '<td height=14  BORDERCOLOR="000000"><strong><a style="text-decoration:none" href="#" onclick=TimeSubmit('+Year+','+Month_Temp+','+Day_Counter+')><font color="red">'+'0'+ Day_Counter + '</font></strong></td>'; 
+                                }else if (Month_Temp<10&&Day_Counter>=10) { 
+                                    HTML_String += '<td height=14  BORDERCOLOR="000000"><strong><a style="text-decoration:none" href="#" onclick=TimeSubmit('+Year+','+Month_Temp+','+Day_Counter+')><font color="red">'+Day_Counter + '</font></strong></td>'; 
+                                }
+                            }else {
+                                if (Month_Temp>=10&&Day_Counter>=10){
+                                    HTML_String += '<td height=14  BORDERCOLOR="000000"><a style="text-decoration:none" href="#" onclick=TimeSubmit('+Year+','+Month_Temp+','+Day_Counter+')><font color="black">'+ Day_Counter + '</font></td>';
+                                }else if (Month_Temp<10&&Day_Counter<10){
+                                    HTML_String += '<td height=14  BORDERCOLOR="000000"><a style="text-decoration:none" href="#" onclick=TimeSubmit('+Year+','+Month_Temp+','+Day_Counter+')><font color="black">'+ '0'+ Day_Counter + '</font></td>';
+                                }else if (Month_Temp>=10&&Day_Counter<10){
+                                    HTML_String += '<td height=14  BORDERCOLOR="000000"><a style="text-decoration:none" href="#" onclick=TimeSubmit('+Year+','+Month_Temp+','+Day_Counter+')><font color="black">'+ '0'+ Day_Counter + '</font></td>';
+                                }else if (Month_Temp<10&&Day_Counter>=10){
+                                    HTML_String += '<td height=14  BORDERCOLOR="000000"><a style="text-decoration:none" href="#" onclick=TimeSubmit('+Year+','+Month_Temp+','+Day_Counter+')><font color="black">'+Day_Counter + '</font></td>';
+                                }
+                            }
+                            Day_Counter++; 
+                        } else { 
+                            HTML_String += '<td height=14 BORDERCOLOR="C0C0C0"> </td>'; 
+                        } 
+                        Loop_Counter++; 
+                    } 
+                    HTML_String += '</tr>'; 
+                } 
+                HTML_String += '</table></td></tr></table>'; 
+                //日历对象赋值
+                document.all.Calendar.innerHTML = HTML_String; 
+            } 
+     
+     
+            function Check_Nums() { 
+                if ((event.keyCode < 48) || (event.keyCode > 57)) { 
+                    return false; 
+                } 
+            } 
+     
+     
+     
+            function On_Year() { 
+                var Year = document.all.year.value; 
+                if (Year.length == 4) { 
+                    Selected_Month = document.all.month.value; 
+                    Selected_Year = Year; 
+                    Make_Calendar(Selected_Year, Selected_Month); 
+                } 
+            } 
+     
+            function On_Month() { 
+                var Year = document.all.year.value; 
+                if (Year.length == 4) { 
+                    Selected_Month = document.all.month.value; 
+                    Selected_Year = Year; 
+                    Make_Calendar(Selected_Year, Selected_Month); 
+                } 
+                else { 
+                    alert('Please enter a valid year.'); 
+                    document.all.year.focus(); 
+                } 
+            } 
+     
+     
+            function Defaults() { 
+                if (!document.all) 
+                    return 
+          
+                var Mid_Screen = Math.round(document.body.clientWidth / 2); 
+                //年月对象取当前年月值
+                document.all.month.value = Current_Month; 
+
+                document.all.year.value = Current_Year; 
+                //全局选择的年月变量取当前年月值
+                Selected_Month = Current_Month; 
+                Selected_Year = Current_Year; 
+                Make_Calendar(Current_Year, Current_Month); 
+            } 
+     
+     
+            function Skip(Direction) { 
+                if (Direction == '+') { 
+                    if (Selected_Month == 11) { 
+                        Selected_Month = 0; 
+                        Selected_Year++; 
+                    } 
+                    else { 
+                        Selected_Month++; 
+                    } 
+                } 
+                else { 
+                    if (Selected_Month == 0) { 
+                        Selected_Month = 11; 
+                        Selected_Year--; 
+                    } 
+                    else { 
+                        Selected_Month--; 
+                    } 
+                } 
+    
+                Make_Calendar(Selected_Year, Selected_Month); 
+                document.all.month.value = Selected_Month; 
+                document.all.year.value = Selected_Year; 
+            } 
+            //时钟显示 
+            function tick() { 
+                var hours, minutes, seconds, xfile; 
+                var intHours, intMinutes, intSeconds; 
+                var today; 
+                today = new Date(); 
+                intHours = today.getHours(); 
+                intMinutes = today.getMinutes(); 
+                intSeconds = today.getSeconds(); 
+                if (intHours == 0) { 
+                    hours = "12:"; 
+                    xfile = "午夜 "; 
+                } else if (intHours < 12) { 
+                    hours = intHours+":"; 
+                    xfile = "上午 "; 
+                } else if (intHours == 12) { 
+                    hours = "12:"; 
+                    xfile = "正午 "; 
+                } else { 
+                    intHours = intHours - 12 
+                    hours = intHours + ":"; 
+                    xfile = "下午 "; 
+                } 
+                if (intMinutes < 10) { 
+                    minutes = "0"+intMinutes+":"; 
+                } else { 
+                    minutes = intMinutes+":"; 
+                } 
+                if (intSeconds < 10) { 
+                    seconds = "0"+intSeconds+" "; 
+                } else { 
+                    seconds = intSeconds+" "; 
+                } 
+                timeString = xfile+hours+minutes+seconds; 
+                //时钟对象赋值
+                //    document.all.Clock.innerHTML = timeString; 
+                window.setTimeout("tick();", 100); 
+            } 
+
+            function openContext(Time_Y,Time_M,Time_D)
+            {	
+                //alert(Time_Y+"-"+Time_M+"-"+Time_D);
+                document.forms[0].BussinessArrange_Time.value=Time_Y+"-"+Time_M+"-"+Time_D;
+	
+	
+            }
+            //日期单击响应处理
+            function TimeSubmit(Timey,Timem,Timed)	
+            {
+                form1.timeyear.value=Timey;
+                form1.timemonth.value=Timem-1;
+                form1.timeday.value=Timed;
+	
+                Make_Calendar(Timey,Timem-1); 
+     
+            }
+            function returnTime(){
+                //取年月日
+                var Timey=form1.timeyear.value;
+                var Timem=form1.timemonth.value;
+                Timem=Timem-0+1;
+                var Timed=form1.timeday.value;
+                //月日补0
+                if(Timem<10) Timem="0"+Timem;
+                if(Timed<10) Timed="0"+Timed;
+                SelectTime=Timey+"-"+Timem+"-"+Timed;
+                //需时间	
+                if(isShowTime()){
+                    var hour = form1.hour.value;
+                    var minute = form1.minute.value;
+                    var second = form1.second.value;
+                    if(hour<10)
+                        hour = "0"+hour;
+                    if(minute<10)
+                        minute = "0"+minute;
+                    if(second<10)
+                        second = "0"+second;
+                    SelectTime = SelectTime+" "+hour+":"+minute+":"+second;
+                }	
+                returnValue=SelectTime;
+                window.close();
+	
+            }
+            function changehour()
+            {
+                for(var i=0;i<form1.yhour.options.length;i++)
+                {
+                    if(form1.yhour.options(i).selected==true){
+                        form1.selectedhour.value=form1.yhour.options(i).value;
+                        break;
+                    }
+                }
+            }
+
+            function changemini()
+            {
+                for(var i=0;i<form1.yminute.options.length;i++)
+                {
+                    if(form1.yminute.options(i).selected==true){
+                        form1.selectedmini.value=form1.yminute.options(i).value;
+                        break;
+                    }
+                }
+            }
+            function init(formName,yearName,monthName,hourName,minuteName,secondName){
+                generateYearControl(formName,yearName);
+                generateMonthControl(formName,monthName);
+                generateTimeControl(formName,hourName,minuteName,secondName);
+            }
+            function generateYearControl(formName,controlName){
+                var frm = document.forms[formName];
+                if(frm == null)
+                    return;
+                var ctrOb = frm.all[controlName];
+                if(ctrOb == null)
+                    return;
+                if(ctrOb.tagName !='SELECT')
+                    return;
+    
+                var Current_Date = new Date();
+                var Current_Year = Current_Date.getYear();
+                var startYear=Current_Year-70;
+                var endYear=Current_Year+30;
+                var tt="";
+                var option = null;
+                //		alert("startYear="+startYear+"endYear="+endYear)
+                for (j=startYear;j<endYear+1;j++) { 
+                    option = new Option(j,j);
+                    ctrOb.add(option);
+                    if(j==Current_Year)
+                        option.selected = true;
+
+                }    
+            }
+            function generateMonthControl(formName,controlName){
+                var frm = document.forms[formName];
+                if(frm == null)
+                    return;
+                var ctrOb = frm.all[controlName];
+                if(ctrOb == null)
+                    return;
+                if(ctrOb.tagName !='SELECT')
+                    return;
+    
+                var Current_Date = new Date();
+                var Current_Month = Current_Date.getMonth();
+                var option = null;
+                //		alert("startYear="+startYear+"endYear="+endYear)
+                for (j=0;j<12;j++) { 
+                    option = new Option(j+1,j);
+                    ctrOb.add(option);
+                    if(j==Current_Month)
+                        option.selected = true;
+
+                }    
+            }
+            function generateTimeControl(formName,hourName,minuteName,secondName){
+                var frm = document.forms[formName];
+                if(frm == null)
+                    return;
+                var hourOb = frm.all[hourName];
+                var minuteOb = frm.all[minuteName];
+                var secondOb = frm.all[secondName];
+                if(hourOb == null || minuteOb== null||secondOb==null)
+                    return;
+                if(hourOb.tagName !='SELECT'||minuteOb.tagName !='SELECT'||secondOb.tagName !='SELECT')
+                    return;
+    
+                var Current_Date = new Date();
+                var Current_Hour = Current_Date.getHours();
+                var Current_Minute = Current_Date.getMinutes();
+                var Current_Second = Current_Date.getSeconds();
+                var option = null;
+                //		alert("Current_Month="+Current_Month)
+                for (j=0;j<24;j++) { 
+                    option = new Option(j,j);
+                    hourOb.add(option);
+                    if(j==Current_Hour)
+                        option.selected = true;
+
+                }  
+                for (j=0;j<60;j++) { 
+                    option = new Option(j,j);
+                    minuteOb.add(option);
+                    if(j==Current_Minute)
+                        option.selected = true;
+
+                } 
+                for (j=0;j<60;j++) { 
+                    option = new Option(j,j);
+                    secondOb.add(option);
+                    if(j==Current_Second)
+                        option.selected = true;
+
+                }   
+            }
+            //显示时间控件
+            function showTimeControl(tableID){
+                var tbl = document.getElementById(tableID);
+                if(tbl ==null)
+                    return;
+                //  alert("tbl.tagName="+tbl.tagName);
+                //时间显示行
+                var row = tbl.rows[2];
+                var isShow = isShowTime();
+                //  alert("isShow="+isShow);
+                if(isShow)
+                    row.style.display ='';//显示
+                else
+                    row.style.display ='none';//不显示
+    	
+            }
+
+            function isShowTime(){
+                var isShow = window.dialogArguments;
+                if(isShow =='1')
+                    return true;
+                else
+                    return false;
+            }
+
+        </SCRIPT>
+        <title>
+            日历表
+        </title>
+    </HEAD>
+
+    <BODY leftmargin=0 rightmargin=0 topmargin=0 onLoad="init('form1','year','month','hour','minute','second');Defaults();showTimeControl('calendarTB')" bgColor="rgb(207,207,207)">
+        <div align="center">
+            <FORM name="form1">
+
+                <table  name="calendarTB" id="calendarTB" height=300 border="0" cellspacing="0" cellpadding="0" >
+                    <tr  align=center> 
+                        <td  class=td >
+                            <table  class=td border=0>
+                                <tr>
+                                    <td>
+                                        <select name="year" onChange="On_Year()"> </select>
+                                        年
+                                        <select name="month" onChange="On_Month()" > </select>
+                                        月
+                                    </td>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr align=center>
+                        <td>
+                            <Div id=Calendar style="position:relative;top:1px;" ></div> 
+                            <input class='textflat'  class='textflat'  type="button" style="display:none;background-color: #e2e2e2; color: #000000; font-size: 9pt; font-family: 宋体; border: 2 groove #FFFFFF; padding-top: 2; background-position: center 100%" value=" 上月 " onClick="Skip('-')"> 
+                            <input class='textflat'  class='textflat'  type="button" style="display:none;background-color: #e2e2e2; color: #000000; font-size: 9pt; font-family: 宋体; border: 2 groove #FFFFFF; padding-top: 2; background-position: center 50%" value=" 下月 " onClick="Skip('+')"> 
+                        </td>
+                    </tr>
+
+                    <tr align=center style="display:none"> 
+                        <td  class=td >
+                            <table  class=td border=0>
+                                <tr>
+                                    <td>
+                                        <select name="hour"> </select>
+                                        时
+                                        <select name="minute"></select> 
+                                        分
+                                        <select name="second"> </select>
+                                        秒
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr align=center>
+                        <td >
+                            <input class='textflat'  class='textflat'  type=button value="确定" onclick="returnTime();">	
+                            <input class='textflat'  class='textflat'  type=button value="取消" onclick="window.close();">	
+                        </td>
+                    </tr>
+                </table>
+
+                <script>
+                    document.writeln("<input class='textflat'  class='textflat'  type=hidden name='timeyear' value='"+Current_Year+"'>");
+                    document.writeln("<input class='textflat'  class='textflat'  type=hidden name='timemonth' value='"+(Current_Month)+"'>");
+                    document.writeln("<input class='textflat'  class='textflat'  type=hidden name='timeday' value='"+Today+"'>");
+                </script>
+                <input class='textflat'  class='textflat'  type="hidden" name="selectedhour" value="">	
+                <input class='textflat'  class='textflat'  type="hidden" name="selectedmini" value="">	
+
+            </FORM>
+        </div>
+    </BODY>
+</HTML>

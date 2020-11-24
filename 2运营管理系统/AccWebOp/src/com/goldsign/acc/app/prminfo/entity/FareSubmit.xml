@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.FareSubmitMapper">
+    
+    <resultMap type="PrmVersion" id="rmPrmVersion">
+        <id column="parm_type_id" property="parm_type_id" />
+        <result column="version_no" property="version_no" />
+        <result column="record_flag" property="record_flag" />
+        <result column="begin_time" property="begin_time" />
+        <result column="end_time" property="end_time" />
+        <result column="version_date" property="version_date" />
+        
+        <result column="distribute_times" property="distribute_times" />
+        <result column="operator_id" property="operator_id" />
+        
+        <result column="app_line_name" property="app_line_name" />
+        <result column="remark" property="remark" />
+
+       
+    </resultMap>
+    
+    <!--查询草稿参数 -->
+    <select id="selectPrmVersionForDraft" parameterType="String" resultMap="rmPrmVersion">
+        select * from w_acc_st.W_OP_PRM_PARA_VER where PARM_TYPE_ID = #{id} and record_flag='3'
+    </select>
+    
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    <!--0401 收费区段-->
+    <update id="submitToOldFlagForFareZone" parameterType="PrmVersion" >
+        update W_ACC_ST.W_OP_PRM_FARE_ZONE set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new}                                               
+    </update>
+    <!--0403 票价表-->
+    <update id="submitToOldFlagForFareTable" parameterType="PrmVersion" >
+        update W_ACC_ST.W_OP_PRM_FARE_TABLE set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new}                                               
+    </update>
+    <!--0404 节假日定义-->
+    <update id="submitToOldFlagForHolidayPara" parameterType="PrmVersion" >
+        update W_ACC_ST.W_OP_PRM_HOLIDAY_TABLE set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new}                                               
+    </update>
+    <!--0405 非繁忙时间定义-->
+    <update id="submitToOldFlagForOffPeakHours" parameterType="PrmVersion" >
+        update W_ACC_ST.W_OP_PRM_OFF_PEAK_HOURS set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new}                                               
+    </update>
+    <!--0402 收费配置表-->
+    <update id="submitToOldFlagForFareConf" parameterType="PrmVersion" >
+        update W_ACC_ST.W_OP_PRM_FARE_CONF set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new}                                               
+    </update>
+    
+    <!--0406 联乘时间间隔定义表-->
+    <update id="submitToOldFlagForFareTimeInterval" parameterType="PrmVersion" >
+        update W_ACC_ST.W_OP_PRM_FARE_TIME_INTERVAL set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new}                                               
+    </update>
+    
+    <!--0407 累计消费额定义表 -->
+    <update id="submitToOldFlagForFareDealToal" parameterType="PrmVersion" >
+        update W_ACC_ST.W_OP_PRM_FARE_DEAL_TOTAL set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new}                                               
+    </update>
+    
+    
+    
+    
+    <!--草稿参数复制为当前或未来参数 -->
+    <!--0401 收费区段-->
+     <insert id="submitFromDraftToCurOrFurForFareZone" parameterType="PrmVersion" >
+        insert into  W_ACC_ST.W_OP_PRM_FARE_ZONE(water_no,b_line_id,b_station_id,e_line_id,e_station_id,fare_zone,max_travel_time,
+                                                 over_time_charge,distince,record_flag,version_no)
+               select w_acc_st.W_SEQ_W_OP_PRM_FARE_ZONE.nextval,b_line_id,b_station_id,e_line_id,e_station_id,fare_zone,max_travel_time,
+               over_time_charge,distince,#{record_flag_new},#{version_no_new}
+               from   W_ACC_ST.W_OP_PRM_FARE_ZONE  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    <!--0403 票价表-->
+    <insert id="submitFromDraftToCurOrFurForFareTable" parameterType="PrmVersion" >
+        insert into  W_ACC_ST.W_OP_PRM_FARE_TABLE(water_no,fare_table_id,fare,fare_zone,fare_name,version_no,record_flag)
+               select W_ACC_ST.W_SEQ_W_OP_PRM_FARE_TABLE.nextval,fare_table_id,fare,fare_zone,fare_name,#{version_no_new},#{record_flag_new}
+               from   W_ACC_ST.W_OP_PRM_FARE_TABLE  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    <!--0404 节假日定义-->
+    <insert id="submitFromDraftToCurOrFurForHolidayPara" parameterType="PrmVersion" >
+        insert into  W_ACC_ST.W_OP_PRM_HOLIDAY_TABLE(water_no,holiday_type,start_date,end_date,version_no,record_flag)
+               select W_ACC_ST.W_SEQ_W_OP_PRM_HOLIDAY_TABLE.nextval,holiday_type,start_date,end_date,#{version_no_new},#{record_flag_new}
+               from   W_ACC_ST.W_OP_PRM_HOLIDAY_TABLE  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    <!--0405 非繁忙时间定义-->
+    <insert id="submitFromDraftToCurOrFurForOffPeakHours" parameterType="PrmVersion" >
+        insert into  W_ACC_ST.W_OP_PRM_OFF_PEAK_HOURS(water_no,day_of_week,start_time,end_time,version_no,record_flag)
+               select W_ACC_ST.W_SEQ_W_OP_PRM_OFF_PEAK_HOURS.nextval,day_of_week,start_time,end_time,#{version_no_new},#{record_flag_new}
+               from   W_ACC_ST.W_OP_PRM_OFF_PEAK_HOURS  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    <!--0402 收费配置表-->
+    <insert id="submitFromDraftToCurOrFurForFareConf" parameterType="PrmVersion" >
+        insert into  W_ACC_ST.W_OP_PRM_FARE_CONF(water_no,time_code,card_sub_id,card_main_id,fare_table_id,
+                                                fare_time_id,fare_deal_id,version_no,record_flag)
+               select W_ACC_ST.W_SEQ_W_OP_PRM_FARE_CONF.nextval,time_code,card_sub_id,card_main_id,fare_table_id,
+                      fare_time_id,fare_deal_id,#{version_no_new},#{record_flag_new}
+               from   W_ACC_ST.W_OP_PRM_FARE_CONF  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    <!--0406 联乘时间间隔定义表-->
+    <insert id="submitFromDraftToCurOrFurForFareTimeInterval" parameterType="PrmVersion" >
+        insert into  W_ACC_ST.W_OP_PRM_FARE_TIME_INTERVAL(water_no,time_id,time_min,time_max,version_no,record_flag)
+               select W_ACC_ST.W_SEQ_W_OP_PRM_FARE_TIME_INT.nextval,time_id,time_min,time_max,#{version_no_new},#{record_flag_new}
+               from   W_ACC_ST.W_OP_PRM_FARE_TIME_INTERVAL  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    <!--0406 联乘时间间隔定义表-->
+    <insert id="submitFromDraftToCurOrFurForFareDealToal" parameterType="PrmVersion" >
+        insert into  W_ACC_ST.W_OP_PRM_FARE_DEAL_TOTAL(water_no,deal_id,deal_min,deal_max,version_no,record_flag)
+               select W_ACC_ST.W_SEQ_W_OP_PRM_FARE_DEAL_TOTAL.nextval,deal_id,deal_min,deal_max,#{version_no_new},#{record_flag_new}
+               from   W_ACC_ST.W_OP_PRM_FARE_DEAL_TOTAL
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    
+    
+    
+    
+    
+     
+    
+</mapper>

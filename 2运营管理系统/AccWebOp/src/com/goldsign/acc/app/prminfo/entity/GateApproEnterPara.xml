@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.GateApproEnterParaMapper">
+    <resultMap type="GateApproEnterPara" id="rmGateApproEnterPara">
+        
+        <result column="card_main_id" property="card_main_id" /> 
+        <result column="card_sub_id" property="card_sub_id" /> 
+        <result column="discount" property="discount" /> 
+        <result column="sound" property="sound" /> 
+        <result column="record_flag" property="record_flag" /> 
+        <result column="version_no" property="version_no" /> 
+    </resultMap>
+
+    <select id="getGateApproEnterParas"  parameterType="GateApproEnterPara" resultMap="rmGateApproEnterPara">
+        select card_main_id,card_sub_id,discount,sound,record_flag,version_no 
+        from w_acc_st.W_OP_PRM_GATE_VOICE_PROMP where record_flag=#{record_flag} and version_no=#{version_no}
+        <if test="card_main_id !=null and card_main_id !=''">
+            and card_main_id =#{card_main_id}
+        </if>
+        <if test="card_sub_id !=null and card_sub_id !=''">
+            and card_sub_id =#{card_sub_id}
+        </if> 
+        order by card_main_id,card_sub_id
+    </select>
+    
+    <select id="getGateApproEnterParaById"  parameterType="GateApproEnterPara" resultMap="rmGateApproEnterPara">
+        select card_main_id,card_sub_id,discount,sound,record_flag,version_no 
+        from w_acc_st.W_OP_PRM_GATE_VOICE_PROMP where record_flag=#{record_flag} and version_no=#{version_no}
+                                                and card_main_id =#{card_main_id} and card_sub_id =#{card_sub_id}
+    </select>
+    
+    <insert id="addGateApproEnterPara" parameterType="GateApproEnterPara" >
+        insert into w_acc_st.W_OP_PRM_GATE_VOICE_PROMP (CARD_MAIN_ID, CARD_SUB_ID, DISCOUNT, SOUND, RECORD_FLAG, VERSION_NO)
+                                        values(#{card_main_id},#{card_sub_id},#{discount},
+                                             #{sound},#{record_flag},#{version_no}) 
+    </insert>
+    
+    <delete id="deleteGateApproEnterPara" parameterType="GateApproEnterPara">
+            delete from w_acc_st.W_OP_PRM_GATE_VOICE_PROMP where card_main_id=#{card_main_id} 
+                                                      and card_sub_id=#{card_sub_id} and record_flag=#{record_flag} and version_no=#{version_no} 
+    </delete>
+    
+    <update id="modifyGateApproEnterPara" parameterType="GateApproEnterPara" >
+        update w_acc_st.W_OP_PRM_GATE_VOICE_PROMP set card_main_id=#{card_main_id},card_sub_id=#{card_sub_id},
+                                                    discount=#{discount},sound=#{sound},record_flag=#{record_flag},version_no=#{version_no}
+                                                where  card_main_id=#{card_main_id} and card_sub_id=#{card_sub_id} 
+                                                        and record_flag=#{record_flag} and version_no=#{version_no} 
+    </update>
+    
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    <update id="submitToOldFlag" parameterType="GateApproEnterPara" >
+        update w_acc_st.W_OP_PRM_GATE_VOICE_PROMP set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new}                                               
+    </update>
+    
+    <!--草稿参数复制为当前或未来参数 -->
+    <insert id="submitFromDraftToCurOrFur" parameterType="GateApproEnterPara" >
+        insert into w_acc_st.W_OP_PRM_GATE_VOICE_PROMP (CARD_MAIN_ID, CARD_SUB_ID, DISCOUNT, SOUND, RECORD_FLAG, VERSION_NO)
+               select card_main_id,card_sub_id,discount,sound,#{record_flag_new},#{version_no_new} 
+        from   w_acc_st.W_OP_PRM_GATE_VOICE_PROMP 
+        where  record_flag=#{record_flag} and version_no=#{version_no}
+    </insert>
+    
+    <!--草稿参数删除 -->
+     <delete id="deleteGateApproEnterParasForClone" parameterType="GateApproEnterPara">
+            delete from W_ACC_ST.W_OP_PRM_GATE_VOICE_PROMP where  record_flag='3' and version_no='0000000000'                                                      
+    </delete>
+    
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="GateApproEnterPara" >
+        insert into w_acc_st.W_OP_PRM_GATE_VOICE_PROMP (CARD_MAIN_ID, CARD_SUB_ID, DISCOUNT, SOUND, RECORD_FLAG, VERSION_NO)
+               select card_main_id,card_sub_id,discount,sound,'3','0000000000' 
+        from   w_acc_st.W_OP_PRM_GATE_VOICE_PROMP 
+        where  record_flag=#{record_flag} and version_no=#{version_no}                                  
+    </insert>
+    
+</mapper>

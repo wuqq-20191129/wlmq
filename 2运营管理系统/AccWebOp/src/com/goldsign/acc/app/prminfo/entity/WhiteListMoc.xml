@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.WhiteListMocMapper">
+    
+    <resultMap type="WhiteListMoc" id="rmWhiteListMoc">
+        
+        <result column="iss_identify_id" property="iss_identify_id" /> 
+        <result column="iss_identify_num" property="iss_identify_num" />
+    </resultMap>
+    
+    <select id="getWhiteListMocs"  parameterType="WhiteListMoc" resultMap="rmWhiteListMoc">
+        select iss_identify_id,iss_identify_num from w_acc_st.W_OP_PRM_WHITE_LIST_MOC 
+        where 1=1
+        <if test="iss_identify_id !=null and iss_identify_id !=''">
+            and iss_identify_id  = #{iss_identify_id}
+        </if>
+        <if test="iss_identify_num !=null and iss_identify_num !=''">
+            and iss_identify_num  = #{iss_identify_num}
+        </if>
+        order by iss_identify_id,iss_identify_num
+    </select>
+    
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.frame.mapper.PubFlagMapper">
+    <resultMap type="PubFlag" id="rmPubFlag">
+        <id column="code" property="code" />
+        <result column="code_text" property="code_text" />  
+    </resultMap>
+    <resultMap type="PubFlag" id="rmPubFlagType">
+        <id column="code" property="code" />
+        <result column="code_text" property="code_text" />  
+        <result column="code_type" property="code_type" />
+    </resultMap>
+    
+     
+    <select id="getLines"  resultMap="rmPubFlag">
+        select line_id code,line_name code_text  from w_acc_st.w_op_prm_line where record_flag='3' order by line_id
+    </select>
+    <select id="getStations"  resultMap="rmPubFlagType">
+        select LINE_ID code_type,STATION_ID code,CHINESE_NAME code_text  from w_acc_st.W_OP_PRM_STATION where record_flag='3' order by LINE_ID,STATION_ID
+    </select>
+    <select id="getDevTypes"  resultMap="rmPubFlag">
+        select DEV_TYPE_ID code,DEV_TYPE_NAME code_text  from w_acc_st.W_OP_PRM_DEV_TYPE where record_flag='3' order by DEV_TYPE_ID
+    </select>
+    <select id="getButtons"  resultMap="rmPubFlag">
+        select BTN_ID code,BTN_NAME code_text  from w_acc_st.W_OP_COD_BTN_TYPE  order by BTN_ID
+    </select>
+    <select id="getCode"  parameterType="String" resultType="PubFlag">
+        select  code, code_text  from w_acc_st.w_op_cod_pub_flag where type = #{type}
+    </select>
+    
+    <select id="getCodeByType"  parameterType="String" resultType="PubFlag">
+        select  code, code_text  from w_acc_mn.w_pub_flag where type = #{type}
+    </select>
+     
+    
+</mapper>

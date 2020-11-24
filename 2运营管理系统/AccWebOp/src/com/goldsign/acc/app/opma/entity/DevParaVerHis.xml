@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.opma.mapper.DevParaVerHisMapper">
+    
+    <resultMap type="DevParaVerHis" id="rmDevParaVerHis">
+        <result column="line_id" property="line_id" />
+        <result column="station_id" property="station_id" />  
+        <result column="dev_type_id" property="dev_type_id" />
+        <result column="device_id" property="device_id" />
+        <result column="parm_type_id" property="parm_type_id" />
+        <result column="record_flag" property="record_flag" />
+        <result column="version_no" property="version_no" />       
+        <result column="genTime" property="genTime" />
+        <result column="endTime" property="endTime" />
+         <result column="report_date" property="report_date" />
+    </resultMap>
+    
+    <select id="getDevParaVerHis"  parameterType="DevParaVerHis" resultMap="rmDevParaVerHis">
+        select water_no,line_id,station_id,dev_type_id,device_id,parm_type_id,record_flag,version_no,report_date,remark 
+        from W_ACC_CM.W_CM_DEV_PARA_VER_HIS
+
+        <where>
+        <if test="line_id !=null and line_id !=''">
+             line_id =#{line_id}
+        </if> 
+        <if test="station_id !=null and station_id !=''">
+            and station_id =#{station_id}
+        </if> 
+        <if test="dev_type_id !=null and dev_type_id !=''">
+            and dev_type_id =#{dev_type_id}
+        </if> 
+        <if test="device_id !=null and device_id !=''">
+            and device_id =#{device_id}
+        </if> 
+        <if test="parm_type_id !=null and parm_type_id !=''">
+            and parm_type_id =#{parm_type_id}
+        </if> 
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag =#{record_flag}
+        </if> 
+        <if test="version_no !=null and version_no !=''">
+            and version_no =#{version_no}
+        </if> 
+        <if test="genTime !=null and genTime !=''">
+            
+            and report_date &gt;= to_date(#{genTime}, 'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        <if test="endTime !=null and endTime !=''">
+            and report_date &lt;= to_date(#{endTime}, 'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        </where>
+    </select>
+    
+    <!--获取设备id-->
+    <select id="getDevIdList"  parameterType="DevParaVerHis" resultMap="rmDevParaVerHis">
+        select distinct device_id from w_acc_st.w_op_prm_dev_code where record_flag = '0'
+        <if test="dev_type_id !=null and dev_type_id !=''">
+            and dev_type_id =#{dev_type_id} 
+        </if>
+        <if test="line_id !=null and line_id !=''">
+            and line_id =#{line_id}
+        </if>
+        <if test="station_id !=null and station_id !=''">
+            and station_id =#{station_id}
+        </if> 
+        order by device_id asc
+    </select>
+   
+
+</mapper>
+

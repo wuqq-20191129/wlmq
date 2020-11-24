@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.sysconfig.mapper.TaskLogMapper">
+    
+    <resultMap type="com.goldsign.acc.app.sysconfig.entity.TaskLog" id="rmTaskLog">      
+        <result column="TASK_NAME" property="taskName" /> 
+        <result column="TASK_DESC" property="taskDesc" /> 
+        <result column="START_TIME" property="startTime" />
+        <result column="END_TIME" property="endTime" />   
+        <result column="TASK_RESULT" property="taskResult" /> 
+        <result column="RESULT_DESC" property="resultDesc" />
+        <result column="WATER_NO" property="waterNo" />  
+        <result column="resultName" property="resultName" />              
+    </resultMap>
+    
+    <select id="queryTaskLog" parameterType="com.goldsign.acc.app.sysconfig.entity.TaskLog" resultMap="rmTaskLog">
+        select * from  w_acc_st.w_op_dm_task_log where 1=1 
+        <if test="taskName != '' and taskName != null">
+            and TASK_NAME like concat(concat('%',#{taskName}),'%')
+        </if>
+        <if test="taskResult != '' and taskResult != null">
+            and TASK_RESULT = #{taskResult}
+        </if>
+        <if test="startTime != '' and startTime != null">
+            and START_TIME &gt;= to_date(#{startTime},'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        <if test="endTime != '' and endTime != null">
+            and END_TIME &lt;= to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss')
+        </if>        
+    </select>
+    
+<!--    <insert id="addTaskLog" parameterType="com.goldsign.acc.app.sysconfig.entity.TaskLog">
+        insert into w_acc_st.w_op_dm_task_log(TASK_NAME,TASK_DESC,START_TIME,END_TIME,TASK_RESULT,RESULT_DESC,WATER_NO) 
+        values (#{taskName}, #{taskDesc}, sysdate, NULL, #{taskResult}, #{resultDesc}, w_acc_st.W_SEQ_W_OP_DM_TASK_LOG.nextval)
+    </insert> -->
+    
+    <insert id="addTaskLog" parameterType="com.goldsign.acc.app.sysconfig.entity.TaskLog">
+        insert into w_acc_st.w_op_dm_task_log(TASK_NAME,TASK_DESC,START_TIME,END_TIME,TASK_RESULT,RESULT_DESC,WATER_NO) 
+        values (#{taskName}, #{taskDesc}, sysdate, NULL, #{taskResult}, #{resultDesc}, #{waterNo})
+    </insert> 
+    
+    <update id="modifyTaskLog" parameterType="com.goldsign.acc.app.sysconfig.entity.TaskLog">
+        update w_acc_st.w_op_dm_task_log set END_TIME = sysdate,TASK_RESULT = #{taskResult},RESULT_DESC = #{resultDesc} where WATER_NO = #{waterNo}
+    </update>  
+    
+    
+    <select id="getWaterNo"  resultType="java.lang.Integer">
+        select W_ACC_ST.W_SEQ_W_OP_DM_TASK_LOG.nextval waterno from dual 
+        
+    </select>
+</mapper>

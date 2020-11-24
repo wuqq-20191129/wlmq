@@ -1,0 +1,55 @@
+M_28_20170710.zhj
+ 
+##command_start_date
+2017-07-10 07:40:00
+##command_end_date
+**********************Hardware Error Check*******************************
+##command_start_hardware
+##command_end_hardware
+************************Disk Space Check **********************************
+##command_start_df
+Filesystem    GB blocks      Free %Used    Iused %Iused Mounted on
+/dev/hd4          10.00      9.79    3%    10720     1% /
+/dev/hd2          10.00      6.07   40%    73434     5% /usr
+/dev/hd9var       10.00      8.76   13%     9326     1% /var
+/dev/hd3          20.00     18.64    7%     1200     1% /tmp
+/dev/fwdump        1.00      1.00    1%        4     1% /var/adm/ras/platform
+/dev/hd1          20.00     19.68    2%      173     1% /home
+/dev/hd11admin      0.50      0.50    1%        5     1% /admin
+/proc                 -         -    -         -     -  /proc
+/dev/hd10opt      10.00      9.71    3%    11910     1% /opt
+/dev/livedump      0.50      0.50    1%       14     1% /var/adm/ras/livedump
+10.99.1.11:/opt/communfs    135.00     25.96   81%  3032895    34% /opt/communfs
+##command_end_df
+************************ All Error List **********************************
+IDENTIFIER TIMESTAMP  T C RESOURCE_NAME  DESCRIPTION
+3C81E43F   0209230317 P U topsvcs        Late in sending heartbeat
+101F1D7C   0414154914 T U sysxinet       DEAD GATEWAY DETECTED
+101F1D7C   0414154614 T U sysxinet       DEAD GATEWAY DETECTED
+********************* ifconfig -a *******************************
+****************** flags state: <UP *****************************
+##command_start_ifconfig
+##command_end_ifconfig
+********************** disk state *********************************
+##command_start_diskstate
+STALE PVs:          0                        STALE PPs:      0
+STALE PVs:          0                        STALE PPs:      0
+##command_end_diskstate
+******************lv_mirror_state*****************************
+##command_start_lv_mirror_state
+rootvg:
+LV NAME             TYPE       LPs     PPs     PVs  LV STATE      MOUNT POINT
+hd4                 jfs2       20      40      2    open/syncd    /
+hd2                 jfs2       20      40      2    open/syncd    /usr
+hd9var              jfs2       20      40      2    open/syncd    /var
+hd3                 jfs2       40      80      2    open/syncd    /tmp
+hd1                 jfs2       40      80      2    open/syncd    /home
+hd10opt             jfs2       20      40      2    open/syncd    /opt
+hd11admin           jfs2       1       2       2    open/syncd    /admin
+fwdump              jfs2       2       4       2    open/syncd    /var/adm/ras/platform
+livedump            jfs2       1       2       2    open/syncd    /var/adm/ras/livedump
+##command_end_lv_mirror_state
+******************ha status check*****************************
+##command_start_ha
+resource: mndhb_vg_01 srvcomm2
+##command_end_ha

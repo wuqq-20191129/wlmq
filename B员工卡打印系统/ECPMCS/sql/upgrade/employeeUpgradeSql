@@ -1,0 +1,94 @@
+-- 票面打印系统配置信息修改 - 添加老人证、员工证，更新“其他”为9
+update acc_tk.ic_scp_pub_flag set code_text='老人证' where type ='1' and code='4';
+insert into acc_tk.ic_scp_pub_flag values ( 1,9 ,'其他', '证件类型');
+insert into acc_tk.ic_scp_pub_flag values ( 1,5 ,'员工证', '证件类型');
+commit;
+
+-- 员工卡发行系统配置信息修改 - 添加老人证、员工证，更新“其他”为9
+update acc_tk.IC_ET_PUB_FLAG set code_text='老人证' where type ='1' and code='4';
+insert into acc_tk.IC_ET_PUB_FLAG values ( 1,9 ,'其他', '证件类型');
+insert into acc_tk.IC_ET_PUB_FLAG values ( 1,5 ,'员工证', '证件类型');
+commit;
+
+-- Create table
+create table IC_SCP_PRINT_LIST_EMPLOYEE
+(
+  ID            VARCHAR2(8 ) not null,
+  NAME          VARCHAR2(30 ),
+  GENDER        CHAR(1 ) default 1,
+  IDENTITY_ID   VARCHAR2(20 ) default 00000000000000000 not null,
+  IDENTITY_TYPE VARCHAR2(2 ),
+  CARD_TYPE     VARCHAR2(4 ),
+  PHOTO_NAME    VARCHAR2(100 ),
+  PRINT_OPER    VARCHAR2(20 ),
+  PRINT_TIME    DATE,
+  ISSUE_TIME    DATE,
+  REMARK        VARCHAR2(100 ),
+  DEPARTMENT    VARCHAR2(2 ),
+  POSITION      VARCHAR2(2 ),
+  LOGICAL_ID    VARCHAR2(20 ) not null
+);
+-- Add comments to the table
+comment on table IC_SCP_PRINT_LIST_EMPLOYEE
+  is '票面打印系统打印记录表-员工卡' ;
+-- Add comments to the columns
+comment on column IC_SCP_PRINT_LIST_EMPLOYEE.NAME
+  is '姓名';
+comment on column IC_SCP_PRINT_LIST_EMPLOYEE.GENDER
+  is '性别';
+comment on column IC_SCP_PRINT_LIST_EMPLOYEE.IDENTITY_ID
+  is '证件号';
+comment on column IC_SCP_PRINT_LIST_EMPLOYEE.IDENTITY_TYPE
+  is '证件类型1:身份证,2:学生证,3:军人证,4:老人,5:员工,9:其他' ;
+comment on column IC_SCP_PRINT_LIST_EMPLOYEE.CARD_TYPE
+  is '票卡类型';
+comment on column IC_SCP_PRINT_LIST_EMPLOYEE.PHOTO_NAME
+  is '相片名称';
+comment on column IC_SCP_PRINT_LIST_EMPLOYEE.PRINT_OPER
+  is '操作员';
+comment on column IC_SCP_PRINT_LIST_EMPLOYEE.PRINT_TIME
+  is '打印时间';
+comment on column IC_SCP_PRINT_LIST_EMPLOYEE.ISSUE_TIME
+  is '发证日期';
+comment on column IC_SCP_PRINT_LIST_EMPLOYEE.REMARK
+  is '备注';
+comment on column IC_SCP_PRINT_LIST_EMPLOYEE.DEPARTMENT
+  is '单位';
+comment on column IC_SCP_PRINT_LIST_EMPLOYEE.POSITION
+  is '职务';
+comment on column IC_SCP_PRINT_LIST_EMPLOYEE.LOGICAL_ID
+  is '逻辑卡号';
+-- Create/Recreate primary, unique and foreign key constraints
+alter table IC_SCP_PRINT_LIST_EMPLOYEE
+  add primary key (ID);
+
+
+-- Create sequence
+create sequence SEQ_IC_SCP_PRINT_LIST_EMPLOYEE
+minvalue 1
+maxvalue 9999999999999999999999999999
+start with 1
+increment by 1
+cache 20 ;
+
+
+
+insert into acc_tk.ic_scp_pub_flag values( '3','0' ,'已发卡', '员工卡状态' );
+insert into acc_tk.ic_scp_pub_flag values( '3','1' ,'已退卡', '员工卡状态' );
+commit;
+
+
+alter table acc_tk.ic_scp_print_list
+add position varchar2 (2);
+alter table acc_tk.ic_scp_print_list
+add department varchar2 (2);
+alter table acc_tk.ic_scp_print_list
+add LOGICAL_ID varchar2 (2);
+
+
+insert into acc_st.op_sys_module (MODULE_ID, MODULE_NAME, MENU_URL, MENU_ICON, TOP_MENU_ID, PARENT_ID, LOCKED, SYS_FLAG, BTN_ID, MODULE_TYPE)
+values ('7402', '员工卡打印', 'com.goldsign.scpmcs.ui.panel.PrintPanel', '7402.png', '74', '74', '0', '10', '', 'M');
+insert into acc_st.op_sys_module (MODULE_ID, MODULE_NAME, MENU_URL, MENU_ICON, TOP_MENU_ID, PARENT_ID, LOCKED, SYS_FLAG, BTN_ID, MODULE_TYPE)
+values ('7503', '员工卡统计', 'com.goldsign.scpmcs.ui.panel.EmployeePrintQueryPanel', '7503.png', '75', '75', '0', '10', '', 'M');
+insert into acc_st.op_sys_module (MODULE_ID, MODULE_NAME, MENU_URL, MENU_ICON, TOP_MENU_ID, PARENT_ID, LOCKED, SYS_FLAG, BTN_ID, MODULE_TYPE)
+values ('7603', '员工卡查询', 'com.goldsign.scpmcs.ui.panel.EmployeeCardQueryPanel', '7603.png', '76', '76', '0', '10', '', 'M');

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicinfo.mapper.TicketStorageLineStockWarnParaMapper">
+    <resultMap type="com.goldsign.acc.app.basicinfo.entity.TicketStorageLineStockWarnPara" id="rmTicketStorageLineStockWarnPara">
+        
+        <result column="LINE_ID" property="lineId" /> 
+        <result column="IC_MAIN_TYPE" property="icMainType" />
+        <result column="IC_SUB_TYPE" property="icSubType" />
+        <result column="UPPER_THRESHHOLD" property="upperThresh" /> 
+        <result column="LOWER_THRESHHOLD" property="lowerThresh" />
+        <result column="REMARK" property="remark" />
+        
+    </resultMap>
+     
+    <select id="queryLineStockWarnPara"  parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageLineStockWarnPara" resultMap="rmTicketStorageLineStockWarnPara">
+        select *  from  W_ACC_TK.W_IC_PRM_LINE_STOCK where 1=1 
+        <if test="lineId !=null and lineId !=''">
+              and trim(LINE_ID) =#{lineId} 
+        </if>
+        <if test="icMainType !=null and icMainType !=''">
+              and trim(IC_MAIN_TYPE) =#{icMainType} 
+        </if> 
+        <if test="icSubType !=null and icSubType !=''">
+            and trim(IC_SUB_TYPE) =#{icSubType}
+        </if>  
+        order by  LINE_ID, IC_MAIN_TYPE, IC_SUB_TYPE    
+    </select>
+     
+    <select id="queryLineStockWarnParaById"  parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageLineStockWarnPara" resultMap="rmTicketStorageLineStockWarnPara">
+        select 1 from  W_ACC_TK.W_IC_PRM_LINE_STOCK where  LINE_ID=#{lineId} and IC_MAIN_TYPE=#{icMainType} and IC_SUB_TYPE =#{icSubType}       
+    </select>
+    
+    <insert id="addLineStockWarnPara" parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageLineStockWarnPara" >
+        insert into W_ACC_TK.W_IC_PRM_LINE_STOCK(LINE_ID,IC_MAIN_TYPE,IC_SUB_TYPE,UPPER_THRESHHOLD,LOWER_THRESHHOLD,REMARK) 
+        values(#{lineId},#{icMainType},#{icSubType},#{upperThresh},#{lowerThresh},#{remark})                
+    </insert>
+    
+    <update id="modifyLineStockWarnPara" parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageLineStockWarnPara" >
+        update W_ACC_TK.W_IC_PRM_LINE_STOCK set UPPER_THRESHHOLD =#{upperThresh} , LOWER_THRESHHOLD=#{lowerThresh},REMARK=#{remark} 
+        where LINE_ID=#{lineId} and IC_MAIN_TYPE=#{icMainType} and IC_SUB_TYPE=#{icSubType}                                                
+    </update>
+    
+    <delete id="deleteLineStockWarnPara" parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageLineStockWarnPara">
+        delete from W_ACC_TK.W_IC_PRM_LINE_STOCK where LINE_ID=#{lineId} and IC_MAIN_TYPE=#{icMainType} and IC_SUB_TYPE=#{icSubType}          
+    </delete>     
+    
+</mapper>
+

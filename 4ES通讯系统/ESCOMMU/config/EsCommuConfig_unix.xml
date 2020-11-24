@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Config>
+	<Common>
+		<BackUpLog>/home/acc/commu_es/data/log</BackUpLog>
+		<FtpLocalDir>/home/acc/commu_es/data/ftp/server</FtpLocalDir>
+		<FtpLocalDirBcp>/home/acc/commu_es/data/bcp</FtpLocalDirBcp>
+		<FtpLocalDirError>/home/acc/commu_es/data/error</FtpLocalDirError>
+	
+		<!--FTP 配置 -->
+		<FtpUserName>ACCES000</FtpUserName>
+		<FtpUserPassword>ACCES000</FtpUserPassword>
+		
+		<FtpTimeout>5000</FtpTimeout>
+		<FtpRetryWaiting>5000</FtpRetryWaiting>
+		<FtpRetryTimes>3</FtpRetryTimes>
+		
+		<!--APP config -->
+		<MessageClassPrefix>com.goldsign.escommu.message.</MessageClassPrefix>
+		<SendQueryWait>50</SendQueryWait>
+
+                <!--control whether console print true :print false:not print -->	
+		<ConsolePrint>true</ConsolePrint>
+		<ConsolePrintFrequency>1</ConsolePrintFrequency>
+		
+		<!--时间间隔 配置 -->
+		<!--日志级别 配置 -->
+                <IntervalThreadLogLevel>300000</IntervalThreadLogLevel>	
+                <!--文件通知查找间隔 配置 -->
+                <IntervalThreadFindFile>10000</IntervalThreadFindFile>
+    
+                <!--审计文件生成时间-->
+		<AuditFileNextMakeTime>02</AuditFileNextMakeTime>
+                <!--单位小时-->
+                <AuditFileFindInterval>1</AuditFileFindInterval>
+                <!--审计文件生成路径-->
+                <AuditFileMakeDir>/home/acc/commu_es/data/audit</AuditFileMakeDir>
+                
+                <!--参数文件生成路径-->
+                <ParmDstrbPathDir>/home/acc/commu_es/data/param</ParmDstrbPathDir>
+
+                <!--物理卡号与逻辑卡号对照文件生成时间-->
+		<PhyLogictFileNextMakeTime>03</PhyLogictFileNextMakeTime>
+                <!--单位小时-->
+                <PhyLogicFileFindInterval>1</PhyLogicFileFindInterval>
+                <!--物理卡号与逻辑卡号对照文件生成路径-->
+                <PhyLogicFileMakeDir>/home/acc/commu_es/data/phyLogic</PhyLogicFileMakeDir>
+                <!--socket-->
+                <ReadOneMessageTimeOut>100000</ReadOneMessageTimeOut>
+                <SocketPort>5001</SocketPort>
+	</Common>
+	
+	<!--if file is in ftp root path,no need to define here-->
+	<FtpPaths>
+		<FtpPath id="ES" value="order"/>
+                <FtpPath id="MB" value="order"/>
+	</FtpPaths>
+	
+	<Messages>
+		<Message id="30" value="Message30"/>
+		<Message id="32" value="Message32"/>
+                <Message id="34" value="Message34"/>
+                <Message id="36" value="Message36"/>
+                <Message id="38" value="Message38"/>
+                <Message id="40" value="Message40"/>
+                <Message id="42" value="Message42"/>
+                <Message id="44" value="Message44"/>
+                <Message id="45" value="Message45"/>
+                <Message id="46" value="Message46"/>
+                <Message id="48" value="Message48"/>
+                <Message id="50" value="Message50"/>
+                <Message id="98" value="Message98"/>
+                <Message id="60" value="Message60"/>
+	</Messages>
+
+	<!--Connection pool name of the 139 database.-->
+	<!--To set user and password, please add "@@" before it. Eg: <User>@@user</User>, <Password>@@password</Password> -->
+	<DataConnectionPool>
+            <Driver>oracle.jdbc.driver.OracleDriver</Driver>
+            <URL>jdbc:oracle:thin:@10.99.1.40:1521:acctest</URL>
+            <User encrypt="true">262C2F1B203D</User>
+            <Password encrypt="true">262C2F1B203D</Password>
+            <MaxActive>40</MaxActive>
+            <MaxIdle>20</MaxIdle>
+            <MaxWait>20000</MaxWait>
+	</DataConnectionPool>
+
+	<!--thread pool configuration -->
+	<CommunicationThreadPool>
+		<MaxThreadNumber>15</MaxThreadNumber>
+		<ThreadSleepTime>100</ThreadSleepTime>
+		<ThreadPriorityAdd>0</ThreadPriorityAdd>
+		<ReadThreadPriorityAdd>2</ReadThreadPriorityAdd>
+		<MaxSearchNum>2</MaxSearchNum>
+		<UnHanledMsgLogDir>/home/acc/commu_es/data/log/unhandled</UnHanledMsgLogDir> 
+		<ThreadBufferCapacity>10000</ThreadBufferCapacity>
+		<ThreadBufferIncrement>1000</ThreadBufferIncrement>
+		<PriorityThreadBufferCapacity>2000</PriorityThreadBufferCapacity>
+		<PriorityThreadBufferIncrement>1000</PriorityThreadBufferIncrement>
+	</CommunicationThreadPool>
+
+	<ConnectionPoolListenerThread>
+	   <CPListenerThreadSleepTime>1000</CPListenerThreadSleepTime>
+	   <TestSqlForData>select 1 from dual</TestSqlForData>
+	   <SqlMsghandleSleepTime>100</SqlMsghandleSleepTime>
+	</ConnectionPoolListenerThread>
+	
+</Config>

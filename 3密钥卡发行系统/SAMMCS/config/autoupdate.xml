@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="GBK"?>
+<Info>
+    <Version>1.0.5</Version>
+    <UpdateServer>
+        <Ip>172.20.18.104</Ip>
+        <Port>2110</Port>
+    </UpdateServer>
+    <Files>     
+        <File> 
+            <Name>CSFRM.jar</Name>  
+            <Path>.\lib</Path>
+            <SubVer>1.0.5</SubVer> 
+        </File>
+        <File> 
+            <Name>run.bat</Name>  
+            <Path>.</Path>
+            <SubVer>1.0.5</SubVer> 
+        </File>
+        <File> 
+            <Name>SAMMCS.jar</Name>  
+            <Path>.\lib</Path>
+            <SubVer>1.0.5</SubVer> 
+        </File> 
+        <File> 
+            <Name>device.cfg</Name>  
+            <Path>.</Path>
+            <SubVer>1.0.3</SubVer> 
+        </File>
+        <File> 
+            <Name>PSAM_ISSUE.dll</Name>  
+            <Path>.</Path>
+            <SubVer>1.0.3</SubVer> 
+        </File>
+        <File> 
+            <Name>LoginCenter.jar</Name>  
+            <Path>.</Path>
+            <SubVer>1.0.5</SubVer> 
+        </File>
+        
+
+        
+        
+          
+    </Files> 
+</Info>

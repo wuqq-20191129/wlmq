@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.FareZoneMapper">
+    <resultMap type="FareZone" id="rmFareZone">
+        
+        <result column="water_no" property="water_no" /> 
+        <result column="b_line_id" property="b_line_id" /> 
+        <result column="b_station_id" property="b_station_id" /> 
+        <result column="e_line_id" property="e_line_id" /> 
+        <result column="e_station_id" property="e_station_id" /> 
+        <result column="fare_zone" property="fare_zone" /> 
+        <result column="max_travel_time" property="max_travel_time" /> 
+        <result column="over_time_charge" property="over_time_charge" /> 
+        <result column="version_no" property="version_no" /> 
+        <result column="record_flag" property="record_flag" /> 
+        <result column="distince" property="distince" /> 
+    </resultMap>
+    
+     <!--record_flag=#{record_flag} and version_no=#{version_no} -->
+    <select id="getFareZones"  parameterType="FareZone" resultMap="rmFareZone">
+        select water_no,b_line_id,b_station_id,e_line_id,e_station_id,fare_zone,max_travel_time,
+        over_time_charge,version_no,record_flag,distince
+        from W_ACC_ST.W_OP_PRM_FARE_ZONE where record_flag=#{record_flag} and version_no=#{version_no}
+        <if test="b_line_id !=null and b_line_id !=''">
+            and b_line_id =#{b_line_id} 
+        </if> 
+        <if test="b_station_id !=null and b_station_id !=''">
+            and b_station_id =#{b_station_id} 
+        </if>
+        <if test="e_line_id !=null and e_line_id !=''">
+            and e_line_id =#{e_line_id}
+        </if>
+        <if test="e_station_id !=null and e_station_id !=''">
+            and e_station_id =#{e_station_id}
+        </if> 
+        <if test="fare_zone !=null and fare_zone !=''">
+            and fare_zone =#{fare_zone}
+        </if>
+        order by b_line_id,b_station_id,e_line_id,e_station_id
+    </select>
+    <select id="getFareZoneById"  parameterType="FareZone" resultMap="rmFareZone">
+        select water_no,b_line_id,b_station_id,e_line_id,e_station_id,fare_zone,max_travel_time,
+        over_time_charge,version_no,record_flag,distince
+        from W_ACC_ST.W_OP_PRM_FARE_ZONE where record_flag=#{record_flag} and version_no=#{version_no}  
+                                              and b_line_id =#{b_line_id} and b_station_id =#{b_station_id} 
+                                              and e_line_id =#{e_line_id} and e_station_id =#{e_station_id}
+        
+    </select>
+    
+    <insert id="addFareZone" parameterType="FareZone" >
+        insert into W_ACC_ST.W_OP_PRM_FARE_ZONE(water_no,b_line_id,b_station_id,e_line_id,e_station_id,fare_zone,max_travel_time,
+                                                over_time_charge,version_no,record_flag,distince)
+                                      values(w_acc_st.W_SEQ_W_OP_PRM_FARE_ZONE.nextval,#{b_line_id},#{b_station_id},#{e_line_id},#{e_station_id},#{fare_zone},#{max_travel_time},
+                                             #{over_time_charge},#{version_no},#{record_flag},#{distince})        
+        
+    </insert>
+    <!--and record_flag=#{record_flag}  -->
+    <update id="modifyFareZone" parameterType="FareZone" >
+        update W_ACC_ST.W_OP_PRM_FARE_ZONE set fare_zone=#{fare_zone},
+                    max_travel_time=#{max_travel_time},over_time_charge=#{over_time_charge},distince=#{distince}
+                    where  b_line_id=#{b_line_id} and b_station_id=#{b_station_id} and e_line_id=#{e_line_id} and e_station_id=#{e_station_id} and version_no=#{version_no}                                          
+        
+    </update>
+    <delete id="deleteFareZone" parameterType="FareZone">
+            delete from W_ACC_ST.W_OP_PRM_FARE_ZONE where water_no=#{water_no}
+        
+    </delete>
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    
+    <update id="submitToOldFlag" parameterType="FareZone" >
+        update W_ACC_ST.W_OP_PRM_FARE_ZONE set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new}                                               
+    </update>
+    <!--草稿参数复制为当前或未来参数 -->
+     <insert id="submitFromDraftToCurOrFur" parameterType="FareZone" >
+        insert into  W_ACC_ST.W_OP_PRM_FARE_ZONE(water_no,b_line_id,b_station_id,e_line_id,e_station_id,fare_zone,max_travel_time,
+                                                 over_time_charge,distince,record_flag,version_no)
+               select w_acc_st.W_SEQ_W_OP_PRM_FARE_ZONE.nextval,b_line_id,b_station_id,e_line_id,e_station_id,fare_zone,max_travel_time,
+               over_time_charge,distince,#{record_flag_new},#{version_no_new}
+               from   W_ACC_ST.W_OP_PRM_FARE_ZONE  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    <!--草稿参数删除 -->
+     <delete id="deleteFareZonesForClone" parameterType="FareZone">
+            delete from W_ACC_ST.W_OP_PRM_FARE_ZONE where  record_flag='3' and version_no='0000000000'                                                      
+    </delete>
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="FareZone" >
+        insert into  W_ACC_ST.W_OP_PRM_FARE_ZONE(water_no,b_line_id,b_station_id,e_line_id,e_station_id,fare_zone,max_travel_time,
+                                                 over_time_charge,distince,record_flag,version_no)
+               select w_acc_st.W_SEQ_W_OP_PRM_FARE_ZONE.nextval,b_line_id,b_station_id,e_line_id,e_station_id,fare_zone,max_travel_time,
+                      over_time_charge,distince,'3','0000000000'
+               from   W_ACC_ST.W_OP_PRM_FARE_ZONE  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    
+     
+    
+</mapper>

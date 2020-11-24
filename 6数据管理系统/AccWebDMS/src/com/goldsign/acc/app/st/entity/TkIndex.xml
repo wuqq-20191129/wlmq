@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.st.mapper.TkIndexMapper">
+    <resultMap type="TkIndex" id="rmIcIdxHistory">
+        <result column="his_table" property="his_table" /> 
+        <result column="begin_recd" property="begin_recd" /> 
+        <result column="end_recd" property="end_recd" /> 
+        <result column="origin_table_name" property="origin_table_name" /> 
+        <result column="begin_time" property="begin_time" /> 
+        <result column="end_time" property="end_time" /> 
+        <result column="recd_count" property="recd_count" /> 
+        <result column="recd_type" property="recd_type" /> 
+    </resultMap>
+    
+    <select id="queryPlan"  parameterType="TkIndex" resultMap="rmIcIdxHistory">
+        select his_table,origin_table_name,begin_recd,end_recd,begin_time,
+                end_time,recd_count,recd_type 
+        from w_acc_tk.w_ic_idx_history where 1=1 
+        <if test="origin_table_name != null and origin_table_name !=''" >  
+            and origin_table_name like concat(concat('%',#{origin_table_name}),'%')
+        </if> 
+        <if test="his_table != null and his_table !=''" >  
+            and his_table like concat(concat('%',#{his_table}),'%')
+        </if> 
+    </select>
+    
+    
+</mapper>
+
+

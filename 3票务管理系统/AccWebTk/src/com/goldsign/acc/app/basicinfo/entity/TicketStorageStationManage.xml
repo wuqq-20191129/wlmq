@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicinfo.mapper.TicketStorageStationManageMapper">
+    <resultMap type="TicketStorageStationManage" id="rmTicketStorageStationManage">
+        
+	<result column="line_id" property="line_id" />
+        <result column="line_name" property="line_name" />
+        <result column="station_id" property="station_id" />  
+        <result column="chinese_name" property="chinese_name" />    
+    </resultMap>
+
+    <!-- 检查票库车站在车站对照表有无关联的票库车站 -->
+    <select id="checkTicketStationContrastManage" parameterType="TicketStorageStationManage" resultMap="rmTicketStorageStationManage"> 
+        select a.line_id line_id, a.line_name line_name, b.station_id station_id, b.chinese_name chinese_name from 
+        W_ACC_TK.w_ic_cod_line a, W_ACC_TK.w_ic_cod_station b, W_ACC_TK.W_ic_cod_station_contrast c where 
+        ltrim(rtrim(a.line_id)) = ltrim(rtrim(#{line_id})) and  ltrim(rtrim(c.line_id)) = ltrim(rtrim(#{line_id}))
+        and ltrim(rtrim(c.station_id)) = ltrim(rtrim(#{station_id})) 
+    </select>       
+     
+    <select id="getTicketStorageStationManage"  parameterType="TicketStorageStationManage" resultMap="rmTicketStorageStationManage">
+        select line_id,line_name,station_id,chinese_name from w_acc_tk.w_ic_cod_line natural join w_acc_tk.w_ic_cod_station where (1=1
+        <if test="line_id !=null and line_id !=''">
+            and line_id =#{line_id} 
+        </if>
+        <if test="station_id !=null and station_id !=''">
+            and station_id =#{station_id} 
+        </if>
+        )
+        <if test="chinese_name !=null and chinese_name !=''">
+            or chinese_name =#{chinese_name} 
+        </if>
+        order by cast(line_id as int),cast(station_id as int)
+    </select>
+    
+    <select id="getTicketStorageStationManageById"  parameterType="TicketStorageStationManage" resultMap="rmTicketStorageStationManage">
+        select line_id,station_id,chinese_name from w_acc_tk.w_ic_cod_station where line_id=#{line_id} and  station_id=#{station_id}      
+    </select>
+     
+    <select id="getTicketStorageStationManageByName"  parameterType="TicketStorageStationManage" resultMap="rmTicketStorageStationManage">
+        select line_id,station_id,chinese_name from w_acc_tk.w_ic_cod_station where chinese_name=#{chinese_name}  
+        <if test="line_id !=null and line_id !=''">
+            and line_id =#{line_id} 
+        </if>
+    </select> 
+    
+    <insert id="addTicketStorageStationManage" parameterType="TicketStorageStationManage" >
+        insert into w_acc_tk.w_ic_cod_station(line_id,station_id,chinese_name)
+        values(#{line_id},#{station_id},#{chinese_name})               
+    </insert>
+    
+    <update id="modifyTicketStorageStationManage" parameterType="TicketStorageStationManage" >
+        update w_acc_tk.w_ic_cod_station set chinese_name=#{chinese_name}  where line_id=#{line_id} and station_id=#{station_id}                                                  
+    </update>
+    
+    <delete id="deleteTicketStorageStationManage" parameterType="TicketStorageStationManage">
+            delete from w_acc_tk.w_ic_cod_station where line_id=#{line_id} and station_id=#{station_id}       
+    </delete>     
+    
+</mapper>

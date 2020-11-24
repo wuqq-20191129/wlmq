@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicinfo.mapper.TicketStorageLineDefManageMapper">
+    <resultMap type="com.goldsign.acc.app.basicinfo.entity.TicketStorageLineDefManage" id="rmTicketStorageLineDefManage">
+        
+        <result column="STORAGE_ID" property="storageId" /> 
+        <result column="LINE_ID" property="lineId" />
+      
+    </resultMap>
+     
+    <select id="queryTicketStorageLineDefManage"  parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageLineDefManage" resultMap="rmTicketStorageLineDefManage">
+         select * from w_acc_tk.w_ic_cod_storage_line where 1=1 
+        <if test="storageId !=null and storageId !=''">
+            and STORAGE_ID = #{storageId}
+        </if>               
+    </select>
+  
+</mapper>
+

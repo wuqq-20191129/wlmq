@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.storagein.mapper.TicketStorageInCleanInBillMapper">
+    
+    <resultMap type="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" id="rmInCleanInBill">
+        
+        <result column="bill_no" property="bill_no" /> 
+        <result column="bill_date" property="bill_date" /> 
+        <result column="form_maker" property="form_maker" /> 
+        <result column="hand_man" property="hand_man" /> 
+        <result column="administer" property="administer" /> 
+        <result column="accounter" property="accounter" /> 
+        <result column="related_bill_no" property="related_bill_no" /> 
+        <result column="record_flag" property="record_flag" /> 
+        <result column="verify_date" property="verify_date" /> 
+        <result column="verify_person" property="verify_person" /> 
+        <result column="remark" property="remark" /> 
+        <result column="out_in_diff" property="outInDiff" /> 
+    </resultMap>
+    
+    <resultMap type="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" id="rmInCleanInBillDiff">
+        
+        <result column="OUT_NUM" property="outNum" /> 
+        <result column="VALID_NUM" property="validNum" /> 
+        <result column="REAL_BALANCE" property="realBalance" /> 
+        <result column="MAN_USELESS_NUM" property="manUselessNum" /> 
+        <result column="CANCEL_FEW_NUM" property="cancelFewNum" /> 
+        <result column="CANCEL_MORE_NUM" property="cancelMoreNum" /> 
+        <result column="LOST_NUM" property="lostNum" /> 
+        <result column="IN_BILL_NO" property="inBillNo" /> 
+        <result column="OUT_BILL_NO" property="outBillNo" /> 
+        <result column="OUT_IN_DIFF" property="outInDiff" /> 
+        <result column="IN_BILL_DATE" property="inBillDate" /> 
+        <result column="PRE_IN_NUM" property="preInNum" /> 
+      
+    </resultMap>
+    
+    <resultMap type="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" id="rmInCleanInBillDetial">
+        
+        <result column="WATER_NO" property="waterNo" /> 
+        <result column="BILL_NO" property="billNo" /> 
+        <result column="REASON_ID" property="reasonId" /> 
+        <result column="STORAGE_ID" property="storageId" /> 
+        <result column="AREA_ID" property="areaId" /> 
+        <result column="IC_MAIN_TYPE" property="icMainType" /> 
+        <result column="IC_SUB_TYPE" property="icSubType" /> 
+        <result column="IN_NUM" property="inNum" /> 
+        <result column="DETAIL_PLACE" property="detailPlace" /> 
+        <result column="START_BOX_ID" property="startBoxId" /> 
+        <result column="END_BOX_ID" property="endBoxId" /> 
+        <result column="START_LOGICAL_ID" property="startLogicalId" /> 
+        <result column="END_LOGICAL_ID" property="endLogicalId" /> 
+        <result column="VALID_DATE" property="validDate" /> 
+        <result column="CARD_MONEY" property="cardMoney" /> 
+        <result column="LINE_ID" property="lineId" /> 
+        <result column="STATION_ID" property="stationId" /> 
+        <result column="USE_FLAG" property="useFlag" /> 
+        <result column="REPORT_DATE" property="reportDate" /> 
+        <result column="TICKETTYPE_ID" property="tickettypeId" /> 
+        <result column="CARD_AVA_DAYS" property="cardAvaDays" /> 
+        <result column="LINE_ID_RECLAIM" property="lineIdReclaim" /> 
+        <result column="STATION_ID_RECLAIM  " property="stationIdReclaim" /> 
+        <result column="EXIT_LINE_ID" property="exitLineId" /> 
+        <result column="EXIT_STATION_ID" property="exitStationId" /> 
+        <result column="MODEL" property="model" /> 
+        
+        <result column="out_num" property="outNum" /> 
+        
+    </resultMap>
+    
+    
+    <resultMap type="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" id="rmHisTables">
+        <result column="his_table" property="table" /> 
+        <result column="begin_recd" property="begin_recd" /> 
+        <result column="end_recd" property="end_recd" />
+    </resultMap>
+    
+    <parameterMap type="map" id="MapBillPlanAudit">  
+        <parameter property="p_bill_no" jdbcType="VARCHAR" mode="IN"/>  
+        <parameter property="p_operator_id" jdbcType="VARCHAR" mode="IN"/>    
+        <parameter property="poRetMsg" jdbcType="VARCHAR" mode="OUT"/>       
+        <parameter property="poRetCode" jdbcType="INTEGER" mode="OUT"/>       
+        <parameter property="bill_no" jdbcType="VARCHAR" mode="OUT"/>   
+    </parameterMap> 
+
+
+    <select id="queryPlan"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" resultMap="rmInCleanInBill">
+        select distinct a.bill_no ,a.bill_date, a.form_maker, a.hand_man, a.administer, 
+        a.accounter ,a.related_bill_no,a.record_flag ,a.verify_date ,a.verify_person,b.out_in_diff,a.remark
+        from w_acc_tk.w_ic_in_store_bill a , w_acc_tk.w_ic_in_out_diff b
+        where a.related_bill_no= b.out_bill_no(+) and a.bill_no = b.in_bill_no(+) and a.bill_no like 'QR%'
+        <if test="bill_no !=null and bill_no !=''">
+            and a.bill_no = #{bill_no}
+        </if>
+        <if test="related_bill_no !=null and related_bill_no !=''">
+            and a.related_bill_no = #{related_bill_no}
+        </if>
+        <if test="begin_date !=null and begin_date !=''">
+            and a.bill_date  &gt;= to_date(#{begin_date},'yyyy-mm-dd')
+        </if>
+        <if test="end_date !=null and end_date !=''">
+            and a.bill_date  &lt;= to_date(#{end_date},'yyyy-mm-dd')
+        </if>
+        <if test="end_date !=null and end_date !=''">
+            and a.bill_date  &lt;= to_date(#{end_date},'yyyy-mm-dd')
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and a.record_flag = #{record_flag}
+        </if>
+       
+        <if test=" (icMainType !=null and  icMainType !='')  
+                            or (icSubType !=null and  icSubType !='')                           
+                            or (storageId !=null and  storageId !='') ">
+            and exists(select 1 from ${table} c  where a.bill_no =c.bill_no        
+        </if>
+   
+        <if test=" icMainType !=null and  icMainType !=''">
+            and  c.ic_main_type =#{icMainType}
+        </if>
+                
+        <if test=" icSubType !=null and  icSubType !=''">
+            and  c.ic_sub_type =#{icSubType}
+        </if>
+        <if test=" storageId !=null and  storageId !=''">
+            and  c.storage_id =#{storageId} 
+        </if>
+        <if test=" (icMainType !=null and  icMainType !='')  
+                            or (icSubType !=null and  icSubType !='')                           
+                            or (storageId !=null and  storageId !='') ">
+            ) 
+                      
+        </if>   
+        order by a.bill_no desc
+    </select>     
+    
+    <insert id="addPlan" parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" >
+        insert into w_acc_tk.w_ic_in_store_bill (bill_no,bill_date,form_maker,administer,accounter,remark,record_flag,hand_man,related_bill_no)
+        values(#{bill_no},sysdate,#{form_maker},#{administer},#{accounter},#{remark},#{record_flag},#{hand_man},#{related_bill_no})
+    </insert>
+    
+    <delete id="deletePlan" parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" >
+        delete from  w_acc_tk.w_ic_in_store_bill where bill_no=#{bill_no}                                  
+    </delete>
+    
+    <select id="queryPlanDiff"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" resultMap="rmInCleanInBillDiff">
+        select * from w_acc_tk.w_ic_in_out_diff where in_bill_no = #{inBillNo}   
+    </select>
+    
+    <select id="getNumFromPlanDetial"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" resultType="Integer">
+        select count(1) from w_acc_tk.w_ic_in_store_detail where bill_no = #{billNo}  
+    </select>
+    
+    <select id="queryPlanDetail"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" resultMap="rmInCleanInBillDetial">
+        select a.*,b.record_flag  from ${table} a,w_acc_tk.w_ic_in_store_bill b  where a.bill_no = #{billNo} and a.bill_no = b.bill_no order by a.area_id
+    </select>
+    
+    <select id="getTableName"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" resultType="String">
+        select his_table his_table from w_acc_tk.w_ic_idx_history where origin_table_name='w_ic_in_store_detail' and 
+        ( substr(#{billNo},3,10) between begin_recd and end_recd 
+        or substr(#{billNo},4,10) between begin_recd and end_recd )
+    </select>
+    
+    <select id="getTableNames"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" resultMap="rmHisTables">
+        select his_table,begin_recd,end_recd 
+        from w_acc_tk.w_ic_idx_history 
+        where origin_table_name = 'w_ic_in_store_detail'
+    </select>
+    
+    <delete id="deletePlanDetail" parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" >
+        delete from  w_acc_tk.w_ic_in_store_detail where bill_no=#{billNo}                              
+    </delete>
+    
+    <delete id="deletePlanDiff" parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" >
+        delete from  w_acc_tk.w_ic_in_out_diff where in_bill_no=#{billNo}                              
+    </delete>
+    
+    <select id="getRelatedBillNo"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" resultType="String">
+        select related_bill_no  from w_acc_tk.w_ic_in_store_bill where bill_no=#{billNo}    
+    </select>
+    
+    <update id="updateOutBillInFlag" parameterType="String" >
+        update w_acc_tk.w_ic_out_bill set in_flag='0' where bill_no= #{outBillNo}              
+    </update>
+    
+    <select id="getInBillInfo"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" resultMap="rmInCleanInBill">
+        select related_bill_no ,bill_date  from w_acc_tk.w_ic_in_store_bill where bill_no= #{billNo}
+    </select>
+    
+    <select id="getAuditedDetials"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" resultType="Integer">
+        select count(1) from w_acc_tk.w_ic_in_store_bill   where record_flag='0' and related_bill_no = #{related_bill_no}
+    </select>
+    
+    <select id="getDetialsFromDetials"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" resultType="Integer">
+        select count(1) from w_acc_tk.w_ic_in_store_bill a, w_acc_tk.w_ic_in_store_detail b
+        where a.bill_no=b.bill_no and a.record_flag='0'  and a.related_bill_no = #{related_bill_no}
+    </select>
+    
+    <select id="getInNumFromDetial"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" resultType="Integer">
+        select sum(in_num)  from w_acc_tk.w_ic_in_store_bill a, w_acc_tk.w_ic_in_store_detail b 
+        where a.bill_no=b.bill_no and record_flag='0'  and a.related_bill_no = #{related_bill_no}
+    </select>
+    
+    <select id="getDetialsFromHistory"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" resultType="Integer">
+        select count(1) from w_acc_tk.w_ic_sts_in  where related_bill_no = #{related_bill_no}
+    </select>
+    
+    <select id="getInNumFromHistory"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" resultType="Integer">
+        select sum(in_num)  from w_acc_tk.w_ic_sts_in where  related_bill_no = #{related_bill_no}
+    </select>
+    
+    <select id="getNoAuditDetials"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" resultType="Integer">
+        select count(1) from w_acc_tk.w_ic_in_store_bill a, w_acc_tk.w_ic_in_store_detail b 
+        where a.bill_no=b.bill_no and record_flag='3'  and a.related_bill_no = #{related_bill_no}
+    </select>
+    
+    <select id="getInNumFromNoAuditDetials"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" resultType="Integer">
+        select sum(in_num)  from w_acc_tk.w_ic_in_store_bill a, w_acc_tk.w_ic_in_store_detail b
+        where a.bill_no=b.bill_no and record_flag='3' and a.related_bill_no = #{related_bill_no}
+    </select>
+    
+    <select id="getOutBillFinfo"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" resultMap="rmInCleanInBillDetial">
+        select sum(out_num) out_num,ic_main_type ic_main_type,ic_sub_type ic_sub_type,storage_id,line_id,station_id,exit_line_id,exit_station_id,model 
+        from w_acc_tk.w_ic_out_bill_detail where bill_no = #{related_bill_no}
+        group by ic_main_type, ic_sub_type,storage_id,line_id,station_id,exit_line_id,exit_station_id,model
+    </select>
+    
+    <insert id="addPlanDetailByvalid" parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" >
+        insert into w_acc_tk.w_ic_in_store_detail (water_no,card_money,bill_no ,reason_id ,storage_id  ,area_id ,ic_main_type ,ic_sub_type ,in_num,use_flag)
+        values( w_acc_tk.w_seq_w_ic_in_detail.nextval, '0', #{billNo}, '08', #{storageId}, '02', #{icMainType}, #{icSubType}, #{validNum},'0'  )
+    </insert>
+    
+    <insert id="addPlanDetailByRealBalance" parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" >
+        insert into w_acc_tk.w_ic_in_store_detail (water_no,card_money,bill_no ,reason_id ,storage_id  ,area_id ,ic_main_type ,ic_sub_type ,in_num,use_flag)
+        values( w_acc_tk.w_seq_w_ic_in_detail.nextval, '0', #{billNo}, '08', #{storageId}, '07', #{icMainType}, #{icSubType}, #{realBalance},'4'  )
+    </insert>
+    
+    <insert id="addPlanDetailByManUselessNum" parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" >
+        insert into w_acc_tk.w_ic_in_store_detail (water_no,card_money,bill_no ,reason_id ,storage_id  ,area_id ,ic_main_type ,ic_sub_type ,in_num,use_flag)
+        values( w_acc_tk.w_seq_w_ic_in_detail.nextval, '0', #{billNo}, '08', #{storageId}, '06', #{icMainType}, #{icSubType}, #{manUselessNum},'2'  )
+    </insert>
+    
+    <insert id="addInOutDiff" parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" >
+        insert into w_acc_tk.w_ic_in_out_diff 
+        ( out_num , valid_num, real_balance ,man_useless_num, out_in_diff, in_bill_no ,out_bill_no,in_bill_date, pre_in_num )
+        values( #{outNum}, #{validNum}, #{realBalance}, #{manUselessNum}, #{outInDiff}, #{billNo}, #{related_bill_no}, to_date(#{bill_date},'yyyy-MM-dd hh24:mi:ss'), #{preInNum} )
+    </insert>
+    
+    <update id="updateOutBillInFlagByVo" parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" >
+        update w_acc_tk.w_ic_out_bill set in_flag='1' where bill_no= #{related_bill_no}                         
+    </update>
+    
+    <select id="getFlag"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInCleanInBill" resultType="Integer">
+        select count(1)  from w_acc_tk.w_ic_out_bill where bill_no= #{related_bill_no} and in_flag='0' and record_flag='0'
+    </select>
+    
+    <select id="auditPlan" parameterMap="MapBillPlanAudit" statementType="CALLABLE">
+        { call W_ACC_TK.W_UP_IC_IN_AUDIT_QR (?,?,?,?,?) }
+                                  
+    </select>
+    
+</mapper>

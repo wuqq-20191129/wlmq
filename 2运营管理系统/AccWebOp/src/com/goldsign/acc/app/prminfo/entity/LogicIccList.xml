@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.LogicIccListMapper">
+    
+    <resultMap type="LogicIccList" id="rmLogicIccList">
+        <result column="water_no" property="water_no" /> 
+        <result column="icc_id" property="icc_id" /> 
+        <result column="logic_no" property="logic_no" /> 
+    </resultMap>
+
+    <select id="getLogicIccLists"  parameterType="LogicIccList" resultMap="rmLogicIccList">
+        select logic_no,icc_id,water_no
+        from W_ACC_ST.W_OP_PRM_LOGIC_ICC_LIST 
+        where 1=1 
+        <if test="water_no !=null and water_no !=''">
+            and water_no =#{water_no} 
+        </if>
+        <if test="icc_id !=null and icc_id !=''">
+            and icc_id =#{icc_id} 
+        </if>
+        <if test="logic_no !=null and logic_no !=''">
+            and logic_no =#{logic_no} 
+        </if>
+        order by logic_no
+    </select>
+    
+    <insert id="addLogicIccList" parameterType="LogicIccList" >
+        insert into  W_ACC_ST.W_OP_PRM_LOGIC_ICC_LIST(logic_no,icc_id,water_no)
+        values(#{logic_no},#{icc_id},#{water_no})        
+    </insert> 
+    
+    <delete id="deleteLogicIccList" parameterType="LogicIccList">
+        delete from W_ACC_ST.W_OP_PRM_LOGIC_ICC_LIST where water_no=#{water_no}
+    </delete>
+    
+</mapper>

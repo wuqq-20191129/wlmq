@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.OffPeakHoursMapper">
+    <resultMap type="OffPeakHours" id="rmOffPeakHours">
+        
+        <result column="water_no" property="water_no" /> 
+        <result column="day_of_week" property="day_of_week" /> 
+        <result column="start_time" property="start_time" /> 
+        <result column="end_time" property="end_time" /> 
+        <result column="version_no" property="version_no" /> 
+        <result column="record_flag" property="record_flag" /> 
+    </resultMap>
+
+    
+     
+    <select id="getOffPeakHourss"  parameterType="OffPeakHours" resultMap="rmOffPeakHours">
+        select water_no,day_of_week,start_time,end_time,version_no,record_flag
+        from W_ACC_ST.W_OP_PRM_OFF_PEAK_HOURS where record_flag=#{record_flag} and version_no=#{version_no}
+        
+        <if test="day_of_week !=null and day_of_week !=''">
+            and day_of_week =#{day_of_week} 
+        </if> 
+        <if test="start_time !=null and start_time !=''">
+            and start_time =#{start_time} 
+        </if>
+        <if test="end_time !=null and end_time !=''">
+            and end_time =#{end_time}
+        </if>
+          
+        order by day_of_week
+    </select>
+    <select id="getOffPeakHoursById"  parameterType="OffPeakHours" resultMap="rmOffPeakHours">
+        select water_no,day_of_week,start_time,end_time,version_no,record_flag
+        from W_ACC_ST.W_OP_PRM_OFF_PEAK_HOURS where not(start_time &gt; #{end_time} or end_time &lt; #{start_time}) 
+            and day_of_week=#{day_of_week} and version_no='0000000000'
+        <if test="water_no !=null and water_no !=''">
+            and water_no !=#{water_no}
+        </if> 
+        
+    </select>
+    
+    <insert id="addOffPeakHours" parameterType="OffPeakHours" >
+        insert into W_ACC_ST.W_OP_PRM_OFF_PEAK_HOURS(water_no,day_of_week,start_time,end_time,version_no,record_flag)
+                                      values(W_ACC_ST.W_SEQ_W_OP_PRM_OFF_PEAK_HOURS.nextval,#{day_of_week},#{start_time},#{end_time},#{version_no},#{record_flag})        
+        
+    </insert>
+    <update id="modifyOffPeakHours" parameterType="OffPeakHours" >
+        update W_ACC_ST.W_OP_PRM_OFF_PEAK_HOURS set day_of_week=#{day_of_week},
+                    start_time=#{start_time},end_time=#{end_time}
+                    where  water_no=#{water_no} and version_no='0000000000'                                       
+        
+    </update>
+    <delete id="deleteOffPeakHours" parameterType="OffPeakHours">
+            delete from W_ACC_ST.W_OP_PRM_OFF_PEAK_HOURS where water_no=#{water_no} 
+        
+    </delete>
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    
+    <update id="submitToOldFlag" parameterType="OffPeakHours" >
+        update W_ACC_ST.W_OP_PRM_OFF_PEAK_HOURS set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new}                                               
+    </update>
+    <!--草稿参数复制为当前或未来参数 -->
+     <insert id="submitFromDraftToCurOrFur" parameterType="OffPeakHours" >
+        insert into  W_ACC_ST.W_OP_PRM_OFF_PEAK_HOURS(water_no,day_of_week,start_time,end_time,version_no,record_flag)
+               select W_ACC_ST.W_SEQ_W_OP_PRM_OFF_PEAK_HOURS.nextval,day_of_week,start_time,end_time,#{version_no_new},#{record_flag_new}
+               from   W_ACC_ST.W_OP_PRM_OFF_PEAK_HOURS  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    <!--草稿参数删除 -->
+     <delete id="deleteOffPeakHourssForClone" parameterType="OffPeakHours">
+            delete from W_ACC_ST.W_OP_PRM_OFF_PEAK_HOURS where  record_flag='3' and version_no='0000000000'                                                      
+    </delete>
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="OffPeakHours" >
+        insert into  W_ACC_ST.W_OP_PRM_OFF_PEAK_HOURS(water_no,day_of_week,start_time,end_time,version_no,record_flag)
+               select W_ACC_ST.W_SEQ_W_OP_PRM_OFF_PEAK_HOURS.nextval,day_of_week,start_time,end_time,'0000000000','3'
+               from   W_ACC_ST.W_OP_PRM_OFF_PEAK_HOURS  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    
+     
+    
+</mapper>

@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.basicinfo.mapper.TicketStorageSignCardMapper" >
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.basicinfo.entity.TicketStorageSignCard" >
+    <constructor >
+      <idArg column="REQ_NO" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="WATER_NO" jdbcType="DECIMAL" javaType="java.lang.Long" />
+      <arg column="LINE_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="STATION_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="DEV_TYPE_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="DEVICE_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="APPLY_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="APPLY_SEX" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IDENTITY_TYPE" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IDENTITY_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="EXPIRED_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="TEL_NO" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="FAX" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="ADDRESS" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="OPERATOR_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="APPLY_DATETIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="SHIFT_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CARD_APP_FLAG" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="BALANCE_WATER_NO" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="FILE_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CHECK_FLAG" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="HDL_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="HDL_FLAG" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="ORDER_NO" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CARD_SUB_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CARD_MAIN_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="APP_BUSINESS_TYPE" jdbcType="CHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    REQ_NO, WATER_NO, LINE_ID, STATION_ID, DEV_TYPE_ID, DEVICE_ID, APPLY_NAME, APPLY_SEX, 
+    IDENTITY_TYPE, IDENTITY_ID, EXPIRED_DATE, TEL_NO, FAX, ADDRESS, OPERATOR_ID, APPLY_DATETIME, 
+    SHIFT_ID, CARD_APP_FLAG, BALANCE_WATER_NO, FILE_NAME, CHECK_FLAG, HDL_TIME, HDL_FLAG, 
+    ORDER_NO, CARD_SUB_ID, CARD_MAIN_ID, APP_BUSINESS_TYPE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from W_ST_LIST_SIGN_CARD
+    where REQ_NO = #{reqNo,jdbcType=CHAR}
+  </select>
+  <select id="qrySignCard" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from w_acc_st.W_ST_LIST_SIGN_CARD
+    
+    <trim prefix="where (" suffix=")" suffixOverrides=" and ">
+         <if test="reqNo != null">
+            WATER_NO = #{reqNo,jdbcType=CHAR} and
+        </if>
+        <if test="operatorId != null">
+            operator_id = rpad(#{operatorId,jdbcType=CHAR},6,' ') and
+        </if>
+        <if test="applyName != null">
+            
+            apply_name like concat(concat('%',#{applyName,jdbcType=VARCHAR}),'%') and
+        </if>
+        <if test="identityId != null">
+            identity_id = rpad(#{identityId,jdbcType=CHAR},18,' ') and
+        </if>
+        <if test="appBusinessType != null">
+            app_business_type = #{appBusinessType,jdbcType=CHAR} and
+        </if>
+        <if test="beginTime != null"> 
+            apply_datetime &gt;= to_date(#{beginTime},'yyyy-mm-dd') and
+        </if>
+        <if test="endTime != null">
+            apply_datetime &lt;= to_date(#{endTime},'yyyy-mm-dd') and
+        </if>
+         <if test="hdlFlag != null">
+            hdl_flag = #{hdlFlag,jdbcType=CHAR} and
+        </if>
+          <if test="cardMainId != null">
+            card_main_id = #{cardMainId,jdbcType=CHAR} and
+        </if>
+          <if test="cardSubId != null">
+            card_sub_id = #{cardSubId,jdbcType=CHAR} and
+        </if>
+         <if test="lineId != null">
+            line_id = rpad(#{lineId,jdbcType=CHAR},2,' ') and
+        </if>
+          <if test="stationId != null">
+            station_id = #{stationId,jdbcType=CHAR} and
+        </if>
+    </trim>  
+  
+     
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from w_acc_st.W_ST_LIST_SIGN_CARD
+    where REQ_NO = #{reqNo,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageSignCard" >
+    insert into W_ST_LIST_SIGN_CARD (REQ_NO, WATER_NO, LINE_ID, 
+      STATION_ID, DEV_TYPE_ID, DEVICE_ID, 
+      APPLY_NAME, APPLY_SEX, IDENTITY_TYPE, 
+      IDENTITY_ID, EXPIRED_DATE, TEL_NO, 
+      FAX, ADDRESS, OPERATOR_ID, 
+      APPLY_DATETIME, SHIFT_ID, CARD_APP_FLAG, 
+      BALANCE_WATER_NO, FILE_NAME, CHECK_FLAG, 
+      HDL_TIME, HDL_FLAG, ORDER_NO, 
+      CARD_SUB_ID, CARD_MAIN_ID, APP_BUSINESS_TYPE
+      )
+    values (#{reqNo,jdbcType=CHAR}, #{waterNo,jdbcType=DECIMAL}, #{lineId,jdbcType=CHAR}, 
+      #{stationId,jdbcType=CHAR}, #{devTypeId,jdbcType=CHAR}, #{deviceId,jdbcType=CHAR}, 
+      #{applyName,jdbcType=VARCHAR}, #{applySex,jdbcType=CHAR}, #{identityType,jdbcType=CHAR}, 
+      #{identityId,jdbcType=CHAR}, #{expiredDate,jdbcType=TIMESTAMP}, #{telNo,jdbcType=CHAR}, 
+      #{fax,jdbcType=CHAR}, #{address,jdbcType=VARCHAR}, #{operatorId,jdbcType=CHAR}, 
+      #{applyDatetime,jdbcType=TIMESTAMP}, #{shiftId,jdbcType=CHAR}, #{cardAppFlag,jdbcType=CHAR}, 
+      #{balanceWaterNo,jdbcType=CHAR}, #{fileName,jdbcType=VARCHAR}, #{checkFlag,jdbcType=CHAR}, 
+      #{hdlTime,jdbcType=TIMESTAMP}, #{hdlFlag,jdbcType=CHAR}, #{orderNo,jdbcType=CHAR}, 
+      #{cardSubId,jdbcType=CHAR}, #{cardMainId,jdbcType=CHAR}, #{appBusinessType,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageSignCard" >
+    insert into w_acc_st.W_ST_LIST_SIGN_CARD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="reqNo != null" >
+        REQ_NO,
+      </if>
+      <if test="waterNo != null" >
+        WATER_NO,
+      </if>
+      <if test="lineId != null" >
+        LINE_ID,
+      </if>
+      <if test="stationId != null" >
+        STATION_ID,
+      </if>
+      <if test="devTypeId != null" >
+        DEV_TYPE_ID,
+      </if>
+      <if test="deviceId != null" >
+        DEVICE_ID,
+      </if>
+      <if test="applyName != null" >
+        APPLY_NAME,
+      </if>
+      <if test="applySex != null" >
+        APPLY_SEX,
+      </if>
+      <if test="identityType != null" >
+        IDENTITY_TYPE,
+      </if>
+      <if test="identityId != null" >
+        IDENTITY_ID,
+      </if>
+      <if test="strExpDate != null" >
+        EXPIRED_DATE,
+      </if>
+      <if test="telNo != null" >
+        TEL_NO,
+      </if>
+      <if test="fax != null" >
+        FAX,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID,
+      </if>
+      <if test="strAppDate != null" >
+        APPLY_DATETIME,
+      </if>
+      <if test="shiftId != null" >
+        SHIFT_ID,
+      </if>
+      <if test="cardAppFlag != null" >
+        CARD_APP_FLAG,
+      </if>
+      <if test="balanceWaterNo != null" >
+        BALANCE_WATER_NO,
+      </if>
+      <if test="fileName != null" >
+        FILE_NAME,
+      </if>
+      <if test="checkFlag != null" >
+        CHECK_FLAG,
+      </if>
+      <if test="hdlTime != null" >
+        HDL_TIME,
+      </if>
+      <if test="hdlFlag != null" >
+        HDL_FLAG,
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO,
+      </if>
+      <if test="cardSubId != null" >
+        CARD_SUB_ID,
+      </if>
+      <if test="cardMainId != null" >
+        CARD_MAIN_ID,
+      </if>
+      <if test="appBusinessType != null" >
+        APP_BUSINESS_TYPE,
+      </if>
+   
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="reqNo != null" >
+        lpad(to_char(w_acc_st.W_SEQ_ST_LIST_SIGN_CARD.nextval),10,'0'),
+      </if>
+      <if test="waterNo != null" >
+        w_acc_st.W_SEQ_ST_BUF_SIGN_CARD_APPLY.nextval,
+      </if>
+      <if test="lineId != null" >
+        #{lineId,jdbcType=CHAR},
+      </if>
+      <if test="stationId != null" >
+        #{stationId,jdbcType=CHAR},
+      </if>
+      <if test="devTypeId != null" >
+        #{devTypeId,jdbcType=CHAR},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=CHAR},
+      </if>
+      <if test="applyName != null" >
+        #{applyName,jdbcType=VARCHAR},
+      </if>
+      <if test="applySex != null" >
+        #{applySex,jdbcType=CHAR},
+      </if>
+      <if test="identityType != null" >
+        #{identityType,jdbcType=CHAR},
+      </if>
+      <if test="identityId != null" >
+        #{identityId,jdbcType=CHAR},
+      </if>
+      <if test="strExpDate != null" >       
+          to_date(#{strExpDate},'yyyy-mm-dd'),
+      </if>
+      <if test="telNo != null" >
+        #{telNo,jdbcType=CHAR},
+      </if>
+      <if test="fax != null" >
+        #{fax,jdbcType=CHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        trim(#{operatorId,jdbcType=CHAR}),
+      </if>
+      <if test="strAppDate != null" >
+        to_date(#{strAppDate},'yyyy-mm-dd'),
+      </if>
+      <if test="shiftId != null" >
+        #{shiftId,jdbcType=CHAR},
+      </if>
+      <if test="cardAppFlag != null" >
+        trim(#{cardAppFlag,jdbcType=CHAR}),
+      </if>
+      <if test="balanceWaterNo != null" >
+        #{balanceWaterNo,jdbcType=CHAR},
+      </if>
+      <if test="fileName != null" >
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkFlag != null" >
+        #{checkFlag,jdbcType=CHAR},
+      </if>
+      <if test="hdlTime != null" >
+        #{hdlTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hdlFlag != null" >
+        #{hdlFlag,jdbcType=CHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=CHAR},
+      </if>
+      <if test="cardSubId != null" >
+        #{cardSubId,jdbcType=CHAR},
+      </if>
+      <if test="cardMainId != null" >
+        #{cardMainId,jdbcType=CHAR},
+      </if>
+      <if test="appBusinessType != null" >
+        #{appBusinessType,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageSignCard" >
+    update w_acc_st.W_ST_LIST_SIGN_CARD
+    <set >
+    
+      <if test="lineId != null" >
+        LINE_ID = #{lineId,jdbcType=CHAR},
+      </if>
+      <if test="stationId != null" >
+        STATION_ID = #{stationId,jdbcType=CHAR},
+      </if>
+      <if test="devTypeId != null" >
+        DEV_TYPE_ID = #{devTypeId,jdbcType=CHAR},
+      </if>
+      <if test="deviceId != null" >
+        DEVICE_ID = #{deviceId,jdbcType=CHAR},
+      </if>
+      <if test="applyName != null" >
+        APPLY_NAME = #{applyName,jdbcType=VARCHAR},
+      </if>
+      <if test="applySex != null" >
+        APPLY_SEX = #{applySex,jdbcType=CHAR},
+      </if>
+      <if test="identityType != null" >
+        IDENTITY_TYPE = #{identityType,jdbcType=CHAR},
+      </if>
+      <if test="identityId != null" >
+        IDENTITY_ID = #{identityId,jdbcType=CHAR},
+      </if>
+       <if test="strExpDate != null" >       
+          EXPIRED_DATE = to_date(#{strExpDate},'yyyy-mm-dd'),
+      </if>
+    
+      <if test="telNo != null" >
+        TEL_NO = #{telNo,jdbcType=CHAR},
+      </if>
+      <if test="fax != null" >
+        FAX = #{fax,jdbcType=CHAR},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID = #{operatorId,jdbcType=CHAR},
+      </if>
+       <if test="strAppDate != null" >
+        APPLY_DATETIME = to_date(#{strAppDate},'yyyy-mm-dd'),
+      </if>
+     
+      <if test="shiftId != null" >
+        SHIFT_ID = #{shiftId,jdbcType=CHAR},
+      </if>
+      <if test="cardAppFlag != null" >
+        CARD_APP_FLAG = #{cardAppFlag,jdbcType=CHAR},
+      </if>
+      <if test="balanceWaterNo != null" >
+        BALANCE_WATER_NO = #{balanceWaterNo,jdbcType=CHAR},
+      </if>
+      <if test="fileName != null" >
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkFlag != null" >
+        CHECK_FLAG = #{checkFlag,jdbcType=CHAR},
+      </if>
+      <if test="hdlTime != null" >
+        HDL_TIME = #{hdlTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hdlFlag != null" >
+        HDL_FLAG = #{hdlFlag,jdbcType=CHAR},
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO = #{orderNo,jdbcType=CHAR},
+      </if>
+      <if test="cardSubId != null" >
+        CARD_SUB_ID = #{cardSubId,jdbcType=CHAR},
+      </if>
+      <if test="cardMainId != null" >
+        CARD_MAIN_ID = #{cardMainId,jdbcType=CHAR},
+      </if>
+      <if test="appBusinessType != null" >
+        APP_BUSINESS_TYPE = #{appBusinessType,jdbcType=CHAR},
+      </if>
+    </set>
+    where WATER_NO = #{reqNo,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageSignCard" >
+    update W_ST_LIST_SIGN_CARD
+    set WATER_NO = #{waterNo,jdbcType=DECIMAL},
+      LINE_ID = #{lineId,jdbcType=CHAR},
+      STATION_ID = #{stationId,jdbcType=CHAR},
+      DEV_TYPE_ID = #{devTypeId,jdbcType=CHAR},
+      DEVICE_ID = #{deviceId,jdbcType=CHAR},
+      APPLY_NAME = #{applyName,jdbcType=VARCHAR},
+      APPLY_SEX = #{applySex,jdbcType=CHAR},
+      IDENTITY_TYPE = #{identityType,jdbcType=CHAR},
+      IDENTITY_ID = #{identityId,jdbcType=CHAR},
+      EXPIRED_DATE = #{expiredDate,jdbcType=TIMESTAMP},
+      TEL_NO = #{telNo,jdbcType=CHAR},
+      FAX = #{fax,jdbcType=CHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      OPERATOR_ID = #{operatorId,jdbcType=CHAR},
+      APPLY_DATETIME = #{applyDatetime,jdbcType=TIMESTAMP},
+      SHIFT_ID = #{shiftId,jdbcType=CHAR},
+      CARD_APP_FLAG = #{cardAppFlag,jdbcType=CHAR},
+      BALANCE_WATER_NO = #{balanceWaterNo,jdbcType=CHAR},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CHECK_FLAG = #{checkFlag,jdbcType=CHAR},
+      HDL_TIME = #{hdlTime,jdbcType=TIMESTAMP},
+      HDL_FLAG = #{hdlFlag,jdbcType=CHAR},
+      ORDER_NO = #{orderNo,jdbcType=CHAR},
+      CARD_SUB_ID = #{cardSubId,jdbcType=CHAR},
+      CARD_MAIN_ID = #{cardMainId,jdbcType=CHAR},
+      APP_BUSINESS_TYPE = #{appBusinessType,jdbcType=CHAR}
+    where REQ_NO = #{reqNo,jdbcType=CHAR}
+  </update>
+</mapper>

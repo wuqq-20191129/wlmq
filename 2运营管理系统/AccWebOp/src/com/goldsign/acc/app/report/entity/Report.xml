@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.report.mapper.ReportMapper">
+    
+    <resultMap type="com.goldsign.acc.app.opma.entity.ReportCfgModuleMapping" id="rmReportCfgModuleMapping">
+        
+        <result column="module_id" property="module_id" /> 
+        <result column="report_module" property="report_module" /> 
+        <result column="description" property="description" /> 
+    </resultMap>
+    
+    <resultMap type="com.goldsign.acc.app.opma.entity.ReportCfgAttr" id="rmReportGfgAttr">
+        
+        <result column="REPORT_CODE" property="reportCode" /> 
+        <result column="REPORT_NAME" property="reportName" /> 
+        <result column="REPORT_MODULE" property="reportModule" /> 
+        <result column="REPORT_TYPE" property="reportType" /> 
+        <result column="PERIOD_TYPE" property="periodType" /> 
+        <result column="LINE_ID" property="lineId" /> 
+        <result column="STATION_ID" property="stationId" /> 
+        <result column="CARD_MAIN_ID" property="cardMainId" /> 
+        <result column="CARD_SUB_ID" property="cardSubId" /> 
+        <result column="DATA_TABLE" property="dataTable" /> 
+        <result column="REPORT_LOCK" property="reportLock" /> 
+        <result column="OUT_TYPE" property="outType" /> 
+        <result column="DS_ID" property="dsId" /> 
+        <result column="GENERATE_DATE" property="generateDate" /> 
+        <result column="PERIOD_DETAIL_TYPE" property="periodDetailType" /> 
+        <result column="REMARK" property="remark" />       
+   
+    </resultMap>
+
+    
+<!--    <select id="getReportModuleByModuleId"  parameterType="String" resultMap="rmReportCfgModuleMapping">
+        select module_id,report_module,description
+        from W_ACC_ST.W_RP_CFG_MODULE_MAPPING where module_id = #{module_id} 
+    </select>-->
+    
+    <select id="getReportModule"  resultMap="rmReportCfgModuleMapping">
+        select module_id,report_module,description
+        from W_ACC_ST.W_RP_CFG_MODULE_MAPPING 
+        order by module_id,report_module
+    </select>
+    
+<!--    <resultMap type="PubFlag" id="rmPubFlag">
+        <id column="code" property="code" />
+        <result column="code_text" property="code_text" />  
+    </resultMap>-->
+    
+<!--    <select id="getReportModules"  resultMap="rmPubFlag">
+        select report_module code, description code_text  from w_acc_st.w_rp_cfg_module_mapping order by report_module asc
+    </select>-->
+    
+    <select id="getReportGfgAttrs"  parameterType="com.goldsign.acc.app.opma.entity.ReportCfgAttr" resultMap="rmReportGfgAttr">
+        select REPORT_CODE,REPORT_NAME,REPORT_MODULE,REPORT_TYPE,PERIOD_TYPE,LINE_ID,STATION_ID,CARD_MAIN_ID,
+               CARD_SUB_ID,DATA_TABLE,REPORT_LOCK,OUT_TYPE,DS_ID,GENERATE_DATE,PERIOD_DETAIL_TYPE,REMARK  
+        from w_acc_st.W_RP_CFG_ATTRIBUTE 
+        where REPORT_CODE = #{reportCode}
+        order by report_module
+        
+    </select>
+    
+    
+   
+    
+    
+     
+    
+</mapper>

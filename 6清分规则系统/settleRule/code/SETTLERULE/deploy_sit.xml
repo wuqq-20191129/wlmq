@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<project name="SETTLERULE" default="default" basedir="F:/csMetro/workspace/项目发布/测试系统/清分规则系统/SETTLERULE"> 
+    <target name="sendFilesToFTP"> 
+        <ftp server="172.20.19.107" port="21" userid="weblogic" password="weblogic123" remotedir="/jboss610/jboss-6.1.0.Final/server/default/deploy/" depends="yes" verbose="yes"> 
+            <fileset dir="${basedir}"> 
+                <include name="*.war" /> 
+                <include name="sr-oracle-ds.xml" /> 
+            </fileset>
+        </ftp> 
+    </target> 
+</project>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/sr" workDir="F:/csMetro/workspace/settleRule/code/SETTLERULE/workdir">
+     <!--
+  <Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" name="jdbc/db" password="acc_st" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:orcl" username="acc_st"/>
+  <Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" name="jdbc/db" password="acc_st" type="javax.sql.DataSource" url="jdbc:oracle:thin:@10.99.1.40:1521:acctest" username="acc_st"/>
+  -->
+  <Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" name="jdbc/db" password="acc_st" type="javax.sql.DataSource" url="jdbc:oracle:thin:@10.99.1.40:1521:acctest" username="acc_st"/>
+  
+</Context>

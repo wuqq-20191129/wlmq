@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.commu.mapper.CmConfigMapper">
+    <resultMap type="CmConfig" id="rmCmConfig">
+        
+        <result column="origin_table_name" property="origin_table_name" /> 
+        <result column="keep_days" property="keep_days" /> 
+        <result column="ab_name" property="ab_name" /> 
+        <result column="date_type" property="date_type" /> 
+        <result column="divide_recd_count" property="divide_recd_count" />
+        <result column="clear_flag" property="clear_flag" />
+    </resultMap> 
+     
+    <select id="getCmConfigs"  parameterType="CmConfig" resultMap="rmCmConfig">
+        select origin_table_name,keep_days,ab_name,date_type,divide_recd_count,clear_flag
+        from W_ACC_CM.W_CM_CFG_CLEAR_TABLE  where 1=1 
+        <if test="origin_table_name !=null and origin_table_name !=''">
+            and origin_table_name like '%${origin_table_name}%'
+        </if>
+        order by origin_table_name
+    </select>
+    
+    <update id="modifyCmConfig" parameterType="CmConfig" >
+        update W_ACC_CM.W_CM_CFG_CLEAR_TABLE set 
+        keep_days =#{keep_days},divide_recd_count=#{divide_recd_count}
+        where  origin_table_name =#{origin_table_name}                                             
+    </update>
+    
+    <select id="getCmConfig"  parameterType="CmConfig" resultMap="rmCmConfig">
+        select origin_table_name,keep_days,ab_name,date_type,divide_recd_count,clear_flag
+        from W_ACC_CM.W_CM_CFG_CLEAR_TABLE
+        where origin_table_name = #{origin_table_name}
+    </select>
+    
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.BalanceLogMapper">
+    <resultMap type="PubFlag" id="rmPubFlag">
+        <id column="code" property="code" />
+        <result column="code_text" property="code_text" />  
+    </resultMap>
+    
+    <resultMap type="BalanceLog" id="rmBalanceLog">
+        
+        <result column="water_no" property="water_no" /> 
+        <result column="balance_water_no" property="balance_water_no" /> 
+        <result column="oper_object" property="oper_object" /> 
+        <result column="err_level" property="err_level" /> 
+        <result column="remark" property="remark" /> 
+        <result column="operator_id" property="operator_id" /> 
+        <result column="gen_datetime" property="gen_datetime" /> 
+    </resultMap>
+
+    <select id="getErrLevelForPage"  resultMap="rmPubFlag">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type = '42' order by code
+    </select>
+    
+    <select id="getBalanceLogs"  parameterType="BalanceLog" resultMap="rmBalanceLog">
+        select water_no,balance_water_no,oper_object,err_level,remark,operator_id,gen_datetime
+        from   W_ACC_ST.W_ST_LOG_BALANCE
+        where 1=1
+        <if test="begin_date !=null and begin_date !=''">
+            and gen_datetime  &gt;= to_date(#{begin_date}, 'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        <if test="end_date !=null and end_date !=''">
+            and gen_datetime  &lt;= to_date(#{end_date}, 'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        <if test="err_level !=null and err_level !=''">
+            and err_level  = #{err_level}
+        </if>
+        order by gen_datetime DESC,balance_water_no,water_no
+    </select>
+    
+</mapper>

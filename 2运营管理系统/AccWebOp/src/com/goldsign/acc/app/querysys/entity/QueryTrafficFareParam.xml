@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.QueryTrafficFareParamMapper">
+    
+    <resultMap type="QueryTrafficFareParam" id="rmQueryTrafficFareParam">
+        <result column="card_main_id" property="card_main_id" />
+        <result column="card_sub_id" property="card_sub_id" />  
+        <result column="distince" property="distince" />
+        <result column="fare" property="fare" />
+    </resultMap>
+    
+    
+    <select id="getQueryTrafficFareParams"  parameterType="QueryTrafficFareParam" resultMap="rmQueryTrafficFareParam">
+        select distinct a.distince distince,b.fare fare,c.card_main_id card_main_id,c.card_sub_id card_sub_id 
+        from w_acc_st.w_op_prm_fare_zone a,w_acc_st.w_op_prm_fare_table b,w_acc_st.w_op_prm_fare_conf c
+        where a.fare_zone=b.fare_zone and b.fare_table_id=c.fare_table_id 
+        and a.record_flag=#{record_flag}  and b.record_flag=#{record_flag}  and c.record_flag=#{record_flag}     
+        <if test="sign ==  &quot;1&quot;">
+            and distince &gt; #{distince}
+        </if>  
+        <if test="sign ==  &quot;2&quot;">
+            and distince &gt;= #{distince}
+        </if>        
+        <if test="sign ==  &quot;3&quot;">
+            and distince = #{distince}
+        </if>      
+        <if test="sign ==  &quot;4&quot;">
+            and distince  &lt;= #{distince}
+        </if>  
+        <if test="sign ==  &quot;5&quot;">
+            and distince  &lt; #{distince}
+        </if>         
+        
+        <if test="sign1 ==  &quot;1&quot;">
+            and to_number(b.fare) &gt; #{fare}
+        </if>  
+        <if test="sign1 ==  &quot;2&quot;">
+            and to_number(b.fare) &gt;= #{fare}
+        </if>        
+        <if test="sign1 ==  &quot;3&quot;">
+            and to_number(b.fare) = #{fare}
+        </if>      
+        <if test="sign1 ==  &quot;4&quot;">
+            and to_number(b.fare)  &lt;= #{fare}
+        </if>  
+        <if test="sign1 ==  &quot;5&quot;">
+            and to_number(b.fare)  &lt; #{fare}
+        </if>           
+        
+        <if test="card_main_id !=null and card_main_id !=''">
+            and c.card_main_id =#{card_main_id} 
+        </if> 
+        <if test="card_sub_id !=null and card_sub_id !=''">
+            and c.card_main_id =#{card_main_id} 
+        </if> 
+        <if test="fareRideType == &quot;1&quot;">
+            and c.time_code != '1'
+        </if> 
+        <if test="fareRideType == &quot;2&quot;">
+            and c.time_code = '1'
+        </if> 
+        <if test="fareRideType == &quot;3&quot;">
+            and (c.time_code = '4' or c.time_code = '5')
+        </if> 
+        order by a.distince
+    </select>
+    
+    <select id="queryToMap"  parameterType="QueryTrafficFareParam" resultType="map">
+        select distinct a.distince distince,b.fare fare,c.card_main_id card_main_id,c.card_sub_id card_sub_id 
+        from w_acc_st.w_op_prm_fare_zone a,w_acc_st.w_op_prm_fare_table b,w_acc_st.w_op_prm_fare_conf c
+        where a.fare_zone=b.fare_zone and b.fare_table_id=c.fare_table_id 
+        and a.record_flag=#{record_flag}  and b.record_flag=#{record_flag}  and c.record_flag=#{record_flag}     
+        <if test="sign ==  &quot;1&quot;">
+            and distince &gt; #{distince}
+        </if>  
+        <if test="sign ==  &quot;2&quot;">
+            and distince &gt;= #{distince}
+        </if>        
+        <if test="sign ==  &quot;3&quot;">
+            and distince = #{distince}
+        </if>      
+        <if test="sign ==  &quot;4&quot;">
+            and distince  &lt;= #{distince}
+        </if>  
+        <if test="sign ==  &quot;5&quot;">
+            and distince  &lt; #{distince}
+        </if>         
+        
+        <if test="sign1 ==  &quot;1&quot;">
+            and to_number(b.fare) &gt; #{fare}
+        </if>  
+        <if test="sign1 ==  &quot;2&quot;">
+            and to_number(b.fare) &gt;= #{fare}
+        </if>        
+        <if test="sign1 ==  &quot;3&quot;">
+            and to_number(b.fare) = #{fare}
+        </if>      
+        <if test="sign1 ==  &quot;4&quot;">
+            and to_number(b.fare)  &lt;= #{fare}
+        </if>  
+        <if test="sign1 ==  &quot;5&quot;">
+            and to_number(b.fare)  &lt; #{fare}
+        </if>           
+        
+        <if test="card_main_id !=null and card_main_id !=''">
+            and c.card_main_id =#{card_main_id} 
+        </if> 
+        <if test="card_sub_id !=null and card_sub_id !=''">
+            and c.card_main_id =#{card_main_id} 
+        </if> 
+        <if test="fareRideType == &quot;1&quot;">
+            and c.time_code != '1'
+        </if> 
+        <if test="fareRideType == &quot;2&quot;">
+            and c.time_code = '1'
+        </if> 
+        <if test="fareRideType == &quot;3&quot;">
+            and (c.time_code = '4' or c.time_code = '5')
+        </if> 
+        order by a.distince
+    </select>
+
+</mapper>
+

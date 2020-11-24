@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<datasources>
+
+  <!-- **************jdbc/scdb_login******************************* -->
+  <local-tx-datasource>
+    <jndi-name>jdbc/srdb</jndi-name>
+     <use-java-context>false</use-java-context> 
+    <connection-url>jdbc:oracle:thin:@172.20.19.203:1521:epay1</connection-url>
+    <driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
+    <user-name>acc_st</user-name>
+    <password>acc_st</password>
+    <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
+      <metadata>
+         <type-mapping>Oracle11g</type-mapping>
+      </metadata>
+  </local-tx-datasource>
+
+  <!-- **************jdbc/scdb_tk******************************* -->
+  <local-tx-datasource>
+    <jndi-name>jdbc/srdb_1</jndi-name>
+     <use-java-context>false</use-java-context> 
+    <connection-url>jdbc:oracle:thin:@172.20.19.203:1521:epay1</connection-url>
+    <driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
+    <user-name>acc_commu</user-name>
+    <password>acc_commu</password>
+    <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
+      <metadata>
+         <type-mapping>Oracle11g</type-mapping>
+      </metadata>
+  </local-tx-datasource>
+
+</datasources>

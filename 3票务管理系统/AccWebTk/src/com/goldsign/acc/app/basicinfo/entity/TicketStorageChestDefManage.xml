@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicinfo.mapper.TicketStorageChestDefManageMapper">
+    <resultMap type="TicketStorageChestDefManage" id="rmTicketStorageChestDefManage">
+         <result column="storage_id" property="storage_id" /> 
+        <result column="area_id" property="area_id" /> 
+        <result column="chest_id" property="chest_id" /> 
+        <result column="chest_name" property="chest_name" /> 
+        <result column="storey_num" property="storey_num" /> 
+        <result column="ic_main_type" property="ic_main_type" /> 
+        <result column="ic_sub_type" property="ic_sub_type" /> 
+        <result column="full_flag" property="full_flag" /> 
+        <result column="card_money" property="card_money" /> 
+        <result column="storey_id" property="storey_id" /> 
+        <result column="storey_name" property="storey_name" /> 
+        <result column="storage_name" property="storage_name" /> 
+        <result column="area_name" property="area_name" /> 
+        <result column="ic_main_desc" property="ic_main_desc" /> 
+        <result column="ic_sub_desc" property="ic_sub_desc" /> 
+        <result column="base_id" property="base_id" /> 
+        <result column="base_name" property="base_name" /> 
+        <result column="base_num" property="base_num" /> 
+        <result column="max_box_num" property="max_box_num" /> 
+        <result column="box_unit" property="box_unit" /> 
+        <result column="upper_num" property="upper_num" /> 
+        <result column="card_num" property="card_num" /> 
+        <result column="put_place" property="put_place" /> 
+        <result column="next_place" property="next_place" /> 
+    </resultMap>
+     
+    <select id="getTicketStorageChestDefManages"  parameterType="TicketStorageChestDefManage" resultMap="rmTicketStorageChestDefManage">
+        select ck.storage_id,ck.storage_id,ck.storage_name,pq.area_id,pq.area_name ,
+            pg.chest_id,pg.chest_name,im.ic_main_type,im.ic_main_desc,su.ic_sub_type,
+            su.ic_sub_desc,pg.storey_num,pg.card_money,cs.base_num,tu.max_box_num 
+        from w_acc_tk.w_ic_cod_storage ck 
+        inner join w_acc_tk.w_ic_cod_area pq on ck.storage_id=pq.storage_id 
+        inner join w_acc_tk.w_ic_cod_chest pg on pg.storage_id=pq.storage_id and pg.area_id=pq.area_id 
+        inner join w_acc_tk.w_ic_cod_card_main_type im on im.ic_main_type=pg.ic_main_type 
+        inner join w_acc_tk.w_ic_cod_card_sub_type su on pg.ic_main_type=su.ic_main_type and pg.ic_sub_type=su.ic_sub_type 
+        inner join w_acc_tk.w_ic_cod_storey cs on pg.storage_id=cs.storage_id and pg.area_id=cs.area_id and pg.chest_id=cs.chest_id and pg.storey_num=cs.storey_id 
+        inner join w_acc_tk.w_ic_cod_base tu on cs.storage_id=tu.storage_id and cs.area_id=tu.area_id and cs.chest_id=tu.chest_id and cs.storey_id=tu.storey_id and cs.base_num=tu.base_id 
+        where 1=1 
+        <if test="storage_id !=null and storage_id !=''">
+            and pg.storage_id =#{storage_id}
+        </if>
+        <if test="ic_main_type !=null and ic_main_type !=''">
+            and pg.ic_main_type = #{ic_main_type}
+        </if>
+        <if test="chest_id !=null and chest_id !=''">
+            and pg.chest_id = #{chest_id}
+        </if>
+        <if test="ic_sub_type !=null and ic_sub_type !=''">
+            and pg.ic_sub_type = #{ic_sub_type}
+        </if>
+        <if test="area_id !=null and area_id !=''">
+            and pg.area_id = #{area_id}
+        </if>
+        <if test="chest_id !=null and chest_id !=''">
+            and pg.chest_id = #{chest_id}
+        </if>
+         order by pg.chest_id,pg.storage_id,pg.area_id
+    </select>
+    
+    <select id="getTicketUnit"  parameterType="TicketStorageChestDefManage" resultMap="rmTicketStorageChestDefManage">
+        select box_unit from W_ACC_TK.W_ic_cod_card_type_contrast 
+        where ic_main_type=#{ic_main_type} and ic_sub_type=#{ic_sub_type}
+    </select>
+    
+    <select id="getTicketStorageChestDefManageDetails"  parameterType="TicketStorageChestDefManage" resultMap="rmTicketStorageChestDefManage">
+        select pg.chest_id,pg.chest_name,ck.storage_name,pq.area_name,cs.storey_id,cs.storey_name,tu.base_id,tu.base_name,tu.real_num,tu.max_box_num 
+        from w_acc_tk.w_ic_cod_chest pg  
+        inner join w_acc_tk.w_ic_cod_storage ck on ck.storage_id=pg.storage_id 
+        inner join w_acc_tk.w_ic_cod_area pq on pg.storage_id=pq.storage_id and pg.area_id=pq.area_id 
+        inner join w_acc_tk.w_ic_cod_storey cs on cs.storage_id=pg.storage_id and cs.area_id=pg.area_id and cs.chest_id=pg.chest_id 
+        inner join w_acc_tk.w_ic_cod_base tu on cs.storage_id=tu.storage_id and cs.area_id=tu.area_id and cs.chest_id=tu.chest_id and cs.storey_id=tu.storey_id
+        where 1=1
+        <if test="storage_id !=null and storage_id !=''">
+            and tu.storage_id=#{storage_id}
+        </if>
+        <if test="area_id !=null and area_id !=''">
+            and tu.area_id=#{area_id}
+        </if>
+        <if test="chest_id !=null and chest_id !=''">
+            and tu.chest_id=#{chest_id}
+        </if>
+        order by pg.chest_id,cs.storey_id,tu.base_id
+
+    </select>
+    
+    <select id="getStoreyNum"  parameterType="TicketStorageChestDefManage" resultMap="rmTicketStorageChestDefManage">
+        select storey_num from W_ACC_TK.W_ic_cod_chest where storage_id=#{storage_id} and area_id=#{area_id} and chest_id=#{chest_id} 
+    </select>
+    
+    <select id="getBaseNum"  parameterType="TicketStorageChestDefManage" resultMap="rmTicketStorageChestDefManage">
+        select cs.base_num from W_ACC_TK.W_ic_cod_storey cs,W_ACC_TK.W_ic_cod_chest pg where cs.storage_id=#{storage_id} and cs.area_id=#{area_id} and cs.chest_id=#{chest_id} and pg.storey_num=to_number(cs.storey_id)
+    </select>
+    
+    <select id="getMaxBoxNum"  parameterType="TicketStorageChestDefManage" resultMap="rmTicketStorageChestDefManage">
+        select tu.max_box_num from W_ACC_TK.W_ic_cod_base tu,W_ACC_TK.W_ic_cod_storey cs where tu.storage_id=#{storage_id} and tu.area_id=#{area_id} and  tu.chest_id=#{chest_id} and cs.chest_id=tu.chest_id and cs.storey_id=tu.storey_id and cs.base_num=to_number(tu.base_id) group by tu.max_box_num 
+    </select>
+    
+    <select id="getBoxUnit"  parameterType="TicketStorageChestDefManage" resultMap="rmTicketStorageChestDefManage">
+        select box_unit from W_ACC_TK.W_ic_cod_card_type_contrast a ,W_ACC_TK.W_ic_cod_chest b where a.ic_main_type=b.ic_main_type and a.ic_sub_type=b.ic_sub_type and b.storage_id=#{storage_id} and b.area_id=#{area_id} and  b.chest_id=#{chest_id} 
+    </select>
+    
+    <select id="isEmptyForChest"  parameterType="TicketStorageChestDefManage" resultMap="rmTicketStorageChestDefManage">
+        select nvl(sum(card_num),0) card_num  from W_ACC_TK.W_ic_sts_storage where storage_id=#{storage_id} and area_id=#{area_id} and chest_id=#{chest_id} 
+    </select>
+    
+    <select id="getChestName"  parameterType="TicketStorageChestDefManage" resultMap="rmTicketStorageChestDefManage">
+        select trim(b.AREA_NAME)||trim(a.ic_sub_desc) chest_name from W_ACC_TK.W_IC_COD_CARD_SUB_TYPE a,W_ACC_TK.W_IC_COD_AREA b where a.IC_SUB_TYPE=#{ic_sub_type} and a.IC_MAIN_TYPE=#{ic_main_type} and b.AREA_ID=#{area_id}
+    </select> 
+    
+    <select id="checkBase"  parameterType="TicketStorageChestDefManage" resultMap="rmTicketStorageChestDefManage">
+        select chest_id from  W_ACC_TK.W_ic_cod_base where storage_id=#{storage_id} and area_id=#{area_id} and chest_id=#{chest_id} and real_num!=0
+    </select>
+    
+    <select id="getCardMoney"  parameterType="TicketStorageChestDefManage" resultMap="rmTicketStorageChestDefManage">
+        select card_money from W_ACC_TK.W_ic_cod_chest where storage_id=#{storage_id} and area_id=#{area_id} and chest_id=#{chest_id} 
+    </select>
+    
+    <select id="getStatus"  parameterType="TicketStorageChestDefManage" resultMap="rmTicketStorageChestDefManage">
+        select rtrim(ltrim(ic_main_type))+rtrim(ltrim(ic_sub_type))+to_char(card_money) ic_main_type from W_ACC_TK.W_ic_in_access_place where substr(put_place,1,9)=#{put_place}
+    </select>
+    
+    <select id="getCheckPlace"  parameterType="TicketStorageChestDefManage" resultMap="rmTicketStorageChestDefManage">
+        select count(*) put_place from W_ACC_TK.W_ic_in_access_place where substr(put_place,1,9)=#{put_place}
+    </select>
+    
+    <select id="getPutPlace"  parameterType="TicketStorageChestDefManage" resultMap="rmTicketStorageChestDefManage">
+        select min(a.chest_id+a.storey_id+a.base_id) put_place 
+        from  W_ACC_TK.W_ic_cod_base a,W_ACC_TK.W_ic_cod_storey b,W_ACC_TK.W_ic_cod_chest c 
+        where  a.storage_id+a.area_id+a.chest_id+a.storey_id=b.storage_id+b.area_id+b.chest_id+b.storey_id 
+        and b.storage_id+b.area_id+b.chest_id=c.storage_id+c.area_id+c.chest_id 
+        and c.ic_main_type=#{ic_main_type} and c.ic_sub_type=#{ic_sub_type}  and c.card_money=#{card_money} 
+        and a.storage_id=#{storage_id} and a.area_id=#{area_id} and a.real_num&lt;a.max_box_num and (a.storage_id+a.area_id+a.chest_id)&gt;#{put_place}
+    </select>
+    
+    <select id="getChestMaxNum"  parameterType="TicketStorageChestDefManage" resultMap="rmTicketStorageChestDefManage">
+        select (pg.storey_num*cs.base_num*tu.max_box_num) max_box_num from W_ACC_TK.W_ic_cod_chest pg 
+            inner join W_ACC_TK.W_ic_cod_card_main_type im on pg.ic_main_type=im.ic_main_type 
+            inner join W_ACC_TK.W_ic_cod_card_sub_type su on pg.ic_sub_type=su.ic_sub_type and im.ic_main_type=su.ic_main_type 
+            inner join W_ACC_TK.W_ic_cod_storage ck on ck.storage_id=pg.storage_id 
+            inner join W_ACC_TK.W_ic_cod_area pq on pg.area_id=pq.area_id 
+            inner join W_ACC_TK.W_ic_cod_storey cs on cs.chest_id=pg.chest_id and pg.storey_num=to_number(cs.storey_id) 
+            inner join W_ACC_TK.W_ic_cod_base tu on cs.storage_id=tu.storage_id and cs.area_id=tu.area_id and cs.chest_id=tu.chest_id and cs.storey_id=tu.storey_id and cs.base_num=to_number(tu.base_id) 
+            where pg.storage_id=#{storage_id} and pg.area_id=#{area_id} and pg.chest_id=#{chest_id}
+    </select>
+        
+    <select id="getAreaId"  parameterType="TicketStorageChestDefManage" resultMap="rmTicketStorageChestDefManage">
+        select area_id from W_ACC_TK.W_IC_COD_AREA 
+        where 1=1 
+        <if test="area_name !=null and area_name !=''">
+            and trim(area_name) =#{area_name}     
+        </if>
+        <if test="storage_id !=null and storage_id !=''">
+            and storage_id =#{storage_id} 
+        </if>
+    </select>
+    
+    <select id="checkChestId"  parameterType="TicketStorageChestDefManage" resultMap="rmTicketStorageChestDefManage">
+        select chest_id from W_ACC_TK.W_ic_cod_chest 
+        where 1=1 
+        <if test="chest_id !=null and chest_id !=''">
+            and chest_id =#{chest_id}     
+        </if>
+    </select>
+    
+    <insert id="addTicketStorageChestDefManage" parameterType="TicketStorageChestDefManage" >
+        insert into W_ACC_TK.W_IC_COD_CHEST(storage_id,area_id,chest_id,chest_name,storey_num,ic_main_type,ic_sub_type,full_flag,card_money)
+        values (#{storage_id},#{area_id},#{chest_id},#{chest_name},#{storey_num},#{ic_main_type},#{ic_sub_type},#{full_flag},#{card_money})              
+    </insert>
+    
+    <insert id="addStorey" parameterType="TicketStorageChestDefManage" >
+       insert into W_ACC_TK.W_ic_cod_storey(storage_id,area_id,chest_id,storey_id,storey_name,base_num,full_flag) 
+        values(#{storage_id},#{area_id},#{chest_id},#{storey_id},#{storey_name},#{base_num},#{full_flag})           
+    </insert>
+    
+    <insert id="addBase" parameterType="TicketStorageChestDefManage" >
+       insert into W_ACC_TK.W_ic_cod_base(storage_id,area_id,chest_id,storey_id,base_id,base_name,real_num,max_box_num) 
+       values(#{storage_id},#{area_id},#{chest_id},#{storey_id},#{base_id},#{base_name},#{real_num},#{max_box_num})
+    </insert>
+    
+    <update id="modifyTicketStorageChestDefManage" parameterType="TicketStorageChestDefManage" >
+        update W_ACC_TK.W_IC_COD_CHEST set ic_main_type=#{ic_main_type},ic_sub_type=#{ic_sub_type},storey_num=#{storey_num},base_num=#{base_num}
+        where trim(chest_name) = #{chest_name} and trim(chest_id) = #{chest_id} and trim(storage_id) = #{storage_id} and trim(area_id) = #{area_id}            
+    </update>
+    
+    <update id="upperAreaNum" parameterType="TicketStorageChestDefManage" >
+        update W_ACC_TK.W_ic_cod_area set upper_num=upper_num+#{upper_num} where area_id=#{area_id} and storage_id=#{storage_id}           
+    </update>
+    
+    <update id="updateNextPlace" parameterType="TicketStorageChestDefManage" >
+        update W_ACC_TK.W_ic_in_access_place set put_place=#{next_place} where substr(put_place,1,9)=#{put_place}       
+    </update>
+    
+    <update id="updateCodeChest" parameterType="TicketStorageChestDefManage" >
+        update W_ACC_TK.W_ic_cod_chest set storey_num=#{storey_num},chest_name=#{chest_name},card_money=#{card_money},ic_main_type=#{ic_main_type},ic_sub_type=#{ic_sub_type}
+        where chest_id = #{chest_id} and storage_id = #{storage_id} and area_id = #{area_id} 
+    </update>
+    
+    <update id="lowerAreaNum" parameterType="TicketStorageChestDefManage" >
+        update W_ACC_TK.W_ic_cod_area set upper_num=upper_num-#{upper_num} where area_id=#{area_id} and storage_id=#{storage_id}  
+    </update>
+    
+    <delete id="deleteTicketStorageChestDefManage" parameterType="TicketStorageChestDefManage">
+        delete from W_ACC_TK.W_IC_COD_CHEST where chest_name = #{chest_name} and chest_id = #{chest_id} and storage_id = #{storage_id} and area_id = #{area_id}          
+    </delete> 
+     
+    <delete id="deleteBase" parameterType="TicketStorageChestDefManage">
+        delete from W_ACC_TK.W_ic_cod_base where storage_id=#{storage_id} and area_id=#{area_id} and chest_id=#{chest_id}
+    </delete>  
+    
+    <delete id="deleteCodBoxInfo" parameterType="TicketStorageChestDefManage">
+        delete from W_ACC_TK.W_ic_cod_box_info 
+            where box_id in(select box_id from W_ACC_TK.W_ic_sts_storage where storage_id=#{storage_id} and area_id=#{area_id} and chest_id=#{chest_id} and card_num=0)
+    </delete>  
+    
+    <delete id="deleteStsStorage" parameterType="TicketStorageChestDefManage">
+        delete  from W_ACC_TK.W_ic_sts_storage where storage_id=#{storage_id} and area_id=#{area_id} and chest_id=#{chest_id} and card_num=0
+    </delete>  
+    
+    <delete id="deletePutPlace" parameterType="TicketStorageChestDefManage">
+        delete  from W_ACC_TK.W_ic_in_access_place where substr(put_place,1,9)=#{put_place}
+    </delete>  
+    
+    <delete id="deleteCodeStorey" parameterType="TicketStorageChestDefManage">
+        delete from W_ACC_TK.W_ic_cod_storey where storage_id=#{storage_id} and area_id=#{area_id} and chest_id=#{chest_id}
+    </delete>  
+    
+    <delete id="deleteCodeChest" parameterType="TicketStorageChestDefManage">
+        delete from W_ACC_TK.W_ic_cod_chest where storage_id=#{storage_id} and area_id=#{area_id} and chest_id=#{chest_id}
+    </delete>  
+    
+</mapper>

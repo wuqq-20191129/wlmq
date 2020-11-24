@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicinfo.mapper.TicketStorageAdjustReasonManageMapper">
+    <resultMap type="com.goldsign.acc.app.basicinfo.entity.TicketStorageAdjustReasonManage" id="rmTicketStorageAdjustReasonManage">
+        
+        <result column="adjust_id" property="adjust_id" /> 
+        <result column="adjust_reason" property="adjust_reason" />
+    </resultMap>
+     
+    <select id="queryTicketStorageAdjustReasonManage"  parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageAdjustReasonManage" resultMap="rmTicketStorageAdjustReasonManage">
+        select adjust_id,adjust_reason  from  W_ACC_TK.W_IC_COD_ADJUST_REASON where 1=1
+        <if test="adjust_id !=null and adjust_id !=''">
+            and adjust_id =#{adjust_id} 
+        </if>
+    order by adjust_id
+    </select>
+    
+    <select id="queryTicketStorageAdjustReasonManageById"  parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageAdjustReasonManage" resultMap="rmTicketStorageAdjustReasonManage">
+        select adjust_id,adjust_reason  from  W_ACC_TK.W_IC_COD_ADJUST_REASON where  adjust_id =#{adjust_id}        
+    </select>
+    
+    <select id="queryTicketStorageAdjustReasonManageByName"  parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageAdjustReasonManage" resultMap="rmTicketStorageAdjustReasonManage">
+        select adjust_id,adjust_reason  from  W_ACC_TK.W_IC_COD_ADJUST_REASON where  adjust_reason =#{adjust_reason}   
+        <if test="adjust_id !=null and adjust_id !=''">
+            and adjust_id !=#{adjust_id} 
+        </if>
+    </select>
+    
+    <insert id="addTicketStorageAdjustReasonManage" parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageAdjustReasonManage" >
+        insert into W_ACC_TK.W_IC_COD_ADJUST_REASON(adjust_id,adjust_reason) values(#{adjust_id},#{adjust_reason})               
+    </insert>
+    
+    <update id="modifyTicketStorageAdjustReasonManage" parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageAdjustReasonManage" >
+        update W_ACC_TK.W_IC_COD_ADJUST_REASON set adjust_reason =#{adjust_reason}  where adjust_id =#{adjust_id}                                                 
+    </update>
+    
+    <delete id="deleteTicketStorageAdjustReasonManage" parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageAdjustReasonManage">
+        delete from W_ACC_TK.W_IC_COD_ADJUST_REASON where adjust_id =#{adjust_id}          
+    </delete>     
+    
+</mapper>
+

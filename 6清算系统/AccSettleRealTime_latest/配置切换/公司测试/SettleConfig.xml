@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Config>
+	<Common>
+		<!-- windows config -->
+
+		
+		
+		<BackUpLog>D:/en_work/dir_prog_work/commu/log</BackUpLog>
+
+
+		
+    </Common>
+	
+   
+
+
+	
+	
+    <!--Connection pool name of the 17 database.-->
+    <!--To set user and password, please add "@@" before it. Eg: <User>@@user</User>, <Password>@@password</Password> -->
+	
+    <DataConnectionPool>
+        <Driver>oracle.jdbc.driver.OracleDriver</Driver>
+        <!-- <URL>jdbc:oracle:thin:@172.20.19.203:1521:epay1</URL> -->
+         <URL>jdbc:oracle:thin:@172.20.19.203:1521:epay1</URL>
+        <!--   <Database></Database>  -->
+        <User encrypt="true">@@acc_st</User>
+        <Password encrypt="true">@@acc_st</Password>
+        <MaxActive>40</MaxActive>
+        <MaxIdle>20</MaxIdle>
+        <MaxWait>20000</MaxWait>
+    </DataConnectionPool>
+  <!--交易文件线程池   -->  
+    <ThreadPoolFile>
+        <MaxThreadNumber>12</MaxThreadNumber>
+        <ThreadSleepTime>100</ThreadSleepTime>
+        <ThreadPriorityAdd>0</ThreadPriorityAdd>
+        <ReadThreadPriorityAdd>2</ReadThreadPriorityAdd>
+        <MaxSearchNum>2</MaxSearchNum>
+        <UnHanledMsgLogDir>D:/en_work/dir_prog_work/commu/log</UnHanledMsgLogDir> 
+        <!--		<UnHanledMsgLogDir>e:/temp/commu/log</UnHanledMsgLogDir> -->
+        <ThreadBufferCapacity>10000</ThreadBufferCapacity>
+        <ThreadBufferIncrement>1000</ThreadBufferIncrement>
+        <PriorityThreadBufferCapacity>2000</PriorityThreadBufferCapacity>
+        <PriorityThreadBufferIncrement>1000</PriorityThreadBufferIncrement>
+    </ThreadPoolFile>
+    <!--交易文件BCP线程池   -->  
+    <ThreadPoolBcp>
+        <MaxThreadNumber>12</MaxThreadNumber>
+        <ThreadSleepTime>100</ThreadSleepTime>
+        <ThreadPriorityAdd>0</ThreadPriorityAdd>
+        <ReadThreadPriorityAdd>2</ReadThreadPriorityAdd>
+        <MaxSearchNum>2</MaxSearchNum>
+        <UnHanledMsgLogDir>D:/en_work/dir_prog_work/commu/log</UnHanledMsgLogDir> 
+        <!--		<UnHanledMsgLogDir>e:/temp/commu/log</UnHanledMsgLogDir> -->
+        <ThreadBufferCapacity>10000</ThreadBufferCapacity>
+        <ThreadBufferIncrement>1000</ThreadBufferIncrement>
+        <PriorityThreadBufferCapacity>2000</PriorityThreadBufferCapacity>
+        <PriorityThreadBufferIncrement>1000</PriorityThreadBufferIncrement>
+    </ThreadPoolBcp>
+     <!--交易数据TAC码校验线程池   --> 
+    <ThreadPoolTac>
+        <MaxThreadNumber>12</MaxThreadNumber>
+        <ThreadSleepTime>100</ThreadSleepTime>
+        <ThreadPriorityAdd>0</ThreadPriorityAdd>
+        <ReadThreadPriorityAdd>2</ReadThreadPriorityAdd>
+        <MaxSearchNum>2</MaxSearchNum>
+        <UnHanledMsgLogDir>D:/en_work/dir_prog_work/commu/log</UnHanledMsgLogDir> 
+        <!--		<UnHanledMsgLogDir>e:/temp/commu/log</UnHanledMsgLogDir> -->
+        <ThreadBufferCapacity>10000</ThreadBufferCapacity>
+        <ThreadBufferIncrement>1000</ThreadBufferIncrement>
+        <PriorityThreadBufferCapacity>2000</PriorityThreadBufferCapacity>
+        <PriorityThreadBufferIncrement>1000</PriorityThreadBufferIncrement>
+    </ThreadPoolTac>
+    
+     <!--收益文件、寄存器文件、审计文件、外部系统文件处理线程池   --> 
+    <ThreadPoolFileOther>
+        <MaxThreadNumber>3</MaxThreadNumber>
+        <ThreadSleepTime>100</ThreadSleepTime>
+        <ThreadPriorityAdd>0</ThreadPriorityAdd>
+        <ReadThreadPriorityAdd>2</ReadThreadPriorityAdd>
+        <MaxSearchNum>2</MaxSearchNum>
+        <UnHanledMsgLogDir>D:/en_work/dir_prog_work/commu/log</UnHanledMsgLogDir> 
+        <!--		<UnHanledMsgLogDir>e:/temp/commu/log</UnHanledMsgLogDir> -->
+        <ThreadBufferCapacity>10000</ThreadBufferCapacity>
+        <ThreadBufferIncrement>1000</ThreadBufferIncrement>
+        <PriorityThreadBufferCapacity>2000</PriorityThreadBufferCapacity>
+        <PriorityThreadBufferIncrement>1000</PriorityThreadBufferIncrement>
+    </ThreadPoolFileOther>
+	
+   
+	
+</Config>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.opma.mapper.ParamDownStatusMapper">
+  <resultMap type="ParamDownStatus" id="rmParamDownStatus">
+        <result column="water_no" property="water_no" /> 
+        <result column="line_id" property="line_id" /> 
+        <result column="station_id" property="station_id" /> 
+        <result column="inform_result" property="inform_result" /> 
+        <result column="parm_type_id" property="parm_type_id" /> 
+        <result column="version_no" property="version_no" /> 
+        <result column="version_type" property="version_type" />
+        <result column="gen_result" property="gen_result" />
+        <result column="distribute_datetime" property="distribute_datetime" /> 
+        <result column="operator_id" property="operator_id" /> 
+        <result column="distribute_result" property="distribute_result" />
+        <result column="distribute_memo" property="distribute_memo" />
+        <result column="download_status" property="download_status" />
+    </resultMap>
+    
+    <resultMap type="PubFlag" id="rmPubFlags">
+        <id column="code" property="code" />
+        <result column="code_text" property="code_text" />  
+    </resultMap>
+    
+    <select id="getDownloadStatus"  resultMap="rmPubFlags">
+        select code code,code_text code_text from w_acc_st.w_op_cod_pub_flag where type = '70' order by code
+    </select>
+
+    <select id="getParamDownStatus"  parameterType="ParamDownStatus" resultMap="rmParamDownStatus">
+        <!--条件“应用情况”为空时，左连接查询pgd,pdd,pid这三张表同时存在的所有记录-->
+         <!--关联 w_acc_st.w_op_prm_para_sts_dl时 增加line_id匹配-->
+        <if test="download_status == null or download_status ==''">
+        SELECT * FROM  (
+                      select pgd.water_no,pgd.parm_type_id,pgd.version_type,pgd.version_no,pgd.gen_result,
+                           pdd.distribute_datetime,pdd.distribute_result,pdd.distribute_memo,trim(pdd.operator_id) operator_id,
+                           pid.station_id,pid.line_id,pid.inform_result 
+                           from  w_acc_st.w_op_prm_para_gen_dtl pgd,
+                           w_acc_st.w_op_prm_para_distribute_dtl pdd,
+                           w_acc_st.w_op_prm_para_inform_dtl pid 
+                           where pgd.water_no=pdd.water_no and pdd.water_no=pid.water_no  
+                        <if test="beginDatetime != null and beginDatetime !=''">
+                            and  pdd.distribute_datetime &gt;= to_date(#{beginDatetime},'yyyy-MM-dd HH24:mi:ss') 
+                        </if>
+                        <if test="endDatetime != null and endDatetime !=''">
+                            and  pdd.distribute_datetime &lt;= to_date(#{endDatetime},'yyyy-MM-dd HH24:mi:ss') 
+                        </if>
+                        <if test="line_id != null and line_id !=''">
+                            and pid.line_id  = #{line_id}
+                        </if>
+                        <if test="parm_type_id != null and parm_type_id !=''">
+                            and pgd.parm_type_id = #{parm_type_id}
+                        </if>
+                        <if test="operator_id != null and operator_id !=''">
+                            and trim(pdd.operator_id) = trim(#{operator_id})
+                        </if>
+                        <!--order by pgd.water_no desc ,pdd.distribute_datetime desc ,pgd.parm_type_id asc-->
+                    ) a
+            left join (
+<!--                    select parm_type_id ,ver_num , line_id, wm_concat(distinct download_status) download_status
+                    from w_acc_st.w_OP_PRM_PARA_STS_DL group by parm_type_id, ver_num, line_id-->
+                    
+                    select parm_type_id ,ver_num , line_id, wm_concat(distinct download_status) download_status
+                    from 
+                        (select parm_type_id ,ver_num , line_id, download_status
+                        from w_acc_st.w_OP_PRM_PARA_STS_DL 
+                        group by parm_type_id, ver_num, line_id, download_status
+                        ) 
+                    group by parm_type_id, ver_num, line_id
+                    
+                    ) b
+                    ON a.parm_type_id||a.version_no||a.line_id = b.parm_type_id||b.ver_num||b.line_id
+                    order by a.water_no desc ,a.distribute_datetime desc ,a.parm_type_id asc
+        </if>
+        <!--条件“应用情况”不为空时，查询4张表同时存在的记录-->
+        <!--关联 w_acc_st.w_op_prm_para_sts_dl时 增加line_id匹配-->
+        
+        <if test="download_status != null and download_status !=''">
+            select pgd.water_no,pgd.parm_type_id,pgd.version_type,pgd.version_no,pgd.gen_result,
+                pdd.distribute_datetime,pdd.distribute_result,pdd.distribute_memo,trim(pdd.operator_id) operator_id,
+                pid.station_id,pid.line_id,pid.inform_result,t.download_status 
+            from  w_acc_st.w_op_prm_para_gen_dtl pgd,
+                w_acc_st.w_op_prm_para_distribute_dtl pdd,
+                w_acc_st.w_op_prm_para_inform_dtl pid ,
+                (select parm_type_id ,ver_num , line_id, wm_concat(distinct download_status) download_status
+                 from (
+                    select parm_type_id ,ver_num , line_id, download_status  
+                    from w_acc_st.w_op_prm_para_sts_dl where 1=1 
+                        <if test="download_status != null and download_status !='' and download_status != '0'.toString()">
+                            and download_status  = #{download_status}
+                        </if>
+                        <if test="download_status != null and download_status !='' and download_status == '0'.toString()">
+                            and download_status  not in('N','Y')
+                        </if>
+                    group by parm_type_id, ver_num, line_id, download_status 
+                    )  
+                    group by parm_type_id, ver_num, line_id)  t
+            where pgd.water_no=pdd.water_no and pdd.water_no=pid.water_no      
+                and pgd.version_no =t.ver_num
+                and pgd.parm_type_id = t.parm_type_id
+                and pid.line_id = t.line_id
+            <if test="beginDatetime != null and beginDatetime !=''">
+                and  pdd.distribute_datetime &gt;= to_date(#{beginDatetime},'yyyy-MM-dd HH24:mi:ss') 
+            </if>
+            <if test="endDatetime != null and endDatetime !=''">
+                and  pdd.distribute_datetime &lt;= to_date(#{endDatetime},'yyyy-MM-dd HH24:mi:ss') 
+            </if>
+            <if test="line_id != null and line_id !=''">
+                and pid.line_id  = #{line_id}
+            </if>
+            <if test="parm_type_id != null and parm_type_id !=''">
+                and pgd.parm_type_id = #{parm_type_id}
+            </if>
+            <if test="operator_id != null and operator_id !=''">
+                and trim(pdd.operator_id) = trim(#{operator_id})
+            </if>
+            order by pgd.water_no desc ,pdd.distribute_datetime desc ,pgd.parm_type_id asc
+        </if>
+  </select>
+  
+</mapper>

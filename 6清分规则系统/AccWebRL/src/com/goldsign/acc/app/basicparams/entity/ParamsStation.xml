@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicparams.mapper.ParamsStationMapper">
+    
+    <resultMap type="com.goldsign.acc.app.basicparams.entity.ParamsStation" id="rmParamsStation">      
+        <result column="p_station_id" property="pStation" /> 
+        <result column="n_station_id" property="nStation" /> 
+        <result column="line_id" property="lineId" />
+        <result column="record_flag" property="recordFlag" />   
+        <result column="version" property="version" /> 
+        <result column="mileage" property="mileage" />  
+        <result column="create_time" property="createTime" />
+        <result column="create_operator" property="createOperator" />   
+        <result column="n_t_station_id" property="ntStation" />  
+        <result column="beginCreateTime" property="beginCreateTime" /> 
+        <result column="endCreateTime" property="endCreateTime" />        
+    </resultMap>
+    
+    <select id="queryParamsStation" parameterType="com.goldsign.acc.app.basicparams.entity.ParamsStation" resultMap="rmParamsStation">
+        select p_station_id,n_station_id,line_id,record_flag,version,mileage,create_time,create_operator,n_t_station_id from w_acc_rl.w_rl_params_station where 1=1
+        <if test="lineId != '' and lineId != null">
+            and line_id = #{lineId}
+        </if>
+        <if test="pStation != '' and pStation != null">
+            and p_station_id = #{pStation}
+        </if>
+        <if test="ntStation != '' and ntStation != null">
+            and n_t_station_id = #{ntStation}
+        </if>
+        <if test="nStation != '' and nStation != null">
+            and n_station_id = #{nStation}
+        </if>
+        <if test="recordFlag != '' and recordFlag != null">
+            and record_flag = #{recordFlag}
+        </if>
+        <if test="beginCreateTime != null and beginCreateTime !=''" >  
+            and CREATE_TIME  &gt;= to_date(#{beginCreateTime},'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        <if test="endCreateTime != null and endCreateTime !=''" >  
+            and CREATE_TIME  &lt;= to_date(#{endCreateTime},'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        order by line_id
+    </select>
+    
+    <insert id="addParamsStation" parameterType="com.goldsign.acc.app.basicparams.entity.ParamsStation">
+        insert into w_acc_rl.w_rl_params_station (p_station_id,n_station_id,line_id,record_flag,version,mileage,create_time,create_operator,n_t_station_id)  
+        select #{pStation},#{nStation},#{lineId},#{recordFlag},to_char(sysdate,'yyyyMMddhh24mi'),#{mileage},sysdate,#{createOperator},#{ntStation} from dual
+        where not exists ( select 1 from w_acc_rl.w_rl_params_station where line_id = #{lineId} and p_station_id = #{pStation} and n_station_id = #{nStation} and record_flag ='3')
+    </insert>
+    
+    <delete id="deleteParamsStation" parameterType="com.goldsign.acc.app.basicparams.entity.ParamsStation">        
+        DELETE FROM w_acc_rl.w_rl_params_station where 
+        line_id||p_station_id||n_station_id||version = #{lineId}||#{pStation}||#{nStation}||#{version} and record_flag = #{recordFlag}
+    </delete>
+    
+    <update id="modifyParamsStation" parameterType="com.goldsign.acc.app.basicparams.entity.ParamsStation">
+        update w_acc_rl.w_rl_params_station set mileage =#{mileage},n_t_station_id =#{ntStation},create_operator = #{createOperator},create_time = sysdate
+        WHERE line_id = #{lineId} and p_station_id = #{pStation}  and n_station_id = #{nStation} and  record_flag = #{recordFlag}
+    </update>
+    
+    <update id="updateCurrentToHistory" parameterType="com.goldsign.acc.app.basicparams.entity.ParamsStation" >
+        update w_acc_rl.w_rl_params_station set record_flag='2' where line_id||p_station_id||n_station_id=#{lineId}||#{pStation}||#{nStation} and record_flag='0'
+    </update>
+    
+    <update id="auditUpdate" parameterType="com.goldsign.acc.app.basicparams.entity.ParamsStation" >    
+        UPDATE w_acc_rl.w_rl_params_station SET record_flag = '0' where line_id||p_station_id||n_station_id||version=#{lineId}||#{pStation}||#{nStation}||#{version} and record_flag='3'
+    </update>
+    
+</mapper>

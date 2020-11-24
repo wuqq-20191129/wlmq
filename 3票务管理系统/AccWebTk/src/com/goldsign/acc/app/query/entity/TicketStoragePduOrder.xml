@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.query.mapper.TicketStoragePduOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.query.entity.TicketStoragePduOrder" >
+    <constructor >
+      <arg column="ORDER_NO" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="ES_WORKTYPE_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="DRAW_NUM" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="FINI_PRONUM" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="SURPLUS_NUM" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="TRASHY_NUM" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="HDL_FLAG" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ACHIEVE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="ORDER_MEMO" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.goldsign.acc.app.query.entity.TicketStoragePduOrder" >
+    insert into W_IC_MB_PDU_ORDER_FORM (ORDER_NO, ES_WORKTYPE_ID, DRAW_NUM, 
+      FINI_PRONUM, SURPLUS_NUM, TRASHY_NUM, 
+      HDL_FLAG, ACHIEVE_TIME, ORDER_MEMO
+      )
+    values (#{orderNo,jdbcType=CHAR}, #{esWorktypeId,jdbcType=VARCHAR}, #{drawNum,jdbcType=DECIMAL}, 
+      #{finiPronum,jdbcType=DECIMAL}, #{surplusNum,jdbcType=DECIMAL}, #{trashyNum,jdbcType=DECIMAL}, 
+      #{hdlFlag,jdbcType=VARCHAR}, #{achieveTime,jdbcType=TIMESTAMP}, #{orderMemo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.query.entity.TicketStoragePduOrder" >
+    insert into W_IC_MB_PDU_ORDER_FORM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderNo != null" >
+        ORDER_NO,
+      </if>
+      <if test="esWorktypeId != null" >
+        ES_WORKTYPE_ID,
+      </if>
+      <if test="drawNum != null" >
+        DRAW_NUM,
+      </if>
+      <if test="finiPronum != null" >
+        FINI_PRONUM,
+      </if>
+      <if test="surplusNum != null" >
+        SURPLUS_NUM,
+      </if>
+      <if test="trashyNum != null" >
+        TRASHY_NUM,
+      </if>
+      <if test="hdlFlag != null" >
+        HDL_FLAG,
+      </if>
+      <if test="achieveTime != null" >
+        ACHIEVE_TIME,
+      </if>
+      <if test="orderMemo != null" >
+        ORDER_MEMO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=CHAR},
+      </if>
+      <if test="esWorktypeId != null" >
+        #{esWorktypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="drawNum != null" >
+        #{drawNum,jdbcType=DECIMAL},
+      </if>
+      <if test="finiPronum != null" >
+        #{finiPronum,jdbcType=DECIMAL},
+      </if>
+      <if test="surplusNum != null" >
+        #{surplusNum,jdbcType=DECIMAL},
+      </if>
+      <if test="trashyNum != null" >
+        #{trashyNum,jdbcType=DECIMAL},
+      </if>
+      <if test="hdlFlag != null" >
+        #{hdlFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="achieveTime != null" >
+        #{achieveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderMemo != null" >
+        #{orderMemo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="qryPduOrder" resultMap="BaseResultMap" parameterType="com.goldsign.acc.app.query.entity.TicketStoragePduOrder" >
+    select 
+    *
+    from w_acc_tk.W_IC_MB_PDU_ORDER_FORM    
+    <trim prefix="where (" suffix=")" suffixOverrides=" and ">
+         <if test="orderNo != null">
+            ORDER_NO = #{orderNo,jdbcType=CHAR} and
+        </if>
+       
+        <if test="startAchieveTime != null">
+             ACHIEVE_TIME &gt;= to_date(#{startAchieveTime},'yyyy-mm-dd') and
+        </if>
+        <if test="endAchieveTime != null">
+            ACHIEVE_TIME &lt;= to_date(#{endAchieveTime},'yyyy-mm-dd') and
+        </if>
+      
+        
+    </trim>  
+  
+     
+  </select>
+</mapper>

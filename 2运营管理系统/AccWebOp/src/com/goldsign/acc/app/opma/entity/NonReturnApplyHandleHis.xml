@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.opma.mapper.NonReturnApplyHandleHisMapper">
+    <resultMap id="BaseResultMap" type="com.goldsign.acc.app.opma.entity.NonReturnApplyHandleHis">
+        <result column="CARD_PHYSICAL_ID" jdbcType="CHAR" property="cardPhysicalId" />
+        <result column="CARD_LOGICAL_ID" jdbcType="CHAR" property="cardLogicalId" />
+        <result column="DEVICE_ID" jdbcType="CHAR" property="deviceId" />
+        <result column="DEAL_DATETIME" jdbcType="VARCHAR" property="dealDatetime" />
+        <result column="PAY_MODE_ID" jdbcType="CHAR" property="payModeId" />
+        <result column="DEAL_FEE" jdbcType="DECIMAL" property="dealFee" />
+        <result column="RECEIPT_ID" jdbcType="CHAR" property="receiptId" />
+        <result column="TAC" jdbcType="CHAR" property="tac" />
+        <result column="LINE_ID" jdbcType="CHAR" property="lineId" />
+        <result column="STATION_ID" jdbcType="CHAR" property="stationId" />
+        <result column="DEAL_BALANCE_FEE" jdbcType="DECIMAL" property="dealBalanceFee" />
+        <result column="BALANCE_WATER_NO" jdbcType="CHAR" property="balanceWaterNo" />
+        <result column="ENTRY_DATETIME" jdbcType="TIMESTAMP" property="entryDatetime" />
+        <result column="DEAL_TYPE" jdbcType="CHAR" property="dealType" />
+        <result column="RED_FLAG" jdbcType="CHAR" property="redFlag" />
+        <result column="CARD_MAIN_ID" jdbcType="CHAR" property="cardMainId" />
+        <result column="CARD_SUB_ID" jdbcType="CHAR" property="cardSubId" />
+        <result column="GEN_TIME" jdbcType="VARCHAR" property="genTime" />
+        <result column="TCT_VALID_DAYS" jdbcType="DECIMAL" property="tctValidDays" />
+        <result column="TCT_ACTIVATE_DATETIME" jdbcType="VARCHAR" property="tctActivateDatetime" />
+        <result column="CURRENT_BALANCE_WATER" jdbcType="CHAR" property="currentBalanceWater" />
+    </resultMap>
+
+    <select id="getHisResult" parameterType="com.goldsign.acc.app.opma.entity.NonReturnApplyHandle" resultMap="BaseResultMap">
+        select
+        CARD_PHYSICAL_ID, CARD_LOGICAL_ID, DEVICE_ID,
+        DEAL_DATETIME, PAY_MODE_ID, DEAL_FEE,
+        RECEIPT_ID, TAC, LINE_ID, STATION_ID,
+        DEAL_BALANCE_FEE, BALANCE_WATER_NO, ENTRY_DATETIME,
+        DEAL_TYPE, RED_FLAG, CARD_MAIN_ID,
+        CARD_SUB_ID, GEN_TIME, TCT_VALID_DAYS,
+        TCT_ACTIVATE_DATETIME, CURRENT_BALANCE_WATER
+        from W_ACC_ST.W_OP_NON_RETURN_TK_HIST  where CARD_LOGICAL_ID = #{cardLogicalId,jdbcType=CHAR}
+        order by DEAL_DATETIME desc
+    </select>
+
+    <delete id="deletByCardLogicalId" parameterType="com.goldsign.acc.app.opma.entity.NonReturnApplyHandle">
+        delete from W_ACC_ST.W_OP_NON_RETURN_TK_HIST where CARD_LOGICAL_ID = #{cardLogicalId,jdbcType=CHAR}
+    </delete>
+    <select id="queryToMap" parameterType="com.goldsign.acc.app.opma.entity.NonReturnApplyHandle" resultType="map">
+        select
+        CARD_PHYSICAL_ID, CARD_LOGICAL_ID, DEVICE_ID,
+        to_char(DEAL_DATETIME,'yyyy-mm-dd hh24:mi:ss') DEAL_DATETIME, PAY_MODE_ID, DEAL_FEE,
+        RECEIPT_ID, TAC, LINE_ID, STATION_ID,
+        DEAL_BALANCE_FEE, substr(BALANCE_WATER_NO,1,10) BALANCE_WATER_NO, ENTRY_DATETIME,
+        DEAL_TYPE, RED_FLAG, CARD_MAIN_ID,
+        CARD_SUB_ID, GEN_TIME, TCT_VALID_DAYS,
+        TCT_ACTIVATE_DATETIME, CURRENT_BALANCE_WATER
+        from W_ACC_ST.W_OP_NON_RETURN_TK_HIST  where CARD_LOGICAL_ID = #{cardLogicalId,jdbcType=CHAR}
+        order by DEAL_DATETIME desc
+    </select>
+</mapper>

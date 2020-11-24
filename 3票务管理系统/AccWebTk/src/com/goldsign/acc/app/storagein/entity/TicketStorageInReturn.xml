@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.storagein.mapper.TicketStorageInReturnMapper">
+    <resultMap type="TicketStorageInReturn" id="rmTicketStorageInNew">
+        <result column="bill_no" property="bill_no" /> 
+        <result column="bill_date" property="bill_date" /> 
+        <result column="form_maker" property="form_maker" /> 
+        <result column="hand_man" property="hand_man" /> 
+        <result column="administer" property="administer" /> 
+        <result column="accounter" property="accounter" /> 
+        <result column="related_bill_no" property="related_bill_no" />
+        <result column="record_flag" property="record_flag" /> 
+        <result column="verify_date" property="verify_date" /> 
+        <result column="verify_person" property="verify_person" /> 
+        <result column="remark" property="remark" /> 
+    </resultMap>
+    
+    <resultMap type="TicketStorageInReturn" id="rmGetUserStorege">
+        <result column="sys_group_id" property="sys_group_id" /> 
+        <result column="sys_storage_id" property="sys_storage_id" /> 
+    </resultMap>
+    
+    <resultMap type="TicketStorageInReturn" id="rmGetHistTable">
+        <result column="his_table" property="his_table" /> 
+        <result column="begin_recd" property="begin_recd" /> 
+        <result column="end_recd" property="end_recd" />
+    </resultMap>
+    
+    <resultMap type="TicketStorageInReturn" id="rmGetDetailByBillNo">
+        <result column="bill_no" property="bill_no" /> 
+    </resultMap>
+    
+    <parameterMap type="java.util.Map" id="MapBillNewAudit">  
+        <parameter property="p_bill_no" jdbcType="VARCHAR" mode="IN"/>  
+        <parameter property="p_operator_id" jdbcType="VARCHAR" mode="IN"/> 
+        <parameter property="p_errmsg" jdbcType="VARCHAR" mode="OUT"/>   
+        <parameter property="p_result" jdbcType="INTEGER" mode="OUT"/> 
+        <parameter property="p_memo" jdbcType="VARCHAR" mode="OUT"/>
+        <parameter property="bill_no" jdbcType="VARCHAR" mode="OUT"/>  
+    </parameterMap> 
+    
+    <select id="addTicketStorageInReturn" parameterType="java.util.Map" statementType="CALLABLE">
+        {
+            call W_ACC_TK.W_UP_IC_IN_ADD_HR(
+                #{p_bill_no,mode=IN,jdbcType=VARCHAR},#{p_type,mode=IN,jdbcType=VARCHAR},
+                #{p_form_maker,mode=IN,jdbcType=VARCHAR},#{p_hand_man,mode=IN,jdbcType=VARCHAR},
+                #{p_administer,mode=IN,jdbcType=VARCHAR},#{p_accounter,mode=IN,jdbcType=VARCHAR},
+                #{p_remark,mode=IN,jdbcType=VARCHAR},
+                #{bill_no,mode=OUT,jdbcType=VARCHAR},
+                #{p_errmsg,mode=OUT,jdbcType=VARCHAR},
+                #{p_result,mode=OUT,jdbcType=VARCHAR},
+                #{p_memo,mode=OUT,jdbcType=VARCHAR}
+            )
+        }
+    </select>
+    
+    
+    <select id="getTicketStorageInReturn" parameterType="TicketStorageInReturn" resultMap="rmTicketStorageInNew">
+        select bill_no,bill_date,form_maker,hand_man ,administer,
+               accounter,related_bill_no,record_flag ,verify_date,verify_person,remark
+          from w_acc_tk.w_ic_in_store_bill a  
+            ${whereSql}
+        order by a.bill_no desc 
+    </select>
+    
+    <select id="getUserStorege" parameterType="String" resultMap="rmGetUserStorege">
+        select sg.sys_group_id,sg.sys_storage_id 
+                from w_acc_st.w_op_sys_group_operator sgo , w_acc_st.w_op_sys_group sg 
+                where sgo.sys_group_id=sg.sys_group_id 
+                and sgo.sys_operator_id=#{operator}
+    </select>
+    
+    <select id="getStorageInDetailByBillNo" parameterType="String" resultType="String">
+        select bill_no from w_acc_tk.w_ic_in_store_detail where bill_no=#{billNo}
+    </select>
+    
+    <select id="getHistTable" resultMap="rmGetHistTable">
+        select his_table,begin_recd,end_recd 
+        from w_acc_tk.w_ic_idx_history 
+        where origin_table_name = 'ic_in_store_detail'
+    </select>
+    
+    <select id="getTicketStorageInReturnByBillNo" parameterType="String" resultMap="rmTicketStorageInNew">
+        select bill_no,bill_date,form_maker,hand_man ,administer,
+               accounter,related_bill_no,record_flag ,verify_date,verify_person,remark
+          from w_acc_tk.w_ic_in_store_bill 
+            where bill_no = #{billNo}
+    </select>
+    
+    <delete id="deleteTicketStorageInReturn" parameterType="TicketStorageInReturn" >
+        delete from  w_acc_tk.w_ic_in_store_bill where bill_no=#{bill_no}
+    </delete>
+    
+    <select id="getDetailByBillNo" parameterType="String" resultMap="rmGetDetailByBillNo">
+        select bill_no
+          from w_acc_tk.w_ic_in_store_detail 
+            where bill_no = #{billNo}
+    </select>
+    
+    <select id="audit" parameterMap="MapBillNewAudit" statementType="CALLABLE">
+        {call W_ACC_TK.W_UP_IC_IN_AUDIT_HR(?,?,?,?,?,?)}
+                                  
+    </select>
+</mapper>

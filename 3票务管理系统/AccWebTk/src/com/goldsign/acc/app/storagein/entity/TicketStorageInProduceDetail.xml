@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.storagein.mapper.TicketStorageInProduceDetailMapper">
+    
+    <resultMap type="com.goldsign.acc.app.storagein.entity.TicketStorageInOutProduceDiff" id="rmInOutDiffProduce">
+        <result column="in_bill_no" property="in_bill_no" />
+        <result column="out_bill_no" property="out_bill_no" /> 
+        <result column="out_num" property="out_num" />
+        <result column="valid_num" property="valid_num" />
+        <result column="es_useless_num" property="es_useless_num" />
+        <result column="man_useless_num" property="man_useless_num" />
+        <result column="lost_num" property="lost_num" />
+        <result column="system_balance" property="system_balance" />
+        <result column="real_balance" property="real_balance" />
+        <result column="out_in_diff" property="out_in_diff" />
+        <result column="remark" property="remark" />
+        <result column="record_flag" property="record_flag" />
+        <result column="in_bill_date" property="in_bill_date" />
+        <result column="diff_id" property="diff_id" />
+    </resultMap>
+    
+    <delete id="deleteInProduceDetail" parameterType="String" >
+        delete from  w_acc_tk.w_ic_in_store_detail where bill_no=#{bill_no}
+                                  
+    </delete>
+    
+    <select id="getInOutDiffProduceList"  parameterType="Map" resultMap="rmInOutDiffProduce">
+        select in_bill_no,out_bill_no,out_num,valid_num,es_useless_num,man_useless_num,
+                lost_num,real_balance,out_in_diff,remark,in_bill_date,diff_id
+        from w_acc_tk.w_ic_in_out_diff_produce
+        where in_bill_no= #{billNo} 
+    </select> 
+    
+    
+    
+    
+    
+
+    
+    
+    
+</mapper>

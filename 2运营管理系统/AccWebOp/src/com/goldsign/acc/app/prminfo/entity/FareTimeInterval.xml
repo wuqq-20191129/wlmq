@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.FareTimeIntervalMapper">
+    
+    <resultMap type="com.goldsign.acc.app.prminfo.entity.FareTimeInterval" id="rmFareTimeInterval">
+        
+        <result column="WATER_NO" property="waterNo" /> 
+        <result column="TIME_ID" property="timeId" /> 
+        <result column="TIME_MIN" property="timeMin" /> 
+        <result column="TIME_MAX" property="timeMax" /> 
+        <result column="version_no" property="version_no" /> 
+        <result column="record_flag" property="record_flag" />  
+        
+   
+    </resultMap>
+    
+    <insert id="add" parameterType="com.goldsign.acc.app.prminfo.entity.FareTimeInterval" >
+        insert into W_ACC_ST.W_OP_PRM_FARE_TIME_INTERVAL
+        (WATER_NO, TIME_ID, TIME_MIN , TIME_MAX , RECORD_FLAG, VERSION_NO )
+        values(w_acc_st.W_SEQ_W_OP_PRM_FARE_TIME_INT.NEXTVAL,#{timeId},#{timeMin},#{timeMax},#{record_flag},#{version_no})         
+    </insert>
+    
+    <select id="query"  parameterType="com.goldsign.acc.app.prminfo.entity.FareTimeInterval" resultMap="rmFareTimeInterval">
+        select * from W_ACC_ST.W_OP_PRM_FARE_TIME_INTERVAL where record_flag=#{record_flag} and version_no=#{version_no}  
+        <if test="timeId !=null and timeId !=''">
+            and TIME_ID =#{timeId} 
+        </if> 
+        
+        order by TIME_ID
+    </select>
+    
+    <delete id="delete" parameterType="com.goldsign.acc.app.prminfo.entity.FareTimeInterval">
+        delete from W_ACC_ST.W_OP_PRM_FARE_TIME_INTERVAL 
+        where TIME_ID =#{timeId}  and record_flag=#{record_flag} and version_no=#{version_no}  
+    </delete>
+    
+    <update id="modify" parameterType="com.goldsign.acc.app.prminfo.entity.FareTimeInterval" >
+        update W_ACC_ST.W_OP_PRM_FARE_TIME_INTERVAL set TIME_MIN = #{timeMin}, TIME_MAX = #{timeMax}
+        where  TIME_ID =#{timeId} and record_flag=#{record_flag} and version_no=#{version_no}                    
+        
+    </update>
+    
+    <update id="submitToOldFlag" parameterType="com.goldsign.acc.app.prminfo.entity.FareTimeInterval" >
+        update W_ACC_ST.W_OP_PRM_FARE_TIME_INTERVAL set record_flag=#{record_flag_old}
+        where   record_flag=#{record_flag_new}                                               
+    </update>
+    
+    <!--草稿参数复制为当前或未来参数 -->
+    <insert id="submitFromDraftToCurOrFur" parameterType="com.goldsign.acc.app.prminfo.entity.FareTimeInterval" >
+        insert into  W_ACC_ST.W_OP_PRM_FARE_TIME_INTERVAL ( WATER_NO, TIME_ID,TIME_MIN,TIME_MAX,record_flag,version_no)
+        select w_acc_st.W_SEQ_W_OP_PRM_FARE_TIME_INT.NEXTVAL,TIME_ID,TIME_MIN,TIME_MAX,#{record_flag_new},#{version_no_new}
+        from   W_ACC_ST.W_OP_PRM_FARE_TIME_INTERVAL  
+        where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    <!--草稿参数删除 -->
+    <delete id="deleteForClone" parameterType="com.goldsign.acc.app.prminfo.entity.FareTimeInterval">
+        delete from W_ACC_ST.W_OP_PRM_FARE_TIME_INTERVAL where  record_flag='3' and version_no='0000000000'                                                      
+    </delete>
+    
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="com.goldsign.acc.app.prminfo.entity.FareTimeInterval" >
+        insert into  W_ACC_ST.W_OP_PRM_FARE_TIME_INTERVAL ( WATER_NO, TIME_ID,TIME_MIN,TIME_MAX,record_flag,version_no)
+        select w_acc_st.W_SEQ_W_OP_PRM_FARE_TIME_INT.NEXTVAL, TIME_ID,TIME_MIN,TIME_MAX,'3','0000000000'
+        from   W_ACC_ST.W_OP_PRM_FARE_TIME_INTERVAL  
+        where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    <select id="queryToMap"  parameterType="com.goldsign.acc.app.prminfo.entity.FareTimeInterval" resultType="map">
+        select * from W_ACC_ST.W_OP_PRM_FARE_TIME_INTERVAL where record_flag=#{record_flag} and version_no=#{version_no}  
+        <if test="timeId !=null and timeId !=''">
+            and TIME_ID =#{timeId} 
+        </if> 
+        
+        order by TIME_ID
+    </select>
+    
+</mapper>
+
+

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.TctQueryMapper">
+    
+    <resultMap type="com.goldsign.acc.app.querysys.entity.TctQuery" id="rmTctQuery">
+        <result column="CARD_LOGICAL_ID" property="cardLogicalId" />
+        <result column="CARD_PHYSICAL_ID" property="cardPhysicalId" /> 
+        <result column="CARD_MAIN_ID" property="cardMainId" /> 
+        <result column="CARD_SUB_ID" property="cardSubId" />
+        <result column="VALID_DATE_START" property="validDateStart" />
+        <result column="VALID_DATE_END" property="validDateEnd" /> 
+        <result column="SALE_FEE" property="saleFee" /> 
+        <result column="SALE_COUNT" property="saleCount" />
+        <result column="BALANCE_STATUES" property="balanceStatues" /> 
+        <result column="CONSUME_COUNT" property="consumeCount" /> 
+        <result column="UPDATE_COUNT" property="updateCount" />
+        <result column="BALANCE_WATER_NO" property="balanceWaterNo" /> 
+        <result column="DELAY_DAY" property="delayDay" /> 
+        <result column="CUR_CONSUME_COUNT" property="curConsumeCount" /> 
+        <result column="CUR_CONSUME_FEE" property="curConsumeFee" /> 
+        <result column="cons_count" property="consumeCount" /> 
+        <result column="valid_day" property="validDay" /> 
+        <result column="sale_datetime" property="saleDate" /> 
+        
+    </resultMap>
+    
+    <select id="getTct"  parameterType="com.goldsign.acc.app.querysys.entity.TctQuery" resultMap="rmTctQuery">
+        select e.*,f.valid_day ,g.consume_count CUR_CONSUME_COUNT,g.consume_fee CUR_CONSUME_FEE from  (
+        select b.card_logical_id,b.card_main_id,b.card_sub_id, b.balance_water_no,
+        CASE WHEN (c.sale_datetime is NULL) THEN b.valid_date_start
+        Else c.sale_datetime END as sale_datetime,     
+        b.valid_date_start,b.valid_date_end,b.balance_statues,(b.consume_count+b.update_count) cons_count,
+        (b.sale_count - b.consume_count-b.update_count) resCount,
+        b.sale_fee sale_fee,
+        b.sale_count sale_count
+        from  w_acc_st.w_st_act_tct  b  left join 
+        (select a.*  from w_acc_st_his.w_st_mb_his_sale       a
+        where a.card_main_id||a.card_sub_id in 
+        (select t.card_main_id||t.card_sub_id  from    w_acc_st.w_st_cod_card_tct      t )
+        ) c
+        on trim(b.card_logical_id) =trim(c.card_logical_id)
+        ) e ,
+        (
+        select t.*  from   w_acc_st.w_op_prm_card_para       t where t.record_flag ='0'
+        and t.card_main_id||t.card_sub_id in (select t.card_main_id||t.card_sub_id  from    w_acc_st.w_st_cod_card_tct      t )
+        )f ,
+        (
+        select q.balance_water_no,q.card_logical_id,
+        sum(q.consume_count+nvl(q.update_count,0))  as consume_count,
+        sum(q.consume_fee+nvl(q.update_fee,0)) as consume_fee 
+        from w_acc_st.w_st_act_tct_day_consume q
+        where substr(q.balance_water_no,0,8) =  #{curDate}
+        group by q.balance_water_no,q.card_logical_id
+        ) g
+        where e.card_main_id||e.card_sub_id =f.card_main_id||f.card_sub_id 
+        and e.card_logical_id = g.card_logical_id(+)
+        <if test="cardLogicalId !=null and cardLogicalId !=''">
+            and  e.card_logical_id like concat(#{cardLogicalId},'%')
+        </if>
+        <if test="validDateStart != null and validDateStart !=''" >  
+            and e.sale_datetime &gt;= to_date(#{validDateStart},'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        <if test="validDateEnd != null and validDateEnd !=''" >  
+            and e.sale_datetime  &lt;= to_date(#{validDateEnd},'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        <if test="balanceStatues != null and balanceStatues !=''" >  
+            and e.balance_statues = #{balanceStatues}
+        </if> 
+        <if test="cardMainId != null and cardMainId !=''" >  
+            and e.card_main_id = #{cardMainId}
+        </if> 
+        <if test="cardSubId != null and cardSubId !=''" >  
+            and e.card_sub_id = #{cardSubId}
+        </if> 
+        order by e.card_logical_id
+    </select>
+    
+  
+    
+</mapper>
+
+
+
+

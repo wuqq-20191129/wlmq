@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.QueryCardExpDateMapper">
+    
+    <resultMap type="QueryCardExpDate" id="rmQueryCardExpDate">
+        <result column="card_main_id" property="card_main_id" />
+        <result column="card_sub_id" property="card_sub_id" /> 
+        <result column="exp_date" property="exp_date" /> 
+    </resultMap>
+    
+    <select id="getQueryCardExpDates"  parameterType="QueryCardExpDate" resultMap="rmQueryCardExpDate">
+        select distinct card_main_id,card_sub_id,exp_date from w_acc_st.w_op_prm_card_para  where record_flag=#{record_flag}
+        <if test="card_main_id !=null and card_main_id !=''">
+            and card_main_id =#{card_main_id}
+        </if>
+        <if test="card_sub_id !=null and card_sub_id !=''">
+            and card_sub_id =#{card_sub_id}
+        </if> 
+        <if test="exp_date !=null and exp_date !=''">
+            and exp_date =#{exp_date}
+        </if>
+        order by card_main_id,card_sub_id
+    </select>
+    
+    <select id="queryToMap"  parameterType="QueryCardExpDate" resultType="map">
+        select distinct card_main_id,card_sub_id,exp_date from w_acc_st.w_op_prm_card_para  where record_flag=#{record_flag}
+        <if test="card_main_id !=null and card_main_id !=''">
+            and card_main_id =#{card_main_id}
+        </if>
+        <if test="card_sub_id !=null and card_sub_id !=''">
+            and card_sub_id =#{card_sub_id}
+        </if> 
+        <if test="exp_date !=null and exp_date !=''">
+            and exp_date =#{exp_date}
+        </if>
+        order by card_main_id,card_sub_id
+    </select>
+    
+    
+</mapper>
+
+

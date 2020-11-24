@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.system.mapper.HardwareMapper">
+    
+    <resultMap type="com.goldsign.acc.app.system.entity.Hardware" id="rmHardware">
+        
+        <result column="STATUS_DATE" property="statusDate" /> 
+        <result column="IP" property="ip" /> 
+        <result column="STATUS" property="status" /> 
+        <result column="REMARK" property="remark" /> 
+        <result column="NAME" property="name" /> 
+        <result column="TYPE" property="type" /> 
+        <result column="IP_VALUE" property="ipValue" /> 
+
+    </resultMap>
+   
+    <select id="queryPlan"  parameterType="com.goldsign.acc.app.system.entity.Hardware" resultMap="rmHardware">
+        select A.status_date, A.ip, A.status, A.remark, B.name, B.type, B.ip_value 
+        from w_acc_mn.w_mtr_current_hardware_info A, w_acc_mn.w_mtr_device_code B 
+        where A.ip = B.ip(+) order by ip_value
+    </select>
+    
+    <update id="update" parameterType="com.goldsign.acc.app.system.entity.Hardware" >
+        update w_acc_mn.w_mtr_current_hardware_info set 
+        status_date = to_date( #{statusDate}, 'yyyy-mm-dd hh24:mi:ss'), status= #{status}, remark= #{remark}
+        where ip= #{ip}
+    </update>
+    
+    <insert id="insertIntoCur" parameterType="com.goldsign.acc.app.system.entity.Hardware" >
+        insert into w_acc_mn.w_mtr_current_hardware_info 
+        (status_date,ip,status,remark) 
+        values(to_date( #{statusDate}, 'yyyy-mm-dd hh24:mi:ss'), #{ip}, #{status}, #{remark} )
+    </insert>
+    
+    <insert id="insertIntoHis" parameterType="com.goldsign.acc.app.system.entity.Cluster" >
+       insert into w_acc_mn.w_mtr_his_hardware_info
+        (status_date,ip,status,remark) 
+        values(to_date( #{statusDate}, 'yyyy-mm-dd hh24:mi:ss'), #{ip}, #{status}, #{remark} )
+    </insert>
+    
+</mapper>
+
+
+
+

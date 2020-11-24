@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.system.mapper.SybaseMapper">
+
+    <resultMap type="com.goldsign.acc.app.system.entity.Sybase" id="rmSybase">
+        <result column="status_date" property="statusDate"/>
+        <result column="ip" property="ip"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+        <result column="ip_value" property="ip_value"/>
+        <result column="free_data" property="free_data"/>
+        <result column="used_data_rate" property="used_data_rate"/>
+        <result column="free_data_1" property="free_data_1"/>
+        <result column="used_data_rate_1" property="used_data_rate_1"/>
+        <result column="free_index" property="free_index"/>
+        <result column="used_index_rate" property="used_index_rate"/>
+        <result column="backup_size" property="backup_size"/>
+        <result column="backup_start_time" property="backup_start_time"/>
+        <result column="backup_end_time" property="backup_end_time"/>
+        <result column="backup_interval" property="backup_interval"/>
+        <result column="free_log" property="free_log"/>
+        <result column="used_log_rate" property="used_log_rate"/>
+        <result column="tablespace_name" property="tablespace_name"/>
+        <result column="Total_MB" property="total_mb"/>
+        <result column="Used_MB" property="used_mb"/>
+        <result column="Used_Pct" property="used_pct"/>
+        <result column="recovery_avail_mb" property="recovery_avail_mb"/>
+        <result column="recovery_used_pct" property="recovery_used_pct"/>
+    </resultMap>
+    <resultMap type="com.goldsign.acc.frame.entity.PubFlag" id="rmPubFlag">
+        <id column="code" property="code"/>
+        <result column="code_text" property="code_text"/>
+    </resultMap>
+
+    <select id="queryPlan" parameterType="com.goldsign.acc.app.system.entity.Sybase" resultMap="rmSybase">
+        select A.ip,A.status,A.status_date,A.free_data,A.used_data_rate,
+            A.free_data_1,A.used_data_rate_1,
+            A.free_index,A.used_index_rate,A.backup_size,A.backup_start_time,
+            A.backup_end_time,A.backup_interval,A.remark,
+            A.free_log,A.used_log_rate,
+            A.name,B.type ,B.ip_value,
+            A.recovery_avail_mb,A.recovery_used_pct
+	from w_acc_mn.w_mtr_current_sybase_info A,w_acc_mn.w_mtr_db_code B
+	where A.ip =B.ip(+) order by name desc
+    </select>
+
+    <select id="queryCapacityConfig" resultType="String">
+        select config_value as capacity from w_acc_mn.W_MTR_CONFIG t where t.config_name ='COMMAND_FIND_USE_SPACE_WARNING'
+    </select>
+
+    <select id="getDbMessageList" statementType="CALLABLE" parameterType="java.util.Map">
+        {call W_ACC_MN.W_UP_MTR_TABLESPACE_MONITOR (#{result,mode=OUT,jdbcType=CURSOR,javaType=ResultSet, resultMap=rmSybase})}
+    </select>
+
+    <update id="updatePlan" parameterType="com.goldsign.acc.app.system.entity.Sybase">
+        update w_acc_mn.w_mtr_current_sybase_info set free_log=#{free_log} ,used_log_rate=#{used_log_rate} where ip=#{ip}
+    </update>
+
+    <insert id="insertPlanOne" parameterType="com.goldsign.acc.app.system.entity.Sybase">
+        insert into w_acc_mn.w_mtr_current_sybase_info(ip,status,status_date,free_log,used_log_rate)
+     values(#{ip},#{status},to_date(#{statusDate},'yyyy-mm-dd hh24:mi:ss'),#{free_log},#{used_log_rate})
+    </insert>
+
+    <insert id="insertPlanTwo" parameterType="com.goldsign.acc.app.system.entity.Sybase">
+        insert into w_acc_mn.w_mtr_his_sybase_info(ip,status,status_date,free_log,used_log_rate)
+            values(#{ip},#{status},to_date(#{statusDate},'yyyy-mm-dd hh24:mi:ss'),#{free_log},#{used_log_rate})
+    </insert>
+
+    <update id="updatePlanField" parameterType="com.goldsign.acc.app.system.entity.Sybase">
+        update w_acc_mn.w_mtr_current_sybase_info set
+            status=#{status,jdbcType=VARCHAR},status_date=#{statusDate,jdbcType=VARCHAR},free_data=#{free_data,jdbcType=VARCHAR},used_data_rate=#{used_data_rate,jdbcType=VARCHAR},
+            free_index=#{free_index,jdbcType=VARCHAR},used_index_rate=#{used_index_rate,jdbcType=VARCHAR},backup_size=#{backup_size,jdbcType=VARCHAR},backup_start_time=#{backup_start_time,jdbcType=VARCHAR},
+            backup_end_time=#{backup_end_time,jdbcType=VARCHAR},backup_interval=#{backup_interval,jdbcType=VARCHAR},remark=#{remark,jdbcType=VARCHAR},free_log=#{free_log,jdbcType=VARCHAR},used_log_rate=#{used_log_rate,jdbcType=VARCHAR},
+            free_data_1=#{free_data_1,jdbcType=VARCHAR},used_data_rate_1=#{used_data_rate_1,jdbcType=VARCHAR},
+            recovery_avail_mb=#{recovery_avail_mb,jdbcType=VARCHAR},recovery_used_pct=#{recovery_used_pct,jdbcType=VARCHAR}
+            where ip=#{ip,jdbcType=VARCHAR} and name=#{name,jdbcType=VARCHAR}
+    </update>
+
+    <insert id="insertPlanOneField" parameterType="com.goldsign.acc.app.system.entity.Sybase">
+        insert into w_acc_mn.w_mtr_current_sybase_info
+        (ip,status,status_date,free_data,used_data_rate,
+                free_index,used_index_rate,backup_size,backup_start_time,
+                backup_end_time,backup_interval,remark,free_log,used_log_rate,
+                free_data_1,used_data_rate_1,name,recovery_avail_mb,recovery_used_pct)
+        values(#{ip,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},#{statusDate,jdbcType=VARCHAR},#{free_data,jdbcType=VARCHAR},#{used_data_rate,jdbcType=VARCHAR},#{free_index,jdbcType=VARCHAR},#{used_index_rate,jdbcType=VARCHAR},
+                #{backup_size,jdbcType=VARCHAR},#{backup_start_time,jdbcType=VARCHAR},#{backup_end_time,jdbcType=VARCHAR},#{backup_interval,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{free_log,jdbcType=VARCHAR},
+                #{used_log_rate,jdbcType=VARCHAR},#{free_data_1,jdbcType=VARCHAR},#{used_data_rate_1,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR}, #{recovery_avail_mb,jdbcType=VARCHAR}, #{recovery_used_pct,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertPlanTwoField" parameterType="com.goldsign.acc.app.system.entity.Sybase">
+        insert into w_acc_mn.w_mtr_his_sybase_info
+        (ip,status,status_date,free_data,used_data_rate,
+                free_index,used_index_rate,backup_size,backup_start_time,
+                backup_end_time,backup_interval,remark,free_log,used_log_rate,
+                free_data_1,used_data_rate_1,name,recovery_avail_mb,recovery_used_pct)
+        values(#{ip,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},#{statusDate,jdbcType=VARCHAR},#{free_data,jdbcType=VARCHAR},#{used_data_rate,jdbcType=VARCHAR},#{free_index,jdbcType=VARCHAR},#{used_index_rate,jdbcType=VARCHAR},
+                #{backup_size,jdbcType=VARCHAR},#{backup_start_time,jdbcType=VARCHAR},#{backup_end_time,jdbcType=VARCHAR},#{backup_interval,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{free_log,jdbcType=VARCHAR},
+                #{used_log_rate,jdbcType=VARCHAR},#{free_data_1,jdbcType=VARCHAR},#{used_data_rate_1,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR}, #{recovery_avail_mb,jdbcType=VARCHAR}, #{recovery_used_pct,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="getTableSpaceNameList" resultMap="rmPubFlag">
+        select config_name code,config_value code_text from w_acc_mn.w_mtr_config  where type = '11'
+    </select>
+    <select id="getDbMessage" parameterType="java.lang.String" resultMap="rmSybase">
+         select total.tablespace_name,round(total.MB, 2) as Total_MB,round(total.MB - free.MB, 2) as Used_MB,
+   DECODE(TRUNC(round((1 - free.MB / total.MB) * 100, 2)), 0, REPLACE(TO_CHAR(round((1 - free.MB / total.MB) * 100, 2)),'.','0.'),
+  TO_CHAR(round((1 - free.MB / total.MB) * 100, 2))) || '%' as Used_Pct from
+         (select tablespace_name, sum(bytes) / 1024 / 1024 as MB from dba_free_space group by tablespace_name) free,
+         (select tablespace_name, sum(bytes) / 1024 / 1024 as MB from dba_data_files where tablespace_name = #{id,jdbcType=CHAR} group by tablespace_name) total
+         where free.tablespace_name = total.tablespace_name
+        order by tablespace_name
+    </select>
+    <select id="getRecoveryMsg" resultMap="rmSybase">
+         select  round(recovery_total - recovery_used, 2) as recovery_avail_mb,
+              round(( recovery_used / recovery_total) * 100,2)||'%' as recovery_used_pct from
+(select round(t.space_limit / 1024 / 1024, 2) recovery_total,
+       round(t.space_used / 1024 / 1024, 2) recovery_used
+  from v$recovery_file_dest t)
+    </select>
+</mapper>
+
+
+

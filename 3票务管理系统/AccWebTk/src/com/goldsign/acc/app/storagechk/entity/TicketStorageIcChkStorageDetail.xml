@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.storagechk.mapper.TicketStorageIcChkStorageDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetail" >
+    <constructor >
+      <arg column="WATER_NO" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="CHECK_BILL_NO" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="STORAGE_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="AREA_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CHEST_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="STOREY_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="BASE_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="BOX_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IC_MAIN_TYPE" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IC_SUB_TYPE" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="STATION_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CARD_MONEY" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="SYS_AMOUNT" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="REAL_AMOUNT" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="LINE_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="PRODUCE_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="EXIT_LINE_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="EXIT_STATION_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="MODEL" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+   <sql id="Base_Column_List">
+    CHECK_BILL_NO, STORAGE_ID, AREA_ID, CHEST_ID, STOREY_ID, BASE_ID, IC_MAIN_TYPE, IC_SUB_TYPE, STATION_ID,
+    WATER_NO, BOX_ID, SYS_AMOUNT, REAL_AMOUNT,LINE_ID, CARD_MONEY, PRODUCE_DATE, EXIT_LINE_ID, 
+    EXIT_STATION_ID, MODEL
+  </sql>
+   <select id="selectByPrimaryKey" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetailKey" resultMap="BaseResultMap">
+      select 
+      <include refid="Base_Column_List" />
+      from W_ACC_TK.W_IC_CHK_STORAGE_DETAIL   
+      <trim prefix="where (" suffix=")" suffixOverrides=" and ">
+          <if test="checkBillNo != null">
+              CHECK_BILL_NO = #{checkBillNo,jdbcType=CHAR} and
+          </if>
+           <if test="boxId != null">
+              BOX_ID = #{boxId,jdbcType=CHAR} and
+          </if>
+      </trim>
+  </select>
+   <select id="selectDetailSeq" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetailKey" resultType="int">
+     select W_ACC_TK.W_SEQ_W_IC_IN_CHECK_DETAIL.NEXTVAL from dual
+  </select>
+  <insert id="insert" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetail" >
+    insert into W_IC_CHK_STORAGE_DETAIL (WATER_NO, CHECK_BILL_NO, STORAGE_ID, 
+      AREA_ID, CHEST_ID, STOREY_ID, BASE_ID, 
+      BOX_ID, IC_MAIN_TYPE, IC_SUB_TYPE, 
+      STATION_ID, CARD_MONEY, SYS_AMOUNT, 
+      REAL_AMOUNT, LINE_ID, PRODUCE_DATE, 
+      EXIT_LINE_ID, EXIT_STATION_ID, MODEL
+      )
+    values (#{waterNo,jdbcType=DECIMAL}, #{checkBillNo,jdbcType=CHAR}, #{storageId,jdbcType=CHAR}, 
+      #{areaId,jdbcType=CHAR}, #{chestId,jdbcType=CHAR}, #{storeyId,jdbcType=CHAR}, #{baseId,jdbcType=CHAR}, 
+      #{boxId,jdbcType=CHAR}, #{icMainType,jdbcType=CHAR}, #{icSubType,jdbcType=CHAR}, 
+      #{stationId,jdbcType=VARCHAR}, #{cardMoney,jdbcType=DECIMAL}, #{sysAmount,jdbcType=DECIMAL}, 
+      #{realAmount,jdbcType=DECIMAL}, #{lineId,jdbcType=VARCHAR}, #{produceDate,jdbcType=TIMESTAMP}, 
+      #{exitLineId,jdbcType=VARCHAR}, #{exitStationId,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="addBillDetailForBox" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetail" >
+    insert into W_ACC_TK.W_IC_CHK_STORAGE_DETAIL (WATER_NO, CHECK_BILL_NO, STORAGE_ID, 
+      AREA_ID, CHEST_ID, STOREY_ID, BASE_ID, BOX_ID, IC_MAIN_TYPE, IC_SUB_TYPE, 
+      STATION_ID, CARD_MONEY,  LINE_ID, EXIT_LINE_ID, EXIT_STATION_ID, MODEL,SYS_AMOUNT, 
+      REAL_AMOUNT,PRODUCE_DATE
+      )
+    select W_ACC_TK.W_SEQ_W_IC_IN_CHECK_DETAIL.NEXTVAL, t.checkBillNo,t.storage_id,t.area_id,t.chest_id,
+     t.storey_id,t.base_id,t.box_id,t.ic_main_type,t.ic_sub_type,t.station_id,
+     t.card_money,t.line_id,t.exit_line_id,t.exit_station_id,t.model,t.card_num,t.card_num1,t.produce_date from (
+      select #{checkBillNo,jdbcType=CHAR} checkBillNo, B.storage_id,B.area_id,B.chest_id,
+      B.storey_id,B.base_id,B.box_id,A.ic_main_type,A.ic_sub_type,A.station_id,
+      A.card_money,A.line_id,A.exit_line_id,
+      A.exit_station_id,A.model, A.card_num,A.card_num card_num1,B.produce_date 
+      from W_ACC_TK.W_IC_COD_BOX_INFO A,W_ACC_TK.W_IC_STS_STORAGE B
+      where B.storage_id = #{storageId,jdbcType=CHAR}
+      and B.area_id = #{areaId,jdbcType=CHAR}
+      and A.ic_main_type = #{icMainType,jdbcType=CHAR}
+      and A.ic_sub_type = #{icSubType,jdbcType=CHAR}
+      and A.box_id = B.box_id) t
+  </insert>
+   <insert id="addBillDetailForAreaForSjt" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetail" >
+    insert into W_ACC_TK.W_IC_CHK_STORAGE_DETAIL ( water_no,check_bill_no,storage_id,area_id,
+       ic_main_type,ic_sub_type,card_money,sys_amount,real_amount,model)
+    select W_ACC_TK.W_SEQ_W_IC_IN_CHECK_DETAIL.NEXTVAL, t.checkBillNo,t.storage_id,t.area_id,
+      t.ic_main_type,t.ic_sub_type,t.card_money,t.card_num,t.card_num1,t.model from
+      (select #{checkBillNo,jdbcType=CHAR} checkBillNo, storage_id,area_id,
+      ic_main_type,ic_sub_type,card_money,sum(card_num) card_num,sum(card_num) card_num1,'000'  model
+      from W_ACC_TK.W_IC_STS_AREA_CARD
+      where storage_id = #{storageId,jdbcType=CHAR}
+      and area_id = #{areaId,jdbcType=CHAR}
+      and ic_main_type = #{icMainType,jdbcType=CHAR}
+      group  by storage_id,area_id,ic_main_type,ic_sub_type,card_money) t
+  </insert>
+  <insert id="addBillDetailForAreaSub" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetail" >
+   insert into W_ACC_TK.W_IC_CHK_STORAGE_DETAIL ( water_no,check_bill_no,storage_id,area_id,
+       ic_main_type,ic_sub_type,card_money,sys_amount,real_amount,model)
+    select W_ACC_TK.W_SEQ_W_IC_IN_CHECK_DETAIL.NEXTVAL, t.checkBillNo,t.storage_id,t.area_id,
+      t.ic_main_type,t.ic_sub_type,t.card_money,t.card_num,t.card_num1,t.model from
+      (select #{checkBillNo,jdbcType=CHAR} checkBillNo, storage_id,area_id,
+      ic_main_type,ic_sub_type,card_money,sum(card_num) card_num,sum(card_num) card_num1,'000'  model
+      from W_ACC_TK.W_IC_STS_AREA_CARD
+      where storage_id = #{storageId,jdbcType=CHAR}
+      and area_id = #{areaId,jdbcType=CHAR}
+      and ic_main_type = #{icMainType,jdbcType=CHAR}
+      and ic_sub_type = #{icSubType,jdbcType=CHAR}
+      group  by storage_id,area_id,ic_main_type,ic_sub_type,card_money) t
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetail" >
+    insert into W_ACC_TK.W_IC_CHK_STORAGE_DETAIL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+     WATER_NO,
+      <if test="checkBillNo != null" >
+        CHECK_BILL_NO,
+      </if>
+      <if test="storageId != null" >
+        STORAGE_ID,
+      </if>
+      <if test="areaId != null" >
+        AREA_ID,
+      </if>
+      <if test="chestId != null" >
+        CHEST_ID,
+      </if>
+      <if test="storeyId != null" >
+        STOREY_ID,
+      </if>
+      <if test="baseId != null" >
+        BASE_ID,
+      </if>
+      <if test="boxId != null" >
+        BOX_ID,
+      </if>
+      <if test="icMainType != null" >
+        IC_MAIN_TYPE,
+      </if>
+      <if test="icSubType != null" >
+        IC_SUB_TYPE,
+      </if>
+      <if test="stationId != null" >
+        STATION_ID,
+      </if>
+      <if test="cardMoney != null" >
+        CARD_MONEY,
+      </if>
+      <if test="sysAmount != null" >
+        SYS_AMOUNT,
+      </if>
+      <if test="realAmount != null" >
+        REAL_AMOUNT,
+      </if>
+      <if test="lineId != null" >
+        LINE_ID,
+      </if>
+      <if test="produceDate != null" >
+        PRODUCE_DATE,
+      </if>
+      <if test="exitLineId != null" >
+        EXIT_LINE_ID,
+      </if>
+      <if test="exitStationId != null" >
+        EXIT_STATION_ID,
+      </if>
+      <if test="model != null" >
+        MODEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      W_ACC_TK.W_SEQ_W_IC_IN_CHECK_DETAIL.NEXTVAL,
+      <if test="checkBillNo != null" >
+        #{checkBillNo,jdbcType=CHAR},
+      </if>
+      <if test="storageId != null" >
+        #{storageId,jdbcType=CHAR},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=CHAR},
+      </if>
+      <if test="chestId != null" >
+        #{chestId,jdbcType=CHAR},
+      </if>
+      <if test="storeyId != null" >
+        #{storeyId,jdbcType=CHAR},
+      </if>
+      <if test="baseId != null" >
+        #{baseId,jdbcType=CHAR},
+      </if>
+      <if test="boxId != null" >
+        #{boxId,jdbcType=CHAR},
+      </if>
+      <if test="icMainType != null" >
+        #{icMainType,jdbcType=CHAR},
+      </if>
+      <if test="icSubType != null" >
+        #{icSubType,jdbcType=CHAR},
+      </if>
+      <if test="stationId != null" >
+        #{stationId,jdbcType=VARCHAR},
+      </if>
+      <if test="cardMoney != null" >
+        #{cardMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="sysAmount != null" >
+        #{sysAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="realAmount != null" >
+        #{realAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="lineId != null" >
+        #{lineId,jdbcType=VARCHAR},
+      </if>
+      <if test="produceDate != null" >
+        #{produceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exitLineId != null" >
+        #{exitLineId,jdbcType=VARCHAR},
+      </if>
+      <if test="exitStationId != null" >
+        #{exitStationId,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetail">
+    update W_ACC_TK.W_IC_CHK_STORAGE_DETAIL
+    <set>
+      <if test="waterNo != null">
+        WATER_NO = #{waterNo,jdbcType=DECIMAL},
+      </if>
+      <if test="boxId != null">
+        BOX_ID = #{boxId,jdbcType=CHAR},
+      </if>
+      <if test="sysAmount != null">
+        SYS_AMOUNT = #{sysAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="realAmount != null">
+        REAL_AMOUNT = #{realAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="cardMoney != null">
+        CARD_MONEY = #{cardMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="produceDate != null">
+        PRODUCE_DATE = #{produceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exitLineId != null">
+        EXIT_LINE_ID = #{exitLineId,jdbcType=CHAR},
+      </if>
+      <if test="exitStationId != null">
+        EXIT_STATION_ID = #{exitStationId,jdbcType=CHAR},
+      </if>
+      <if test="model != null">
+        MODEL = #{model,jdbcType=CHAR},
+      </if>
+    </set>
+    where CHECK_BILL_NO = #{checkBillNo,jdbcType=CHAR}
+      and WATER_NO = #{waterNo,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetail">
+    update W_IC_CHK_STORAGE_DETAIL
+    set WATER_NO = #{waterNo,jdbcType=DECIMAL},
+      BOX_ID = #{boxId,jdbcType=CHAR},
+      SYS_AMOUNT = #{sysAmount,jdbcType=DECIMAL},
+      REAL_AMOUNT = #{realAmount,jdbcType=DECIMAL},
+      CARD_MONEY = #{cardMoney,jdbcType=DECIMAL},
+      PRODUCE_DATE = #{produceDate,jdbcType=TIMESTAMP},
+      EXIT_LINE_ID = #{exitLineId,jdbcType=CHAR},
+      EXIT_STATION_ID = #{exitStationId,jdbcType=CHAR},
+      MODEL = #{model,jdbcType=CHAR}
+    where CHECK_BILL_NO = #{checkBillNo,jdbcType=CHAR}
+      and STORAGE_ID = #{storageId,jdbcType=CHAR}
+      and AREA_ID = #{areaId,jdbcType=CHAR}
+      and CHEST_ID = #{chestId,jdbcType=CHAR}
+      and STOREY_ID = #{storeyId,jdbcType=CHAR}
+      and BASE_ID = #{baseId,jdbcType=CHAR}
+      and IC_MAIN_TYPE = #{icMainType,jdbcType=CHAR}
+      and IC_SUB_TYPE = #{icSubType,jdbcType=CHAR}
+  </update>
+   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from W_ACC_TK.W_IC_CHK_STORAGE_DETAIL
+    where CHECK_BILL_NO = #{checkBillNo,jdbcType=CHAR}
+  </delete>
+</mapper>

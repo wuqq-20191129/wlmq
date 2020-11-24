@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.produce.mapper.TicketStorageProduceBillMapper">
+    
+    <resultMap type="com.goldsign.acc.app.produce.entity.TicketStorageProduceBill" id="rmProduceBill">
+        <result column="bill_no" property="bill_no" /> 
+        <result column="out_bill_no" property="out_bill_no" />
+        <result column="draw_total" property="draw_total" />
+        <result column="es_worktype_id" property="es_worktype_id" />
+        <result column="es_useless_num" property="es_useless_num" />
+        <result column="man_useless_num" property="man_useless_num" />
+        <result column="lost_num" property="lost_num" />
+        <result column="system_balance" property="system_balance" />
+        <result column="real_balance" property="real_balance" />
+        <result column="hand_man" property="hand_man" />
+        <result column="receive_man" property="receive_man" />
+        <result column="bill_date" property="bill_date" />
+        <result column="record_flag" property="record_flag" />
+        <result column="verify_date" property="verify_date" />
+        
+        <result column="verify_person" property="verify_person" />
+        <result column="remarks" property="remarks" />
+        <result column="in_flag" property="in_flag" />
+        <result column="es_operator" property="es_operator" />
+        <result column="diff_id" property="diff_id" />
+        
+        <result column="valid_num" property="valid_num" />
+    </resultMap>
+    
+    <parameterMap type="map" id="AuditProduceBillMap">  
+        <parameter property="pi_bill_no" jdbcType="VARCHAR" mode="IN"/>  
+        <parameter property="pi_operator" jdbcType="VARCHAR" mode="IN"/> 
+       
+        <parameter property="po_retCode" jdbcType="INTEGER" mode="OUT"/>  
+        <parameter property="po_retMsg" jdbcType="VARCHAR" mode="OUT"/> 
+    </parameterMap>
+    
+    <select id="getProduceBillList"  parameterType="com.goldsign.acc.app.produce.entity.TicketStorageProduceBill" resultMap="rmProduceBill">
+        select bill_no, out_bill_no, draw_total, real_balance, es_worktype_id, es_useless_num, man_useless_num,
+        lost_num, system_balance, real_balance, hand_man, receive_man, bill_date, record_flag, verify_date, verify_person,
+        remarks, es_operator, diff_id, 
+        (select sum(draw_quantity)  from w_acc_tk.w_ic_pdu_produce_bill_detail C where A.bill_no=C.bill_no) valid_num
+        from w_acc_tk.w_ic_pdu_produce_bill A 
+        where 1=1
+        <if test="bill_no !=null and bill_no !=''">
+            and bill_no like concat('%',concat(#{bill_no},'%'))
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag =#{record_flag}
+        </if>
+        <if test="bill_date_begin !=null and bill_date_begin !=''">
+            and bill_date &gt;= to_date(concat(#{bill_date_begin},' 00:00:00'),'yyyy-mm-dd  hh24:mi:ss')
+        </if>
+                
+        <if test="bill_date_end !=null and bill_date_end !=''">
+            and bill_date &lt;= to_date(concat(#{bill_date_end}, ' 23:59:59 '),'yyyy-mm-dd  hh24:mi:ss')
+        </if>
+        <if test="es_worktype_id !=null and es_worktype_id !=''">
+            and es_worktype_id =#{es_worktype_id}
+        </if>
+        order by record_flag desc,bill_no desc
+    </select> 
+    
+    
+    <!--生产工作单审核--> 
+    <select id="auditProduceBill" parameterMap="AuditProduceBillMap" statementType="CALLABLE">
+        {call w_acc_tk.W_UP_IC_PDU_AUDIT(?,?,?,?)}
+                                  
+    </select>
+    
+    <update id="modifyProduceBill" parameterType="com.goldsign.acc.app.produce.entity.TicketStorageProduceBill" >
+        update w_acc_tk.w_ic_pdu_produce_bill set man_useless_num=#{man_useless_num},
+        lost_num=#{lost_num},real_balance=#{real_balance},es_useless_num=#{es_useless_num},
+        diff_id=#{diff_id}
+        <if test="hand_man !=null and hand_man !=''">
+            ,hand_man =#{hand_man}
+        </if>
+        <if test="receive_man !=null and receive_man !=''">
+            ,receive_man =#{receive_man}
+        </if>
+        <if test="remarks !=null and remarks !=''">
+            ,remarks =#{remarks}
+        </if>
+        where bill_no=#{bill_no} and record_flag='3'
+        
+    </update>
+    
+    
+    
+    
+    <select id="getInOutDiffCount"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInBill" resultType="int">
+        select count(*) from w_acc_tk.w_ic_in_out_diff_produce where in_bill_no = #{bill_no}
+    </select>
+    
+    
+    
+    
+
+    
+    
+    
+</mapper>

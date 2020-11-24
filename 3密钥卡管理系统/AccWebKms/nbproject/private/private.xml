@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/src/com/goldsign/acc/frame/controller/BaseController.java</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/src/com/goldsign/acc/frame/entity/Version.xml</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/src/com/goldsign/acc/frame/constant/DBConstant.java</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/src/com/goldsign/acc/frame/mapper/PubFlagMapper.java</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/src/com/goldsign/acc/frame/entity/PubFlag.java</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/web/WEB-INF/web.xml</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/web/WEB-INF/dispatcher-servlet.xml</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/src/com/goldsign/acc/frame/controller/VersionController.java</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/src/com/goldsign/acc/frame/constant/WebConstant.java</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/src/com/goldsign/acc/frame/controller/LoginController.java</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/src/com/goldsign/acc/frame/constant/ConfigConstant.java</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/src/com/goldsign/acc/frame/constant/ParameterConstant.java</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/src/conf/mybatis-config.xml</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/web/META-INF/context.xml</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/src/com/goldsign/acc/app/password/controller/PasswordEdit.java</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/src/com/goldsign/acc/frame/mapper/OperationLogMapper.java</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/web/WEB-INF/applicationContext.xml</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/src/com/goldsign/acc/frame/constant/LogConstant.java</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/src/com/goldsign/acc/frame/constant/CommandConstant.java</file>
+            <file>file:/D:/en_work/netbeansproject/3乌市ACC/6密钥卡系统/AccWebKmsFrame/src/com/goldsign/acc/frame/entity/PubFlag.xml</file>
+        </group>
+    </open-files>
+</project-private>

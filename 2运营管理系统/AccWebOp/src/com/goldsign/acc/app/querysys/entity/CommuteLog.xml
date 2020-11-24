@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.CommuteLogMapper">
+    <resultMap type="CommuteLog" id="rmCommuteLog">
+        <result column="datetime_ftp" property="datetime_ftp" /> 
+        <result column="ip" property="ip" /> 
+        <result column="filename" property="filename" /> 
+        <result column="result" property="result" /> 
+    </resultMap>
+
+    
+     
+    <select id="getCommuteLogs"  parameterType="CommuteLog" resultMap="rmCommuteLog">
+        select datetime_ftp,ip,filename,result
+        from   W_ACC_CM.w_cm_log_ftp
+        where  1=1
+        <if test="beginDate !=null and beginDate !=''">
+            and datetime_ftp &gt;= to_date(#{beginDate}, 'yyyy-mm-dd hh24:mi:ss') 
+        </if> 
+        <if test="endDate !=null and endDate !=''">
+            and datetime_ftp &lt;= to_date(#{endDate}, 'yyyy-mm-dd hh24:mi:ss') 
+        </if>
+        order by datetime_ftp DESC
+    </select>
+</mapper>

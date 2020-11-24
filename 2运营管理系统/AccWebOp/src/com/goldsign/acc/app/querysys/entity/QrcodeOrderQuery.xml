@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.QrcodeOrderQueryMapper">
+    <resultMap id="BaseResultMap" type="com.goldsign.acc.app.querysys.entity.QrcodeOrderQuery">
+        <result column="WATER_NO" jdbcType="DECIMAL" property="waterNo" />
+        <result column="ORDER_NO" jdbcType="VARCHAR" property="orderNo" />
+        <result column="PHONE_NO" jdbcType="VARCHAR" property="phoneNo" />
+        <result column="STATUS" jdbcType="VARCHAR" property="status" />
+        <result column="TICKET_STATUS" jdbcType="VARCHAR" property="ticket_status" />
+        <result column="START_STATION" jdbcType="VARCHAR" property="start_station" />
+        <result column="END_STATTION" jdbcType="VARCHAR" property="end_station" />
+        <result column="DEAL_TIME" jdbcType="VARCHAR" property="deal_time" />
+        <result column="UPDATE_DATE" jdbcType="VARCHAR" property="update_date" />
+        <result column="INSERT_DATE" jdbcType="VARCHAR" property="insert_date" />
+        <result column="SALE_FEE" jdbcType="DECIMAL" property="sale_fee" />
+        <result column="DEAL_FEE" jdbcType="DECIMAL" property="deal_fee" />
+        <result column="SALE_TIMES" jdbcType="DECIMAL" property="sale_times" />
+        <result column="SALE_FEE_TOTAL" jdbcType="DECIMAL" property="sale_fee_total" />
+        <result column="DEAL_FEE_TOTAL" jdbcType="DECIMAL" property="deal_fee_total" />
+        <result column="SALE_TIMES_TOTAL" jdbcType="DECIMAL" property="sale_times_total" />
+        <result column="QRCODE" jdbcType="VARCHAR" property="qrcode" />
+        <result column="VALID_TIME" jdbcType="VARCHAR" property="valid_time" />
+        <result column="TKCODE" jdbcType="VARCHAR" property="tkcode" />
+        <result column="LOCK_DEV" jdbcType="VARCHAR" property="lock_dev" />
+        <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+        <result column="MODIFY_OPERATE" property="modify_operate" /> 
+        <result column="AUDIT_OPERATE" property="audit_operate" />  
+    </resultMap>
+    
+    <resultMap id="CodeMap" type="com.goldsign.acc.app.querysys.entity.CodePubFlag">
+        <id column="CODE" jdbcType="VARCHAR" property="code" />
+        <result column="CODE_TEXT" jdbcType="VARCHAR" property="codeText" />
+    </resultMap>
+    
+    <select id = "getStation"  resultMap="CodeMap">
+        select  line_id||station_id  as code ,chinese_name as codetext from w_acc_st.w_op_prm_station where record_flag='0'
+    </select>
+    
+    <select id = "getdate"  parameterType="com.goldsign.acc.app.querysys.entity.QrcodeOrderQuery" resultType="int">
+       select count(1) from w_acc_ol.w_ol_buf_qrcode_order where ORDER_NO =#{orderNo}
+    </select>
+    <select id="getQrcodeOrder" parameterType="com.goldsign.acc.app.querysys.entity.QrcodeOrderQuery" resultMap="BaseResultMap">
+        SELECT * FROM 
+        (
+        SELECT * FROM w_acc_ol.w_ol_buf_qrcode_order a
+        UNION ALL 
+        SELECT * FROM w_acc_ol.w_ol_qrcode_order b
+        )e
+          
+        <where>
+            <if test="orderNo !=null and orderNo !=''">
+                ORDER_NO =#{orderNo}
+            </if>
+            <if test="beginDatetime != null and beginDatetime !=''" >  
+                and INSERT_DATE &gt;= to_date(#{beginDatetime},'yyyy-mm-dd hh24:mi:ss')
+            </if> 
+            <if test="endDatetime != null and endDatetime !=''" >  
+                and INSERT_DATE  &lt;= to_date(#{endDatetime},'yyyy-mm-dd hh24:mi:ss')
+            </if> 
+            <if test="status != null and status !=''" >  
+                and STATUS =#{status}
+            </if> 
+            <if test="ticket_status != null and ticket_status !=''" >  
+                and TICKET_STATUS = #{ticket_status}
+            </if> 
+        </where>
+        order by WATER_NO desc
+        
+    </select>
+    <select id="getQrcodeOrderadd" parameterType="com.goldsign.acc.app.querysys.entity.QrcodeOrderQuery" resultMap="BaseResultMap">
+        select water_no,order_no,phone_no,sale_fee,sale_times,deal_fee,status,update_date,insert_date,start_station,end_station,sale_fee_total,
+        deal_fee_total,SALE_TIMES_TOTAL,ticket_status,qrcode,valid_time,tkcode,lock_dev,deal_time,remark 
+        from w_acc_ol.w_ol_buf_qrcode_order
+        <where>
+            <if test="orderNo !=null and orderNo !=''">
+                ORDER_NO =#{orderNo}
+            </if>
+            <if test="beginDatetime != null and beginDatetime !=''" >  
+                and INSERT_DATE &gt;= to_date(#{beginDatetime},'yyyy-mm-dd hh24:mi:ss')
+            </if> 
+            <if test="endDatetime != null and endDatetime !=''" >  
+                and INSERT_DATE  &lt;= to_date(#{endDatetime},'yyyy-mm-dd hh24:mi:ss')
+            </if> 
+            <if test="status != null and status !=''" >  
+                and STATUS =#{status}
+            </if> 
+            <if test="ticket_status != null and ticket_status !=''" >  
+                and TICKET_STATUS = #{ticket_status}
+            </if> 
+        </where>
+        order by WATER_NO
+    </select>
+    
+    <update id="modifyQrcodOrder" parameterType="com.goldsign.acc.app.querysys.entity.QrcodeOrderQuery" >
+        
+        update w_acc_ol.w_ol_qrcode_order 
+        set  remark   = #{remark}
+        where order_no = #{orderNo}
+                                                
+    </update>
+    
+    <update id="auditQrcodOrderForY" parameterType="com.goldsign.acc.app.querysys.entity.QrcodeOrderQuery" >
+        
+        update w_acc_ol.w_ol_qrcode_order 
+        set  sale_fee = sale_fee_total,
+        sale_times = sale_times_total,
+        deal_fee = deal_fee_total,   
+        update_date = sysdate,
+        ticket_status = '81',
+        deal_time     = to_char(sysdate, 'yyyymmddhh24miss'),
+        remark          = #{remark}
+        where order_no = #{orderNo}
+                                                
+    </update>
+    
+    <update id="auditQrcodOrderForNo" parameterType="com.goldsign.acc.app.querysys.entity.QrcodeOrderQuery" >
+        
+        update w_acc_ol.w_ol_qrcode_order 
+        set     
+        update_date   = sysdate,
+        ticket_status = '00',
+        deal_time     = to_char(sysdate, 'yyyymmddhh24miss'),
+        remark          = #{remark}
+        where order_no = #{orderNo}
+                                                
+    </update>
+    
+    
+    <insert id="insertModifyOpe" parameterType="com.goldsign.acc.app.querysys.entity.QrcodeOrderQuery">
+        insert into W_ACC_ST.W_OP_LOG_QR_OL
+        (order_no,modify_operate,audit_operate,operate_time,lock_dev,module_flag,remark)
+        values(#{orderNo},#{modify_operate},#{audit_operate},sysdate,#{lock_dev},'2',#{remark})
+    </insert>
+</mapper>

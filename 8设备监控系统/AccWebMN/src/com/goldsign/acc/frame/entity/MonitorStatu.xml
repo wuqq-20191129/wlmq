@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldsign.acc.frame.mapper.MonitorStatuMapper">
+
+    <select id="getMenuStatus"  resultType="map">
+        select t.* from w_acc_mn.w_mtr_monitor_statu  t order by t.module_id
+    </select>
+    <select id="updateMenuStatus" statementType="CALLABLE" parameterType="java.util.Map"  >
+        {call W_ACC_MN.W_UP_MTR_UPDATE_MENU_STATUS (
+        #{p_class,mode=IN,jdbcType=VARCHAR},
+        #{p_out,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select >
+</mapper>

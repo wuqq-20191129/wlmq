@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.opma.mapper.SysGroupMapper" >
+    <resultMap id="BaseResultMap" type="com.goldsign.acc.app.opma.entity.SysGroup" >
+        <constructor >
+            <idArg column="SYS_GROUP_ID" jdbcType="CHAR" javaType="java.lang.String" />
+            <arg column="SYS_GROUP_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="SYS_STORAGE_ID" jdbcType="CHAR" javaType="java.lang.String" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List" >
+        SYS_GROUP_ID, SYS_GROUP_NAME, SYS_STORAGE_ID
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from w_acc_st.W_OP_SYS_GROUP
+        where SYS_GROUP_ID = #{sysGroupId,jdbcType=CHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from w_acc_st.W_OP_SYS_GROUP
+        where SYS_GROUP_ID = #{sysGroupId,jdbcType=CHAR}
+    </delete>
+    <insert id="insert" parameterType="com.goldsign.acc.app.opma.entity.SysGroup" >
+        insert into w_acc_st.W_OP_SYS_GROUP (SYS_GROUP_ID, SYS_GROUP_NAME, SYS_STORAGE_ID
+        )
+        values (#{sysGroupId,jdbcType=CHAR}, #{sysGroupName,jdbcType=VARCHAR}, #{sysStorageId,jdbcType=CHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.goldsign.acc.app.opma.entity.SysGroup" >
+        insert into w_acc_st.W_OP_SYS_GROUP
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="sysGroupId != null" >
+                SYS_GROUP_ID,
+            </if>
+            <if test="sysGroupName != null" >
+                SYS_GROUP_NAME,
+            </if>
+            <if test="sysStorageId != null" >
+                SYS_STORAGE_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="sysGroupId != null" >
+                #{sysGroupId,jdbcType=CHAR},
+            </if>
+            <if test="sysGroupName != null" >
+                #{sysGroupName,jdbcType=VARCHAR},
+            </if>
+            <if test="sysStorageId != null" >
+                #{sysStorageId,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.goldsign.acc.app.opma.entity.SysGroup" >
+        update w_acc_st.W_OP_SYS_GROUP
+        <set >
+            <if test="sysGroupName != null" >
+                SYS_GROUP_NAME = #{sysGroupName,jdbcType=VARCHAR},
+            </if>
+            <if test="sysStorageId != null" >
+                SYS_STORAGE_ID = #{sysStorageId,jdbcType=CHAR},
+            </if>
+        </set>
+        where trim(SYS_GROUP_ID) = #{sysGroupId,jdbcType=CHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.goldsign.acc.app.opma.entity.SysGroup" >
+        update w_acc_st.W_OP_SYS_GROUP
+        set SYS_GROUP_NAME = #{sysGroupName,jdbcType=VARCHAR},
+        SYS_STORAGE_ID = #{sysStorageId,jdbcType=CHAR}
+        where SYS_GROUP_ID = #{sysGroupId,jdbcType=CHAR}
+    </update>
+    <select id="find" parameterType="map" resultMap="BaseResultMap">      
+        select a1.* from (select a.*,rownum rn from w_acc_st.W_OP_SYS_GROUP a order by SYS_GROUP_ID asc) a1
+        where a1.rn between #{pageOffset} and #{pageSize}      
+    </select>
+    <select id="getAll" parameterType="map" resultMap="BaseResultMap">      
+        select SYS_GROUP_ID , SYS_GROUP_NAME , SYS_STORAGE_ID from w_acc_st.W_OP_SYS_GROUP         
+        order by SYS_GROUP_ID  
+    </select>
+    
+     <select id="querySysGroup" parameterType="com.goldsign.acc.app.opma.entity.SysGroup" resultMap="BaseResultMap">      
+        select SYS_GROUP_ID , SYS_GROUP_NAME , SYS_STORAGE_ID from w_acc_st.W_OP_SYS_GROUP   
+        <where> 
+            <if test="sysGroupId !=null and sysGroupId !=''">
+                SYS_GROUP_ID =#{sysGroupId} 
+            </if> 
+            <if test="sysGroupName !=null and sysGroupName !=''">
+                and SYS_GROUP_NAME like concat(concat('%',#{sysGroupName}),'%')
+            </if>
+            <if test="sysStorageId !=null and sysStorageId !=''">
+                and SYS_STORAGE_ID = #{sysStorageId}
+            </if>
+        </where>
+        order by SYS_GROUP_ID  
+    </select>
+    
+    <select id="getMax" parameterType="map" resultType="int">      
+        select max(to_number(SYS_GROUP_ID)) + 1  from w_acc_st.W_OP_SYS_GROUP
+    </select>
+    <select id="count" parameterType="com.goldsign.acc.app.opma.entity.SysGroup" resultType="int">
+        select count(*) from w_acc_st.W_OP_SYS_GROUP 
+        <trim prefix="where " suffixOverrides=" and " >
+            <if test="sysGroupName != null" >
+                SYS_GROUP_NAME = #{sysGroupName,jdbcType=CHAR} and
+            </if>
+           
+        </trim>
+                      
+    </select>
+</mapper>

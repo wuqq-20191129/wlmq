@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.move.mapper.TicketStorageTicketMoveMapper" >
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.move.entity.TicketStorageTicketMove" >
+    <constructor >
+      <arg column="BILL_NO" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="FORM_MAKER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="BILL_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="RECORD_FLAG" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="VERIFY_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="VERIFY_PERSON" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="DISTRIBUTE_MAN" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="RECEIVE_UNIT" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="RECEIVE_MAN" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="REMARK" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="IC_MAIN_TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="IC_SUB_TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CARD_MONEY" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="OUT_STORAGE_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="OUT_AREA_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IN_STORAGE_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IN_AREA_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="QUANTITY" jdbcType="DECIMAL" javaType="java.lang.Integer" />
+      <arg column="START_LOGICAL_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="END_LOGICAL_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="START_BOX_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="END_BOX_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="OUT_BILL_NO" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IN_BILL_NO" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="VALID_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+    <select id="qryTktMove" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    *
+    from w_acc_tk.W_IC_OUT_TICKET_MOVE    
+    <trim prefix="where (" suffix=")" suffixOverrides=" and ">
+         <if test="billNo != null">
+            BILL_NO = #{billNo,jdbcType=CHAR} and
+        </if>
+        <if test="formMaker != null">
+            FORM_MAKER = #{formMaker,jdbcType=VARCHAR} and
+        </if>
+        <if test="startBillDate != null">
+             BILL_DATE &gt;= to_date(concat(#{startBillDate},' 00:00:00'),'yyyy-mm-dd  hh24:mi:ss') and
+        </if>
+        <if test="endBillDate != null">
+            BILL_DATE &lt;= to_date(concat(#{endBillDate}, ' 23:59:59 '),'yyyy-mm-dd  hh24:mi:ss') and
+            
+        </if>
+        <if test="icMainType != null">
+            IC_MAIN_TYPE = #{icMainType,jdbcType=VARCHAR} and
+        </if>
+        <if test="icSubType != null"> 
+            IC_SUB_TYPE = #{icSubType,jdbcType=VARCHAR} and
+        </if>
+        <if test="outStorageId != null">
+            OUT_STORAGE_ID = #{outStorageId,jdbcType=VARCHAR} and
+        </if>
+         <if test="inStorageId != null">
+            IN_STORAGE_ID = #{inStorageId,jdbcType=VARCHAR} and
+        </if>
+          <if test="recordFlag != null">
+            RECORD_FLAG = #{recordFlag,jdbcType=CHAR} and
+        </if>
+        
+    </trim>  
+    order by bill_no desc
+  
+     
+  </select>
+  <insert id="insert" parameterType="com.goldsign.acc.app.move.entity.TicketStorageTicketMove" >
+    insert into w_acc_tk.W_IC_OUT_TICKET_MOVE (BILL_NO, FORM_MAKER, BILL_DATE, 
+      RECORD_FLAG, VERIFY_DATE, VERIFY_PERSON, 
+      DISTRIBUTE_MAN, RECEIVE_UNIT, RECEIVE_MAN, 
+      REMARK, IC_MAIN_TYPE, IC_SUB_TYPE, 
+      CARD_MONEY, OUT_STORAGE_ID, OUT_AREA_ID, 
+      IN_STORAGE_ID, IN_AREA_ID, QUANTITY, 
+      START_LOGICAL_ID, END_LOGICAL_ID, START_BOX_ID, 
+      END_BOX_ID, OUT_BILL_NO, IN_BILL_NO, 
+      VALID_DATE)
+    values (#{billNo,jdbcType=CHAR}, #{formMaker,jdbcType=VARCHAR}, #{billDate,jdbcType=TIMESTAMP}, 
+      #{recordFlag,jdbcType=CHAR}, #{verifyDate,jdbcType=TIMESTAMP}, #{verifyPerson,jdbcType=VARCHAR}, 
+      #{distributeMan,jdbcType=VARCHAR}, #{receiveUnit,jdbcType=VARCHAR}, #{receiveMan,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{icMainType,jdbcType=VARCHAR}, #{icSubType,jdbcType=VARCHAR}, 
+      #{cardMoney,jdbcType=DECIMAL}, #{outStorageId,jdbcType=CHAR}, #{outAreaId,jdbcType=CHAR}, 
+      #{inStorageId,jdbcType=CHAR}, #{inAreaId,jdbcType=CHAR}, #{quantity,jdbcType=DECIMAL}, 
+      #{startLogicalId,jdbcType=VARCHAR}, #{endLogicalId,jdbcType=VARCHAR}, #{startBoxId,jdbcType=VARCHAR}, 
+      #{endBoxId,jdbcType=VARCHAR}, #{outBillNo,jdbcType=CHAR}, #{inBillNo,jdbcType=CHAR}, 
+      #{validDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.move.entity.TicketStorageTicketMove" >
+    insert into w_acc_tk.W_IC_OUT_TICKET_MOVE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="billNo != null" >
+        BILL_NO,
+      </if>
+      <if test="formMaker != null" >
+        FORM_MAKER,
+      </if>
+      <if test="strBillDate != null" >
+        BILL_DATE,
+      </if>
+      <if test="recordFlag != null" >
+        RECORD_FLAG,
+      </if>
+      <if test="strVerifyDate != null" >
+        VERIFY_DATE,
+      </if>
+      <if test="verifyPerson != null" >
+        VERIFY_PERSON,
+      </if>
+      <if test="distributeMan != null" >
+        DISTRIBUTE_MAN,
+      </if>
+      <if test="receiveUnit != null" >
+        RECEIVE_UNIT,
+      </if>
+      <if test="receiveMan != null" >
+        RECEIVE_MAN,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="icMainType != null" >
+        IC_MAIN_TYPE,
+      </if>
+      <if test="icSubType != null" >
+        IC_SUB_TYPE,
+      </if>
+      <if test="cardMoney != null" >
+        CARD_MONEY,
+      </if>
+      <if test="outStorageId != null" >
+        OUT_STORAGE_ID,
+      </if>
+      <if test="outAreaId != null" >
+        OUT_AREA_ID,
+      </if>
+      <if test="inStorageId != null" >
+        IN_STORAGE_ID,
+      </if>
+      <if test="inAreaId != null" >
+        IN_AREA_ID,
+      </if>
+      <if test="quantity != null" >
+        QUANTITY,
+      </if>
+      <if test="startLogicalId != null" >
+        START_LOGICAL_ID,
+      </if>
+      <if test="endLogicalId != null" >
+        END_LOGICAL_ID,
+      </if>
+      <if test="startBoxId != null" >
+        START_BOX_ID,
+      </if>
+      <if test="endBoxId != null" >
+        END_BOX_ID,
+      </if>
+      <if test="outBillNo != null" >
+        OUT_BILL_NO,
+      </if>
+      <if test="inBillNo != null" >
+        IN_BILL_NO,
+      </if>
+      <if test="strValidDate != null" >
+        VALID_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="billNo != null" >
+        #{billNo,jdbcType=CHAR},
+      </if>
+      <if test="formMaker != null" >
+        #{formMaker,jdbcType=VARCHAR},
+      </if>
+      <if test="strBillDate != null" >
+          to_date(#{strBillDate},'yyyy-mm-dd'),
+       
+      </if>
+      <if test="recordFlag != null" >
+        #{recordFlag,jdbcType=CHAR},
+      </if>
+      <if test="strVerifyDate != null" >
+           to_date(#{strVerifyDate},'yyyy-mm-dd'),
+       
+      </if>
+      <if test="verifyPerson != null" >
+        #{verifyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="distributeMan != null" >
+        #{distributeMan,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUnit != null" >
+        #{receiveUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveMan != null" >
+        #{receiveMan,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="icMainType != null" >
+        #{icMainType,jdbcType=VARCHAR},
+      </if>
+      <if test="icSubType != null" >
+        #{icSubType,jdbcType=VARCHAR},
+      </if>
+      <if test="cardMoney != null" >
+        #{cardMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="outStorageId != null" >
+        #{outStorageId,jdbcType=CHAR},
+      </if>
+      <if test="outAreaId != null" >
+        #{outAreaId,jdbcType=CHAR},
+      </if>
+      <if test="inStorageId != null" >
+        #{inStorageId,jdbcType=CHAR},
+      </if>
+      <if test="inAreaId != null" >
+        #{inAreaId,jdbcType=CHAR},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=DECIMAL},
+      </if>
+      <if test="startLogicalId != null" >
+        #{startLogicalId,jdbcType=VARCHAR},
+      </if>
+      <if test="endLogicalId != null" >
+        #{endLogicalId,jdbcType=VARCHAR},
+      </if>
+      <if test="startBoxId != null" >
+        #{startBoxId,jdbcType=VARCHAR},
+      </if>
+      <if test="endBoxId != null" >
+        #{endBoxId,jdbcType=VARCHAR},
+      </if>
+      <if test="outBillNo != null" >
+        #{outBillNo,jdbcType=CHAR},
+      </if>
+      <if test="inBillNo != null" >
+        #{inBillNo,jdbcType=CHAR},
+      </if>
+      <if test="strValidDate != null" >
+           to_date(#{strValidDate},'yyyy-mm-dd'),
+       
+      </if>
+    </trim>
+  </insert>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from w_acc_tk.W_IC_OUT_TICKET_MOVE
+    where BILL_NO = #{billNo,jdbcType=CHAR}
+  </delete>
+  <update id="modify" parameterType="com.goldsign.acc.app.move.entity.TicketStorageTicketMove" >
+    update w_acc_tk.W_IC_OUT_TICKET_MOVE
+    <set >
+      <if test="formMaker != null" >
+        FORM_MAKER = #{formMaker,jdbcType=VARCHAR},
+      </if>
+      <if test="strBillDate != null" >
+          BILL_DATE = to_date(#{strBillDate},'yyyy-mm-dd'),
+       
+      </if>
+      <if test="recordFlag != null" >
+       RECORD_FLAG =  #{recordFlag,jdbcType=CHAR},
+      </if>
+      <if test="strVerifyDate != null" >
+         VERIFY_DATE = to_date(#{strVerifyDate},'yyyy-mm-dd'),
+       
+      </if>
+      <if test="verifyPerson != null" >
+        VERIFY_PERSON = #{verifyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="distributeMan != null" >
+        DISTRIBUTE_MAN = #{distributeMan,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUnit != null" >
+        RECEIVE_UNIT = #{receiveUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveMan != null" >
+        RECEIVE_MAN = #{receiveMan,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="icMainType != null" >
+        IC_MAIN_TYPE = #{icMainType,jdbcType=VARCHAR},
+      </if>
+      <if test="icSubType != null" >
+        IC_SUB_TYPE = #{icSubType,jdbcType=VARCHAR},
+      </if>
+      <if test="cardMoney != null" >
+        CARD_MONEY = #{cardMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="outStorageId != null" >
+        OUT_STORAGE_ID = #{outStorageId,jdbcType=CHAR},
+      </if>
+      <if test="outAreaId != null" >
+        OUT_AREA_ID = #{outAreaId,jdbcType=CHAR},
+      </if>
+      <if test="inStorageId != null" >
+        IN_STORAGE_ID = #{inStorageId,jdbcType=CHAR},
+      </if>
+      <if test="inAreaId != null" >
+        IN_AREA_ID = #{inAreaId,jdbcType=CHAR},
+      </if>
+      <if test="quantity != null" >
+        QUANTITY = #{quantity,jdbcType=DECIMAL},
+      </if>
+      <if test="startLogicalId != null" >
+        START_LOGICAL_ID = #{startLogicalId,jdbcType=VARCHAR},
+      </if>
+      <if test="endLogicalId != null" >
+        END_LOGICAL_ID = #{endLogicalId,jdbcType=VARCHAR},
+      </if>
+      <if test="startBoxId != null" >
+        START_BOX_ID = #{startBoxId,jdbcType=VARCHAR},
+      </if>
+      <if test="endBoxId != null" >
+        END_BOX_ID = #{endBoxId,jdbcType=VARCHAR},
+      </if>
+      <if test="outBillNo != null" >
+        OUT_BILL_NO = #{outBillNo,jdbcType=CHAR},
+      </if>
+      <if test="inBillNo != null" >
+        IN_BILL_NO = #{inBillNo,jdbcType=CHAR},
+      </if>
+      <if test="strValidDate != null" >
+         VALID_DATE= to_date(#{strValidDate},'yyyy-mm-dd'),
+       
+      </if>
+      <if test="normalBillNo != null" >
+        BILL_NO = #{normalBillNo,jdbcType=CHAR},
+      </if>
+    </set>
+    where BILL_NO = #{billNo,jdbcType=CHAR}
+  </update>
+  
+    <parameterMap type="map" id="MapStorageMoveAudit">  
+        <parameter property="pi_billNoTmp" jdbcType="VARCHAR" mode="IN"/>  
+        <parameter property="pi_operator_id" jdbcType="VARCHAR" mode="IN"/>      
+        <parameter property="po_billNoNormal" jdbcType="VARCHAR" mode="OUT"/> 
+        <parameter property="po_retCode" jdbcType="INTEGER" mode="OUT"/>  
+        <parameter property="po_retMsg" jdbcType="VARCHAR" mode="OUT"/> 
+    </parameterMap> 
+    
+    <select id="auditStorageMove"  parameterMap="MapStorageMoveAudit" statementType="CALLABLE">
+        {call W_ACC_TK.W_UP_IC_MOVE_STORAGE_AUDIT(?,?,?,?,?)}
+    </select>
+ 
+</mapper>

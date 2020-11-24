@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.SignCardReturnQueryMapper">
+	<resultMap id="BaseResultMap"
+		type="com.goldsign.acc.app.querysys.entity.SignCardReturnQuery">
+		<id column="WATER_NO" jdbcType="INTEGER" property="waterNo" />
+		<result column="LINE_ID" jdbcType="CHAR" property="lineId" />
+		<result column="STATION_ID" jdbcType="CHAR" property="stationId" />
+		<result column="DEV_TYPE_ID" jdbcType="CHAR" property="devTypeId" />
+		<result column="DEVICE_ID" jdbcType="CHAR" property="deviceId" />
+		<result column="CARD_MAIN_ID" jdbcType="CHAR" property="cardMainId" />
+		<result column="CARD_SUB_ID" jdbcType="CHAR" property="cardSubId" />
+		<result column="CARD_LOGICAL_ID" jdbcType="VARCHAR" property="cardLogicalId" />
+		<result column="CARD_PHYSICAL_ID" jdbcType="VARCHAR" property="cardPhysicalId" />
+		<result column="CARD_PRINT_ID" jdbcType="VARCHAR" property="cardPrintId" />
+		<result column="APPLY_DATETIME" jdbcType="VARCHAR" property="applyDatetime" />
+		<result column="BUSINESS_RECEIPT_ID" jdbcType="CHAR"
+			property="businessReceiptId" />
+		<result column="OPERATOR_ID" jdbcType="CHAR" property="operatorId" />
+		<result column="APPLY_NAME" jdbcType="CHAR" property="applyName" />
+		<result column="TEL_NO" jdbcType="VARCHAR" property="telNo" />
+		<result column="IDENTITY_TYPE" jdbcType="CHAR" property="identityType" />
+		<result column="IDENTITY_ID" jdbcType="VARCHAR" property="identityId" />
+		<result column="IS_BROKEN" jdbcType="CHAR" property="isBroken" />
+		<result column="SHIFT_ID" jdbcType="CHAR" property="shiftId" />
+		<result column="CARD_APP_FLAG" jdbcType="CHAR" property="cardAppFlag" />
+		<result column="BALANCE_WATER_NO" jdbcType="CHAR" property="balanceWaterNo" />
+		<result column="HDL_FLAG" jdbcType="CHAR" property="hdlFlag" />
+		<result column="DEPOSIT_FEE" jdbcType="DECIMAL" property="depositFee" />
+		<result column="CARD_BALANCE_FEE" jdbcType="DECIMAL" property="cardBalanceFee" />
+		<result column="SYSTEM_BALANCE_FEE" jdbcType="DECIMAL"
+			property="systemBalanceFee" />
+		<result column="PENALTY_FEE" jdbcType="DECIMAL" property="penaltyFee" />
+		<result column="RETURN_BALA" jdbcType="DECIMAL" property="returnBala" />
+		<result column="REMARK" jdbcType="VARCHAR" property="remark" />
+		<result column="RETURN_LINE_ID" jdbcType="CHAR" property="returnLineId" />
+		<result column="RETURN_STATION_ID" jdbcType="CHAR" property="returnStationId" />
+		<result column="RETURN_DEV_TYPE_ID" jdbcType="CHAR" property="returnDevTypeId" />
+		<result column="RETURN_DEVICE_ID" jdbcType="CHAR" property="returnDeviceId" />
+		<result column="ACTUAL_RETURN_BALA" jdbcType="DECIMAL"
+			property="actualReturnBala" />
+		<result column="AUDIT_FLAG" jdbcType="CHAR" property="auditFlag" />
+		<result column="PENALTY_REASON" jdbcType="CHAR" property="penaltyReason" />
+		<result column="RETURN_TYPE" jdbcType="CHAR" property="returnType" />
+		<result column="NON_HANDLE_FLAG" jdbcType="CHAR" property="nonHandleFlag" />
+		<result column="DISPLAY_FLAG" jdbcType="CHAR" property="displayFlag" />
+	</resultMap>
+	<resultMap id="IdTypeMap"
+		type="com.goldsign.acc.app.querysys.entity.CodePubFlag">
+		<id column="CODE" jdbcType="VARCHAR" property="code" />
+		<result column="CODE_TEXT" jdbcType="VARCHAR" property="codeText" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		WATER_NO, LINE_ID, STATION_ID, DEV_TYPE_ID, DEVICE_ID,
+		CARD_MAIN_ID,
+		CARD_SUB_ID,
+		CARD_LOGICAL_ID, CARD_PHYSICAL_ID,
+		CARD_PRINT_ID, to_char(APPLY_DATETIME,'YYYY-MM-DD
+		HH24:MI:SS') as
+		APPLY_DATETIME, BUSINESS_RECEIPT_ID, OPERATOR_ID,
+		APPLY_NAME, TEL_NO,
+		IDENTITY_TYPE, IDENTITY_ID, IS_BROKEN, SHIFT_ID,
+		CARD_APP_FLAG,
+		BALANCE_WATER_NO, HDL_FLAG, DEPOSIT_FEE, CARD_BALANCE_FEE,
+		SYSTEM_BALANCE_FEE,
+		PENALTY_FEE,
+		RETURN_BALA, A.REMARK, RETURN_LINE_ID,
+		RETURN_STATION_ID, RETURN_DEV_TYPE_ID,
+		RETURN_DEVICE_ID,
+		ACTUAL_RETURN_BALA, AUDIT_FLAG, PENALTY_REASON, RETURN_TYPE,CASE WHEN
+		(TO_DATE(SYSDATE)>TO_DATE(APPLY_DATETIME+TO_NUMBER(CFG_VALUE)) and
+		HDL_FLAG = '2') THEN '1'
+		WHEN (HDL_FLAG in('1','3','4') and (AUDIT_FLAG is null or AUDIT_FLAG ='0')) THEN '2'
+		ELSE '0' END NON_HANDLE_FLAG,case when (RETURN_LINE_ID is not null and RETURN_STATION_ID is not null ) then '1' else '0' end DISPLAY_FLAG
+	</sql>
+	<select id="getSignCardReturnQuery" parameterType="SignCardReturnQuery"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from w_acc_st.W_ST_LIST_NON_RTN A,W_ACC_ST.W_ST_CFG_SYS_BASE
+		where
+		cfg_key ='sys.non_return_day' and record_flag = '0'
+		<if test="cardLogicalId != null">
+			and CARD_LOGICAL_ID like '%${cardLogicalId}%'
+		</if>
+		<if test="cardMainId != null">
+			and CARD_MAIN_ID = #{cardMainId,jdbcType=CHAR}
+		</if>
+		<if test="cardSubId != null">
+			and CARD_SUB_ID = #{cardSubId,jdbcType=CHAR}
+		</if>
+		<if test="businessReceiptId != null">
+			and BUSINESS_RECEIPT_ID like '%${businessReceiptId}%'
+		</if>
+		<if test="returnLineId != null">
+			and RETURN_LINE_ID = #{returnLineId,jdbcType=CHAR}
+		</if>
+		<if test="returnStationId != null">
+			and RETURN_STATION_ID = #{returnStationId,jdbcType=CHAR}
+		</if>
+		<if test="identityType != null">
+			and IDENTITY_TYPE = #{identityType}
+		</if>
+		<if test="identityId != null">
+			and IDENTITY_ID like '%${identityId}%'
+		</if>
+		<if test="beginDatetime != null">
+			and APPLY_DATETIME &gt;=
+			to_date(#{beginDatetime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+		</if>
+		<if test="endDatetime != null">
+			and APPLY_DATETIME &lt;=
+			to_date(#{endDatetime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+		</if>
+		<if test="hdlFlag != null">
+			and HDL_FLAG = #{hdlFlag,jdbcType=CHAR}
+		</if>
+		<if test="returnBala != null">
+			<if test="operator !=null">
+				<if test="operator ==  &quot;1&quot;">
+					and RETURN_BALA
+					&gt;to_number(#{returnBala,jdbcType=VARCHAR})
+				</if>
+				<if test="operator ==  &quot;2&quot;">
+					and RETURN_BALA
+					&gt;=to_number(#{returnBala,jdbcType=VARCHAR})
+				</if>
+				<if test="operator ==  &quot;3&quot;">
+					and return_bala =
+					to_number(#{returnBala,jdbcType=VARCHAR})
+				</if>
+				<if test="operator ==  &quot;4&quot;">
+					and RETURN_BALA &lt;=
+					to_number(#{returnBala,jdbcType=VARCHAR})
+				</if>
+				<if test="operator ==  &quot;5&quot;">
+					and RETURN_BALA &lt;
+					to_number(#{returnBala,jdbcType=VARCHAR})
+				</if>
+			</if>
+		</if>
+		and return_type = '4'
+	</select>
+
+	<select id="getIdTypes" resultMap="IdTypeMap">
+		select code,code_text from
+		W_ACC_TK.W_IC_ET_PUB_FLAG where type='1' order by code
+	</select>
+
+</mapper>

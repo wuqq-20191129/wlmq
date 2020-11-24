@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.DealAssignContcMapper">
+    <resultMap type="DealAssignContc" id="rmDealAssignContc">
+        
+        <result column="version_no" property="version_no" /> 
+        <result column="record_flag" property="record_flag" /> 
+        <result column="b_line_id" property="b_line_id" /> 
+        <result column="b_station_id" property="b_station_id" /> 
+        <result column="e_line_id" property="e_line_id" /> 
+        <result column="e_station_id" property="e_station_id" /> 
+        <result column="contc_id" property="contc_id" /> 
+        <result column="in_percent" property="in_percent" />
+        <result column="linestation" property="linestation" />
+        <result column="line_id" property="line_id" /> 
+    </resultMap>
+
+    
+     
+    <select id="getDealAssignContc"  parameterType="DealAssignContc" resultMap="rmDealAssignContc">
+        select version_no,record_flag,b_line_id,b_station_id,e_line_id,
+               e_station_id,contc_id,in_percent 
+        from   w_acc_st.w_op_prm_deal_assign_contc
+        where  record_flag=#{record_flag} and version_no=#{version_no}  
+        <if test="b_line_id !=null and b_line_id !=''">
+            and b_line_id =#{b_line_id} 
+        </if> 
+        <if test="b_station_id !=null and b_station_id !=''">
+            and b_station_id =#{b_station_id} 
+        </if>
+        <if test="e_line_id !=null and e_line_id !=''">
+            and e_line_id =#{e_line_id} 
+        </if>
+        <if test="e_station_id !=null and e_station_id !=''">
+            and e_station_id =#{e_station_id} 
+        </if>
+        <if test="contc_id !=null and contc_id !=''">
+            and contc_id =#{contc_id} 
+        </if>
+        order by b_line_id,b_station_id,e_line_id,e_station_id,contc_id
+    </select>
+    
+    <select id="getDealAssignContcById"  parameterType="DealAssignContc" resultMap="rmDealAssignContc">
+       select version_no,record_flag,b_line_id,b_station_id,e_line_id,
+               e_station_id,contc_id,in_percent 
+        from   w_acc_st.w_op_prm_deal_assign_contc
+        where  record_flag=#{record_flag} and version_no=#{version_no} 
+               and b_line_id =#{b_line_id} and b_station_id =#{b_station_id} and e_line_id =#{e_line_id}
+        and e_station_id =#{e_station_id} and contc_id =#{contc_id}
+    </select>
+    
+    <insert id="addDealAssignContc" parameterType="DealAssignContc" >
+        insert into w_acc_st.w_op_prm_deal_assign_contc(
+                    version_no,record_flag,b_line_id,b_station_id,e_line_id,
+               e_station_id,contc_id,in_percent)
+        values      (#{version_no},#{record_flag},#{b_line_id},#{b_station_id},
+                    #{e_line_id},#{e_station_id},#{contc_id},#{in_percent})       
+    </insert>
+    <update id="modifyDealAssignContc" parameterType="DealAssignContc" >
+        update w_acc_st.w_op_prm_deal_assign_contc set in_percent=#{in_percent}
+                    where  record_flag=#{record_flag} and version_no=#{version_no} 
+               and b_line_id =#{b_line_id} and b_station_id =#{b_station_id} and e_line_id =#{e_line_id}
+        and e_station_id =#{e_station_id} and contc_id =#{contc_id}                                          
+        
+    </update>
+    <delete id="deleteDealAssignContc" parameterType="DealAssignContc">
+            delete from w_acc_st.w_op_prm_deal_assign_contc where record_flag=#{record_flag} and version_no=#{version_no} 
+               and b_line_id =#{b_line_id} and b_station_id =#{b_station_id} and e_line_id =#{e_line_id}
+        and e_station_id =#{e_station_id} and contc_id =#{contc_id}         
+    </delete>
+
+<!--草稿参数删除 -->
+    <delete id="deleteDealAssignContcForClone" parameterType="DealAssignContc">
+            delete from w_acc_st.w_op_prm_deal_assign_contc where  record_flag='3' and version_no='0000000000'                                                      
+    </delete>
+    
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="DealAssignContc" >
+        insert into  w_acc_st.w_op_prm_deal_assign_contc(b_line_id,b_station_id,e_line_id,
+               e_station_id,contc_id,in_percent,record_flag,version_no)
+               select b_line_id,b_station_id,e_line_id,
+               e_station_id,contc_id,in_percent,'3','0000000000'
+               from   w_acc_st.w_op_prm_deal_assign_contc  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    
+     <update id="submitToOldFlag" parameterType="DealAssignLine" >
+        update w_acc_st.w_op_prm_deal_assign_contc set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new}                                               
+    </update>
+    
+    <!--草稿参数复制为当前或未来参数 -->
+    <insert id="submitFromDraftToCurOrFur" parameterType="DealAssignLine" >
+        insert into  w_acc_st.w_op_prm_deal_assign_contc(b_line_id,b_station_id,e_line_id,
+               e_station_id,contc_id,in_percent,record_flag,version_no)
+        select b_line_id,b_station_id,e_line_id,
+               e_station_id,contc_id,in_percent,#{record_flag_new},#{version_no_new}
+               from   w_acc_st.w_op_prm_deal_assign_contc  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    <select id="getLines"   resultType="java.lang.String">
+       select distinct line_id||station_id linestation from w_acc_st.w_op_prm_station where record_flag='0'
+    </select>
+    
+    <select id="getContcs"   resultType="java.lang.String">
+       select distinct contc_id  from w_acc_st.w_op_prm_contc where record_flag= '0'
+    </select>
+</mapper>

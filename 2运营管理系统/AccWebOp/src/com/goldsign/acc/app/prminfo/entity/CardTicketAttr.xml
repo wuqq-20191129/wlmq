@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.CardTicketAttrMapper">
+    <resultMap type="CardTicketAttr" id="rmCardTicketAttr">
+        
+        <result column="card_main_id" property="card_main_id" /> 
+        <result column="card_sub_id" property="card_sub_id" /> 
+        <result column="version_no" property="version_no" /> 
+        <result column="record_flag" property="record_flag" /> 
+        <result column="once_charge_money" property="once_charge_money" /> 
+        <result column="once_charge_count" property="once_charge_count" /> 
+        <result column="add_begin_day" property="add_begin_day" /> 
+        <result column="add_valid_day" property="add_valid_day" /> 
+        <result column="exit_timeout_count" property="exit_timeout_count" /> 
+        <result column="exit_timeout_money" property="exit_timeout_money" /> 
+        <result column="entry_timeout_count" property="entry_timeout_count" /> 
+        <result column="entry_timeout_money" property="entry_timeout_money" />  
+        <result column="field1" property="field1" /> 
+        <result column="field2" property="field2" /> 
+        <result column="field3" property="field3" /> 
+        <result column="package_id" property="package_id" /> 
+    </resultMap>
+
+    <select id="getCardTicketAttrs"  parameterType="CardTicketAttr" resultMap="rmCardTicketAttr">
+        select * from W_ACC_ST.W_OP_PRM_CARD_TCT_ATTR where record_flag=#{record_flag} and version_no=#{version_no}  
+        <if test="card_main_id !=null and card_main_id !=''">
+            and card_main_id =#{card_main_id} 
+        </if> 
+        <if test="card_sub_id !=null and card_sub_id !=''">
+            and card_sub_id =#{card_sub_id} 
+        </if>
+        order by card_main_id,card_sub_id,package_id
+    </select>
+    
+    <select id="queryToMap"  parameterType="CardTicketAttr" resultType="map">
+        select * from W_ACC_ST.W_OP_PRM_CARD_TCT_ATTR where record_flag=#{record_flag} and version_no=#{version_no}  
+        <if test="card_main_id !=null and card_main_id !=''">
+            and card_main_id =#{card_main_id} 
+        </if> 
+        <if test="card_sub_id !=null and card_sub_id !=''">
+            and card_sub_id =#{card_sub_id} 
+        </if>
+        order by card_main_id,card_sub_id,package_id
+    </select>
+    
+    <select id="getCardTicketAttrsBySubId"  parameterType="CardTicketAttr" resultMap="rmCardTicketAttr">
+        select * from W_ACC_ST.W_OP_PRM_CARD_TCT_ATTR where card_sub_id =#{card_sub_id} and card_main_id =#{card_main_id} and record_flag in('3','0','1')
+    </select>
+     
+    <select id="getCardTicketAttrById"  parameterType="CardTicketAttr" resultMap="rmCardTicketAttr">
+        select * from W_ACC_ST.W_OP_PRM_CARD_TCT_ATTR where record_flag=#{record_flag} and version_no=#{version_no} 
+        and card_main_id =#{card_main_id} and card_sub_id =#{card_sub_id} 
+    </select>
+    
+    <insert id="addCardTicketAttr" parameterType="CardTicketAttr" >
+        insert into W_ACC_ST.W_OP_PRM_CARD_TCT_ATTR(card_main_id,card_sub_id,version_no,record_flag,once_charge_money,
+        once_charge_count,add_begin_day,add_valid_day,exit_timeout_count,
+        exit_timeout_money,entry_timeout_count,entry_timeout_money,package_id)
+        values(#{card_main_id},#{card_sub_id},#{version_no},#{record_flag},#{once_charge_money},
+        #{once_charge_count},#{add_begin_day},#{add_valid_day},#{exit_timeout_count},
+        #{exit_timeout_money},#{entry_timeout_count},#{entry_timeout_money},#{package_id})               
+    </insert>
+    
+    <delete id="deleteCardTicketAttr" parameterType="CardTicketAttr">
+        delete from W_ACC_ST.W_OP_PRM_CARD_TCT_ATTR where record_flag=#{record_flag} and version_no=#{version_no} 
+        and card_main_id =#{card_main_id} and card_sub_id =#{card_sub_id} and package_id=#{package_id}
+    </delete>
+    
+    <update id="modifyCardTicketAttr" parameterType="CardTicketAttr" >
+        update W_ACC_ST.W_OP_PRM_CARD_TCT_ATTR set once_charge_money=#{once_charge_money},
+        once_charge_count=#{once_charge_count},add_begin_day=#{add_begin_day},add_valid_day=#{add_valid_day},exit_timeout_count=#{exit_timeout_count},
+        exit_timeout_money=#{exit_timeout_money},entry_timeout_count=#{entry_timeout_count},entry_timeout_money=#{entry_timeout_money}
+        where  card_main_id =#{card_main_id}  and card_sub_id =#{card_sub_id} and package_id=#{package_id}
+        and record_flag=#{record_flag} and version_no=#{version_no}                                            
+    </update>
+    
+     <!--当前参数、未来参数作历史标识或删除标识 -->
+    
+    <update id="submitToOldFlag" parameterType="CardTicketAttr" >
+        update W_ACC_ST.W_OP_PRM_CARD_TCT_ATTR set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new}                                               
+    </update>
+    
+    <!--草稿参数复制为当前或未来参数 -->
+     <insert id="submitFromDraftToCurOrFur" parameterType="CardTicketAttr" >
+        insert into  W_ACC_ST.W_OP_PRM_CARD_TCT_ATTR(card_main_id,card_sub_id,once_charge_money,once_charge_count,add_begin_day, add_valid_day,exit_timeout_count,
+                                                exit_timeout_money,entry_timeout_count,entry_timeout_money,package_id,record_flag,version_no)
+               select card_main_id,card_sub_id,once_charge_money,once_charge_count,add_begin_day, add_valid_day,exit_timeout_count,
+                                                exit_timeout_money,entry_timeout_count,entry_timeout_money,package_id,#{record_flag_new},#{version_no_new}
+               from   W_ACC_ST.W_OP_PRM_CARD_TCT_ATTR  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+   
+   <!--草稿参数删除 -->
+     <delete id="deleteCardTicketAttrsForClone" parameterType="CardTicketAttr">
+            delete from W_ACC_ST.W_OP_PRM_CARD_TCT_ATTR where  record_flag='3' and version_no='0000000000'                                                      
+    </delete>
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="CardTicketAttr" >
+        insert into  W_ACC_ST.W_OP_PRM_CARD_TCT_ATTR(card_main_id,card_sub_id,once_charge_money,once_charge_count,add_begin_day, add_valid_day,exit_timeout_count,
+                                                exit_timeout_money,entry_timeout_count,entry_timeout_money,package_id,record_flag,version_no)
+               select card_main_id,card_sub_id,once_charge_money,once_charge_count,add_begin_day, add_valid_day,exit_timeout_count,
+                                                exit_timeout_money,entry_timeout_count,entry_timeout_money,package_id,'3','0000000000'
+               from  W_ACC_ST.W_OP_PRM_CARD_TCT_ATTR 
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+   
+</mapper>
+

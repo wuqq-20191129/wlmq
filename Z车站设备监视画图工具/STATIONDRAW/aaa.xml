@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="gb2312"?><Config><OtherDb>
+	<Driver>oracle.jdbc.driver.OracleDriver</Driver>
+    	<URL>jdbc:oracle:thin:@10.99.1.40:1521:acctest</URL>
+    	<UserName>262C2F1B30262A2332</UserName>
+	<Password>262C2F1B30262A2332</Password>
+        
+        <UserName2>262C2F1B203D</UserName2>
+	<Password2>262C2F1B203D</Password2>
+    </OtherDb>
+    
+    
+    <ScreenSize>
+        <height>768</height>
+        <width>1366</width>
+    </ScreenSize>
+</Config>

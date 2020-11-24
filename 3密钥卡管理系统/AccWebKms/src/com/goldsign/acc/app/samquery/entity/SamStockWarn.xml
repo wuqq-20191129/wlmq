@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.samquery.mapper.SamStockWarnMapper">
+    
+    <resultMap type="SamStockWarn" id="rmSamStockWarn">
+	<result column="samType" property="samType" />
+        <result column="stockEmptyQty" property="stockEmptyQty" />
+        <result column="etyWarnState" property="etyWarnState" />
+        <result column="stockProductQty" property="stockProductQty" />
+        <result column="pduWarnState" property="pduWarnState" />
+    </resultMap>  
+    
+    <sql id="getList">
+        select SAM_TYPE 
+        ,sum(case when PRODUCE_TYPE=#{produce_Type_Empty} and IS_INSTOCK = #{stock_State_In}  THEN 1 else 0 end) as stockEmptyQty,
+        sum(case when PRODUCE_TYPE=#{produce_Type_Product} and IS_INSTOCK = #{stock_State_In}  THEN 1 else 0 end) as stockProductQty 
+        from W_ACC_TK.W_IC_SAM_STOCK where 1=1 and IS_BAD = #{sam_Card_State_Ok} 
+        <if test="samType !=null and samType !=''">
+            and sam_type = #{samType} 
+        </if>
+        group by SAM_TYPE 
+    </sql>
+    
+    <select id = "getSamStockWarn"  parameterType="SamStockWarn" resultMap = "rmSamStockWarn">
+        select a.SAM_TYPE samType,a.stockEmptyQty stockEmptyQty,
+        case when a.stockEmptyQty&lt;(NVL(b.ety_warn_threshhold,0)) then 1 else 0 end as etyWarnState,
+        a.stockProductQty stockProductQty,
+        case when a.stockProductQty&lt;(NVL(b.pdu_warn_threshhold,0)) then 1 else 0 end as pduWarnState 
+        from ( 
+        <include refid="getList"/>
+        ) a left join W_ACC_TK.W_IC_SAM_TYPE b on a.SAM_TYPE = b.sam_type_code order by a.SAM_TYPE
+    </select>
+</mapper>

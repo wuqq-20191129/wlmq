@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.storageout.mapper.TicketStorageOutWayMapper">
+    <resultMap id="rmBoxDetail" type="com.goldsign.acc.app.storageout.entity.TicketStorageOutStorageInfo">
+        <result column="BOX_ID" jdbcType="CHAR" property="boxId" />
+        <result column="START_LOGICAL_ID" jdbcType="VARCHAR" property="startLogicalId" />
+        <result column="END_LOGICAL_ID" jdbcType="VARCHAR" property="endLogicalId" />
+    </resultMap>
+    <select id="getExistLogicalSection"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutStorageInfo" resultMap="rmBoxDetail">
+        SELECT C.BOX_ID, C.start_logical_id,C.end_logical_id from w_acc_tk.w_ic_sts_storage A, w_acc_tk.w_ic_cod_box_detail C
+        where A.Storage_Id = '${storageId}'
+        and A.Area_Id = '${areaId}'
+        and A.BOX_ID = C.BOX_ID
+        and A.BOX_ID in (select B.box_id from w_acc_tk.w_ic_cod_box_info B
+        where B.ic_main_type ='${icMainType}'
+        and B.ic_sub_type ='${icSubType}'
+        and B.card_money = ${cardMoney}
+        <if test=" validDate !=''">
+            and B.Valid_Date =to_date('${validDate}','yyyy-mm-dd')
+        </if>  
+        <if test=" validDate ==''">
+            and B.Valid_Date >=to_date('1970-01-01','yyyy-mm-dd')
+        </if> 
+        and B.Model = '${model}'
+        and B.Line_Id =nvl('${lineId}',' ')
+        and B.Station_Id =  nvl('${stationId}',' ')
+        and B.Exit_Line_Id =nvl('${exitLineId}',' ')
+        and B.Exit_Station_Id =nvl('${exitStationId}',' ')
+        and B.flag = '${flag}'
+        )     
+        and  to_number(C.End_Logical_Id) &gt;= to_number('${startLogicalId}')
+        and  to_number(C.Start_Logical_Id) &lt;= to_number('${endLogicalId}')
+        order by to_number(C.Start_Logical_Id)
+    </select>
+</mapper>

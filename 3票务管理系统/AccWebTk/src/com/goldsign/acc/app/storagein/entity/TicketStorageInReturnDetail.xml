@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.storagein.mapper.TicketStorageInReturnDetailMapper">
+    <resultMap type="TicketStorageInReturnDetail" id="rmTicketStorageInReturnDetailByBillNo">
+        <result column="bill_no" property="bill_no" /> 
+        <result column="water_no" property="water_no" />
+        <result column="reason_id" property="reason_id" />
+        <result column="storage_id" property="storage_id" />
+        <result column="area_id" property="area_id" />
+        <result column="ic_main_type" property="ic_main_type" />
+        <result column="ic_sub_type" property="ic_sub_type" />
+        <result column="in_num" property="in_num" />
+        <result column="card_money" property="card_money" />
+        <result column="line_id_reclaim" property="line_id_reclaim" />
+        <result column="station_id_reclaim" property="station_id_reclaim" />
+        <result column="model" property="model" />
+        <result column="report_date" property="report_date" />
+        <result column="start_logical_id" property="start_logical_id" />
+        <result column="end_logical_id" property="end_logical_id" />
+        
+    </resultMap>
+    
+    <resultMap type="TicketStorageInReturnDetail" id="rmGetDetailTableRecord">
+        <result column="line_id_reclaim" property="line_id_reclaim" /> 
+        <result column="station_id_reclaim" property="station_id_reclaim" />
+        <result column="report_date" property="report_date" />
+    </resultMap>
+    
+    <resultMap type="PubFlag" id="rmPubFlag">
+        <id column="code" property="code" />
+        <result column="code_text" property="code_text" />  
+    </resultMap>
+    
+    <resultMap type="PubFlag" id="rmPubFlagType">
+        <id column="code" property="code" />
+        <result column="code_text" property="code_text" />  
+        <result column="code_type" property="code_type" />
+    </resultMap>
+    
+    
+    <select id="getIcCardMainType"  resultMap="rmPubFlag">
+        select ic_main_type code, ic_main_desc code_text
+            from w_acc_tk.w_ic_cod_card_main_type
+             where ic_main_type in ('1','2','6','7','8','9','10','12','40')
+    </select>
+    
+    <select id="getIcCodStorageLine"  resultMap="rmPubFlagType">
+        select a.storage_id code_type, b.line_id code, b.line_name code_text
+            from w_acc_tk.w_ic_cod_storage_line a, w_acc_tk.w_ic_cod_line b
+            where to_number(a.line_id） = to_number(b.line_id)
+    </select>
+    
+    <select id="getInReason"  resultMap="rmPubFlag">
+        select reason_id code, reason_describe code_text
+        from w_acc_tk.w_ic_cod_in_out
+        where to_number(reason_id)&lt;= 14
+        and to_number(reason_id) &gt;= 10
+        or to_number(reason_id) = '24'
+    </select>
+    
+    <select id="getTicketStorageInReturnDetailByBillNo" parameterType="String" resultMap="rmTicketStorageInReturnDetailByBillNo">
+        select bill_no,water_no,reason_id,storage_id,area_id,ic_main_type,ic_sub_type,
+                in_num,card_money,valid_date,line_id_reclaim,station_id_reclaim,model,
+                report_date,start_logical_id,end_logical_id
+        from w_acc_tk.w_ic_in_store_detail where bill_no = #{billNo} order by water_no
+    </select>
+    
+    <select id="getHisTable" parameterType="String" resultType="String">
+        select his_table from w_acc_tk.w_ic_idx_history where origin_table_name='w_ic_in_store_detail' 
+        and substr(#{billNo},3,10) between begin_recd and end_recd
+    </select>
+    
+    <select id="getTicketStorageInReturnDetailHisByBillNo" parameterType="String" resultMap="rmTicketStorageInReturnDetailByBillNo">
+        select bill_no,water_no,reason_id,storage_id,area_id,ic_main_type,ic_sub_type,
+                in_num,card_money,valid_date,line_id_reclaim,station_id_reclaim,model,
+                report_date,start_logical_id,end_logical_id
+        from w_acc_tk.${tableName} where 1=1
+        <if test="billNo !=null and billNo !=''">
+            and bill_no = #{billNo}
+        </if> 
+        order by water_no
+    </select>
+    
+    <insert id="addTicketStorageInReturnDetail" parameterType="TicketStorageInReturnDetail" >
+        insert into w_acc_tk.w_ic_in_store_detail
+                    (water_no,card_money,bill_no,reason_id,storage_id,area_id,ic_main_type,
+                    ic_sub_type,detail_place,start_box_id,end_box_id,start_logical_id,
+                    end_logical_id,valid_date,line_id,station_id,in_num,report_date,
+                    line_id_reclaim,station_id_reclaim,exit_line_id,exit_station_id,model)
+           values   (w_acc_tk.W_SEQ_W_IC_IN_DETAIL.nextval,#{card_money},#{bill_no},#{reason_id},#{storage_id},#{area_id},#{ic_main_type},
+                    #{ic_sub_type},'','','',#{start_logical_id},
+                    #{end_logical_id},to_date(nvl(#{valid_date},'1970-01-01'),'yyyy-mm-dd'),' ',' ',#{in_num},to_date(nvl(#{report_date},'1970-01-01'),'yyyy-mm-dd'),
+                    #{line_id_reclaim},#{station_id_reclaim},' ',' ','000')       
+    </insert>
+    
+    <select id="getDetailByStorage" parameterType="TicketStorageInReturnDetail" resultMap="rmTicketStorageInReturnDetailByBillNo">
+        select bill_no,water_no,reason_id,storage_id,area_id,ic_main_type,ic_sub_type,
+                in_num,card_money,valid_date,line_id_reclaim,station_id_reclaim,model,
+                report_date,start_logical_id,end_logical_id
+        from w_acc_tk.w_ic_in_store_detail where  bill_no = #{bill_no} and storage_id !=#{storage_id}
+          order by water_no
+    </select>
+    
+    <delete id="deleteTicketStorageInReturnDetail" parameterType="TicketStorageInReturnDetail" >
+        delete from  w_acc_tk.w_ic_in_store_detail where water_no=${water_no}
+    </delete>
+    
+    <select id="getAllNumByBillNo" parameterType="TicketStorageInReturnDetail" resultType="int">
+        select  nvl(sum(in_num),0) sumNum from w_acc_tk.w_ic_in_store_detail  
+        where 1=1
+        <if test="bill_no !=null and bill_no !=''">
+            and bill_no = #{bill_no}
+        </if> 
+        <if test="water_no !=null and water_no !=''">
+            and water_no!=#{water_no}
+        </if>  
+    </select>
+    
+    <select id="getMaxNumOfArea" parameterType="TicketStorageInReturnDetail" resultType="int">
+        select upper_num-nvl(real_num,0) max_num from w_acc_tk.w_ic_cod_area
+        where  storage_id =#{storage_id} and area_id =#{area_id}
+    </select>
+    
+    <select id="getTableFlagsByCondition"  parameterType="TicketStorageInReturnDetail" resultMap="rmPubFlag">
+        select line_id code,line_name code_text  from w_acc_tk.w_ic_cod_line a
+        where exists (select 1 from w_acc_tk.W_IC_COD_STORAGE_LINE b 
+            where to_number(a.line_id)=to_number(b.line_id) 
+                and w_acc_tk.b.storage_id =#{storage_id})
+                order by to_number(a.line_id)
+    </select>
+    
+    <update id="modifyTicketStorageInReturnDetail" parameterType="TicketStorageInReturnDetail" >
+        update w_acc_tk.w_ic_in_store_detail set
+        <if test="storage_id !=null and storage_id !=''">
+             storage_id = #{storage_id}
+        </if>
+        <if test="area_id !=null and area_id !=''">
+            ,area_id = #{area_id}
+        </if>
+        <if test="ic_main_type !=null and ic_main_type !=''">
+            ,ic_main_type = #{ic_main_type}
+        </if>
+        <if test="in_num !=null and in_num !=''">
+            ,in_num = #{in_num}
+        </if>
+        <if test="reason_id !=null and reason_id !=''">
+            ,reason_id = #{reason_id}
+        </if>
+        <if test="ic_sub_type !=null and ic_sub_type !=''">
+            ,ic_sub_type = #{ic_sub_type}
+        </if>
+        <if test="start_box_id !=null and start_box_id !=''">
+            ,start_box_id = #{start_box_id}
+        </if>
+        <if test="end_box_id !=null and end_box_id !=''">
+            ,end_box_id = #{end_box_id}
+        </if>
+        <if test="start_logical_id !=null and start_logical_id !=''">
+            ,start_logical_id = #{start_logical_id}
+        </if>
+        <if test="end_logical_id !=null and end_logical_id !=''">
+            ,end_logical_id = #{end_logical_id}
+        </if>
+        <if test="card_money !=null and card_money !=''">
+            ,card_money = #{card_money}
+        </if>
+        <if test="line_id !=null and line_id !=''">
+            ,line_id = #{line_id}
+        </if>
+        <if test="station_id !=null and station_id !=''">
+            ,station_id = #{station_id}
+        </if>
+        <if test="line_id_reclaim !=null and line_id_reclaim !=''">
+            ,line_id_reclaim = #{line_id_reclaim}
+        </if>
+        <if test="station_id_reclaim !=null and station_id_reclaim !=''">
+            ,station_id_reclaim = #{station_id_reclaim}
+        </if>
+        where water_no = #{water_no}                                         
+    </update>
+    
+    <select id="getUploadRecordOfStationHandIn" parameterType="TicketStorageInReturnDetail" resultType="String">
+        select dept_id from w_acc_tk.w_ic_inf_station_handin
+        where to_char(REPORTDATE, 'yyyymmdd') = #{date}
+        and in_flag = '0'
+        <!--
+        有选择线路与车站
+        <if test="station_id_reclaim !=null and station_id_reclaim !=''">
+            and dept_id = (select line_code || station_code
+            from w_acc_tk.w_ic_cod_station_contrast
+            where station_id = #{station_id_reclaim}
+            and line_id = #{line_id_reclaim})
+        </if>
+        
+        只选择线路，没有选择车站
+        <if test="line_id_reclaim!=null and line_id_reclaim !='' and (station_id_reclaim ==null or station_id_reclaim =='')">
+            and substr(dept_id, 0, 2) =
+            (select distinct line_code
+            from w_acc_tk.w_ic_cod_station_contrast
+            where line_id = #{line_id_reclaim})
+        </if>
+        <不选择线路与车站
+        <if test="line_id_reclaim == null or line_id_reclaim =='' or station_id_reclaim ==null or station_id_reclaim ==''">
+            and substr(dept_id, 0, 2) in ${lineAuthSql}
+        </if>
+        !-->
+    </select>
+    
+    <select id="getAreaOfStationHandIn" parameterType="TicketStorageInReturnDetail" resultType="int">
+        select upper_num - real_num -
+         (select nvl(sum(QUANTITY),0)
+            from w_acc_tk.w_ic_inf_station_handin
+            where to_char(REPORTDATE, 'yyyymmdd') =  #{date}) as max_num
+            from w_acc_tk.w_ic_inf_station_handin a, w_acc_tk.w_ic_cod_area b
+             where to_char(REPORTDATE, 'yyyymmdd') =  #{date}
+                and in_flag = '0'
+        <!--
+        有选择线路与车站
+        <if test="station_id_reclaim !=null and station_id_reclaim !=''">
+            and dept_id = (select line_code || station_code
+            from w_acc_tk.w_ic_cod_station_contrast
+            where station_id = #{station_id_reclaim}
+            and line_id = #{line_id_reclaim})
+        </if>
+        只选择线路，没有选择车站
+        <if test="line_id_reclaim!=null and line_id_reclaim !='' and (station_id_reclaim ==null or station_id_reclaim =='')">
+            and substr(dept_id, 0, 2) =
+            (select distinct line_code
+            from w_acc_tk.w_ic_cod_station_contrast
+            where line_id = #{line_id_reclaim})
+        </if>
+        不选择线路与车站
+        <if test="line_id_reclaim == null or line_id_reclaim =='' or station_id_reclaim ==null or station_id_reclaim ==''">
+            and substr(dept_id, 0, 2) in ${lineAuthSql}
+        </if>
+        -->
+        and b.area_id = '05' and b.storage_id = #{storage_id}
+    </select>
+    
+    <update id="modifyStationDetailNo" parameterType="TicketStorageInReturnDetail" >
+        update w_acc_tk.w_ic_inf_station_handin set 
+            in_store_detail_no = w_acc_tk.W_SEQ_W_IC_IN_DETAIL.nextval
+        where to_char(REPORTDATE, 'yyyymmdd') = #{date}
+            and in_flag = '0'
+        <!--
+        有选择线路与车站
+        <if test="station_id_reclaim !=null and station_id_reclaim !=''">
+            and dept_id = (select line_code || station_code
+            from w_acc_tk.w_ic_cod_station_contrast
+            where station_id = #{station_id_reclaim}
+            and line_id = #{line_id_reclaim})
+        </if>
+        只选择线路，没有选择车站
+        <if test="line_id_reclaim!=null and line_id_reclaim !='' and (station_id_reclaim ==null or station_id_reclaim =='')">
+            and substr(dept_id, 0, 2) =
+            (select distinct line_code
+            from w_acc_tk.w_ic_cod_station_contrast
+            where line_id = #{line_id_reclaim})
+        </if>
+        不选择线路与车站
+        <if test="line_id_reclaim == null or line_id_reclaim =='' or station_id_reclaim ==null or station_id_reclaim ==''">
+            and substr(dept_id, 0, 2) in ${lineAuthSql}
+        </if>
+        -->
+    </update>
+    
+     <insert id="addByStationHandIn" parameterType="TicketStorageInReturnDetail" >
+        insert into w_acc_tk.w_ic_in_store_detail(water_no,
+                    card_money,bill_no,reason_id,storage_id,
+                    area_id,ic_main_type,ic_sub_type,start_box_id,
+                    end_box_id,start_logical_id,end_logical_id,
+                    valid_date,line_id_reclaim,station_id_reclaim,
+                    in_num,report_date,TICKETTYPE_ID,use_flag,
+                    line_id,station_id,exit_line_id,exit_station_id,
+                    model)
+        select a.in_store_detail_no,
+        nvl(VALUE, 0),#{bill_no},#{reason_id},#{storage_id},
+        #{area_id},b.ic_main_type,b.ic_sub_type,'',
+        '',
+        case
+            when to_number(nvl(trim(IDSTART), 0)) != 0 then
+            LPAD(nvl(trim(IDSTART), 0), 20, '0')
+            else null
+        end,
+        case
+            when to_number(nvl(trim(IDEND), 0)) != 0 then
+            LPAD(nvl(trim(IDEND), 0), 20, '0')
+            when to_number(nvl(trim(IDEND), 0)) = 0 and
+                 to_number(nvl(trim(IDSTART), 0)) != 0 then
+             LPAD(to_char(to_number(nvl(trim(IDSTART),0)) + QUANTITY - 1),20, '0')
+            else
+             null
+        end,
+        to_date(nvl(#{valid_date},'1970-01-01'),'yyyy-mm-dd'),
+        to_char(to_number(substr(a.DEPT_ID, 1, 2))),
+        to_char(to_number(substr(a.DEPT_ID, 3, 2))),
+        QUANTITY,
+        REPORTDATE,
+        a.TICKETTYPE_ID,
+        'H',' ',' ',' ',' ','000'
+        from w_acc_tk.w_ic_inf_station_handin a,
+        w_acc_tk.w_IC_COD_CARD_TYPE_CONTRAST b
+        where a.in_flag ='0'
+        and a.TICKETTYPE_ID in (b.CARD_MAIN_TYPE|| b.CARD_SUB_TYPE)
+        and to_char(REPORTDATE, 'yyyymmdd') = #{date}
+        <!--
+        有选择线路与车站
+        <if test="station_id_reclaim !=null and station_id_reclaim !=''">
+            and dept_id = (select line_code || station_code
+            from w_acc_tk.w_ic_cod_station_contrast
+            where station_id = #{station_id_reclaim}
+            and line_id = #{line_id_reclaim})
+        </if>
+        <只选择线路，没有选择车站
+        <if test="line_id_reclaim!=null and line_id_reclaim !='' and (station_id_reclaim ==null or station_id_reclaim =='')">
+            and substr(dept_id, 0, 2) =
+            (select distinct line_code
+            from w_acc_tk.w_ic_cod_station_contrast
+            where line_id = #{line_id_reclaim})
+        </if> 
+        不选择线路与车站
+        <if test="line_id_reclaim == null or line_id_reclaim =='' or station_id_reclaim ==null or station_id_reclaim ==''">
+            and substr(dept_id, 0, 2) in ${lineAuthSql}
+        </if>  
+        -->     
+    </insert>
+    
+    <update id="modifyStationInFlag" parameterType="TicketStorageInReturnDetail" >
+        update w_acc_tk.w_ic_inf_station_handin set 
+            in_flag = '1'
+        where to_char(REPORTDATE, 'yyyymmdd') = #{date}
+            and in_flag = '0'
+    </update>
+    
+    <select id="getUploadRecordOfIncomeDepHandIn" parameterType="TicketStorageInReturnDetail" resultType="String">
+        select dept_id from  w_acc_tk.w_ic_inf_incomedep_handin
+        where to_char(REPORTDATE, 'yyyymmdd') = #{date} and in_flag = '0'
+        <!--
+        只选择线路，没有选择车站(收益组移交只考虑线路，不考虑车站)
+        <if test="line_id_reclaim!=null and line_id_reclaim !=''">
+            and dept_id = to_number(#{line_id_reclaim})
+        </if>
+        不选择线路与车站
+        <if test="line_id_reclaim == null or line_id_reclaim ==''">
+            and substr(dept_id, 0, 2) in ${lineAuthSql}
+        </if>
+        -->
+    </select>
+    
+     <select id="getDetailTableRecordOfIncomeDepHandIn" parameterType="TicketStorageInReturnDetail" resultMap="rmGetDetailTableRecord">
+        
+        <if test="line_id_reclaim!=null and line_id_reclaim !=''">
+            select line_id_reclaim, station_id_reclaim, report_date
+            from w_acc_tk.w_ic_in_store_detail
+            where reason_id = #{reason_id}
+            and to_char(report_date, 'yyyymmdd') = #{date}
+            and line_id_reclaim = #{line_id_reclaim}
+            union
+            select line_id, station_id, report_date
+            from w_acc_tk.w_ic_in_return_recd
+            where reason_id = #{reason_id}
+            and to_char(report_date, 'yyyymmdd') = #{date}
+            and line_id = #{line_id_reclaim}
+        </if>     
+        <if test="line_id_reclaim ==null or line_id_reclaim ==''">
+            select DEPT_ID
+            from W_ACC_TK.W_IC_INF_INCOMEDEP_HANDIN
+            where to_char(REPORTDATE, 'yyyymmdd') = #{date}
+            and DEPT_ID not in
+            (select to_number(line_id_reclaim)
+            from w_acc_tk.w_ic_in_store_detail
+            where reason_id = #{reason_id} and bill_no like 'HR%'
+            and to_char(report_date, 'yyyymmdd') = #{date})
+            and DEPT_ID not in
+            (select to_number(line_id)
+            from w_acc_tk.w_ic_in_return_recd
+            where reason_id = #{reason_id}
+            and to_char(report_date, 'yyyymmdd') = #{date})
+        </if>
+         
+    </select>
+    
+    <select id="getAreaOfIncomeDepHandIn" parameterType="TicketStorageInReturnDetail" resultType="int">
+        select upper_num - real_num -
+            (select nvl(sum(QUANTITY),0)
+            from w_acc_tk.w_ic_inf_incomedep_handin
+            where to_char(REPORTDATE, 'yyyymmdd') = #{date} and in_flag='0') max_num
+        <!--
+        有选择线路
+        <if test="line_id_reclaim !=null and line_id_reclaim !=''">
+            and DEPT_ID = to_number(#{line_id_reclaim})) max_num
+        </if>
+        不选择线路与车站
+        <if test="line_id_reclaim == null or line_id_reclaim ==''">
+            and substr(dept_id, 0, 2) in ${lineAuthSql}) max_num
+        </if>
+        -->
+        from w_acc_tk.w_ic_cod_area b
+        where b.area_id = '04' and b.storage_id = #{storage_id}
+    </select>
+    
+    <update id="modifyIncomedepDetailNo" parameterType="TicketStorageInReturnDetail" >
+        update w_acc_tk.w_ic_inf_incomedep_handin set 
+            in_store_detail_no = w_acc_tk.W_SEQ_W_IC_IN_DETAIL.nextval
+        where to_char(REPORTDATE, 'yyyymmdd') = #{date}
+            and in_flag = '0'
+    </update>
+    
+    <insert id="addByIncomeDepHandIn" parameterType="TicketStorageInReturnDetail" >
+        insert into w_acc_tk.w_ic_in_store_detail(
+        water_no,card_money,bill_no,reason_id,storage_id,
+        area_id,ic_main_type,ic_sub_type,start_box_id,
+        end_box_id,start_logical_id,end_logical_id,
+        valid_date,line_id_reclaim,station_id_reclaim,
+        in_num,report_date,TICKETTYPE_ID,use_flag,
+        line_id,station_id,exit_line_id,exit_station_id,model)
+        select 
+        a.in_store_detail_no,nvl(VALUE, 0),#{bill_no},#{reason_id},#{storage_id},
+         '04',b.ic_main_type,b.ic_sub_type,'',
+         '','','',
+        to_date(nvl(#{valid_date},'1970-01-01'),'yyyy-mm-dd'),to_char(to_number(substr(a.dept_id, 1, 2))),'',
+         quantity,reportdate,a.tickettype_id,'H',
+         nvl(#{line_id},' '),nvl(#{station_id},' '),nvl(#{exit_line_id},' '),nvl(#{exit_station_id},' '),#{model}
+          from w_acc_tk.w_ic_inf_incomedep_handin a, w_acc_tk.w_ic_cod_card_type_contrast b
+         where a.in_flag ='0'
+            and a.TICKETTYPE_ID in (b.CARD_MAIN_TYPE|| b.CARD_SUB_TYPE)
+            and to_char(REPORTDATE, 'yyyymmdd') = #{date}
+        <!--   and a.in_store_detail_no not in
+             (select to_char(water_no)
+                from w_acc_tk.w_ic_in_store_detail
+               where reason_id = '10'
+                 and to_char(report_date, 'yyyymmdd') = #{date})
+        
+        <if test="line_id_reclaim !=null and line_id_reclaim !=''">
+           and DEPT_ID = to_number(#{line_id_reclaim})
+        </if>
+        <if test="line_id_reclaim == null or line_id_reclaim ==''">
+            and to_char(to_number(substr(a.DEPT_ID,1,2)))
+            not in
+            (select line_id_reclaim
+              from w_acc_tk.w_ic_in_store_detail
+              where reason_id = #{reason_id} and bill_no like 'HR%'
+               and to_char(report_date,'yyyymmdd') =#{date})
+               and substr(a.dept_id, 0, 2) in ${lineAuthSql}
+        </if>
+        -->
+    </insert>
+    
+    <update id="modifyIncomedepInFlag" parameterType="TicketStorageInReturnDetail" >
+        update w_acc_tk.w_ic_inf_incomedep_handin set 
+            in_flag = '1'
+        where to_char(REPORTDATE, 'yyyymmdd') = #{date}
+            and in_flag = '0'
+    </update>
+        
+    <select id="getAreaOfOthers" parameterType="TicketStorageInReturnDetail" resultType="int">
+       select upper_num-nvl(real_num,0)-
+        (select nvl(sum(in_num),0) from w_acc_tk.w_ic_in_store_detail where bill_no=#{bill_no}) max_num 
+        from w_acc_tk.w_ic_cod_area 
+        where storage_id=#{storage_id} and area_id=#{area_id}
+    </select>
+           
+    <insert id="addByOthers" parameterType="TicketStorageInReturnDetail" >
+        insert into w_acc_tk.w_ic_in_store_detail(
+            water_no,card_money,bill_no ,reason_id ,storage_id  ,area_id ,
+            ic_main_type ,ic_sub_type ,detail_place,start_box_id,end_box_id ,
+            start_logical_id ,end_logical_id ,valid_date ,line_id ,station_id ,
+            in_num,report_date,line_id_reclaim,station_id_reclaim,exit_line_id,
+            exit_station_id,model) 
+        values(
+            w_acc_tk.W_SEQ_W_IC_IN_DETAIL.nextval,${card_money},#{bill_no},#{reason_id},#{storage_id},#{area_id},
+            #{ic_main_type},#{ic_sub_type},#{detail_place},#{start_box_id},#{end_box_id},
+            #{start_logical_id},#{end_logical_id},
+            to_date(nvl(#{valid_date},'1970-01-01'),'yyyy-mm-dd'),
+            #{line_id},#{station_id},${in_num},
+            to_date(nvl(#{report_date},'1970-01-01'),'yyyy-mm-dd'),
+            #{line_id_reclaim},#{station_id_reclaim},#{exit_line_id},
+            #{exit_station_id},'000')
+    </insert>
+    
+    <select id="getInReasonByWaterNo" parameterType="TicketStorageInReturnDetail" resultType="String">
+       select reason_id from w_acc_tk.w_ic_in_store_detail  where water_no = ${water_no}
+    </select>
+    
+    <update id="UpdateINFlagForStationDelete" parameterType="TicketStorageInReturnDetail" >
+        update w_acc_tk.w_ic_inf_station_handin 
+        set in_flag='0',in_store_detail_no=null 
+        where in_store_detail_no = #{water_no}
+    </update>
+    
+    <update id="UpdateINFlagForIncomedepDelete" parameterType="TicketStorageInReturnDetail" >
+        update w_acc_tk.w_ic_inf_incomedep_handin 
+        set in_flag='0',in_store_detail_no=null 
+        where in_store_detail_no = #{water_no}
+    </update>
+    
+    <select id="getReporDateByWaterNo" parameterType="TicketStorageInReturnDetail" resultType="String">
+       select report_date from w_acc_tk.w_ic_in_store_detail  where water_no = ${water_no}
+    </select>
+    
+    <select id="getWaterNoByInReasonRepordate" parameterType="TicketStorageInReturnDetail" resultType="String">
+       select water_no from w_acc_tk.w_ic_in_store_detail  
+        where bill_no like 'HR%' and reason_id = #{reason_id} and to_char(report_date,'yyyy-mm-dd') = #{report_date}
+    </select>
+</mapper>

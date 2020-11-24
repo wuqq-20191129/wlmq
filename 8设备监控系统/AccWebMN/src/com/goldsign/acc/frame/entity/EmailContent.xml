@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.frame.mapper.EmailContentMapper">
+    <resultMap id="BaseResultMap" type="com.goldsign.acc.frame.entity.EmailContent">
+        <result column="MODULE" jdbcType="VARCHAR" property="module"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="IP" jdbcType="VARCHAR" property="ip"/>
+        <result column="PASRE_TIME" jdbcType="VARCHAR" property="pasreTime"/>
+        <result column="STATUS" jdbcType="VARCHAR" property="status"/>
+        <result column="MESSAGE" jdbcType="VARCHAR" property="message"/>
+        <result column="IS_SEND" jdbcType="CHAR" property="isSend"/>
+        <result column="IS_HANDLE" jdbcType="CHAR" property="isHandle"/>
+        <result column="HANDLE_TIME" jdbcType="VARCHAR" property="handleTime"/>
+        <result column="CLASS_SIMPLE_NAME" jdbcType="VARCHAR" property="classSimpleName"/>
+        <result column="KEY" jdbcType="VARCHAR" property="key"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.goldsign.acc.frame.entity.EmailContent">
+    insert into W_ACC_MN.W_MTR_EMAIL_CONTENTS (MODULE, NAME, IP,
+      PASRE_TIME, STATUS, MESSAGE,
+      IS_SEND, IS_HANDLE, HANDLE_TIME,
+      CLASS_SIMPLE_NAME)
+    values (#{module,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR},
+      #{pasreTime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR},
+      #{isSend,jdbcType=CHAR}, #{isHandle,jdbcType=CHAR}, #{handleTime,jdbcType=VARCHAR},
+      #{classSimpleName,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.goldsign.acc.frame.entity.EmailContent">
+        insert into W_ACC_MN.W_MTR_EMAIL_CONTENTS
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="module != null">
+                MODULE,
+            </if>
+            <if test="name != null">
+                NAME,
+            </if>
+            <if test="ip != null">
+                IP,
+            </if>
+            <if test="pasreTime != null">
+                PASRE_TIME,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="message != null">
+                MESSAGE,
+            </if>
+            <if test="isSend != null">
+                IS_SEND,
+            </if>
+            <if test="isHandle != null">
+                IS_HANDLE,
+            </if>
+            <if test="handleTime != null">
+                HANDLE_TIME,
+            </if>
+            <if test="classSimpleName != null">
+                CLASS_SIMPLE_NAME,
+            </if>
+            <if test="key != null">
+                KEY
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="module != null">
+                #{module,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="pasreTime != null">
+                #{pasreTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="message != null">
+                #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="isSend != null">
+                #{isSend,jdbcType=CHAR},
+            </if>
+            <if test="isHandle != null">
+                #{isHandle,jdbcType=CHAR},
+            </if>
+            <if test="handleTime != null">
+                #{handleTime,jdbcType=VARCHAR},
+            </if>
+            <if test="classSimpleName != null">
+                #{classSimpleName,jdbcType=VARCHAR},
+            </if>
+            <if test="key != null">
+                #{key,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="getContents" resultMap="BaseResultMap">
+    select A.MODULE, A.NAME, A.IP,A.PASRE_TIME, A.STATUS,
+         A.MESSAGE,A.IS_SEND,A.CLASS_SIMPLE_NAME
+    from W_ACC_MN.W_MTR_EMAIL_CONTENTS A
+    left join W_ACC_MN.W_MTR_CLASS_MODULE_MAPPING B
+      on replace(B.CLASS, 'com.goldsign.acc.systemmonitor.handler.', '') =
+         A.Class_Simple_Name
+   where IS_SEND = '0' and is_handle = '0'
+   order by B.Module_Id
+
+  </select>
+    <update id="updateForSend" parameterType="com.goldsign.acc.frame.entity.EmailContent">
+        update W_ACC_MN.W_MTR_EMAIL_CONTENTS
+          set IS_SEND = '1'
+        where CLASS_SIMPLE_NAME = #{classSimpleName ,jdbcType=VARCHAR} and IP = #{ip,jdbcType=VARCHAR} and PASRE_TIME = #{pasreTime,jdbcType=VARCHAR}
+    </update>
+    <select id="checkOldAbnormal" parameterType="com.goldsign.acc.frame.entity.EmailContent" resultType="int">
+        select count(1) from w_acc_mn.w_mtr_email_contents
+        where class_simple_name = #{classSimpleName ,jdbcType=VARCHAR}
+        and ip = #{ip,jdbcType=VARCHAR} and is_handle = '0'
+        <if test="key != null">
+            and key =#{key,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="checkNeedUpdate" parameterType="com.goldsign.acc.app.system.entity.BaseMessage" resultType="int">
+        select count(1) from w_acc_mn.w_mtr_email_contents
+        where class_simple_name = #{classSimpleName ,jdbcType=VARCHAR}
+        and ip = #{ip,jdbcType=VARCHAR}
+        <if test="keyMessage != null">
+            and key =#{keyMessage,jdbcType=VARCHAR}
+        </if>
+        and is_handle = '0'
+    </select>
+    <update id="updateHandleAbnormal" parameterType="com.goldsign.acc.app.system.entity.BaseMessage">
+        update W_ACC_MN.W_MTR_EMAIL_CONTENTS
+        set is_handle = '1',HANDLE_TIME = to_char(sysdate,'yyyy-mm-dd hh24:mi:ss')
+        where class_simple_name = #{classSimpleName ,jdbcType=VARCHAR}
+        and ip = #{ip,jdbcType=VARCHAR}
+        <if test="keyMessage != null">
+            and key =#{keyMessage,jdbcType=VARCHAR}
+        </if>
+        and is_handle = '0'
+    </update>
+
+</mapper>

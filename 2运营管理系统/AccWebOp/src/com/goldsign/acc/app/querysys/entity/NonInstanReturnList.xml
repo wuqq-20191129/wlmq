@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.NonInstanReturnListMapper">
+    <resultMap type="NonInstanReturnList" id="rmNonInstanReturnList">
+        
+        <result column="line_id" property="line_id" /> 
+        <result column="station_id" property="station_id" /> 
+        <result column="dev_type_id" property="dev_type_id" /> 
+        <result column="device_id" property="device_id" /> 
+        <result column="card_main_id;" property="card_main_id;" /> 
+        <result column="card_sub_id;" property="card_sub_id;" /> 
+        <result column="card_logical_id" property="card_logical_id" /> 
+        <result column="card_physical_id" property="card_physical_id" /> 
+        <result column="card_print_id" property="card_print_id" /> 
+        <result column="apply_datetime" property="apply_datetime" /> 
+        <result column="receipt_id" property="receipt_id" /> 
+        <result column="operator_id" property="operator_id" />  
+        <result column="apply_name" property="apply_name" /> 
+        
+        <result column="tel_no" property="tel_no" /> 
+        <result column="identity_type" property="identity_type" /> 
+        <result column="identity_id" property="identity_id" /> 
+        <result column="is_broken" property="is_broken" /> 
+        <result column="shift_id" property="shift_id" /> 
+        <result column="balance_water_no" property="balance_water_no" /> 
+        <result column="hdl_flag" property="hdl_flag" /> 
+        <result column="deposit_fee" property="deposit_fee" /> 
+        <result column="card_balance_fee" property="card_balance_fee" /> 
+        <result column="system_balance_fee" property="system_balance_fee" /> 
+        <result column="penalty_fee" property="penalty_fee" /> 
+        <result column="return_bala" property="return_bala" />  
+        <result column="remark" property="remark" /> 
+        
+        <result column="return_line_id" property="return_line_id" /> 
+        <result column="return_station_id" property="return_station_id" /> 
+        <result column="return_dev_type_id" property="return_dev_type_id" /> 
+        <result column="return_device_id" property="return_device_id" /> 
+        <result column="actual_return_bala" property="actual_return_bala" /> 
+        <result column="balance_water_no" property="balance_water_no" /> 
+        <result column="audit_flag" property="audit_flag" /> 
+        <result column="penalty_reason" property="penalty_reason" /> 
+        <result column="return_type" property="return_type" /> 
+        <result column="business_receipt_id" property="business_receipt_id" /> 
+        
+    </resultMap>
+    
+    
+    <select id="getNonInstanReturnLists"  parameterType="NonInstanReturnList" resultMap="rmNonInstanReturnList">
+        select * from W_ACC_ST.W_ST_LIST_NON_RTN where apply_datetime between to_date(#{begin_time},'yyyy/mm/dd') and to_date(#{end_time},'yyyy/mm/dd')  
+        and card_logical_id like #{card_logical_id} 
+        and business_receipt_id like #{business_receipt_id} 
+        <if test="card_main_id !=null and card_main_id !=''">
+            and card_main_id =#{card_main_id}
+        </if>
+        <if test="card_sub_id !=null and card_sub_id !=''">
+            and card_sub_id =#{card_sub_id}
+        </if> 
+        <if test="line_id !=null and line_id !=''">
+            and line_id =#{line_id}
+        </if> 
+        <if test="station_id !=null and station_id !=''">
+            and station_id =#{station_id}
+        </if> 
+        <if test="hdl_flag !=null and hdl_flag !=''">
+            and hdl_flag =#{hdl_flag}
+        </if>         
+        <if test="rtnOper ==  &quot;1&quot;">
+            and return_bala &gt; #{return_bala}
+        </if>  
+        <if test="rtnOper ==  &quot;2&quot;">
+            and return_bala &gt;= #{return_bala}
+        </if>        
+        <if test="rtnOper ==  &quot;3&quot;">
+            and return_bala = #{return_bala}
+        </if>      
+        <if test="rtnOper ==  &quot;4&quot;">
+            and return_bala  &lt;= #{return_bala}
+        </if>  
+        <if test="rtnOper ==  &quot;5&quot;">
+            and return_bala  &lt; #{return_bala}
+        </if>          
+        order by line_id,station_id,card_main_id,card_sub_id
+    </select>
+    
+    <select id="queryToMap"  parameterType="NonInstanReturnList" resultType="map">
+        select * from W_ACC_ST.W_ST_LIST_NON_RTN where 1=1
+        <if test="begin_time !=null and begin_time !='' and end_time != null and end_time != '' ">
+           and apply_datetime between to_date(#{begin_time},'yyyy/mm/dd') and to_date(#{end_time},'yyyy/mm/dd')  
+        </if>       
+        <if test="card_logical_id !=null and card_logical_id !=''">
+             and card_logical_id like #{card_logical_id} 
+        </if>
+        <if test="card_logical_id !=null and card_logical_id !=''">
+            and business_receipt_id like #{business_receipt_id} 
+        </if>
+        <if test="card_main_id !=null and card_main_id !=''">
+            and card_main_id =#{card_main_id}
+        </if>
+        <if test="card_sub_id !=null and card_sub_id !=''">
+            and card_sub_id =#{card_sub_id}
+        </if> 
+        <if test="line_id !=null and line_id !=''">
+            and line_id =#{line_id}
+        </if> 
+        <if test="station_id !=null and station_id !=''">
+            and station_id =#{station_id}
+        </if> 
+        <if test="hdl_flag !=null and hdl_flag !=''">
+            and hdl_flag =#{hdl_flag}
+        </if>         
+        <if test="rtnOper ==  &quot;1&quot;">
+            and return_bala &gt; #{return_bala}
+        </if>  
+        <if test="rtnOper ==  &quot;2&quot;">
+            and return_bala &gt;= #{return_bala}
+        </if>        
+        <if test="rtnOper ==  &quot;3&quot;">
+            and return_bala = #{return_bala}
+        </if>      
+        <if test="rtnOper ==  &quot;4&quot;">
+            and return_bala  &lt;= #{return_bala}
+        </if>  
+        <if test="rtnOper ==  &quot;5&quot;">
+            and return_bala  &lt; #{return_bala}
+        </if>          
+        order by line_id,station_id,card_main_id,card_sub_id
+    </select>
+    
+    <select id="getNonReturnDay" resultType="java.lang.Integer">
+        select t.cfg_value from w_acc_st.w_st_cfg_sys_base t where t.cfg_key = 'sys.non_return_day'
+    </select>
+
+    
+</mapper>
+

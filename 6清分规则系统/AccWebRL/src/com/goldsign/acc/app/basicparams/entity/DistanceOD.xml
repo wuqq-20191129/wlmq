@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicparams.mapper.DistanceODMapper">
+    
+    <resultMap type="com.goldsign.acc.app.basicparams.entity.DistanceOD" id="rmDistanceOD">   
+        <result column="id" property="id" /> 
+        <result column="o_line_id" property="o_line_id" /> 
+        <result column="o_station_id" property="o_station_id" /> 
+        <result column="e_line_id" property="e_line_id" /> 
+        <result column="e_station_id" property="e_station_id" /> 
+        <result column="change_times" property="change_times" /> 
+        <result column="distance" property="distance" /> 
+        <result column="min_distance" property="min_distance" /> 
+        <result column="record_flag" property="record_flag" />
+        <result column="threshold" property="threshold" />
+    </resultMap>
+    
+    <select id="getDistanceOD"  parameterType="DistanceOD" resultMap="rmDistanceOD">
+        select id,o_line_id,o_station_id,e_line_id,e_station_id,change_times,distance,record_flag  from w_acc_rl.w_rl_distance_od
+        where record_flag in ('0','2','3')
+        <if test="o_line_id !=null and o_line_id !=''">
+            and o_line_id =#{o_line_id} 
+        </if>
+        <if test="o_station_id !=null and o_station_id !=''">
+            and o_station_id =#{o_station_id} 
+        </if>
+        <if test="e_line_id !=null and e_line_id !=''">
+            and e_line_id =#{e_line_id} 
+        </if>
+        <if test="e_station_id !=null and e_station_id !=''">
+            and e_station_id =#{e_station_id} 
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag =#{record_flag} 
+        </if>
+        order by id
+    </select>
+ 
+    <select id="getMinDistance"  parameterType="DistanceOD" resultMap="rmDistanceOD">
+        select min(distance) min_distance from w_acc_rl.w_rl_distance_od
+        where record_flag in ('0','2','3')
+        <if test="o_line_id !=null and o_line_id !=''">
+            and o_line_id =#{o_line_id} 
+        </if>
+        <if test="o_station_id !=null and o_station_id !=''">
+            and o_station_id =#{o_station_id} 
+        </if>
+        <if test="e_line_id !=null and e_line_id !=''">
+            and e_line_id =#{e_line_id} 
+        </if>
+        <if test="e_station_id !=null and e_station_id !=''">
+            and e_station_id =#{e_station_id} 
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag =#{record_flag} 
+        </if>
+    </select>
+    
+    <select id="getDistanceThres"  parameterType="DistanceOD" resultMap="rmDistanceOD">
+        select DISTANCE_THRES as threshold ,change_thres from W_ACC_RL.W_RL_PARAMS_THRESHOLD where record_flag='0'
+    </select>
+    
+</mapper>

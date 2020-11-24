@@ -1,0 +1,194 @@
+.contentbd { background-image: url(../../images/content/content_bg_blue.jpg);
+             background-repeat: no-repeat; background-position: left top;}
+.tableStyle {
+    margin-top: 0px;
+    margin-left: 0px;
+    background-color: #D1D1D1;
+    font-size: 9pt;
+    color: #000000;
+}
+body {
+    background-image: url(../../images/content/content_bg_blue.jpg);
+    background-position: left top;
+}
+
+.simpleTable {
+    margin-top: 0px;
+    margin-left: 0px;
+    font-size: 9pt;
+    color: #000000;
+}
+
+.trTitle {
+    color: #000000;
+}
+
+.trContent {
+    color: #000000;
+    background-color: #EFEFEF;
+}
+
+.tdFont {
+    font-size: 10pt;
+    color: #000000;
+}
+
+.trContentIn {
+    color: #000000;
+    background-color: #D2E8FB;
+}
+.trData {
+    background-color: #FDFDFD;
+}
+.trDataHead {
+    background-color: #D1D1D1;
+}
+
+.buttonTableStyle{
+    font-size: 9pt;
+    background-color: #FFFFFF;
+}
+
+.buttonStyle{
+    font-size: 9pt;
+    color:#3399FF;
+    background-color: #FFFFFF;
+    text-align:align;
+}
+
+.buttonyes {
+    font-size: 9pt;
+    BACKGROUND-COLOR:#ffffff;
+    cursor:hand;
+    BORDER-BOTTOM:medium outset #666666;
+    BORDER-LEFT:inset #FFFFFF;
+    BORDER-RIGHT:medium outset #666666;
+    BORDER-TOP:inset #FFFFFF;
+    COLOR:#000000;
+    FONT-SIZE:9pt;
+}
+
+.buttonno {
+    font-size: 9pt;
+    BACKGROUND-COLOR:#cccccc;
+    cursor:hand;
+    BORDER-BOTTOM:inset #FFFFFF;
+    BORDER-LEFT:medium outset #999999;
+    BORDER-RIGHT:inset #FFFFFF;
+    BORDER-TOP:medium outset #999999;
+    COLOR:#000000;
+    FONT-SIZE:9pt;
+}
+
+.simple {
+    font-size: 13px;
+}
+
+
+.inputStyle {
+    border: 0px none #FFFFFF;
+    cursor: hand;
+}
+
+
+.opStyle {
+    position:absolute;
+    top:570;
+    left:27;
+    margin-top: 0px;
+    margin-left: 0px;
+    font-size: 9pt;
+    color: #000000;
+}
+
+.opStyle_mx {
+    position:absolute;
+    top:570;
+    left:27;
+    margin-top: 0px;
+    margin-left: 0px;
+    font-size: 9pt;
+    color: #000000;
+}
+
+.statusStyle {
+    position:absolute;
+    top:610;
+    left:27;
+    margin-top: 0px;
+    margin-left: 0px;
+    background-color: #D1D1D1;
+    font-size: 9pt;
+    color: #000000;
+}
+
+.status-font{
+    font-size: 11pt;
+}
+
+.statusStyle_mx {
+    position:absolute;
+    top:610;
+    left:27;
+    margin-top: 0px;
+    margin-left: 0px;
+    background-color: #D1D1D1;
+    font-size: 9pt;
+    color: #000000;
+}
+
+.orderByTitle{
+    border:thin outset;
+}
+
+.orderByClo {
+    cursor: hand;
+}
+
+
+a.orderByClo:link {
+    font-size: 9pt;
+    color: #000000;
+    text-decoration: none;
+}
+a.orderByClo:visited {
+    font-size: 9pt;
+    color: #000000;
+    text-decoration: none;
+}
+a.orderByClo:hover {
+    font-size: 9pt;
+    color: #CC0000;
+    text-decoration: none;
+}
+
+
+
+a.selectRow:link {
+    cursor: hand;
+    font-size: 9pt;
+    color: #000000;
+    text-decoration: none;
+}
+a.selectRow:visited {
+    cursor: hand;
+    font-size: 9pt;
+    color: #000000;
+    text-decoration: none;
+}
+a.selectRow:hover {
+    cursor: hand;
+    font-size: 9pt;
+    color: #CC0000;
+    text-decoration: none;
+}
+
+
+
+<!-- ҳ������ -->
+.listDataTable {FONT-SIZE: 12px ;}
+.listTableHead {FONT-WEIGHT: bold; CURSOR: hand}
+.onMouseOnTr {CURSOR: default; COLOR: #ffffff; BACKGROUND-COLOR: #006699}
+.listTableHeadO {FONT-WEIGHT: bold; CURSOR: hand; COLOR: #ffffff; BACKGROUND-COLOR: #006699}
+.listHeadClicked {FONT-WEIGHT: bold; CURSOR: hand; COLOR: #ffffff; BACKGROUND-COLOR: #990033}
+.listHeadClicked0 {FONT-WEIGHT: bold; CURSOR: hand; COLOR: #ffffff; BACKGROUND-COLOR: #990033}

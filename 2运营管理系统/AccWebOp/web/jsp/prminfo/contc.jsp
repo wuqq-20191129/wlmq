@@ -1,0 +1,170 @@
+<%-- 
+    Document   : contc
+    Created on : 2017-6-16, 14:42:14
+    Author     : mh
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>运营商</title>
+        <script language="javascript" type="text/javascript" charset="utf-8" src="js/common_form.js"></script>
+        <script language="javascript" type="text/javascript" charset="utf-8" src="js/Validator.js"></script>
+        <script language="JavaScript" src="js/CalendarPop.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/frame/simple.css" title="Style"/>
+    </head>
+    <!--删除克隆 setInvisable('detailOp','clone');  -->
+    <!--删除查询 initDocument('queryOp', 'detail');
+            setControlsDefaultValue('queryOp');
+            setQueryControlsDefaultValue('queryOp', 'detailOp');
+    -->
+    
+    <body onload="
+            initDocument('detailOp', 'detail');
+            setPrimaryKeys('detailOp', 'd_contcId');
+            setListViewDefaultValue('detailOp', 'clearStart');
+            setPageControl('detailOp');
+            setTableRowBackgroundBlock('DataTable')"> 
+        <table  class="table_title">
+            <tr align="center" class="trTitle">
+                <td colspan="4">运营商</td>
+            </tr>
+        </table>
+        
+        <!-- 状态栏 通用模板 -->
+        <c:import url="/jsp/common/common_template.jsp?template_name=common_status_table" />
+
+        <!-- 表头 通用模板 -->
+        <c:set var="pTitleName" scope="request" value="列表"/>
+        <c:set var="pTitleWidth" scope="request" value="50"/>
+        <c:import url="/jsp/common/common_template.jsp?template_name=common_table_title" />
+        <div id="clearStartBlock" class="divForTableBlock">
+            <div id="clearStartHead" class="divForTableBlockHead">
+                <table class="table_list_block" id="DataTableHead" >
+                    <!--说明：列的序号从0开始 isDigit：false 表示按字符串排序 ：true表示按数值排序 sortedby：asc表示按升序 dec表示按降序 -->
+                    <tr  class="table_list_tr_head_block" id="ignore">
+                        <td   class="table_list_tr_col_head_block">
+                            <input type="checkbox" name="rectNoAll" id="rectNoAll" onclick="selectAllRecord('detailOp', 'rectNoAll', 'rectNo', 'clearStart', 0);"/>
+                        </td>	
+                        <td id="orderTd"    class="table_list_tr_col_head_block"  isDigit=false index="1"  sortedby="asc" onclick="sortForTableBlock('clearStart');" >运营商ID</td>
+                        <td id="orderTd"    class="table_list_tr_col_head_block"  isDigit=false index="2"  sortedby="asc" onclick="sortForTableBlock('clearStart');" style="width:100px;">运营商名称</td>
+                        <td id="orderTd"    class="table_list_tr_col_head_block"  isDigit=false index="3"  sortedby="asc" onclick="sortForTableBlock('clearStart');" >联系人</td>
+                        <td id="orderTd"    class="table_list_tr_col_head_block"  isDigit=false index="4"  sortedby="asc" onclick="sortForTableBlock('clearStart');" style="width:100px;">电话</td>
+                        <td id="orderTd"    class="table_list_tr_col_head_block"  isDigit=true index="5"  sortedby="asc" onclick="sortForTableBlock('clearStart');" style="width:100px;">传真</td>
+                        <td id="orderTd"    class="table_list_tr_col_head_block"  isDigit=false index="6"  sortedby="asc" onclick="sortForTableBlock('clearStart');" >序号</td>
+                    </tr>
+                </table>
+
+            </div>
+            <div id="clearStart"  class="divForTableBlockData">
+                <table class="table_list_block" id="DataTable" >
+                    <c:forEach items="${ResultSet}" var="rs">
+                        <!--class="listTableData" -->
+                        <!--删除 hejj setSelectValuesByRow('detailOp', 'd_cardLogicalId', 'commonVariable'); -->
+                        <tr class="table_list_tr_data"  onMouseOver="overResultRow('detailOp', this);" 
+                            onMouseOut="outResultRow('detailOp', this);" 
+                            onclick="clickResultRow('detailOp', this, 'detail');
+                                    setPageControl('detailOp');" 
+                            id="${rs.contc_id}#${rs.record_flag}">
+
+                            <td id="rectNo1" class="table_list_tr_col_data_block">
+                                <input type="checkbox" name="rectNo" onclick="unSelectAllRecord('detailOp', 'rectNoAll', 'rectNo');"
+                                       value="${rs.contc_id}">
+                                </input>
+                            </td>
+                            <td  id="contcId" class="table_list_tr_col_data_block">
+                                ${rs.contc_id}
+                            </td>
+                            <td  id="contcName" class="table_list_tr_col_data_block" style="width:100px;">
+                                ${rs.contc_name}
+                            </td>
+                            <td  id="linkMan" class="table_list_tr_col_data_block">
+                                ${rs.link_man}
+                            </td>
+                            <td  id="tel" class="table_list_tr_col_data_block" style="width:100px;">
+                                ${rs.tel}
+                            </td>
+                            <td  id="fax" class="table_list_tr_col_data_block" style="width:100px;">
+                                ${rs.fax}
+                            </td>
+                            <td  id="sequence" class="table_list_tr_col_data_block">
+                                ${rs.sequence}
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </div>
+
+        <!-- 表头 通用模板 -->
+        <c:set var="pTitleName" scope="request" value="明细"/>
+        <c:set var="pTitleWidth" scope="request" value="50"/>
+        <c:import url="/jsp/common/common_template.jsp?template_name=common_table_title" />
+
+        <FORM method="post" name="detailOp" id="detailOp" action="Contc">
+            <c:set var="divideShow" scope="request" value="1"/>
+            <c:import  url="/jsp/common/common_template_web_variable.jsp?template_name=common_web_variable" />
+            <input type="hidden" name="expAllFields" id="d_expAllFields" value="contc_id,contc_name,link_man,tel,fax,sequence" />
+            <input type="hidden" name="expFileName" id="d_expFileName" value="运营商.xlsx" />
+            <input type="hidden" name="divId" id="d_divId" value="clearStartHead" />
+            <input type="hidden" name="methodUrl" id="d_methodUrl" value="/ContcExportAll" />
+            <DIV id="detail"  class="divForTableDataDetail" >
+                <table  class="table_edit_detail">
+                    <tr class="table_edit_tr">
+                        <td class="table_edit_tr_td_label">运营商ID:</td>
+                        <td class="table_edit_tr_td_input">
+                            <input type="text" name="d_contcId" id="d_contcId" size="10" maxLength="2" require="true" dataType="Number|LimitB" min="2" max="2" msg="商户ID应为2位数字"/>
+                        </td>
+                        <td class="table_edit_tr_td_label">运营商名称:</td>
+                        <td class="table_edit_tr_td_input">
+                            <input type="text" name="d_contcName" id="d_contcName" size="10" maxLength="75" require="true" dataType="NotEmpty"  msg="运营商名称不能为空" />
+                        </td>
+                        <td class="table_edit_tr_td_label">联系人:</td>
+                        <td class="table_edit_tr_td_input">
+                            <input type="text" name="d_linkMan" id="d_linkMan" size="10" maxLength="20" require="true" dataType="NotEmpty" msg="联系人不能为空！"/>
+                        </td>
+                    </tr>
+
+                    <tr class="table_edit_tr">
+                        <td class="table_edit_tr_td_label">电话:</td>
+                        <td class="table_edit_tr_td_input">
+                            <input type="text" name="d_tel" id="d_tel" size="10" require="false"  maxlength="15"   dataType="Phone" msg="电话号码输入错误！" />
+                        </td>
+                        <td class="table_edit_tr_td_label">传真:</td>
+                        <td class="table_edit_tr_td_input">
+                            <input type="text" name="d_fax" id="d_fax" size="10" require="false"  maxlength="15"   dataType="Phone" msg="传真号码输入错误！"/>
+                        </td>
+                        <td class="table_edit_tr_td_label">序号:</td>
+                        <td class="table_edit_tr_td_input">
+                            <input type="text" name="d_sequence" id="d_sequence" size="10" maxlength="10" require="false"  dataType="integer" msg="序号为1--10位数字！"/>
+                        </td>
+                    </tr>
+                </table>
+            </DIV>
+
+            <c:import url="/jsp/common/common_template.jsp?template_name=op_button_list_all_init" />
+            <c:set var="add" scope="request" value="1"/>
+            <c:set var="del" scope="request" value="1"/>
+            <c:set var="modify" scope="request" value="1"/>
+            <c:set var="save" scope="request" value="1"/>
+            <c:set var="cancle" scope="request" value="1"/>
+            <c:set var="print" scope="request" value="1"/>
+            <c:set var="export" scope="request" value="1"/>
+            <c:set var="expAll" scope="request" value="1" />
+            <c:set var="btNext" scope="request" value="1"/>
+            <c:set var="btNextEnd" scope="request" value="1"/>
+            <c:set var="btBack" scope="request" value="1"/>
+            <c:set var="btBackEnd" scope="request" value="1"/>
+            <c:set var="btGoPage" scope="request" value="1"/>
+            <c:set var="addClickMethod" scope="request" value="setUpdatePrimaryKey('detailOp','d_contcId');"/>
+            <c:set var="clickMethod" scope="request" value="btnClick('detailOp','clearStart','detail','','clearStartHead');"/>
+            <c:import url="/jsp/common/common_template.jsp?template_name=op_button_list_all" />
+            <br/>
+        </FORM>
+        
+    </body>
+</html>
+

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.opma.mapper.ReportCfgAttrMapper">
+    
+    <resultMap type="com.goldsign.acc.app.opma.entity.ReportCfgAttr" id="rmReportGfgAttr">
+        
+        <result column="REPORT_CODE" property="reportCode" /> 
+        <result column="REPORT_NAME" property="reportName" /> 
+        <result column="REPORT_MODULE" property="reportModule" /> 
+        <result column="REPORT_TYPE" property="reportType" /> 
+        <result column="PERIOD_TYPE" property="periodType" /> 
+        <result column="LINE_ID" property="lineId" /> 
+        <result column="STATION_ID" property="stationId" /> 
+        <result column="CARD_MAIN_ID" property="cardMainId" /> 
+        <result column="CARD_SUB_ID" property="cardSubId" /> 
+        <result column="DATA_TABLE" property="dataTable" /> 
+        <result column="REPORT_LOCK" property="reportLock" /> 
+        <result column="OUT_TYPE" property="outType" /> 
+        <result column="DS_ID" property="dsId" /> 
+        <result column="GENERATE_DATE" property="generateDate" /> 
+        <result column="PERIOD_DETAIL_TYPE" property="periodDetailType" /> 
+        <result column="REMARK" property="remark" />       
+   
+    </resultMap>
+    
+    <resultMap type="PubFlag" id="rmPubFlag">
+        <id column="code" property="code" />
+        <result column="code_text" property="code_text" />  
+    </resultMap>
+    
+    <select id="getReportGfgAttrs"  parameterType="com.goldsign.acc.app.opma.entity.ReportCfgAttr" resultMap="rmReportGfgAttr">
+        select * from w_acc_st.W_RP_CFG_ATTRIBUTE
+        <where> 
+            <if test="reportCode != null and reportCode !=''" >  
+                REPORT_CODE like concat(concat('%',#{reportCode}),'%')
+            </if> 
+            <if test="reportModule != null and reportModule !=''" >  
+                and  REPORT_MODULE like concat(concat('%',#{reportModule}),'%')
+            </if>
+            <if test="reportLock != null and reportLock !=''" >  
+                and  REPORT_LOCK = #{reportLock}
+            </if>
+            <if test="lineId != null and lineId !=''" >  
+                and LINE_ID = #{lineId}
+            </if>    
+            <if test="cardMainId != null and cardMainId !=''" >  
+                and CARD_MAIN_ID = #{cardMainId}
+            </if>    
+            <if test="cardSubId != null and cardSubId !=''" >  
+                and CARD_SUB_ID = #{cardSubId}
+            </if>   
+            <if test="outType != null and outType !=''" >  
+                and OUT_TYPE = #{outType}
+            </if>    
+        </where>
+        order by report_module
+    </select>
+    
+     <select id="queryToMap"  parameterType="com.goldsign.acc.app.opma.entity.ReportCfgAttr" resultType="map">
+        select * from w_acc_st.W_RP_CFG_ATTRIBUTE
+        <where> 
+            <if test="reportCode != null and reportCode !=''" >  
+                REPORT_CODE like concat(concat('%',#{reportCode}),'%')
+            </if> 
+            <if test="reportModule != null and reportModule !=''" >  
+                and  REPORT_MODULE like concat(concat('%',#{reportModule}),'%')
+            </if>
+            <if test="reportLock != null and reportLock !=''" >  
+                and  REPORT_LOCK = #{reportLock}
+            </if>
+            <if test="lineId != null and lineId !=''" >  
+                and LINE_ID = #{lineId}
+            </if>    
+            <if test="cardMainId != null and cardMainId !=''" >  
+                and CARD_MAIN_ID = #{cardMainId}
+            </if>    
+            <if test="cardSubId != null and cardSubId !=''" >  
+                and CARD_SUB_ID = #{cardSubId}
+            </if>   
+            <if test="outType != null and outType !=''" >  
+                and OUT_TYPE = #{outType}
+            </if>    
+        </where>
+        order by report_module
+    </select>
+    
+    <select id="getResources"  resultMap="rmPubFlag">
+        select ds_id code, ds_user code_text  from W_ACC_ST.W_OP_CFG_REPORT_PASS 
+    </select>
+    
+    <update id="modify" parameterType="com.goldsign.acc.app.opma.entity.ReportCfgAttr" >
+        update w_acc_st.W_RP_CFG_ATTRIBUTE set REPORT_LOCK = #{reportLock} where REPORT_MODULE = #{reportModule} 
+        <if test="lineId != null and lineId !=''" >  
+            and LINE_ID = #{lineId}
+        </if>    
+        <if test="cardMainId != null and cardMainId !=''" >  
+            and CARD_MAIN_ID = #{cardMainId}
+        </if>    
+        <if test="cardSubId != null and cardSubId !=''" >  
+            and CARD_SUB_ID = #{cardSubId}
+        </if>   
+        <if test="outType != null and outType !=''" >  
+            and OUT_TYPE = #{outType}
+        </if>    
+    </update>
+    
+</mapper>
+

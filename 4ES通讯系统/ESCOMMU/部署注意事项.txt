@@ -1,0 +1,6 @@
+1.BCP配置W_IC_ES_BCP_CONFIG
+2.control文件夹buf文件
+
+
+订单上传：
+ES机发送45消息 -> ES通讯解析45消息插入W_IC_ES_INFO_FILE -> 文件下载线程ComFindFileThread定时下载文件，并发送50消息到消息队列 -> ES通讯解析50消息后BCP导入订单明细数据到数据库。

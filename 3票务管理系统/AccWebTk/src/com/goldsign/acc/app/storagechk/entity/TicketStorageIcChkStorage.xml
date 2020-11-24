@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.storagechk.mapper.TicketStorageIcChkStorageMapper">
+     <parameterMap type="map" id="MapAudit">  
+        <parameter property="pi_billno" jdbcType="VARCHAR" mode="IN"/>  
+        <!--<parameter property="p_time" jdbcType="VARCHAR" mode="IN"/>-->  
+        <parameter property="pi_operator_id" jdbcType="VARCHAR" mode="IN"/> 
+        <!--<parameter property="p_result" jdbcType="VARCHAR" mode="OUT"/>-->  
+        
+        <parameter property="po_retMsg" jdbcType="VARCHAR" mode="OUT"/> 
+        <parameter property="po_retCode" jdbcType="INTEGER" mode="OUT"/>  
+        <parameter property="po_bill_no" jdbcType="VARCHAR" mode="OUT"/>  
+    </parameterMap> 
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorage">
+    <constructor>
+      <idArg column="CHECK_BILL_NO" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="CHECK_PERSON" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="CHECK_DATE" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="VERIFY_DATE" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="VERIFY_PERSON" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="RECORD_FLAG" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="LOCKED" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="IN_LOCKED" javaType="java.lang.String" jdbcType="CHAR" />
+    </constructor>
+    
+    <collection property="icChkStorageDetails" ofType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetailKey">
+        <id property="checkBillNo" column="CHECK_BILL_NO"/>
+        <result property="storageId" column="STORAGE_ID"/>
+        <result property="areaId" column="AREA_ID"/>
+        <result property="icMainType" column="IC_MAIN_TYPE"/>
+        <result property="icSubType" column="IC_SUB_TYPE"/>
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    CHECK_BILL_NO, CHECK_PERSON, CHECK_DATE, VERIFY_DATE, VERIFY_PERSON, RECORD_FLAG, 
+    LOCKED, IN_LOCKED
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorage" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from w_acc_tk.W_IC_CHK_STORAGE
+    <trim prefix="where (" suffix=")" suffixOverrides=" and ">
+            <if test="checkBillNo != null">
+                CHECK_BILL_NO = #{checkBillNo,jdbcType=CHAR} and
+            </if>
+            <if test="recordFlag != null">
+                RECORD_FLAG = #{recordFlag,jdbcType=CHAR} and
+            </if>
+          
+        </trim>
+    
+  </select>
+  <select id="getIcChkStorages" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorage" resultMap="BaseResultMap">
+    select 
+    *
+    from w_acc_tk.W_IC_CHK_STORAGE a,w_acc_tk.W_IC_CHK_STORAGE_DETAIL b
+    where a.CHECK_BILL_NO = b.CHECK_BILL_NO
+    <trim prefixOverrides=" and ">
+            <if test="checkBillNo != null">
+               and a.CHECK_BILL_NO = #{checkBillNo,jdbcType=CHAR} 
+            </if>
+             <if test="storageId != null">
+               and b.STORAGE_ID = #{storageId,jdbcType=CHAR} 
+            </if>
+             <if test="areaId != null">
+               and b.AREA_ID = #{areaId,jdbcType=CHAR} 
+            </if>
+            <if test="recordFlag != null">
+               and a.RECORD_FLAG = #{recordFlag,jdbcType=CHAR} 
+            </if>
+             <if test="startChkDate != null">                
+               and a.CHECK_DATE &gt;= to_date(concat(#{startChkDate},' 00:00:00'),'yyyy-mm-dd  hh24:mi:ss')
+            </if>
+            <if test="endChkDate != null">                
+               and a.CHECK_DATE &lt;= to_date(concat(#{endChkDate}, ' 23:59:59 '),'yyyy-mm-dd  hh24:mi:ss')
+            </if>
+           
+        </trim>
+    order by a.CHECK_BILL_NO desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from W_ACC_TK.W_IC_CHK_STORAGE
+    where CHECK_BILL_NO = #{checkBillNo,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorage">
+    insert into W_IC_CHK_STORAGE (CHECK_BILL_NO, CHECK_PERSON, CHECK_DATE, 
+      VERIFY_DATE, VERIFY_PERSON, RECORD_FLAG, 
+      LOCKED, IN_LOCKED)
+    values (#{checkBillNo,jdbcType=CHAR}, #{checkPerson,jdbcType=CHAR}, #{checkDate,jdbcType=TIMESTAMP}, 
+      #{verifyDate,jdbcType=TIMESTAMP}, #{verifyPerson,jdbcType=CHAR}, #{recordFlag,jdbcType=CHAR}, 
+      #{locked,jdbcType=CHAR}, #{inLocked,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorage">
+    insert into W_ACC_TK.W_IC_CHK_STORAGE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="checkBillNo != null">
+        CHECK_BILL_NO,
+      </if>
+      <if test="checkPerson != null">
+        CHECK_PERSON,
+      </if>
+      <if test="checkDate != null">
+        CHECK_DATE,
+      </if>
+      <if test="verifyDate != null">
+        VERIFY_DATE,
+      </if>
+      <if test="verifyPerson != null">
+        VERIFY_PERSON,
+      </if>
+      <if test="recordFlag != null">
+        RECORD_FLAG,
+      </if>
+      <if test="locked != null">
+        LOCKED,
+      </if>
+      <if test="inLocked != null">
+        IN_LOCKED,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="checkBillNo != null">
+        #{checkBillNo,jdbcType=CHAR},
+      </if>
+      <if test="checkPerson != null">
+        #{checkPerson,jdbcType=CHAR},
+      </if>
+      <if test="checkDate != null">
+        #{checkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verifyDate != null">
+        #{verifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verifyPerson != null">
+        #{verifyPerson,jdbcType=CHAR},
+      </if>
+      <if test="recordFlag != null">
+        #{recordFlag,jdbcType=CHAR},
+      </if>
+      <if test="locked != null">
+        #{locked,jdbcType=CHAR},
+      </if>
+      <if test="inLocked != null">
+        #{inLocked,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorage">
+    update W_ACC_TK.W_IC_CHK_STORAGE
+    <set>
+      <if test="checkPerson != null">
+        CHECK_PERSON = #{checkPerson,jdbcType=CHAR},
+      </if>
+      <if test="startChkDate != null">          
+        CHECK_DATE = to_date(#{startChkDate},'YYYY-MM-DD hh24:mi:ss'),
+      </if>
+      <if test="verifyDate != null">
+        VERIFY_DATE = #{verifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verifyPerson != null">
+        VERIFY_PERSON = #{verifyPerson,jdbcType=CHAR},
+      </if>
+      <if test="recordFlag != null">
+        RECORD_FLAG = #{recordFlag,jdbcType=CHAR},
+      </if>
+      <if test="locked != null">
+        LOCKED = #{locked,jdbcType=CHAR},
+      </if>
+      <if test="inLocked != null">
+        IN_LOCKED = #{inLocked,jdbcType=CHAR},
+      </if>
+    </set>
+    where CHECK_BILL_NO = #{checkBillNo,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorage">
+    update W_IC_CHK_STORAGE
+    set CHECK_PERSON = #{checkPerson,jdbcType=CHAR},
+      CHECK_DATE = #{checkDate,jdbcType=TIMESTAMP},
+      VERIFY_DATE = #{verifyDate,jdbcType=TIMESTAMP},
+      VERIFY_PERSON = #{verifyPerson,jdbcType=CHAR},
+      RECORD_FLAG = #{recordFlag,jdbcType=CHAR},
+      LOCKED = #{locked,jdbcType=CHAR},
+      IN_LOCKED = #{inLocked,jdbcType=CHAR}
+    where CHECK_BILL_NO = #{checkBillNo,jdbcType=CHAR}
+  </update>
+  <select id="audit"  parameterMap="MapAudit" statementType="CALLABLE">
+        {call W_ACC_TK.W_UP_IC_CHECK_AUDIT(?,?,?,?,?)}
+    </select>
+ 
+</mapper>

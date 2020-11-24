@@ -1,0 +1,46 @@
+M_12_20180501.zhj
+ 
+##command_start_date
+2018-05-01 07:10:00
+##command_end_date
+**********************Hardware Error Check*******************************
+##command_start_hardware
+##command_end_hardware
+************************Disk Space Check **********************************
+##command_start_df
+Filesystem    GB blocks      Free %Used    Iused %Iused Mounted on
+/dev/hd4          10.00      9.76    3%    11098     1% /
+/dev/hd2          10.00      7.36   27%    51914     3% /usr
+/dev/hd9var       10.00      8.19   19%     9248     1% /var
+/dev/hd3          20.00     12.24   39%     3598     1% /tmp
+/dev/hd1          35.00     33.29    5%      163     1% /home
+/dev/hd11admin      0.50      0.50    1%        5     1% /admin
+/proc                 -         -    -         -     -  /proc
+/dev/hd10opt     100.00     29.19   71%  2630147    28% /opt
+/dev/livedump      0.50      0.50    1%        4     1% /var/adm/ras/livedump
+/dev/fslv00       50.00     10.27   80%      985     1% /archivelog
+10.99.1.11:/opt/communfs    135.00     29.68   79%  3546117    34% /opt/communfs
+##command_end_df
+************************ All Error List **********************************
+********************* ifconfig -a *******************************
+****************** flags state: <UP *****************************
+##command_start_ifconfig
+##command_end_ifconfig
+********************** disk state *********************************
+##command_start_diskstate
+STALE PVs:          0                        STALE PPs:      0
+##command_end_diskstate
+******************lv_mirror_state*****************************
+##command_start_lv_mirror_state
+rootvg:
+LV NAME             TYPE       LPs     PPs     PVs  LV STATE      MOUNT POINT
+hd4                 jfs2       20      40      2    open/syncd    /
+hd2                 jfs2       20      40      2    open/syncd    /usr
+hd9var              jfs2       20      40      2    open/syncd    /var
+hd3                 jfs2       40      80      2    open/syncd    /tmp
+hd1                 jfs2       70      140     2    open/syncd    /home
+hd10opt             jfs2       200     400     2    open/syncd    /opt
+hd11admin           jfs2       1       2       2    open/syncd    /admin
+livedump            jfs2       1       2       2    open/syncd    /var/adm/ras/livedump
+fslv00              jfs2       100     200     2    open/syncd    /archivelog
+##command_end_lv_mirror_state

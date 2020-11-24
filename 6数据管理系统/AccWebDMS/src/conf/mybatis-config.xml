@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases> 
+        <typeAlias alias="PubFlag" type="com.goldsign.acc.frame.entity.PubFlag"/>
+        <typeAlias alias="OperationLog" type="com.goldsign.acc.frame.entity.OperationLog"/>
+        <typeAlias alias="Config" type="com.goldsign.acc.app.config.entity.Config"/>
+        <typeAlias alias="ConfigKey" type="com.goldsign.acc.app.config.entity.ConfigKey"/>
+        
+        <!-- 票务管理系统 - 分表日志 -->
+        <typeAlias alias="TkIndex" type="com.goldsign.acc.app.st.entity.TkIndex"/>
+        <!-- 票务管理系统 - 同步日志 -->
+        <typeAlias alias="SynLog" type="com.goldsign.acc.app.st.entity.SynLog"/>
+        <!-- 票务管理系统 - 交易表分表 -->
+        <typeAlias alias="StTrxIndex" type="com.goldsign.acc.app.st.entity.StTrxIndex"/>
+        <!-- 票务管理系统 - 中间表分表 -->
+        <typeAlias alias="StRptIndex" type="com.goldsign.acc.app.st.entity.StRptIndex"/>
+        <!-- 票务管理系统 - 清理日志 -->
+        <typeAlias alias="TkClear" type="com.goldsign.acc.app.st.entity.TkClear"/>
+        <!-- 票务管理系统 - 配置信息 -->
+        <typeAlias alias="TkConfig" type="com.goldsign.acc.app.st.entity.TkConfig"/>
+        
+        <!--数据交换系统 - 配置信息 -->
+        <typeAlias alias="CmConfig" type="com.goldsign.acc.app.commu.entity.CmConfig"/>
+        <!--数据交换系统 - 清理日志 -->
+        <typeAlias alias="CmClearLog" type="com.goldsign.acc.app.commu.entity.CmClearLog"/>
+        
+        <!--系统管理-任务管理-->
+        <typeAlias alias="TaskConfig" type="com.goldsign.acc.app.sysconfig.entity.TaskConfig"/>
+        <!--系统管理-日志查询-->
+        <typeAlias alias="TaskConfig" type="com.goldsign.acc.app.sysconfig.entity.TaskLog"/>
+        
+
+
+    </typeAliases> 
+
+    <mappers>
+        <!--软件版本 -->
+        <mapper resource="com/goldsign/acc/frame/entity/Version.xml"/> 
+        <!--公共参数 -->
+        <mapper resource="com/goldsign/acc/frame/entity/PubFlag.xml"/> 
+        <mapper resource="com/goldsign/acc/app/password/entity/SysOperator.xml"/> 
+        <!--系统配置 -->
+        <mapper resource="com/goldsign/acc/app/config/entity/ConfigMapper.xml"/> 
+        <!--操作日志 参数操作日志 -->
+        <mapper resource="com/goldsign/acc/frame/entity/OperationLog.xml"/> 
+        
+        <!--清算系统 - 配置信息 -->
+        <mapper resource="com/goldsign/acc/app/st/entity/StConfig.xml"/> 
+        <!--清算系统 - 清理日志 -->
+        <mapper resource="com/goldsign/acc/app/st/entity/StClear.xml"/> 
+        
+        <!-- 票务管理系统 - 分表日志 -->
+        <mapper resource="com/goldsign/acc/app/st/entity/TkIndex.xml"/> 
+        <!-- 票务管理系统 - 同步日志 -->
+        <mapper resource="com/goldsign/acc/app/st/entity/SynLog.xml"/> 
+        <!-- 票务管理系统 - 交易表分表 -->
+        <mapper resource="com/goldsign/acc/app/st/entity/StTrxIndex.xml"/> 
+        <!-- 票务管理系统 - 中间表分表 -->
+        <mapper resource="com/goldsign/acc/app/st/entity/StRptIndex.xml"/> 
+        <!-- 票务管理系统 - 清理日志 -->
+        <mapper resource="com/goldsign/acc/app/st/entity/TkClear.xml"/>
+        <!-- 票务管理系统 - 配置信息 -->
+        <mapper resource="com/goldsign/acc/app/st/entity/TkConfig.xml"/>
+        
+        <!--数据交换系统 - 配置信息 -->
+        <mapper resource="com/goldsign/acc/app/commu/entity/CmConfig.xml"/> 
+        <!--数据交换系统 - 清理日志 -->
+        <mapper resource="com/goldsign/acc/app/commu/entity/CmClearLog.xml"/> 
+        <!--数据交换系统 - 分表记录 -->
+        <mapper resource="com/goldsign/acc/app/commu/entity/CmIdxHis.xml"/> 
+        
+        <!--系统管理-任务管理-->
+        <mapper resource="com/goldsign/acc/app/sysconfig/entity/TaskConfig.xml"/>
+        <!--系统管理-日志查询-->
+        <mapper resource="com/goldsign/acc/app/sysconfig/entity/TaskLog.xml"/>
+        
+        <!--系统初始化-->
+        <mapper resource="com/goldsign/acc/app/init/entity/Task.xml"/>
+    </mappers>
+</configuration>

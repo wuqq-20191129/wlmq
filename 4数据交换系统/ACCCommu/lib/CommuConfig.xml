@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Config>
+	<Common>
+		<!-- windows config <BackUpLog>D:\en_work\dir_prog_work\commu\log</BackUpLog> 
+			<FtpLocalDir>D:\en_work\dir_prog_work\commu\parameter</FtpLocalDir> <ParmDstrbPath>D:\en_work\dir_prog_work\commu\parameter</ParmDstrbPath> 
+			<ParmEncodePath>D:\en_work\dir_prog_work\commu\parm</ParmEncodePath> -->
+
+
+		<!-- solaris config -->
+		<BackUpLog>/home/ccommu/log</BackUpLog>
+		<FtpLocalDir>/home/commu/receive</FtpLocalDir>
+		<ParmDstrbPath>/home/commu/parameter</ParmDstrbPath>
+		<ParmEncodePath>/home/commu/parm</ParmEncodePath>
+
+		<!-- <BackUpLog>/export/home/ditie/commu/log</BackUpLog> <FtpLocalDir>/export/home/ditie/commu/receive</FtpLocalDir> 
+			<ParmDstrbPath>/export/home/ditie/commu/parameter</ParmDstrbPath> <ParmEncodePath>/usr/local/jakarta-tomcat-4.1.31/webapps/encode/parm</ParmEncodePath> -->
+		<!-- <BackUpLog>/export/home/ditie/commu/log</BackUpLog> <FtpLocalDir>/export/home/ditie/ComFiles/Com_FTP_Recv_Dir</FtpLocalDir> 
+			<ParmDstrbPath>/export/home/ditie/ftp/parameter</ParmDstrbPath> <ParmEncodePath>/usr/local/jakarta-tomcat-4.1.31/webapps/encode/parm</ParmEncodePath> -->
+
+		<!--Socket config -->
+		<Port>8091</Port>
+		<ReadOneByteTimeOut>3000</ReadOneByteTimeOut>
+		<ReadOneMessageTimeOut>3000</ReadOneMessageTimeOut>
+		<MessageQueueThreadSleepTime>10000</MessageQueueThreadSleepTime>
+
+		<!--FTP config -->
+		<FtpUserName>cs_acc</FtpUserName>
+		<FtpUserPassword>cs_acc123</FtpUserPassword>
+		<FtpPort>21</FtpPort>
+		<!-- <FtpTimeout>5000</FtpTimeout> <FtpRetryWaiting>5000</FtpRetryWaiting> 
+			<FtpRetryTimes>3</FtpRetryTimes> -->
+		<FtpTimeout>900000</FtpTimeout>
+		<FtpRetryWaiting>20000</FtpRetryWaiting>
+		<FtpRetryTimes>45</FtpRetryTimes>
+
+		<!--<FtpLocalDir>receive</FtpLocalDir> -->
+
+		<!--Parameter config -->
+		<ParmDstrbInterval>5000</ParmDstrbInterval>
+		<ParmSynchType>'0101','0201','0202','0203','0204','0205','0301','0302','0303','0304','0400','0501','0601','0602','0603','0604','0801','0802','0900','0901','0902','0903','9120','9220','9320','9420','9520'
+		</ParmSynchType>
+
+		<!--JMS config -->
+		<!--<JmsUrl>t3://10.90.1.51:7001</JmsUrl> -->
+		<JmsUrl>t3://172.20.19.107:7001</JmsUrl>
+		<JmsDefaultQueue>queueAcc</JmsDefaultQueue>
+
+
+		<!--APP config -->
+		<MessageClassPrefix>com.goldsign.commu.app.message.
+		</MessageClassPrefix>
+		<SendQueryWait>50</SendQueryWait>
+		<MonitorRefresh>5000</MonitorRefresh>
+
+		<!--control whether console print true :print false:not print -->
+		<ConsolePrint>true</ConsolePrint>
+		<ConsolePrintFrequency>1</ConsolePrintFrequency>
+		<ReadWithThread>false</ReadWithThread>
+		<GetMessageFrequency>16</GetMessageFrequency>
+		<IsWriteEmergentTraffic>false</IsWriteEmergentTraffic>
+
+
+
+		<StartParameterDistribute>true</StartParameterDistribute>
+		<StartJmsListener>true</StartJmsListener>
+		<StartSocketListener>true</StartSocketListener>
+		<StartJmsExceptionListener>true</StartJmsExceptionListener>
+		<StartConnectionPoolListener>true</StartConnectionPoolListener>
+
+		<!--客流消息最大滞留时间 -1:不限制 -->
+		<TrafficDelayMaxDay>-1</TrafficDelayMaxDay>
+		<!--杀死线程,等候资源释放最大的次数,每次1秒 -->
+		<ThreadReleaseResourceWaitCount>5</ThreadReleaseResourceWaitCount>
+
+
+	</Common>
+
+	<OP_URL>10.200.48.7</OP_URL>
+	<OP_PORT>21</OP_PORT>
+	<OP_USERNAME>cs_acc</OP_USERNAME>
+	<OP_PASSWORD>cs_acc123</OP_PASSWORD>
+	<OP_REMOTE_PATH_PROGRAM>remote_program</OP_REMOTE_PATH_PROGRAM>
+	<OP_REMOTE_PATH_TVMMAP>remote_map</OP_REMOTE_PATH_TVMMAP>
+
+
+	<!--if file is in ftp root path,no need to define here -->
+	<FtpPaths>
+		<FtpPath id="TRX" value="transaction" />
+		<FtpPath id="PRO" value="revenue" />
+		<FtpPath id="AUD" value="audit" />
+		<FtpPath id="REG" value="reg" />
+	</FtpPaths>
+
+	<Messages>
+		<Message id="01" value="Message01" />
+		<Message id="03" value="Message03" />
+		<Message id="05" value="Message05" />
+		<Message id="08" value="Message08" />
+		<Message id="09" value="Message09" />
+		<Message id="10" value="Message10" />
+		<Message id="11" value="Message11" />
+		<Message id="12" value="Message12" />
+		<Message id="13" value="Message13" />
+		<Message id="14" value="Message14" />
+		<Message id="15" value="Message15" />
+		<Message id="16" value="Message16" />
+		<Message id="20" value="Message20" />
+	</Messages>
+
+
+
+
+	<!--Connection pool name of the 17 database. -->
+	<!--To set user and password, please add "@@" before it. Eg: <User>@@user</User>, 
+		<Password>@@password</Password> -->
+
+	<DataConnectionPool>
+		<Driver>oracle.jdbc.driver.OracleDriver</Driver>
+		<URL>jdbc:oracle:thin:@172.20.19.203:1521:epay1</URL>
+		<!-- <Database></Database> -->
+		<User encrypt="true">262C2F1B203D</User>
+		<Password encrypt="true">262C2F1B203D</Password>
+		<MaxActive>40</MaxActive>
+		<MaxIdle>20</MaxIdle>
+		<MaxWait>20000</MaxWait>
+	</DataConnectionPool>
+
+	<!--Connection pool name of the 30 database. -->
+	<!--To set user and password, please add "@@" before it. Eg: <User>@@user</User>, 
+		<Password>@@password</Password> -->
+	<LogConnectionPool>
+		<Driver>oracle.jdbc.driver.OracleDriver</Driver>
+		<URL>jdbc:oracle:thin:@172.20.19.203:1521:epay1</URL>
+		<!-- <Database></Database> -->
+		<User encrypt="true">262C2F1B30262A2332</User>
+		<Password encrypt="true">262C2F1B30262A2332</Password>
+		<MaxActive>40</MaxActive>
+		<MaxIdle>20</MaxIdle>
+		<MaxWait>20000</MaxWait>
+	</LogConnectionPool>
+
+
+	<!--Connection pool name of the 31 database. -->
+	<!--To set user and password, please add "@@" before it. Eg: <User>@@user</User>, 
+		<Password>@@password</Password> -->
+	<FlowConnectionPool>
+		<Driver>oracle.jdbc.driver.OracleDriver</Driver>
+		<URL>jdbc:oracle:thin:@172.20.19.203:1521:epay1</URL>
+		<!-- <Database></Database> -->
+		<User encrypt="true">262C2F1B30262A2332</User>
+		<Password encrypt="true">262C2F1B30262A2332</Password>
+		<MaxActive>40</MaxActive>
+		<MaxIdle>20</MaxIdle>
+		<MaxWait>20000</MaxWait>
+	</FlowConnectionPool>
+
+
+	<EmergentFlowConnectionPool>
+		<Driver>oracle.jdbc.driver.OracleDriver</Driver>
+		<URL>jdbc:oracle:thin:@172.20.19.203:1521:epay1</URL>
+		<!-- <Database></Database> -->
+		<User encrypt="true">262C2F1B30262A2332</User>
+		<Password encrypt="true">262C2F1B30262A2332</Password>
+		<MaxActive>40</MaxActive>
+		<MaxIdle>20</MaxIdle>
+		<MaxWait>20000</MaxWait>
+	</EmergentFlowConnectionPool>
+
+	<!--thread pool configuration -->
+
+	<CommunicationThreadPool>
+		<MaxThreadNumber>12</MaxThreadNumber>
+		<ThreadSleepTime>100</ThreadSleepTime>
+		<ThreadPriorityAdd>0</ThreadPriorityAdd>
+		<ReadThreadPriorityAdd>2</ReadThreadPriorityAdd>
+		<MaxSearchNum>2</MaxSearchNum>
+		<UnHanledMsgLogDir>/home/online/acccommu/log</UnHanledMsgLogDir>
+		<!-- <UnHanledMsgLogDir>e:/temp/commu/log</UnHanledMsgLogDir> -->
+		<ThreadBufferCapacity>10000</ThreadBufferCapacity>
+		<ThreadBufferIncrement>1000</ThreadBufferIncrement>
+		<PriorityThreadBufferCapacity>2000</PriorityThreadBufferCapacity>
+		<PriorityThreadBufferIncrement>1000</PriorityThreadBufferIncrement>
+	</CommunicationThreadPool>
+
+	<JMSExceptionListenerThread>
+		<!-- 0:reconnect until sucess; -->
+		<JmsReconnectCount>0</JmsReconnectCount>
+		<JmsExceptionThreadSleepTime>1000</JmsExceptionThreadSleepTime>
+		<JmsMsghandleSleepTime>100</JmsMsghandleSleepTime>
+	</JMSExceptionListenerThread>
+
+	<ConnectionPoolListenerThread>
+		<CPListenerThreadSleepTime>1000</CPListenerThreadSleepTime>
+		<TestSqlForData>select count(*) from op_tst_db_status </TestSqlForData>
+		<TestSqlForLog>select count(*) from cm_tst_db_status </TestSqlForLog>
+		<TestSqlForFlow>select count(*) from cm_tst_db_status </TestSqlForFlow>
+		<SqlMsghandleSleepTime>100</SqlMsghandleSleepTime>
+	</ConnectionPoolListenerThread>
+
+	<ThreadPoolMonitor>
+		<!--线程池监控时间间隔 -->
+		<TPMonitorThreadSleepTime>1000</TPMonitorThreadSleepTime>
+		<!--消息处理允许的最大挂起数 -->
+		<ThreadMsgHandUpMaxNumberAllow>15</ThreadMsgHandUpMaxNumberAllow>
+		<!--消息解释类前缀 -->
+		<ThreadMsgAnalyzeClassPrefix>com.goldsign.commu.app.monitor.AnalyzeMessage
+		</ThreadMsgAnalyzeClassPrefix>
+	</ThreadPoolMonitor>
+	<!--备参数版本 -->
+	<DevParamVer>
+		<!--设备参数版本查询时间间隔 单位：毫秒 -->
+		<DevParaVerThreadSleepTime>10000</DevParaVerThreadSleepTime>
+	</DevParamVer>
+	<!--参数自动下发 -->
+	<ParamAutoDown>
+		<!--自动下发轮询时间间隔 单位：毫秒 设置值不能小于1分钟 -->
+		<ParaDownloadThreadSleepTime>80000</ParaDownloadThreadSleepTime>
+	</ParamAutoDown>
+
+</Config>

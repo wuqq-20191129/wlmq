@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prmdev.mapper.SamListMapper">
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.prmdev.entity.SamList">
+    <constructor>
+      <idArg column="DEVICE_ID" javaType="java.lang.String" jdbcType="CHAR" />
+      <idArg column="DEV_TYPE_ID" javaType="java.lang.String" jdbcType="CHAR" />
+      <idArg column="LINE_ID" javaType="java.lang.String" jdbcType="CHAR" />
+      <idArg column="STATION_ID" javaType="java.lang.String" jdbcType="CHAR" />
+      <idArg column="RECORD_FLAG" javaType="java.lang.String" jdbcType="CHAR" />
+      <idArg column="VERSION_NO" javaType="java.lang.String" jdbcType="CHAR" />
+      <idArg column="SAM_LOGICAL_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SAM_TYPE_ID" javaType="java.lang.String" jdbcType="CHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    DEVICE_ID, DEV_TYPE_ID, LINE_ID, STATION_ID, RECORD_FLAG, VERSION_NO, SAM_LOGICAL_ID, 
+    SAM_TYPE_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.goldsign.acc.app.prmdev.entity.SamList" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from W_ACC_ST.W_OP_PRM_SAM_LIST
+    where RECORD_FLAG = #{recordFlag,jdbcType=CHAR}
+      and VERSION_NO = #{versionNo,jdbcType=CHAR}
+      and SAM_LOGICAL_ID = #{samLogicalId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectSamLists" parameterType="com.goldsign.acc.app.prmdev.entity.SamList" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from W_ACC_ST.W_OP_PRM_SAM_LIST
+    where 1=1
+    <if test="lineId !=null and lineId !=''">
+        and LINE_ID = #{lineId,jdbcType=CHAR}
+    </if>
+    <if test="samTypeId !=null and samTypeId !=''">
+        and SAM_TYPE_ID = #{samTypeId,jdbcType=CHAR}
+    </if>
+    <if test="devTypeId !=null and devTypeId !=''">
+        and DEV_TYPE_ID = #{devTypeId,jdbcType=CHAR}
+    </if>
+    <if test="versionNo !=null and versionNo !=''">
+        and VERSION_NO = #{versionNo,jdbcType=CHAR}
+    </if>
+    <if test="stationId !=null and stationId !=''">
+        and STATION_ID = #{stationId,jdbcType=CHAR}
+    </if>
+    <if test="samLogicalId !=null and samLogicalId !=''">
+        and SAM_LOGICAL_ID = #{samLogicalId,jdbcType=VARCHAR}
+    </if>
+    <if test="recordFlag !=null and recordFlag !=''">
+        and RECORD_FLAG = #{recordFlag,jdbcType=CHAR}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.goldsign.acc.app.prmdev.entity.SamList">
+    delete from W_ACC_ST.W_OP_PRM_SAM_LIST
+    where RECORD_FLAG = #{recordFlag,jdbcType=CHAR}
+      and VERSION_NO = #{versionNo,jdbcType=CHAR}
+      and SAM_LOGICAL_ID = #{samLogicalId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.goldsign.acc.app.prmdev.entity.SamList">
+    insert into W_ACC_ST.W_OP_PRM_SAM_LIST (DEVICE_ID, DEV_TYPE_ID, LINE_ID, 
+      STATION_ID, RECORD_FLAG, VERSION_NO, 
+      SAM_LOGICAL_ID, SAM_TYPE_ID)
+    values (#{deviceId,jdbcType=CHAR}, #{devTypeId,jdbcType=CHAR}, #{lineId,jdbcType=CHAR}, 
+      #{stationId,jdbcType=CHAR}, #{recordFlag,jdbcType=CHAR}, #{versionNo,jdbcType=CHAR}, 
+      #{samLogicalId,jdbcType=VARCHAR}, #{samTypeId,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.prmdev.entity.SamList">
+    insert into W_ACC_ST.W_OP_PRM_SAM_LIST
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        DEVICE_ID,
+      </if>
+      <if test="devTypeId != null">
+        DEV_TYPE_ID,
+      </if>
+      <if test="lineId != null">
+        LINE_ID,
+      </if>
+      <if test="stationId != null">
+        STATION_ID,
+      </if>
+      <if test="recordFlag != null">
+        RECORD_FLAG,
+      </if>
+      <if test="versionNo != null">
+        VERSION_NO,
+      </if>
+      <if test="samLogicalId != null">
+        SAM_LOGICAL_ID,
+      </if>
+      <if test="samTypeId != null">
+        SAM_TYPE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=CHAR},
+      </if>
+      <if test="devTypeId != null">
+        #{devTypeId,jdbcType=CHAR},
+      </if>
+      <if test="lineId != null">
+        #{lineId,jdbcType=CHAR},
+      </if>
+      <if test="stationId != null">
+        #{stationId,jdbcType=CHAR},
+      </if>
+      <if test="recordFlag != null">
+        #{recordFlag,jdbcType=CHAR},
+      </if>
+      <if test="versionNo != null">
+        #{versionNo,jdbcType=CHAR},
+      </if>
+      <if test="samLogicalId != null">
+        #{samLogicalId,jdbcType=VARCHAR},
+      </if>
+      <if test="samTypeId != null">
+        #{samTypeId,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.goldsign.acc.app.prmdev.entity.SamList">
+    update W_ACC_ST.W_OP_PRM_SAM_LIST
+    <set>
+      <if test="samTypeId != null">
+        SAM_TYPE_ID = #{samTypeId,jdbcType=CHAR}
+      </if>
+      <if test="deviceId != null">
+        ,DEVICE_ID = #{deviceId,jdbcType=CHAR}
+      </if>
+      <if test="devTypeId != null">
+        ,DEV_TYPE_ID = #{devTypeId,jdbcType=CHAR}
+      </if>
+      <if test="lineId != null">
+        ,LINE_ID = #{lineId,jdbcType=CHAR}
+      </if>
+      <if test="stationId != null">
+        ,STATION_ID = #{stationId,jdbcType=CHAR}
+      </if>
+    </set>
+    where RECORD_FLAG = #{recordFlag,jdbcType=CHAR}
+      and VERSION_NO = #{versionNo,jdbcType=CHAR}
+      and SAM_LOGICAL_ID = #{samLogicalId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.goldsign.acc.app.prmdev.entity.SamList">
+    update W_ACC_ST.W_OP_PRM_SAM_LIST
+    set SAM_TYPE_ID = #{samTypeId,jdbcType=CHAR}
+    where DEVICE_ID = #{deviceId,jdbcType=CHAR}
+      and DEV_TYPE_ID = #{devTypeId,jdbcType=CHAR}
+      and LINE_ID = #{lineId,jdbcType=CHAR}
+      and STATION_ID = #{stationId,jdbcType=CHAR}
+      and RECORD_FLAG = #{recordFlag,jdbcType=CHAR}
+      and VERSION_NO = #{versionNo,jdbcType=CHAR}
+      and SAM_LOGICAL_ID = #{samLogicalId,jdbcType=VARCHAR}
+  </update>
+  
+  <!--当前参数、未来参数作历史标识或删除标识 -->
+  <update id="submitToOldFlag" parameterType="PrmVersion" >
+      update W_ACC_ST.W_OP_PRM_SAM_LIST set record_flag=#{record_flag_old}
+      where record_flag=#{record_flag_new}                                               
+  </update>
+  <!--草稿参数复制为当前或未来参数 -->
+  <insert id="submitFromDraftToCurOrFur" parameterType="PrmVersion" >
+      insert into W_ACC_ST.W_OP_PRM_SAM_LIST(DEVICE_ID, DEV_TYPE_ID, LINE_ID, STATION_ID, RECORD_FLAG, VERSION_NO, SAM_LOGICAL_ID, SAM_TYPE_ID)
+      select DEVICE_ID, DEV_TYPE_ID, LINE_ID, STATION_ID, #{record_flag_new}, #{version_no_new}, SAM_LOGICAL_ID, SAM_TYPE_ID
+      from W_ACC_ST.W_OP_PRM_SAM_LIST
+      where record_flag=#{record_flag} and version_no=#{version_no}                                   
+  </insert>
+  <!--草稿参数删除 -->
+  <delete id="deleteDeviceTypesForClone" parameterType="PrmVersion">
+      delete from W_ACC_ST.W_OP_PRM_SAM_LIST where record_flag='3' and version_no='0000000000'                                                      
+  </delete>
+  <!--当前参数或未来参数克隆为草稿参数 -->
+  <insert id="cloneFromCurOrFurToDraft" parameterType="PrmVersion" >
+      insert into W_ACC_ST.W_OP_PRM_SAM_LIST(DEVICE_ID, DEV_TYPE_ID, LINE_ID, STATION_ID, RECORD_FLAG, VERSION_NO, SAM_LOGICAL_ID, SAM_TYPE_ID)
+      select DEVICE_ID, DEV_TYPE_ID, LINE_ID, STATION_ID, '3', '0000000000', SAM_LOGICAL_ID, SAM_TYPE_ID
+      from W_ACC_ST.W_OP_PRM_SAM_LIST
+      where record_flag=#{record_flag} and version_no=#{version_no}
+  </insert>
+</mapper>

@@ -1,0 +1,502 @@
+package com.goldsign.acc.app.querysys.entity;
+
+import java.math.BigDecimal;
+
+
+public class SignCardReturnQuery {
+    private Integer waterNo;
+
+    private String lineId;
+    
+    private String lineText;
+    
+    private String stationId;
+    
+     private String stationText;
+
+    private String devTypeId;
+
+    private String deviceId;
+
+    private String cardMainId;
+    
+    private String cardMainText;
+
+    private String cardSubId;
+    
+    private String cardSubText;
+
+    private String cardLogicalId;
+
+    private String cardPhysicalId;
+
+    private String cardPrintId;
+
+    private String applyDatetime;
+
+    private String businessReceiptId;
+
+    private String operatorId;
+
+    private String applyName;
+
+    private String telNo;
+
+    private String identityType;
+    
+    private String identityTypeText;
+
+    private String identityId;
+
+    private String isBroken;
+
+    private String shiftId;
+
+    private String cardAppFlag;
+
+    private String balanceWaterNo;
+
+    private String hdlFlag;
+    
+    private String hdlText;
+
+    private BigDecimal depositFee;
+
+    private BigDecimal cardBalanceFee;
+
+    private BigDecimal systemBalanceFee;
+
+    private BigDecimal penaltyFee;
+
+    private BigDecimal returnBala;
+
+    private String remark;
+
+    private String returnLineId;
+    
+    private String returnLineText;
+
+    private String returnStationId;
+    
+    private String returnStationText;
+
+    private String returnDevTypeId;
+
+    private String returnDeviceId;
+
+    private BigDecimal actualReturnBala;
+
+    private String auditFlag;
+
+    private String penaltyReason;
+
+    private String returnType;
+    
+    private String beginDatetime;
+    
+    private String endDatetime;
+    
+    private String operator;
+    
+    //到点未处理标志 判断依据当前时间>申请时间+等待时间且未审核
+    private String nonHandleFlag;
+
+    //BOM没有退款0 BOM退款1
+    private  String displayFlag;
+
+    public String getDisplayFlag() {
+        return displayFlag;
+    }
+
+    public void setDisplayFlag(String displayFlag) {
+        this.displayFlag = displayFlag;
+    }
+
+    public Integer getWaterNo() {
+        return waterNo;
+    }
+
+    public void setWaterNo(Integer waterNo) {
+        this.waterNo = waterNo;
+    }
+
+    public String getLineId() {
+        return lineId;
+    }
+
+    public void setLineId(String lineId) {
+        this.lineId = lineId == null ? null : lineId.trim();
+    }
+
+    public String getStationId() {
+        return stationId;
+    }
+
+    public void setStationId(String stationId) {
+        this.stationId = stationId == null ? null : stationId.trim();
+    }
+
+    public String getDevTypeId() {
+        return devTypeId;
+    }
+
+    public void setDevTypeId(String devTypeId) {
+        this.devTypeId = devTypeId == null ? null : devTypeId.trim();
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId == null ? null : deviceId.trim();
+    }
+
+    public String getCardMainId() {
+        return cardMainId;
+    }
+
+    public void setCardMainId(String cardMainId) {
+        this.cardMainId = cardMainId == null ? null : cardMainId.trim();
+    }
+
+    public String getCardSubId() {
+        return cardSubId;
+    }
+
+    public void setCardSubId(String cardSubId) {
+        this.cardSubId = cardSubId == null ? null : cardSubId.trim();
+    }
+
+    public String getCardLogicalId() {
+        return cardLogicalId;
+    }
+
+    public void setCardLogicalId(String cardLogicalId) {
+        this.cardLogicalId = cardLogicalId == null ? null : cardLogicalId.trim();
+    }
+
+    public String getCardPhysicalId() {
+        return cardPhysicalId;
+    }
+
+    public void setCardPhysicalId(String cardPhysicalId) {
+        this.cardPhysicalId = cardPhysicalId == null ? null : cardPhysicalId.trim();
+    }
+
+    public String getCardPrintId() {
+        return cardPrintId;
+    }
+
+    public void setCardPrintId(String cardPrintId) {
+        this.cardPrintId = cardPrintId == null ? null : cardPrintId.trim();
+    }
+
+    public String getApplyDatetime() {
+        return applyDatetime;
+    }
+
+    public void setApplyDatetime(String applyDatetime) {
+        this.applyDatetime = applyDatetime;
+    }
+
+    public String getBusinessReceiptId() {
+        return businessReceiptId;
+    }
+
+    public void setBusinessReceiptId(String businessReceiptId) {
+        this.businessReceiptId = businessReceiptId;
+    }
+
+
+
+    public String getOperatorId() {
+        return operatorId;
+    }
+
+    public void setOperatorId(String operatorId) {
+        this.operatorId = operatorId == null ? null : operatorId.trim();
+    }
+
+    public String getApplyName() {
+        return applyName;
+    }
+
+    public void setApplyName(String applyName) {
+        this.applyName = applyName == null ? null : applyName.trim();
+    }
+
+    public String getTelNo() {
+        return telNo;
+    }
+
+    public void setTelNo(String telNo) {
+        this.telNo = telNo == null ? null : telNo.trim();
+    }
+
+    public String getIdentityType() {
+        return identityType;
+    }
+
+    public void setIdentityType(String identityType) {
+        this.identityType = identityType == null ? null : identityType.trim();
+    }
+
+    public String getIdentityId() {
+        return identityId;
+    }
+
+    public void setIdentityId(String identityId) {
+        this.identityId = identityId == null ? null : identityId.trim();
+    }
+
+    public String getIsBroken() {
+        return isBroken;
+    }
+
+    public void setIsBroken(String isBroken) {
+        this.isBroken = isBroken == null ? null : isBroken.trim();
+    }
+
+    public String getShiftId() {
+        return shiftId;
+    }
+
+    public void setShiftId(String shiftId) {
+        this.shiftId = shiftId == null ? null : shiftId.trim();
+    }
+
+    public String getCardAppFlag() {
+        return cardAppFlag;
+    }
+
+    public void setCardAppFlag(String cardAppFlag) {
+        this.cardAppFlag = cardAppFlag == null ? null : cardAppFlag.trim();
+    }
+
+    public String getBalanceWaterNo() {
+        return balanceWaterNo;
+    }
+
+    public void setBalanceWaterNo(String balanceWaterNo) {
+        this.balanceWaterNo = balanceWaterNo == null ? null : balanceWaterNo.trim();
+    }
+
+    public String getHdlFlag() {
+        return hdlFlag;
+    }
+
+    public void setHdlFlag(String hdlFlag) {
+        this.hdlFlag = hdlFlag == null ? null : hdlFlag.trim();
+    }
+
+    public BigDecimal getDepositFee() {
+        return depositFee;
+    }
+
+    public void setDepositFee(BigDecimal depositFee) {
+        this.depositFee = depositFee;
+    }
+
+    public BigDecimal getCardBalanceFee() {
+        return cardBalanceFee;
+    }
+
+    public void setCardBalanceFee(BigDecimal cardBalanceFee) {
+        this.cardBalanceFee = cardBalanceFee;
+    }
+
+    public BigDecimal getSystemBalanceFee() {
+        return systemBalanceFee;
+    }
+
+    public void setSystemBalanceFee(BigDecimal systemBalanceFee) {
+        this.systemBalanceFee = systemBalanceFee;
+    }
+
+    public BigDecimal getPenaltyFee() {
+        return penaltyFee;
+    }
+
+    public void setPenaltyFee(BigDecimal penaltyFee) {
+        this.penaltyFee = penaltyFee;
+    }
+
+    public BigDecimal getReturnBala() {
+        return returnBala;
+    }
+
+    public void setReturnBala(BigDecimal returnBala) {
+        this.returnBala = returnBala;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getReturnLineId() {
+        return returnLineId;
+    }
+
+    public void setReturnLineId(String returnLineId) {
+        this.returnLineId = returnLineId == null ? null : returnLineId.trim();
+    }
+
+    public String getReturnStationId() {
+        return returnStationId;
+    }
+
+    public void setReturnStationId(String returnStationId) {
+        this.returnStationId = returnStationId == null ? null : returnStationId.trim();
+    }
+
+    public String getReturnDevTypeId() {
+        return returnDevTypeId;
+    }
+
+    public void setReturnDevTypeId(String returnDevTypeId) {
+        this.returnDevTypeId = returnDevTypeId == null ? null : returnDevTypeId.trim();
+    }
+
+    public String getReturnDeviceId() {
+        return returnDeviceId;
+    }
+
+    public void setReturnDeviceId(String returnDeviceId) {
+        this.returnDeviceId = returnDeviceId == null ? null : returnDeviceId.trim();
+    }
+
+    public BigDecimal getActualReturnBala() {
+        return actualReturnBala;
+    }
+
+    public void setActualReturnBala(BigDecimal actualReturnBala) {
+        this.actualReturnBala = actualReturnBala;
+    }
+
+    public String getAuditFlag() {
+        return auditFlag;
+    }
+
+    public void setAuditFlag(String auditFlag) {
+        this.auditFlag = auditFlag == null ? null : auditFlag.trim();
+    }
+
+    public String getPenaltyReason() {
+        return penaltyReason;
+    }
+
+    public void setPenaltyReason(String penaltyReason) {
+        this.penaltyReason = penaltyReason == null ? null : penaltyReason.trim();
+    }
+
+    public String getReturnType() {
+        return returnType;
+    }
+
+    public void setReturnType(String returnType) {
+        this.returnType = returnType == null ? null : returnType.trim();
+    }
+
+    public String getLineText() {
+        return lineText;
+    }
+
+    public void setLineText(String lineText) {
+        this.lineText = lineText;
+    }
+
+    public String getStationText() {
+        return stationText;
+    }
+
+    public void setStationText(String stationText) {
+        this.stationText = stationText;
+    }
+
+    public String getCardMainText() {
+        return cardMainText;
+    }
+
+    public void setCardMainText(String cardMainText) {
+        this.cardMainText = cardMainText;
+    }
+
+    public String getCardSubText() {
+        return cardSubText;
+    }
+
+    public void setCardSubText(String cardSubText) {
+        this.cardSubText = cardSubText;
+    }
+
+    public String getBeginDatetime() {
+        return beginDatetime;
+    }
+
+    public String getEndDatetime() {
+        return endDatetime;
+    }
+
+    public void setBeginDatetime(String beginDatetime) {
+        this.beginDatetime = beginDatetime;
+    }
+
+    public void setEndDatetime(String endDatetime) {
+        this.endDatetime = endDatetime;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public String getReturnLineText() {
+        return returnLineText;
+    }
+
+    public String getReturnStationText() {
+        return returnStationText;
+    }
+
+    public void setReturnLineText(String returnLineText) {
+        this.returnLineText = returnLineText;
+    }
+
+    public void setReturnStationText(String returnStationText) {
+        this.returnStationText = returnStationText;
+    }
+
+    public String getHdlText() {
+        return hdlText;
+    }
+
+    public void setHdlText(String hdlText) {
+        this.hdlText = hdlText;
+    }
+
+    public void setIdentityTypeText(String identityTypeText) {
+        this.identityTypeText = identityTypeText;
+    }
+
+    public String getIdentityTypeText() {
+        return identityTypeText;
+    }
+
+	public String getNonHandleFlag() {
+		return nonHandleFlag;
+	}
+
+	public void setNonHandleFlag(String nonHandleFlag) {
+		this.nonHandleFlag = nonHandleFlag;
+	}
+    
+    
+}

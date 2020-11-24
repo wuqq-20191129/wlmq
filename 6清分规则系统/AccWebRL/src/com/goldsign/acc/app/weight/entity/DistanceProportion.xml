@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper  namespace = "com.goldsign.acc.app.weight.mapper.GenerateDataMapper">
+    
+    <resultMap type = "com.goldsign.acc.app.weight.entity.DistanceProportion"  id = "rmDistanceProportion">
+        <result column="VERSION"  property="version"/>
+        <result column="RECORD_FLAG"  property="recordFlag"/>
+        <result column="O_STATION_ID"  property="oStationId"/>
+        <result column="O_LINE_ID"  property="oLineId"/>
+        <result column="D_STATION_ID"  property="dStationId"/>
+        <result column="D_LINE_ID"  property="dLineId"/>
+        <result column="DISPART_LINE_ID"  property="dispartLineId"/>
+        <result column="IN_PERCENT"  property="inPrecent"/>
+        <result column="CREATE_TIME"  property="createTime"/>
+        <result column="CREATE_OPERATOR"  property="createOperator"/>
+    </resultMap>
+    
+    <select id="getGenerateDataList"   resultMap="rmDistanceProportion">
+        select * from w_acc_rl.w_rl_proportion where 1=1
+        <if test="oLineId !=null and oLineId !=''">
+            and O_LINE_ID = #{oLineId} 
+        </if>
+        <if test="oStationId !=null and oStationId !=''">
+            and O_STATION_ID = #{oStationId} 
+        </if>
+        <if test="dLineId !=null and dLineId !=''">
+            and D_LINE_ID =#{dLineId} 
+        </if> 
+        <if test="dStationId !=null and dStationId !=''">
+            and D_STATION_ID =#{dStationId}
+        </if>
+        <if test="recordFlag !=null and recordFlag !=''">
+            and RECORD_FLAG =#{recordFlag}
+        </if>
+        
+    </select> 
+    
+    <select id="queryStore"   resultMap="rmDistanceProportion">
+        select O_LINE_ID,O_STATION_ID,D_LINE_ID,D_STATION_ID,DISPART_LINE_ID,IN_PERCENT from w_acc_rl.w_rl_proportion where RECORD_FLAG='0'
+        <if test="oLineId !=null and oLineId !=''">
+            and O_LINE_ID = #{oLineId} 
+        </if>
+        <if test="oStationId !=null and oStationId !=''">
+            and O_STATION_ID = #{oStationId} 
+        </if>
+        <if test="dLineId !=null and dLineId !=''">
+            and D_LINE_ID =#{dLineId} 
+        </if> 
+        <if test="dStationId !=null and dStationId !=''">
+            and D_STATION_ID =#{dStationId}
+        </if>
+
+        order by O_LINE_ID,O_STATION_ID,D_LINE_ID,D_STATION_ID
+    </select> 
+<!--     <select id="queryStore" parameterType="java.util.Map" statementType="CALLABLE">
+        {
+            call W_ACC_RL.W_UP_RL_GET_OD_PROPORTION_CUR( 
+                #{o_line_id,mode=IN,jdbcType=VARCHAR},#{o_station_id,mode=IN,jdbcType=VARCHAR},
+                #{d_line_id,mode=IN,jdbcType=VARCHAR},#{d_station_id,mode=IN,jdbcType=VARCHAR},
+                #{result,mode=OUT,jdbcType=CURSOR,javaType=ResultSet, resultMap=rmDistanceProportion},
+                #{code,mode=OUT,jdbcType=INTEGER},#{errmsg,mode=OUT,jdbcType=VARCHAR}
+            )
+        }
+    </select>-->
+
+
+
+
+
+</mapper>
+
+
+

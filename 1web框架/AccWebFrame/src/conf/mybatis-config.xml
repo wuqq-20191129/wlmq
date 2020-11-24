@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<typeAliases> 
+    <typeAlias alias="User" type="com.goldsign.acc.test.entity.User"/> 
+    <typeAlias alias="PrmVersion" type="com.goldsign.acc.app.prminfo.entity.PrmVersion"/> 
+    <typeAlias alias="PubFlag" type="com.goldsign.acc.frame.entity.PubFlag"/>
+    <typeAlias alias="OperationLog" type="com.goldsign.acc.frame.entity.OperationLog"/>
+    <typeAlias alias="OperationLogForPrm" type="com.goldsign.acc.frame.entity.OperationLogForPrm"/>
+    <typeAlias alias="StationDevice" type="com.goldsign.acc.app.prmdev.entity.StationDevice"/>
+    <typeAlias alias="Config" type="com.goldsign.acc.app.config.entity.Config"/>
+    <typeAlias alias="ConfigKey" type="com.goldsign.acc.app.config.entity.ConfigKey"/>
+
+</typeAliases> 
+<!--
+<environments default="development">
+    <environment id="development">
+        <transactionManager type="JDBC"/>
+        <dataSource type="POOLED">
+            <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+            <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
+            <property name="username" value="acc_st"/>
+            <property name="password" value="acc_st"/>
+        </dataSource>
+    </environment>
+</environments>
+ -->  
+<mappers>
+    <mapper resource="com/goldsign/acc/test/entity/User.xml"/> 
+    <!--软件版本 -->
+    <mapper resource="com/goldsign/acc/frame/entity/Version.xml"/> 
+    <!--参数版本 -->
+    <mapper resource="com/goldsign/acc/app/prminfo/entity/PrmVersion.xml"/> 
+     <!--公共参数 线路、车站、票卡主类型、票卡子类型、设备类型 -->
+    <mapper resource="com/goldsign/acc/frame/entity/PubFlag.xml"/> 
+    <!--操作日志 参数操作日志 -->
+    <mapper resource="com/goldsign/acc/frame/entity/OperationLog.xml"/> 
+    <!--车站设备 -->
+    <mapper resource="com/goldsign/acc/app/prmdev/entity/StationDevice.xml"/> 
+    <mapper resource="com/goldsign/acc/app/password/entity/SysOperator.xml"/> 
+   <!--  <mapper resource="com/goldsign/acc/test/model/UserInterface.xml"/> -->
+    <!--系统配置 -->
+    <mapper resource="com/goldsign/acc/app/config/entity/ConfigMapper.xml"/> 
+</mappers>
+</configuration>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.opma.mapper.CodBtnTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.opma.entity.CodBtnType" >
+    <constructor >
+      <idArg column="BTN_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="BTN_CODE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="BTN_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="COMMAND_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="OPERATION_TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    BTN_ID, BTN_CODE, BTN_NAME, COMMAND_NAME, OPERATION_TYPE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from w_acc_st.W_OP_COD_BTN_TYPE
+    where BTN_ID = #{btnId,jdbcType=CHAR}
+  </select>
+  <select id="selectBy" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from w_acc_st.W_OP_COD_BTN_TYPE
+    order by BTN_ID desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from w_acc_st.W_OP_COD_BTN_TYPE
+    where BTN_ID = #{btnId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.goldsign.acc.app.opma.entity.CodBtnType" >
+    insert into w_acc_st.W_OP_COD_BTN_TYPE (BTN_ID, BTN_CODE, BTN_NAME, 
+      COMMAND_NAME, OPERATION_TYPE)
+    values (#{btnId,jdbcType=CHAR}, #{btnCode,jdbcType=VARCHAR}, #{btnName,jdbcType=VARCHAR}, 
+      #{commandName,jdbcType=VARCHAR}, #{operationType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.opma.entity.CodBtnType" >
+    insert into w_acc_st.W_OP_COD_BTN_TYPE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="btnId != null" >
+        BTN_ID,
+      </if>
+      <if test="btnCode != null" >
+        BTN_CODE,
+      </if>
+      <if test="btnName != null" >
+        BTN_NAME,
+      </if>
+      <if test="commandName != null" >
+        COMMAND_NAME,
+      </if>
+      <if test="operationType != null" >
+        OPERATION_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="btnId != null" >
+        #{btnId,jdbcType=CHAR},
+      </if>
+      <if test="btnCode != null" >
+        #{btnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="btnName != null" >
+        #{btnName,jdbcType=VARCHAR},
+      </if>
+      <if test="commandName != null" >
+        #{commandName,jdbcType=VARCHAR},
+      </if>
+      <if test="operationType != null" >
+        #{operationType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.goldsign.acc.app.opma.entity.CodBtnType" >
+    update w_acc_st.W_OP_COD_BTN_TYPE
+    <set >
+      <if test="btnCode != null" >
+        BTN_CODE = #{btnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="btnName != null" >
+        BTN_NAME = #{btnName,jdbcType=VARCHAR},
+      </if>
+      <if test="commandName != null" >
+        COMMAND_NAME = #{commandName,jdbcType=VARCHAR},
+      </if>
+      <if test="operationType != null" >
+        OPERATION_TYPE = #{operationType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BTN_ID = #{btnId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.goldsign.acc.app.opma.entity.CodBtnType" >
+    update w_acc_st.W_OP_COD_BTN_TYPE
+    set BTN_CODE = #{btnCode,jdbcType=VARCHAR},
+      BTN_NAME = #{btnName,jdbcType=VARCHAR},
+      COMMAND_NAME = #{commandName,jdbcType=VARCHAR},
+      OPERATION_TYPE = #{operationType,jdbcType=VARCHAR}
+    where BTN_ID = #{btnId,jdbcType=CHAR}
+  </update>
+</mapper>

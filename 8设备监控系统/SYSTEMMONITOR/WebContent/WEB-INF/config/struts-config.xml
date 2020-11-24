@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+    <!-- Data Sources -->
+    <data-sources></data-sources>
+	
+    <form-beans>
+        <form-bean name="menuForm" type="org.apache.struts.action.DynaActionForm">
+            <form-property name="MenuId" type="java.lang.String" />
+        </form-bean>
+    </form-beans>
+
+    <!-- Global Exceptions -->
+    <global-exceptions></global-exceptions>
+
+    <!-- Global Forwards -->
+    <global-forwards>
+        <!-- framework global forwards -->
+        <forward name="EXCEPTION_DEFAULT_PAGE" path="/core/exception_default_page.xml" />
+
+        <forward name="showMessage" path="/jsp/showMessage.jsp" />
+        <forward name="failure" path="/jsp/failure.jsp" />
+        <forward name="error" path="/jsp/showErrorMessage.jsp" />
+		
+        <!-- 
+     		<forward name="loginFailure" path="/index.htm" />
+     		 -->
+		 
+        <forward name="screenloginFailure" path="/screenindex.htm" />
+
+    </global-forwards>
+	
+
+    <!-- Action Mappings -->
+    <action-mappings>
+
+        <action path="/Action2XML" type="com.goldsign.frame.struts.Action2XML" />
+	
+        <action path="/TopJsp" type="com.goldsign.frame.struts.BaseForwardAction" parameter="/jsp/top.jsp" />
+        <action path="/LeftJsp" type="com.goldsign.frame.struts.BaseForwardAction" parameter="/jsp/left.jsp" />
+        <action path="/Logout" type="com.goldsign.frame.struts.BaseForwardAction" parameter="/jsp/logout.jsp" />		
+        <action path="/leftMenu" name="menuForm" scope="request" type="com.goldsign.systemmonitor.web.MenuAct">
+            <forward name="success" path="/LeftJsp.do" />
+        </action>
+        <!--系统管理 模块资料 -->
+        <action path="/menuManage" scope="request" type="com.goldsign.systemmonitor.web.ModuleManagerAction">
+            <forward name="success" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/menu.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward>
+        </action>
+        <!--系统管理 密码更改 -->
+        <action path="/password" scope="request" type="com.goldsign.systemmonitor.web.PasswordAct">
+            <forward name="success" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/password.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward>
+        </action>
+		
+        <!--系统监视 硬件状态  -->
+        <action path="/hardware" scope="request" type="com.goldsign.systemmonitor.web.HardwareAct">
+            <forward name="success" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/hardware.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward>
+        </action>
+        <!--系统监视 集群状态  -->
+        <action path="/cluster" scope="request" type="com.goldsign.systemmonitor.web.ClusterAct">
+            <forward name="success" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/cluster.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward>
+        </action>
+        <!--系统监视 磁盘空间  -->
+        <action path="/diskSpace" scope="request" type="com.goldsign.systemmonitor.web.DiskSpaceAct">
+            <forward name="success" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/diskSpace.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward>
+        </action>
+        <!--系统监视 网卡  -->
+        <action path="/netCard" scope="request" type="com.goldsign.systemmonitor.web.NetCardAct">
+            <forward name="success" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/netCard.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward>
+        </action>
+        <!--系统监视 硬盘状态  -->
+        <action path="/disk" scope="request" type="com.goldsign.systemmonitor.web.DiskAct">
+            <forward name="success" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/disk.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward>
+        </action>
+        <!--系统监视ICCS与各LCC通信情况  -->
+        <action path="/lcc" scope="request" type="com.goldsign.systemmonitor.web.LccAct">
+            <forward name="success" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/lcc.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward>
+        </action>
+		
+        <!--系统监视 UPS负载  -->
+        <action path="/ups" scope="request" type="com.goldsign.systemmonitor.web.UpsAct">
+            <forward name="success" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/ups.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward>
+        </action>
+		
+        <!--系统监视 Cisco系列网络设备  -->
+        <action path="/cisco" scope="request" type="com.goldsign.systemmonitor.web.CiscoAct">
+            <forward name="success" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/cisco.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward>
+        </action>
+        <action path="/forward"  scope="request" type="com.goldsign.systemmonitor.web.ForwardAct">
+        </action>
+		
+        <!--系统监视 	SYBASE ASE监控  -->
+        <action path="/sybase" scope="request" type="com.goldsign.systemmonitor.web.SybaseAct">
+            <forward name="success" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/sybase.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward>
+        </action>
+        <action path="/forward"  scope="request" type="com.goldsign.iccs.web.ForwardAct">
+        </action>
+		
+        <!--系统监视 	iq监控  -->
+        <!--
+        <action path="/iq" scope="request" type="com.goldsign.systemmonitor.web.IqAct">
+            <forward name="success" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/iq.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward>
+        </action>
+        -->
+        <!--时钟同步 	时钟同步状态  -->
+        <action path="/ntpsyn" scope="request" type="com.goldsign.systemmonitor.web.NtpSynAct">
+            <forward name="success" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/ntpsyn.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward>
+        </action>
+		
+        <!--时钟同步ACC时钟同步状态  -->
+        <action path="/ntplccsyn" scope="request" type="com.goldsign.systemmonitor.web.NtpLccSynAct">
+            <forward name="success" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/ntplccsyn.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward>
+        </action>
+		
+        <!--时钟同步ACC时钟同步状态  -->
+        <action path="/ntpiccssyn" scope="request" type="com.goldsign.systemmonitor.web.NtpIccsSynAct">
+            <forward name="success" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/ntpiccssyn.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward>
+        </action>
+		
+        <action path="/forward"  scope="request" type="com.goldsign.systemmonitor.web.ForwardAct">
+        </action>
+        <action path="/login"      scope="request" type="com.goldsign.systemmonitor.web.LoginAct">
+            <forward name="success" path="/jsp/index2.htm" />					
+            <forward name="failure" path="/jsp/password.jsp" />											
+
+        </action>
+	
+	
+    </action-mappings>
+	
+    <controller contentType="text/html"/>
+
+    <!-- Message Resources-->
+    <message-resources parameter="com.goldsign.systemmonitor.resources.ApplicationMessage" />
+
+
+    <!-- framework message resource -->
+    <message-resources key="FRAMEWORKMESSAGE" parameter="com.goldsign.javacore.resources.FrameworkMessage" />
+
+    <plug-in className="com.goldsign.frame.struts.AppPlugIn">
+        <set-property property="loggerServiceConfig" value="/WEB-INF/config/Log4jConfig.xml" />
+    </plug-in>
+
+    <plug-in className="com.goldsign.systemmonitor.web.ApplicationPlugIn">
+        <set-property property="jndiPrefix" value="java:comp/env/" />
+        <!--<set-property property="jndiPrefix" value="t3://10.200.4.213:7001/"/>-->
+    </plug-in>
+
+</struts-config>

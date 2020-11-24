@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicinfo.mapper.TicketStorageBlankCardManageMapper">
+    <resultMap type="TicketStorageBlankCardManage" id="rmTicketStorageBlankCardManage">
+        <result column="bill_no" property="bill_no" /> 
+        <result column="bill_date" property="bill_date" />
+        <result column="year" property="year" /> 
+        <result column="produce_factory_id" property="produce_factory_id" />
+        <result column="start_logicno" property="start_logicno" /> 
+        <result column="end_logicno" property="end_logicno" />
+        <result column="record_flag" property="record_flag" /> 
+        <result column="blank_card_type" property="blank_card_type" />
+        <result column="qty" property="qty" />
+        <result column="form_maker" property="form_maker" />
+        <result column="remark" property="remark" />
+        <result column="is_used" property="is_used" />
+        <result column="batch_no" property="batch_no" />
+        <result column="current_int_no" property="current_int_no" />
+        <result column="current_no" property="current_no" />
+        <result column="verify_date" property="verify_date" />
+        <result column="verify_person" property="verify_person" />
+        <result column="bill_main_type_id" property="bill_main_type_id" />
+        <result column="old_bill_no" property="old_bill_no" />
+        <result column="city_code" property="city_code" />
+        <result column="industry_code" property="industry_code" />
+        <result column="app_identifier" property="app_identifier" />
+        <result column="file_prefix" property="file_prefix" />
+    </resultMap>
+     
+    <select id="getTicketStorageBlankCardManage"  parameterType="TicketStorageBlankCardManage" resultMap="rmTicketStorageBlankCardManage">
+        select BILL_NO,BILL_DATE,YEAR,BATCH_NO,PRODUCE_FACTORY_ID,START_LOGICNO,END_LOGICNO, 
+        RECORD_FLAG,FORM_MAKER,VERIFY_DATE,VERIFY_PERSON,REMARK,BLANK_CARD_TYPE,QTY,is_used,city_code,industry_code,app_identifier,START_LOGIC_ALL, END_LOGIC_ALL, file_prefix
+        from W_ACC_TK.W_IC_BC_LOGIC_NO  where 1=1 
+        <if test="bill_no !=null and bill_no !=''">
+            and bill_no like #{bill_no}
+        </if>
+        <if test="year !=null and year !=''">
+            and year = #{year}
+        </if>
+        <if test="batch_no !=null and batch_no !=''">
+            and batch_no = #{batch_no} 
+        </if>
+        <if test="produce_factory_id !=null and produce_factory_id !=''">
+            and produce_factory_id = #{produce_factory_id} 
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag = #{record_flag} 
+        </if>
+        <if test="bill_date_start !=null and bill_date_start !=''">
+            and  bill_date &gt;=to_date(#{bill_date_start},'yyyy-MM-dd hh24:mi:ss')
+        </if>
+        <if test="bill_date_end !=null and bill_date_end !=''">
+            and  bill_date &lt;=to_date(#{bill_date_end},'yyyy-MM-dd hh24:mi:ss')
+        </if>
+        <if test="form_maker !=null and form_maker !=''">
+            and form_maker = #{form_maker}
+        </if>
+        <if test="is_used !=null and is_used !=''">
+            and is_used = #{is_used}
+        </if>
+        <if test="blank_card_type !=null and blank_card_type !=''">
+            and blank_card_type = #{blank_card_type}
+        </if>
+        <if test="app_identifier !=null and app_identifier !=''">
+            and app_identifier = #{app_identifier}
+        </if>
+        order by BILL_NO desc
+    </select>
+    
+    <select id="getTicketStorageBlankCardManageById"  parameterType="TicketStorageBlankCardManage" resultMap="rmTicketStorageBlankCardManage">
+        select BILL_NO,BILL_DATE,YEAR,BATCH_NO,PRODUCE_FACTORY_ID,START_LOGICNO,END_LOGICNO, 
+        RECORD_FLAG,FORM_MAKER,VERIFY_DATE,VERIFY_PERSON,REMARK,BLANK_CARD_TYPE,QTY,is_used,city_code,industry_code,app_identifier,START_LOGIC_ALL, END_LOGIC_ALL,file_prefix
+        from W_ACC_TK.W_IC_BC_LOGIC_NO  where 1=1 
+        <if test="bill_no !=null and bill_no !=''">
+            and bill_no like #{bill_no}
+        </if>
+    </select>
+    
+    <!-- 空白卡订单对应逻辑卡号卡类型代码  remark 传回 类型中文名  -->
+
+    <!--20191231  ldz   去掉福利票-->
+    <select id="getBlankCardTypes" resultMap="rmTicketStorageBlankCardManage">
+    select a.logical_card_type as blank_card_type,b.card_sub_name as remark
+        from w_acc_tk.W_IC_COD_LOGICAL_CARD_TYPE_CON a, w_acc_st.w_op_prm_card_sub b
+        where b.record_flag='0' and a.card_main_type=b.card_main_id
+        and a.card_sub_type=b.card_sub_id and a.card_main_type||a.card_sub_type !='0103'
+        order by a.card_main_type,a.card_sub_type
+        </select>
+     
+    <select id="queryByUpdateBillNoList"  parameterType="TicketStorageBlankCardManage" resultMap="rmTicketStorageBlankCardManage">
+        select BILL_NO,BILL_DATE,YEAR,BATCH_NO,PRODUCE_FACTORY_ID,START_LOGICNO,END_LOGICNO, 
+        RECORD_FLAG,FORM_MAKER,VERIFY_DATE,VERIFY_PERSON,REMARK,BLANK_CARD_TYPE,QTY,is_used,city_code,industry_code,app_identifier,START_LOGIC_ALL, END_LOGIC_ALL,file_prefix
+        from W_ACC_TK.W_IC_BC_LOGIC_NO  where 1=1 
+        <if test="billNoList != '' and billNoList != null">  
+            and bill_no in  
+            <foreach item="item" index="index" collection="billNoList" open="("  
+                     separator="," close=")">  
+                #{item}  
+            </foreach>  
+        </if> 
+        <if test="end_logicno != '' and end_logicno != null and start_logicno != '' and start_logicno != null">
+            not (START_LOGICNO &gt; #{start_logicno} or END_LOGICNO &lt; #{end_logicno})
+        </if>
+        order by BILL_NO desc
+    </select>
+     
+    <select id="isExisting"  parameterType="TicketStorageBlankCardManage" resultMap="rmTicketStorageBlankCardManage">
+        select BILL_NO,BILL_DATE,YEAR,BATCH_NO,PRODUCE_FACTORY_ID,START_LOGICNO,END_LOGICNO, 
+        RECORD_FLAG,FORM_MAKER,VERIFY_DATE,VERIFY_PERSON,REMARK,BLANK_CARD_TYPE,QTY,IS_USED,CITY_CODE,INDUSTRY_CODE,APP_IDENTIFIER,START_LOGIC_ALL, END_LOGIC_ALL,file_prefix
+        from W_ACC_TK.W_IC_BC_LOGIC_NO where 1=1 and record_flag = 0 
+        <if test="bill_no !=null and bill_no !=''">
+            and bill_no !=#{bill_no} 
+        </if>
+        <if test="blank_card_type !=null and blank_card_type !=''">
+            and blank_card_type = #{blank_card_type}
+        </if>
+        <if test="city_code !=null and city_code !=''">
+            and CITY_CODE = #{city_code}
+        </if>
+        <if test="industry_code !=null and industry_code !=''">
+            and INDUSTRY_CODE = #{industry_code}
+        </if>
+        <if test="app_identifier !=null and app_identifier !=''">
+            and APP_IDENTIFIER = #{app_identifier}
+        </if>
+        <if test="start_logicno !=null and start_logicno !='' and end_logicno != null and end_logicno != ''">
+            and not (start_logicno &gt; #{end_logicno} or end_logicno &lt; #{start_logicno}) 
+        </if>
+    </select>
+     
+    <select id="getCurrentBatchNo"  parameterType="TicketStorageBlankCardManage" resultType="java.lang.String">
+        select max(BATCH_NO) as batch_No from W_ACC_TK.W_IC_BC_LOGIC_NO where year = #{year}
+        <if test="cardTypeList != null and cardTypeList.size()>0">
+            and blank_card_type  in 
+            <foreach collection="cardTypeList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        and produce_factory_id = #{produce_factory_id}
+       
+        
+    </select>
+    
+    <select id="getCardTypeList"  parameterType="TicketStorageBlankCardManage" resultType="java.lang.String">
+        select logical_card_type from w_acc_tk.W_IC_COD_LOGICAL_CARD_TYPE_CON where card_large_type = #{type}
+    </select>
+    <select id="getCardLogicList"  parameterType="TicketStorageBlankCardManage" resultType="java.lang.String">
+        select logical_card_type from w_acc_tk.W_IC_COD_LOGICAL_CARD_TYPE_CON where card_main_type = '08' 
+    </select>
+     
+    <select id="getCurrentStartLogicNo" resultType="java.lang.String" parameterType="TicketStorageBlankCardManage">
+        select CURRENT_INT_NO from W_ACC_TK.W_IC_PRM_CURRENT_LOGIC_NO where blank_card_type = #{blank_card_type}
+    </select>
+    
+    <select id="getCurrentBillNoTemp" parameterType="java.lang.String" resultType="java.lang.String">
+        select current_int_no from w_acc_tk.w_ic_prm_bill_curr_flow_tmp where bill_main_type_id=#{bill_main_type_id}
+    </select>
+    
+    <select id="getCurrentBillNo" parameterType="java.lang.String" resultType="java.lang.String">
+        select current_int_no from w_acc_tk.w_ic_prm_bill_current_flow where bill_main_type_id=#{bill_main_type_id}
+    </select>
+    
+    <insert id="addTicketStorageBlankCardManage" parameterType="TicketStorageBlankCardManage" >
+        insert into W_ACC_TK.W_IC_BC_LOGIC_NO(BILL_NO,BILL_DATE,
+        YEAR,PRODUCE_FACTORY_ID,START_LOGICNO,END_LOGICNO,RECORD_FLAG,BLANK_CARD_TYPE,QTY,FORM_MAKER,REMARK,CITY_CODE,INDUSTRY_CODE,APP_IDENTIFIER,START_LOGIC_ALL, END_LOGIC_ALL)
+        values(#{bill_no},to_date(#{bill_date},'yyyy-MM-dd hh24:mi:ss'),#{year},#{produce_factory_id},#{start_logicno},
+        #{end_logicno},#{record_flag},#{blank_card_type},#{qty},#{form_maker},#{remark},#{city_code},#{industry_code},#{app_identifier},#{start_logic_all}, #{end_logic_all})     
+    </insert>
+    
+    <insert id="addCurrentLogicNo" parameterType="TicketStorageBlankCardManage" >
+        insert into W_ACC_TK.W_IC_PRM_CURRENT_LOGIC_NO (ID,BILL_NO,CURRENT_NO,CURRENT_INT_NO,BLANK_CARD_TYPE)
+        select W_ACC_TK.W_seq_W_IC_PRM_CURR_LOGIC_NO.NEXTVAL,BILL_NO,END_LOGICNO,TO_NUMBER(END_LOGICNO),BLANK_CARD_TYPE
+        from W_ACC_TK.W_IC_BC_LOGIC_NO where bill_no=#{bill_no} and START_LOGICNO=#{start_logicno} and END_LOGICNO=#{end_logicno} and blank_card_type = #{blank_card_type}  
+    </insert>
+    
+    <insert id="addCurrentBillNoTemp" parameterType="TicketStorageBlankCardManage" >
+        insert into w_acc_tk.w_ic_prm_bill_curr_flow_tmp(bill_main_type_id,current_no,current_int_no) values(#{bill_main_type_id},#{current_no},#{current_int_no})
+    </insert>
+    
+    <insert id="addCurrentBillNo" parameterType="TicketStorageBlankCardManage" >
+        insert into w_acc_tk.w_ic_prm_bill_current_flow(bill_main_type_id,current_no,current_int_no) values(#{bill_main_type_id},#{current_no},#{current_int_no})
+    </insert>
+    
+    <update id="updateCurrentBillNoTemp" parameterType="TicketStorageBlankCardManage" >
+        update w_acc_tk.w_ic_prm_bill_curr_flow_tmp set current_int_no=#{current_int_no} where bill_main_type_id=#{bill_main_type_id}                                 
+    </update>
+    
+    <update id="updateCurrentBillNo" parameterType="TicketStorageBlankCardManage" >
+        update w_acc_tk.w_ic_prm_bill_current_flow set current_int_no=#{current_int_no} where bill_main_type_id=#{bill_main_type_id}                                 
+    </update>
+    
+    <update id="updateCurrentLogicNo" parameterType="TicketStorageBlankCardManage" >
+        update W_ACC_TK.W_IC_PRM_CURRENT_LOGIC_NO set CURRENT_NO=#{current_no}, CURRENT_INT_NO=TO_NUMBER(current_int_no), BILL_NO=#{bill_no} where blank_card_type = #{blank_card_type}                                       
+    </update>
+    
+    <update id="updateBillNo" parameterType="TicketStorageBlankCardManage" >
+        update W_ACC_TK.W_IC_BC_LOGIC_NO set BILL_NO=#{bill_no},IS_USED=#{is_used} where BILL_NO=#{old_bill_no}                                          
+    </update>
+    
+    <update id="modifyTicketStorageBlankCardManage" parameterType="TicketStorageBlankCardManage" >
+        update W_ACC_TK.W_IC_BC_LOGIC_NO set YEAR =#{year} ,PRODUCE_FACTORY_ID=#{produce_factory_id}, 
+        START_LOGICNO=#{start_logicno},END_LOGICNO=#{end_logicno}, REMARK=#{remark}, BLANK_CARD_TYPE=#{blank_card_type}, QTY=#{qty},
+        CITY_CODE=#{city_code},INDUSTRY_CODE=#{industry_code},APP_IDENTIFIER=#{app_identifier},
+        START_LOGIC_ALL=#{start_logic_all}, END_LOGIC_ALL=#{end_logic_all}
+        where  BILL_NO =#{bill_no}                                              
+    </update>
+    
+    <update id="auditTicketStorageBlankCardManage" parameterType="TicketStorageBlankCardManage" >
+        update W_ACC_TK.W_IC_BC_LOGIC_NO  set record_flag=#{record_flag_text},verify_person=#{form_maker},verify_date=to_date(#{bill_date},'yyyy-MM-dd hh24:mi:ss'),batch_no=#{batch_no},file_prefix = #{file_prefix}
+        where bill_no=#{bill_no} and record_flag=#{record_flag}                                            
+    </update>
+    
+    <delete id="deleteTicketStorageBlankCardManage" parameterType="TicketStorageBlankCardManage">
+        delete from W_ACC_TK.W_IC_BC_LOGIC_NO where BILL_NO =#{bill_no}
+    </delete>     
+    
+</mapper>
+

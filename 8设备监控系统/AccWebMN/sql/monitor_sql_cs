@@ -1,0 +1,744 @@
+create table MTR_COMMAND_MODULE_MAPPING
+(
+  command    VARCHAR2(100) not null,
+  menu_id    VARCHAR2(6) not null,
+  table_name VARCHAR2(100) not null
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_CONFIG
+(
+  type         VARCHAR2(2) not null,
+  config_name  VARCHAR2(100) not null,
+  config_value VARCHAR2(300) not null,
+  remark       VARCHAR2(300)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_CURRENT_CISCO_INFO
+(
+  status_date        DATE not null,
+  ip                 VARCHAR2(20) not null,
+  status             VARCHAR2(1) not null,
+  power_status       VARCHAR2(1),
+  temperature_status VARCHAR2(1),
+  fan_status         VARCHAR2(1),
+  redundancy         VARCHAR2(50),
+  mainframe          VARCHAR2(250),
+  remark             VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_CURRENT_CLUSTER_INFO
+(
+  status_date   DATE not null,
+  ip            VARCHAR2(20) not null,
+  resource_name VARCHAR2(100) not null,
+  node_name     VARCHAR2(100) not null,
+  status        VARCHAR2(1) not null,
+  status_desc   VARCHAR2(250),
+  remark        VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_CURRENT_DISK_INFO
+(
+  status_date DATE not null,
+  ip          VARCHAR2(20) not null,
+  status      VARCHAR2(1) not null,
+  remark      VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_CURRENT_DISK_SPACE_INFO
+(
+  status_date DATE not null,
+  ip          VARCHAR2(20) not null,
+  file_system VARCHAR2(250) not null,
+  avail       VARCHAR2(15) not null,
+  capacity    VARCHAR2(10) not null,
+  status      VARCHAR2(1) not null,
+  mounted_on  VARCHAR2(250) not null,
+  remark      VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_CURRENT_HARDWARE_INFO
+(
+  status_date DATE not null,
+  ip          VARCHAR2(20) not null,
+  status      VARCHAR2(1) not null,
+  remark      VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_CURRENT_IQ_INFO
+(
+  status_date           DATE not null,
+  ip                    VARCHAR2(20) not null,
+  status                VARCHAR2(1) not null,
+  free_data             VARCHAR2(20),
+  used_data_rate        VARCHAR2(20),
+  backup_ful_size       VARCHAR2(20),
+  backup_ful_start_time VARCHAR2(25),
+  backup_ful_end_time   VARCHAR2(25),
+  backup_ful_interval   VARCHAR2(20),
+  backup_inc_size       VARCHAR2(20),
+  backup_inc_start_time VARCHAR2(25),
+  backup_inc_end_time   VARCHAR2(25),
+  backup_inc_interval   VARCHAR2(20),
+  remark                VARCHAR2(250),
+  job_water_no          VARCHAR2(20),
+  job_status            VARCHAR2(1)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_CURRENT_LCC_INFO
+(
+  status_date DATE not null,
+  ip          VARCHAR2(20) not null,
+  status      VARCHAR2(1) not null,
+  remark      VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_CURRENT_NETCARD_INFO
+(
+  status_date DATE not null,
+  ip          VARCHAR2(20) not null,
+  status      VARCHAR2(1) not null,
+  remark      VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_CURRENT_NTPICCSSYN_INFO
+(
+  status_date     DATE not null,
+  ip              VARCHAR2(20) not null,
+  ip_source       VARCHAR2(20) not null,
+  status_date_syn DATE not null,
+  diff            VARCHAR2(30) not null,
+  status          VARCHAR2(1) not null,
+  remark          VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_CURRENT_NTPLCCSYN_INFO
+(
+  status_date     DATE not null,
+  ip              VARCHAR2(20) not null,
+  ip_source       VARCHAR2(20) not null,
+  status_date_syn DATE not null,
+  diff            VARCHAR2(30) not null,
+  status          VARCHAR2(1) not null,
+  remark          VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_CURRENT_NTPSYN_INFO
+(
+  status_date     DATE not null,
+  ip              VARCHAR2(20) not null,
+  ip_source       VARCHAR2(20) not null,
+  status_date_syn DATE not null,
+  diff            VARCHAR2(30) not null,
+  status          VARCHAR2(1) not null,
+  remark          VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_CURRENT_SYBASE_INFO
+(
+  status_date       VARCHAR2(20) not null,
+  ip                VARCHAR2(20) not null,
+  status            VARCHAR2(1) not null,
+  free_data         VARCHAR2(20),
+  used_data_rate    VARCHAR2(20),
+  free_index        VARCHAR2(20),
+  used_index_rate   VARCHAR2(20),
+  backup_size       VARCHAR2(20),
+  backup_start_time VARCHAR2(25),
+  backup_end_time   VARCHAR2(25),
+  backup_interval   VARCHAR2(20),
+  remark            VARCHAR2(250),
+  free_log          VARCHAR2(20),
+  used_log_rate     VARCHAR2(20),
+  free_data_1       VARCHAR2(20),
+  used_data_rate_1  VARCHAR2(20),
+  name              VARCHAR2(25)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_CURRENT_UPS_INFO
+(
+  status_date DATE not null,
+  ip          VARCHAR2(20) not null,
+  status      VARCHAR2(1) not null,
+  ups_load    VARCHAR2(20) not null,
+  remark      VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_DB_CODE
+(
+  ip       VARCHAR2(20) not null,
+  name     VARCHAR2(200),
+  type     VARCHAR2(200),
+  ip_value INTEGER
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_DB_CONFIG
+(
+  type          VARCHAR2(1) not null,
+  ip            VARCHAR2(20) not null,
+  segement_name VARCHAR2(100) not null,
+  datasource    VARCHAR2(200),
+  remark        VARCHAR2(200) not null
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_DEVICE_CODE
+(
+  ip       VARCHAR2(20) not null,
+  name     VARCHAR2(200),
+  type     VARCHAR2(200),
+  ip_value INTEGER
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_FTP_FILE_LATEST
+(
+  file_name   VARCHAR2(200) not null,
+  latest_time VARCHAR2(20) not null
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_HIS_CISCO_INFO
+(
+  water_no           NUMBER(18),
+  status_date        DATE not null,
+  ip                 VARCHAR2(20) not null,
+  status             VARCHAR2(1) not null,
+  power_status       VARCHAR2(1),
+  temperature_status VARCHAR2(1),
+  fan_status         VARCHAR2(1),
+  redundancy         VARCHAR2(50),
+  mainframe          VARCHAR2(250),
+  remark             VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_HIS_CLUSTER_INFO
+(
+  water_no      NUMBER(18),
+  status_date   DATE not null,
+  ip            VARCHAR2(20) not null,
+  resource_name VARCHAR2(100) not null,
+  node_name     VARCHAR2(100) not null,
+  status        VARCHAR2(1) not null,
+  status_desc   VARCHAR2(250),
+  remark        VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_HIS_DISK_INFO
+(
+  water_no    NUMBER(18),
+  status_date DATE not null,
+  ip          VARCHAR2(20) not null,
+  status      VARCHAR2(1) not null,
+  remark      VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_HIS_DISK_SPACE_INFO
+(
+  water_no    NUMBER(18),
+  status_date DATE not null,
+  ip          VARCHAR2(20) not null,
+  file_system VARCHAR2(250) not null,
+  avail       VARCHAR2(15) not null,
+  capacity    VARCHAR2(10) not null,
+  mounted_on  VARCHAR2(250) not null,
+  status      VARCHAR2(1) not null,
+  remark      VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_HIS_HARDWARE_INFO
+(
+  water_no    NUMBER(18),
+  status_date DATE not null,
+  ip          VARCHAR2(20) not null,
+  status      VARCHAR2(1) not null,
+  remark      VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_HIS_IQ_INFO
+(
+  water_no              NUMBER(18),
+  status_date           DATE not null,
+  ip                    VARCHAR2(20) not null,
+  status                VARCHAR2(1) not null,
+  free_data             VARCHAR2(20),
+  used_data_rate        VARCHAR2(20),
+  backup_ful_size       VARCHAR2(20),
+  backup_ful_start_time VARCHAR2(25),
+  backup_ful_end_time   VARCHAR2(25),
+  backup_ful_interval   VARCHAR2(20),
+  backup_inc_size       VARCHAR2(20),
+  backup_inc_start_time VARCHAR2(25),
+  backup_inc_end_time   VARCHAR2(25),
+  backup_inc_interval   VARCHAR2(20),
+  remark                VARCHAR2(250),
+  job_water_no          VARCHAR2(20),
+  job_status            VARCHAR2(1)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_HIS_LCC_INFO
+(
+  water_no    NUMBER(18),
+  status_date DATE not null,
+  ip          VARCHAR2(20) not null,
+  status      VARCHAR2(1) not null,
+  remark      VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_HIS_NETCARD_INFO
+(
+  water_no    NUMBER(18),
+  status_date DATE not null,
+  ip          VARCHAR2(20) not null,
+  status      VARCHAR2(1) not null,
+  remark      VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_HIS_NTPICCSSYN_INFO
+(
+  water_no        NUMBER(18),
+  status_date     DATE not null,
+  ip              VARCHAR2(20) not null,
+  ip_source       VARCHAR2(20) not null,
+  status_date_syn DATE not null,
+  diff            VARCHAR2(30) not null,
+  status          VARCHAR2(1) not null,
+  remark          VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_HIS_NTPLCCSYN_INFO
+(
+  water_no        NUMBER(18),
+  status_date     DATE not null,
+  ip              VARCHAR2(20) not null,
+  ip_source       VARCHAR2(20) not null,
+  status_date_syn DATE not null,
+  diff            VARCHAR2(30) not null,
+  status          VARCHAR2(1) not null,
+  remark          VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_HIS_NTPSYN_INFO
+(
+  water_no        NUMBER(18),
+  status_date     DATE not null,
+  ip              VARCHAR2(20) not null,
+  ip_source       VARCHAR2(20) not null,
+  status_date_syn DATE not null,
+  diff            VARCHAR2(30) not null,
+  status          VARCHAR2(1) not null,
+  remark          VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_HIS_SYBASE_INFO
+(
+  water_no          NUMBER(18),
+  status_date       VARCHAR2(20) not null,
+  ip                VARCHAR2(20) not null,
+  status            VARCHAR2(1) not null,
+  free_data         VARCHAR2(20),
+  used_data_rate    VARCHAR2(20),
+  free_index        VARCHAR2(20),
+  used_index_rate   VARCHAR2(20),
+  backup_size       VARCHAR2(20),
+  backup_start_time VARCHAR2(25),
+  backup_end_time   VARCHAR2(25),
+  backup_interval   VARCHAR2(20),
+  remark            VARCHAR2(250),
+  free_log          VARCHAR2(20),
+  used_log_rate     VARCHAR2(20),
+  free_data_1       VARCHAR2(20),
+  used_data_rate_1  VARCHAR2(20),
+  name              VARCHAR2(25)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_HIS_UPS_INFO
+(
+  water_no    NUMBER(18),
+  status_date DATE not null,
+  ip          VARCHAR2(20) not null,
+  status      VARCHAR2(1) not null,
+  ups_load    VARCHAR2(20) not null,
+  remark      VARCHAR2(250)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_MENU
+(
+  menu_id         VARCHAR2(6) not null,
+  menu_name       VARCHAR2(50),
+  menu_url        VARCHAR2(100),
+  menu_icon       VARCHAR2(50),
+  top_menu_id     VARCHAR2(2),
+  parent_id       VARCHAR2(4),
+  locked          CHAR(1),
+  post_parameter  VARCHAR2(250),
+  status          VARCHAR2(1) default '0' not null,
+  new_window_flag VARCHAR2(1) default '0' not null,
+  password_flag   VARCHAR2(1) default '0' not null
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table MTR_PASSWORD
+(
+  password VARCHAR2(100) not null
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create table PUB_FLAG
+(
+  type        INTEGER not null,
+  code        VARCHAR2(50) not null,
+  code_text   VARCHAR2(50),
+  description VARCHAR2(100)
+)
+tablespace ACC_MONITOR
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+create global temporary table T_#STATUS
+(
+  status VARCHAR2(1)
+)
+on commit preserve rows;

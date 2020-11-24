@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias alias="User" type="com.goldsign.acc.test.entity.User"/>
+        <!--参数版本 -->
+        <typeAlias alias="PrmVersion" type="com.goldsign.acc.app.prminfo.entity.PrmVersion"/>
+        <!--公共参数 线路、车站、票卡主类型、票卡子类型、设备类型 -->
+        <typeAlias alias="PubFlag" type="com.goldsign.acc.frame.entity.PubFlag"/>
+        <!--操作日志 参数操作日志 -->
+        <typeAlias alias="OperationLog" type="com.goldsign.acc.frame.entity.OperationLog"/>
+        <typeAlias alias="OperationLogForPrm" type="com.goldsign.acc.frame.entity.OperationLogForPrm"/>
+        <!--车站设备 -->
+        <typeAlias alias="StationDevice" type="com.goldsign.acc.app.prmdev.entity.StationDevice"/>
+        <!--系统配置 -->
+        <typeAlias alias="Config" type="com.goldsign.acc.app.config.entity.Config"/>
+        <typeAlias alias="ConfigKey" type="com.goldsign.acc.app.config.entity.ConfigKey"/>
+        <typeAlias alias="CodePubFlag" type="com.goldsign.acc.app.querysys.entity.CodePubFlag"/>
+
+        <!--运营资料管理开始-->
+        <!--票卡-->
+        <typeAlias alias="CardMain" type="com.goldsign.acc.app.prminfo.entity.CardMain"/>
+        <typeAlias alias="CardSub" type="com.goldsign.acc.app.prminfo.entity.CardSub"/>
+        <typeAlias alias="CardTicketAttr" type="com.goldsign.acc.app.prminfo.entity.CardTicketAttr"/>
+        <typeAlias alias="CardAttribute" type="com.goldsign.acc.app.prminfo.entity.CardAttribute"/>
+        <!--票卡-->
+        <!--线路车站-->
+        <typeAlias alias="LineCode" type="com.goldsign.acc.app.prminfo.entity.LineCode"/>
+        <typeAlias alias="StationCode" type="com.goldsign.acc.app.prminfo.entity.StationCode"/>
+        <typeAlias alias="TransferStationCode" type="com.goldsign.acc.app.prminfo.entity.TransferStationCode"/>
+        <!--线路车站-->
+        <!--票价-->
+        <typeAlias alias="FareZone" type="com.goldsign.acc.app.prminfo.entity.FareZone"/>
+        <typeAlias alias="HolidayPara" type="com.goldsign.acc.app.prminfo.entity.HolidayPara"/>
+        <typeAlias alias="OffPeakHours" type="com.goldsign.acc.app.prminfo.entity.OffPeakHours"/>
+        <typeAlias alias="FareTable" type="com.goldsign.acc.app.prminfo.entity.FareTable"/>
+        <typeAlias alias="FareConf" type="com.goldsign.acc.app.prminfo.entity.FareConf"/>
+        <typeAlias alias="FareName" type="com.goldsign.acc.app.prminfo.entity.FareName"/>
+        <typeAlias alias="FareDealTotal" type="com.goldsign.acc.app.prminfo.entity.FareDealTotal"/>
+        <!--票价-->
+        <!--黑名单-->
+        <typeAlias alias="BlackListMtr" type="com.goldsign.acc.app.prminfo.entity.BlackListMtr"/>
+        <typeAlias alias="BlackListMtrSec" type="com.goldsign.acc.app.prminfo.entity.BlackListMtrSec"/>
+        <typeAlias alias="BlackListOct" type="com.goldsign.acc.app.prminfo.entity.BlackListOct"/>
+        <typeAlias alias="BlackListOctSec" type="com.goldsign.acc.app.prminfo.entity.BlackListOctSec"/>
+        <typeAlias alias="BlackListMOC" type="com.goldsign.acc.app.prminfo.entity.BlackListMOC"/>
+        <!--交通部一卡通白名单-->
+        <typeAlias alias="WhiteListMoc" type="com.goldsign.acc.app.prminfo.entity.WhiteListMoc"/>
+        <!--黑名单-->
+        <!--设备控制-->
+        <typeAlias alias="GateApproEnterPara" type="com.goldsign.acc.app.prminfo.entity.GateApproEnterPara"/>
+        <typeAlias alias="TvmStopSellConfig" type="com.goldsign.acc.app.prminfo.entity.TvmStopSellConfig"/>
+        <typeAlias alias="TvmStopsellDef" type="com.goldsign.acc.app.prminfo.entity.TvmStopsellDef"/>
+        <typeAlias alias="DevControl" type="com.goldsign.acc.app.prminfo.entity.DevControl"/>
+        <typeAlias alias="ChargeServer" type="com.goldsign.acc.app.prminfo.entity.ChargeServer"/>
+        <typeAlias alias="PhyLogicList" type="com.goldsign.acc.app.prminfo.entity.PhyLogicList"/>
+        <typeAlias alias="HisPhyLogicList" type="com.goldsign.acc.app.prminfo.entity.HisPhyLogicList"/>
+        <typeAlias alias="OpLogImport" type="com.goldsign.acc.app.prminfo.entity.OpLogImport"/>
+        <typeAlias alias="LogicIccList" type="com.goldsign.acc.app.prminfo.entity.LogicIccList"/>
+        <!--设备控制-->
+        <!--行政收费-->
+
+        <!--行政收费-->
+        <!--降级模式-->
+
+        <!--降级模式-->
+        <!--代码定义-->
+        <typeAlias alias="Store" type="com.goldsign.acc.app.prminfo.entity.Store" />
+        <typeAlias alias="Contc" type="com.goldsign.acc.app.prminfo.entity.Contc" />
+        <typeAlias alias="DegradeType" type="com.goldsign.acc.app.prminfo.entity.DegradeType" />
+        <typeAlias alias="StatusMapping" type="com.goldsign.acc.app.prminfo.entity.StatusMapping" />
+        <typeAlias alias="PenaltyReason" type="com.goldsign.acc.app.prminfo.entity.PenaltyReason" />
+        <!--代码定义-->
+        <!--费率-->
+        <typeAlias alias="SystemRateLine" type="com.goldsign.acc.app.prminfo.entity.SystemRateLine"/>
+        <typeAlias alias="SystemRateContc" type="com.goldsign.acc.app.prminfo.entity.SystemRateContc" />
+        <typeAlias alias="AgentRate" type="com.goldsign.acc.app.prminfo.entity.AgentRate" />
+        <typeAlias alias="DealAssignLine"  type="com.goldsign.acc.app.prminfo.entity.DealAssignLine" />
+        <typeAlias alias="DealAssignContc" type="com.goldsign.acc.app.prminfo.entity.DealAssignContc" />
+        <!--费率-->
+        <!--设备程序参数-->
+
+        <!--设备程序参数-->
+
+        <!--运营资料管理结束-->
+
+        <!--运营管理开始-->
+        <!--权限-->
+
+        <!--权限-->
+        <!--参数-->
+        <typeAlias alias="ParamDown"  type="com.goldsign.acc.app.opma.entity.ParamDown" />
+        <typeAlias alias="DevParaVerHis" type="com.goldsign.acc.app.opma.entity.DevParaVerHis" />
+        <typeAlias alias="ParamDownStatus"  type="com.goldsign.acc.app.opma.entity.ParamDownStatus" />
+        <typeAlias alias="DevParaVerCur"  type="com.goldsign.acc.app.opma.entity.DevParaVerCur" />
+        <typeAlias alias="DevParaVerQry" type="com.goldsign.acc.app.opma.entity.DevParaVerQry" />
+        <!--参数-->
+        <!--退票退款管理-->
+        <typeAlias alias="NonReturnApplyHandle" type="com.goldsign.acc.app.opma.entity.NonReturnApplyHandle" />
+        <typeAlias alias="NonReturnApplyHandle" type="com.goldsign.acc.app.opma.entity.NonReturnApplyHandleHis" />
+        <typeAlias alias="NonReturnApplyHandle" type="com.goldsign.acc.app.opma.entity.SignCardLossApplyHandle" />
+        <typeAlias alias="NonReturnApplyHandle" type="com.goldsign.acc.app.opma.entity.SignCardLossApplyHandleHis" />
+        <!--退票退款管理-->
+        <!--报表数据源管理-->
+        <typeAlias alias="ReportDataSoure" type="com.goldsign.acc.app.opma.entity.ReportDataSoure" />
+        <!--报表数据源管理-->
+        <!--信息发布-->
+
+        <!--信息发布-->
+
+        <!--运营管理结束-->
+
+        <!--设备管理开始-->
+        <typeAlias alias="DeviceTypeKey" type="com.goldsign.acc.app.prmdev.entity.DeviceTypeKey"/>
+        <typeAlias alias="DeviceType" type="com.goldsign.acc.app.prmdev.entity.DeviceType"/>
+        <!--设备管理结束-->
+
+        <!--查询系统开始-->
+        <!--交易清单查询-->
+
+        <!--交易清单查询-->
+        <!--客服明细查询-->
+        <typeAlias alias="NonInstanReturnList" type="com.goldsign.acc.app.querysys.entity.NonInstanReturnList"/>
+        <typeAlias alias="AdminHandleQuery" type="com.goldsign.acc.app.querysys.entity.AdminHandleQuery"/>
+        <typeAlias alias="SignCardReturnQuery" type="com.goldsign.acc.app.querysys.entity.SignCardReturnQuery"/>
+        <typeAlias alias="BomSignCardLossApplyQuery" type="com.goldsign.acc.app.querysys.entity.BomSignCardLossApplyQuery"/>
+        <!--客服明细查询-->
+        <!--参数记录查询-->
+        <typeAlias alias="QueryTrafficFareParam" type="com.goldsign.acc.app.querysys.entity.QueryTrafficFareParam"/>
+        <typeAlias alias="QueryAdminFareParam" type="com.goldsign.acc.app.querysys.entity.QueryAdminFareParam"/>
+        <typeAlias alias="QueryCardExpDate" type="com.goldsign.acc.app.querysys.entity.QueryCardExpDate"/>
+        <typeAlias alias="QueryPhyLogicList" type="com.goldsign.acc.app.querysys.entity.QueryPhyLogicList"/>
+        <!--参数记录查询-->
+        <!--日志查询-->
+            <!--清算日志-->
+            <typeAlias alias="BalanceLog" type="com.goldsign.acc.app.querysys.entity.BalanceLog"/>
+            <!--安全日志-->
+            <typeAlias alias="OperatorLog" type="com.goldsign.acc.app.querysys.entity.OperatorLog"/>
+            <!--安全日志(查看操作)-->
+            <typeAlias alias="ViewOpertion" type="com.goldsign.acc.app.querysys.entity.ViewOpertion"/>
+            <!--数据交换日志-->
+            <typeAlias alias="CommuteLog" type="com.goldsign.acc.app.querysys.entity.CommuteLog"/>
+            <!--参数操作日志-->
+            <typeAlias alias="ParamLog" type="com.goldsign.acc.app.querysys.entity.ParamLog"/>
+            <typeAlias alias="NonReturnOpLog" type="com.goldsign.acc.app.querysys.entity.NonReturnOpLog"/>
+            <typeAlias alias="SignCardLossApplyOpLog" type="com.goldsign.acc.app.querysys.entity.SignCardLossApplyOpLog"/>
+        <!--日志查询-->
+        <!--设备查询-->
+            <!--设备状态查询-->
+            <typeAlias alias="DeviceStatus" type="com.goldsign.acc.app.querysys.entity.DeviceStatus"/>
+        <!--设备查询-->
+        <!--查询系统结束-->
+    </typeAliases>
+    <!--
+   <environments default="development">
+       <environment id="development">
+           <transactionManager type="JDBC"/>
+           <dataSource type="POOLED">
+               <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+               <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
+               <property name="username" value="acc_st"/>
+               <property name="password" value="acc_st"/>
+           </dataSource>
+       </environment>
+   </environments>
+    -->
+    <mappers>
+        <mapper resource="com/goldsign/acc/test/entity/User.xml"/>
+        <!--软件版本 -->
+        <mapper resource="com/goldsign/acc/frame/entity/Version.xml"/>
+        <!--参数版本 -->
+        <mapper resource="com/goldsign/acc/app/prminfo/entity/PrmVersion.xml"/>
+
+        <!--公共参数 线路、车站、票卡主类型、票卡子类型、设备类型 -->
+        <mapper resource="com/goldsign/acc/frame/entity/PubFlag.xml"/>
+        <!--操作日志 参数操作日志 -->
+        <mapper resource="com/goldsign/acc/frame/entity/OperationLog.xml"/>
+        <!--车站设备 -->
+          <mapper resource="com/goldsign/acc/app/password/entity/SysOperator.xml"/>
+        <mapper resource="com/goldsign/acc/app/opma/entity/SysModule.xml"/>
+        <mapper resource="com/goldsign/acc/app/opma/entity/CodPubFlag.xml"/>
+        <mapper resource="com/goldsign/acc/app/opma/entity/CodBtnType.xml"/>
+        <mapper resource="com/goldsign/acc/app/opma/entity/SysGroup.xml"/>
+        <mapper resource="com/goldsign/acc/app/opma/entity/SysGroupOperator.xml"/>
+        <mapper resource="com/goldsign/acc/app/opma/entity/SysGroupModule.xml"/>
+        <!--  <mapper resource="com/goldsign/acc/test/model/UserInterface.xml"/> -->
+        <!--系统配置 -->
+        <mapper resource="com/goldsign/acc/app/config/entity/ConfigMapper.xml"/>
+        <mapper resource="com/goldsign/acc/app/querysys/entity/CodePubFlag.xml"/>
+
+        <!--运营资料管理开始-->
+        <!--票卡-->
+        <!--票卡主类型 luck 20170607 -->
+        <mapper resource="com/goldsign/acc/app/prminfo/entity/CardMain.xml"/>
+        <!--票卡子类型 luck  20170609 -->
+        <mapper resource="com/goldsign/acc/app/prminfo/entity/CardSub.xml"/>
+        <!--乘次票属性 luck  20170611 -->
+        <mapper resource="com/goldsign/acc/app/prminfo/entity/CardTicketAttr.xml"/>
+        <!--票卡属性 luck  20170613 -->
+        <mapper resource="com/goldsign/acc/app/prminfo/entity/CardAttribute.xml"/>
+        <!--票卡-->
+        <!--线路车站-->
+            <!--线路车站-线路管理-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/LineCode.xml"/>
+            <!--线路车站-车站表-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/StationCode.xml"/>
+            <!--线路车站-换乘车站-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/TransferStationCode.xml"/>
+        <!--线路车站-->
+        <!--票价-->
+        <mapper resource="com/goldsign/acc/app/prminfo/entity/FareZone.xml"/>
+        <mapper resource="com/goldsign/acc/app/prminfo/entity/HolidayPara.xml"/>
+        <mapper resource="com/goldsign/acc/app/prminfo/entity/OffPeakHours.xml"/>
+        <mapper resource="com/goldsign/acc/app/prminfo/entity/FareTable.xml"/>
+        <mapper resource="com/goldsign/acc/app/prminfo/entity/FareConf.xml"/>
+        <mapper resource="com/goldsign/acc/app/prminfo/entity/FareName.xml"/>
+        <mapper resource="com/goldsign/acc/app/prminfo/entity/FareSubmit.xml"/>
+        <mapper resource="com/goldsign/acc/app/prminfo/entity/FareTimeInterval.xml"/>
+        <mapper resource="com/goldsign/acc/app/prminfo/entity/FareDealTotal.xml"/>
+        <!--票价-->
+        <!--黑名单开始-->
+            <!--地铁黑名单-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/BlackListMtr.xml"/>
+            <!--地铁黑名单段-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/BlackListMtrSec.xml"/>
+            <!--一卡通黑名单-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/BlackListOct.xml"/>
+            <!--一卡通黑名单段-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/BlackListOctSec.xml"/>
+            <!--交通部一卡通黑名单-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/BlackListMOC.xml"/>
+            <!--交通部一卡通白名单-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/WhiteListMoc.xml"/>
+        <!--黑名单结束-->
+        <!--设备控制-->
+            <!--闸机专用通道参数  zhouyang 20170609-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/GateApproEnterPara.xml"/>
+            <!--TVM停售时间配置参数  zhouyang 20170611-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/TvmStopSellConfig.xml"/>
+            <!--工作日时间表参数  zhouyang 20170614-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/TvmStopsellDef.xml"/>
+            <!--设备控制-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/DevControl.xml"/>
+            <!-- 充值终端通讯参数 -->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/ChargeServer.xml"/>
+            <!-- 物理逻辑卡号 -->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/PhyLogicList.xml"/>
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/HisPhyLogicList.xml"/>
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/OpLogImport.xml"/>
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/OpLogLogicImport.xml"/>
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/LogicIccList.xml"/>
+        <!--设备控制-->
+        <!--行政收费-->
+            <!--行政收费-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/AdminManager.xml"/>
+            <!--行政处理原因-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/AdminReason.xml"/>
+        <!--行政收费-->
+        <!--降级模式-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/DegradeModeRecd.xml"/>
+        <!--降级模式-->
+        <!--代码定义-->
+            <!--运营商 czx 20170616-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/Contc.xml"/>
+            <!--商户定义 czx 20170615-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/Store.xml"/>
+            <!--降级运营模式 czx 20170615-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/DegradeType.xml"/>
+            <!--设备运营状态 czx 20170619-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/StatusMapping.xml"/>
+            <!--罚款原因 czx 20170619-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/PenaltyReason.xml"/>
+        <!--代码定义-->
+        <!--费率-->
+            <!--线路服务费率 ldz 20170609-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/SystemRateLine.xml"/>
+            <!--运营商服务费率 ldz 20170613-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/SystemRateContc.xml"/>
+            <!--手续费率 ldz 20170614-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/AgentRate.xml"/>
+            <!--线路交易分配比例 ldz 20170617-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/DealAssignLine.xml"/>
+            <!--运营商交易分配比例 ldz 20170619-->
+            <mapper resource="com/goldsign/acc/app/prminfo/entity/DealAssignContc.xml"/>
+            <!--费率-->
+        <!--设备程序参数-->
+         <mapper resource="com/goldsign/acc/app/prminfo/entity/PrmDevProgram.xml"/>
+        <!--设备程序参数-->
+
+        <!--运营资料管理结束-->
+
+        <!--运营管理开始-->
+        <!--权限-->
+
+        <!--权限-->
+         <!--参数-->
+         <mapper resource="com/goldsign/acc/app/opma/entity/ParamDown.xml"/>
+         <!--运营商交易分配比例 ldz 20170619-->
+         <mapper resource="com/goldsign/acc/app/opma/entity/DevParaVerHis.xml"/>
+         <!--参数下发状态 czx 20170622-->
+         <mapper resource="com/goldsign/acc/app/opma/entity/ParamDownStatus.xml"/>
+         <!--设备参数状态查询 zhouyang 20170623-->
+         <mapper resource="com/goldsign/acc/app/opma/entity/DevParaVerCur.xml"/>
+         <!--设备参数版本查询 czx 20170626-->
+         <mapper resource="com/goldsign/acc/app/opma/entity/DevParaVerQry.xml"/>
+        <!--参数-->
+        <!--退票退款管理-->
+             <mapper resource="com/goldsign/acc/app/opma/entity/NonReturnApplyHandle.xml"/>
+             <mapper resource="com/goldsign/acc/app/opma/entity/NonReturnApplyHandleHis.xml"/>
+             <mapper resource="com/goldsign/acc/app/opma/entity/SignCardLossApplyHandle.xml"/>
+             <mapper resource="com/goldsign/acc/app/opma/entity/SignCardLossApplyHandleHis.xml"/>
+        <!--退票退款管理-->
+        <!--报表数据源管理-->
+        <mapper resource="com/goldsign/acc/app/opma/entity/ReportDataSoure.xml"/>
+
+
+        <!--信息发布-->
+
+        <!--信息发布-->
+        <!--报表查询配置 -->
+        <mapper resource="com/goldsign/acc/app/opma/entity/ReportQryCfg.xml"/>
+        <!--报表查询配置 -->
+
+        <!--报表属性配置-->
+        <mapper resource="com/goldsign/acc/app/opma/entity/ReportCfgAttr.xml"/>
+
+        <!--运营管理结束-->
+
+        <!--设备管理开始-->
+            <!--车站设备 -->
+            <mapper resource="com/goldsign/acc/app/prmdev/entity/StationDevice.xml"/>
+            <!--设备类型-->
+            <mapper resource="com/goldsign/acc/app/prmdev/entity/DeviceType.xml"/>
+            <!--sam卡对照表-->
+            <mapper resource="com/goldsign/acc/app/prmdev/entity/SamList.xml"/>
+            <!--ACC设备-->
+            <mapper resource="com/goldsign/acc/app/prmdev/entity/ACCDevice.xml"/>
+        <!--权限-->
+
+        <!--权限-->
+        <!--参数-->
+
+        <!--参数-->
+
+        <!--信息发布-->
+
+        <!--信息发布-->
+
+        <!--设备管理结束-->
+
+        <!--查询系统开始-->
+        <!--交易清单查询开始-->
+             <!--票卡交易记录查询-->
+             <mapper resource="com/goldsign/acc/app/querysys/entity/TicketCardDealHis.xml"/>
+             <!--储值卡余额差异查询-->
+             <mapper resource="com/goldsign/acc/app/querysys/entity/StCardCheckResult.xml"/>
+
+        <!--交易清单查询结束-->
+        <!--客服明细查询开始-->
+                <!--行政处理查询-->
+                <mapper resource="com/goldsign/acc/app/querysys/entity/AdminHandleQuery.xml"/>
+                <!--记名卡退款退卡查询-->
+                 <mapper resource="com/goldsign/acc/app/querysys/entity/SignCardReturnQuery.xml"/>
+                 <!--BOM记名卡挂失申请查询-->
+                 <mapper resource="com/goldsign/acc/app/querysys/entity/BomSignCardLossApplyQuery.xml"/>
+            <!--非即时退款查询-->
+            <mapper resource="com/goldsign/acc/app/querysys/entity/NonInstanReturnList.xml"/>
+        <!--客服明细查询结束-->
+        <!--参数记录查询开始-->
+            <!--乘车费率参数-->
+            <mapper resource="com/goldsign/acc/app/querysys/entity/QueryTrafficFareParam.xml"/>
+            <!--行政费率参数-->
+            <mapper resource="com/goldsign/acc/app/querysys/entity/QueryAdminFareParam.xml"/>
+            <!--票卡有效期-->
+            <mapper resource="com/goldsign/acc/app/querysys/entity/QueryCardExpDate.xml"/>
+            <!--物理逻辑卡号查询-->
+            <mapper resource="com/goldsign/acc/app/querysys/entity/QueryPhyLogicList.xml"/>
+        <!--参数记录查询结束-->
+        <!--日志查询开始-->
+            <!--清算日志 zhouyang 20170619-->
+            <mapper resource="com/goldsign/acc/app/querysys/entity/BalanceLog.xml"/>
+            <!--安全日志 zhouyang 20170619-->
+            <mapper resource="com/goldsign/acc/app/querysys/entity/OperatorLog.xml"/>
+             <!--安全日志(查看操作) zhouyang 20170620-->
+            <mapper resource="com/goldsign/acc/app/querysys/entity/ViewOpertion.xml"/>
+            <!--数据交换日志 zhouyang 20170621-->
+            <mapper resource="com/goldsign/acc/app/querysys/entity/CommuteLog.xml"/>
+            <!--参数操作日志 zhouyang 20170622-->
+            <mapper resource="com/goldsign/acc/app/querysys/entity/ParamLog.xml"/>
+            <!--非即时退款操作日志-->
+            <mapper resource="com/goldsign/acc/app/querysys/entity/NonReturnOpLog.xml"/>
+             <!--记名卡挂失申请操作日志-->
+            <mapper resource="com/goldsign/acc/app/querysys/entity/SignCardLossApplyOpLog.xml"/>
+             <!--报表生成日志-->
+            <mapper resource="com/goldsign/acc/app/querysys/entity/RpLogDetail.xml"/>
+        <!--日志查询结束-->
+        <!--设备查询开始-->
+            <!--设备状态查询 zhouyang 20171128-->
+            <mapper resource="com/goldsign/acc/app/querysys/entity/DeviceStatus.xml"/>
+        <!--设备结束-->
+        <!--二维码支付订单查询-->
+            <mapper resource="com/goldsign/acc/app/querysys/entity/QrpayOrderQuery.xml"/>
+        <!--二维码取票订单查询-->
+            <mapper resource="com/goldsign/acc/app/querysys/entity/QrcodeOrderQuery.xml"/>
+        <!--二维码取票订单查询-->
+            <mapper resource="com/goldsign/acc/app/querysys/entity/TctQuery.xml"/>
+
+        <!--查询系统结束-->
+        <!--报表系统开始-->
+            <mapper resource="com/goldsign/acc/app/report/entity/Report.xml"/>
+        <!--查询系统结束-->
+
+    </mappers>
+</configuration>

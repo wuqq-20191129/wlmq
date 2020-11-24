@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.system.mapper.DiskMapper">
+    
+    <resultMap type="com.goldsign.acc.app.system.entity.Disk" id="rmDisk">
+        <result column="status_date" property="statusDate"/>
+        <result column="ip" property="ip" /> 
+        <result column="status" property="status" /> 
+        <result column="remark" property="remark" /> 
+        <result column="name" property="name" /> 
+        <result column="type" property="type" /> 
+        <result column="ip_value" property="ip_value" /> 
+    </resultMap>
+    
+    <parameterMap type="map" id="MapTemp">  
+        <parameter property="p_pcommand" jdbcType="VARCHAR" mode="IN"/>  
+        <parameter property="p_out" jdbcType="VARCHAR" mode="OUT"/>
+    </parameterMap> 
+    
+    <select id="updateMenuStatus"  parameterMap="MapTemp" statementType="CALLABLE">
+        {call W_UP_MTR_UPDATE_MENUT_STATUS(?,?)}
+    </select>
+    
+    <select id="queryPlan"  parameterType="com.goldsign.acc.app.system.entity.Disk" resultMap="rmDisk">
+        select A.status_date,A.ip,A.status,A.remark,B.name,B.type,B.ip_value
+        from w_acc_mn.w_mtr_current_disk_info A, w_acc_mn.w_mtr_device_code B 
+        where A.ip =B.ip(+) order by ip_value
+    </select>
+    
+    <update id="updatePlan" parameterType="com.goldsign.acc.app.system.entity.Disk" >
+        update w_acc_mn.w_mtr_current_disk_info set status_date=to_date(#{statusDate},'yyyy-mm-dd hh24:mi:ss'), status=#{status},remark=#{remark} where ip=#{ip}
+    </update>
+    
+    <insert id="insertPlanOne" parameterType="com.goldsign.acc.app.system.entity.Disk" >
+        insert into w_acc_mn.w_mtr_current_disk_info(status_date,ip,status,remark) values(to_date(#{statusDate},'yyyy-mm-dd hh24:mi:ss'),#{ip},#{status},#{remark})
+    </insert>
+   
+    <insert id="insertPlanTwo" parameterType="com.goldsign.acc.app.system.entity.Disk" >
+        insert into w_acc_mn.w_mtr_his_disk_info(status_date,ip,status,remark) values(to_date(#{statusDate},'yyyy-mm-dd hh24:mi:ss'),#{ip},#{status},#{remark})
+    </insert>
+   
+</mapper>
+
+
+

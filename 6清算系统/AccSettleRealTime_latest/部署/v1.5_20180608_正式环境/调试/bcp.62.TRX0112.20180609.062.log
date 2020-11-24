@@ -1,0 +1,79 @@
+
+SQL*Loader: Release 11.2.0.3.0 - Production on Sat Jun 9 21:59:43 2018
+
+Copyright (c) 1982, 2011, Oracle and/or its affiliates.  All rights reserved.
+
+Control File:   /export/home/acc/settle/control/62.ctl
+Data File:      /export/home/acc/settle/bcp/2018060801/bcp.62.TRX0112.20180609.062
+  Bad File:     /export/home/acc/settle/bcpbad/2018060801/bcp.62.TRX0112.20180609.062.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 50
+Bind array:     64 rows, maximum of 256000 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table W_ACC_ST.W_ST_BUF_REPORT_LOSS, loaded from every logical record.
+Insert option in effect for this table: APPEND
+TRAILING NULLCOLS option in effect
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+RECORD_VER                          FIRST     *   ,       CHARACTER            
+LINE_ID                              NEXT     *   ,       CHARACTER            
+STATION_ID                           NEXT     *   ,       CHARACTER            
+DEV_TYPE_ID                          NEXT     *   ,       CHARACTER            
+DEVICE_ID                            NEXT     *   ,       CHARACTER            
+APPLY_NAME                           NEXT     *   ,       CHARACTER            
+APPLY_SEX                            NEXT     *   ,       CHARACTER            
+IDENTITY_TYPE                        NEXT     *   ,       CHARACTER            
+IDENTITY_ID                          NEXT     *   ,       CHARACTER            
+EXPIRED_DATE                         NEXT     *   ,       DATE yyyymmdd        
+TEL_NO                               NEXT     *   ,       CHARACTER            
+FAX                                  NEXT     *   ,       CHARACTER            
+ADDRESS                              NEXT     *   ,       CHARACTER            
+OPERATOR_ID                          NEXT     *   ,       CHARACTER            
+APPLY_DATETIME                       NEXT     *   ,       DATE yyyymmddhh24miss
+SHIFT_ID                             NEXT     *   ,       CHARACTER            
+CARD_APP_FLAG                        NEXT     *   ,       CHARACTER            
+CARD_MAIN_ID                         NEXT     *   ,       CHARACTER            
+CARD_SUB_ID                          NEXT     *   ,       CHARACTER            
+APPLY_BUSINESS_TYPE                  NEXT     *   ,       CHARACTER            
+RECEIPT_ID                           NEXT     *   ,       CHARACTER            
+CARD_LOGICAL_ID                      NEXT     *   ,       CHARACTER            
+BALANCE_WATER_NO                     NEXT     *   ,       CHARACTER            
+BALANCE_WATER_NO_SUB                 NEXT     *   ,       CHARACTER            
+FILE_NAME                            NEXT     *   ,       CHARACTER            
+CHECK_FLAG                           NEXT     *   ,       CHARACTER            
+WATER_NO                             NEXT     *   ,       CHARACTER            
+    SQL string for column : "W_ACC_ST.W_seq_W_ST_BUF_REPORT_LOSS.nextval"
+
+value used for ROWS parameter changed from 64 to 36
+Record 1: Rejected - Error on table W_ACC_ST.W_ST_BUF_REPORT_LOSS, column BALANCE_WATER_NO_SUB.
+ORA-01722: invalid number
+
+
+Table W_ACC_ST.W_ST_BUF_REPORT_LOSS:
+  0 Rows successfully loaded.
+  1 Row not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                 250776 bytes(36 rows)
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:             1
+Total logical records rejected:         1
+Total logical records discarded:        0
+
+Run began on Sat Jun 09 21:59:43 2018
+Run ended on Sat Jun 09 21:59:43 2018
+
+Elapsed time was:     00:00:00.04
+CPU time was:         00:00:00.02

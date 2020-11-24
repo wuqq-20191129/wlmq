@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.produceorder.mapper.ProduceOrderMapper">
+    
+    <resultMap type="com.goldsign.acc.app.produceorder.entity.ProduceOrder" id="rmProduceOrder">
+        <result column="order_no" property="order_no" /> 
+        <result column="sam_type" property="sam_type" /> 
+        <result column="order_num" property="order_num" /> 
+        <result column="make_order_oper" property="make_order_oper" /> 
+        <result column="make_order_time" property="make_order_time" /> 
+        <result column="order_state" property="order_state" /> 
+        <result column="start_logic_no" property="start_logic_no" /> 
+        <result column="audit_order_oper" property="audit_order_oper" /> 
+        <result column="audit_order_time" property="audit_order_time" /> 
+        <result column="finish_num" property="finish_num" /> 
+        <result column="make_card_oper" property="make_card_oper" /> 
+        <result column="make_card_time" property="make_card_time" /> 
+        <result column="remark" property="remark" /> 
+        <result column="finish_flag" property="finish_flag" />
+        <result column="is_bad" property="is_bad" />  
+    </resultMap>
+    
+    <insert id="addPlan" parameterType="ProduceOrder" >
+        INSERT INTO w_acc_tk.w_ic_sam_order_plan (
+            order_no, sam_type, order_num, start_logic_no, make_order_oper, make_order_time, order_state, remark, finish_flag) 
+                SELECT #{order_no},#{sam_type},#{order_num},#{start_logic_no},#{make_order_oper},SYSDATE,#{order_state},#{remark},#{finish_flag} 
+                FROM w_acc_tk.w_ic_sam_stock b WHERE b.sam_type=#{sam_type} and b.produce_type=#{produce_type} and b.is_instock=#{is_instock} 
+                GROUP BY b.sam_type HAVING COUNT(b.logic_no)&gt;=#{order_num}
+    </insert>
+    
+    <select id="getCountStock"  parameterType="ProduceOrder" resultType="Integer">
+        SELECT count(1) countNum FROM w_acc_tk.w_ic_sam_stock WHERE 1=1 
+        <if test="sam_type != null and sam_type !=''" >  
+            and  sam_type = #{sam_type}
+        </if> 
+        <if test="produce_type != null and produce_type !=''" >  
+            and  produce_type = #{produce_type}
+        </if> 
+        <if test="is_instock != null and is_instock !=''" >  
+            and  is_instock = #{is_instock}
+        </if> 
+        <if test="is_bad != null and is_bad !=''" >  
+            and is_bad = #{is_bad}
+        </if>
+        <if test="start_logic_no != null and start_logic_no !=''" >  
+             and substr(logic_no,0,9) = #{stLogicNoEle}  and to_number(substr(logic_no,10)) &gt;= #{stLogicNoSeven}
+        </if> 
+    </select>
+    
+    <select id="queryPlan"  parameterType="ProduceOrder" resultMap="rmProduceOrder">
+        SELECT a.order_no,a.sam_type,a.order_num,b.is_bad,a.make_order_oper,a.make_order_time,a.order_state,a.start_logic_no,a.audit_order_oper,
+            a.audit_order_time,a.finish_num,a.make_card_oper,a.make_card_time,a.remark,a.finish_flag 
+        FROM w_acc_tk.w_ic_sam_order_plan a, W_ACC_TK.W_IC_SAM_STOCK b
+        where  a.start_logic_no=b.logic_no
+        <if test="sam_type != null and sam_type !=''" >  
+            and a.sam_type = #{sam_type}
+        </if> 
+        <if test="order_state != null and order_state !=''" >  
+            and a.order_state = #{order_state}
+        </if> 
+        <if test="order_no != null and order_no !=''" >  
+            and a.order_no like #{order_no}
+        </if>
+        <if test="is_bad != null and is_bad !=''" >  
+            and b.is_bad = #{is_bad}
+        </if>
+        order by a.order_no desc
+    </select>
+    
+    <select id="queryPlanForModify"  parameterType="ProduceOrder" resultMap="rmProduceOrder">
+        SELECT a.order_no,a.sam_type,a.order_num,b.is_bad,a.make_order_oper,a.make_order_time,a.order_state,a.start_logic_no,a.audit_order_oper,
+            a.audit_order_time,a.finish_num,a.make_card_oper,a.make_card_time,a.remark,a.finish_flag 
+        FROM w_acc_tk.w_ic_sam_order_plan a, W_ACC_TK.W_IC_SAM_STOCK b
+        where  a.start_logic_no=b.logic_no
+        <if test="sam_type != null and sam_type !=''" >  
+            and a.sam_type = #{sam_type}
+        </if> 
+        <if test="order_state != null and order_state !=''" >  
+            and a.order_state = #{order_state}
+        </if> 
+        <if test="order_no != null and order_no !=''" >  
+            and a.order_no like #{order_no}
+        </if>
+        
+        order by a.order_no desc
+    </select>
+    
+    <select id="queryPlanWithStartLN"  parameterType="ProduceOrder" resultMap="rmProduceOrder">
+        SELECT order_no,sam_type,order_num,make_order_oper,make_order_time,order_state,start_logic_no,audit_order_oper,
+            audit_order_time,finish_num,make_card_oper,make_card_time,remark,finish_flag 
+        FROM w_acc_tk.w_ic_sam_order_plan where 1=1 
+        <if test="start_logic_no != null and start_logic_no !=''" >  
+            and start_logic_no = #{start_logic_no}
+        </if> 
+        order by order_no desc
+    </select>
+    
+    <delete id="deletePlan" parameterType="ProduceOrder" >
+        DELETE FROM w_acc_tk.w_ic_sam_order_plan WHERE order_no = #{order_no} and order_state = #{order_state}                    
+    </delete>
+    
+    <update id="modifyPlan" parameterType="ProduceOrder" >
+        UPDATE w_acc_tk.w_ic_sam_order_plan SET start_logic_no = #{start_logic_no}, order_num = #{order_num}, sam_type = #{sam_type}, remark = #{remark} 
+            WHERE order_no = trim(#{order_no}) and order_state = #{order_state} and exists
+            (SELECT 1 FROM w_acc_tk.w_ic_sam_stock b WHERE b.sam_type=#{sam_type} and b.produce_type=#{produce_type} and b.is_instock=#{is_instock}
+            GROUP BY b.sam_type HAVING COUNT(b.logic_no)&gt;=#{order_num})      
+    </update>
+    
+    <select id="checkStore"  parameterType="ProduceOrder" resultType="Integer">
+        SELECT 1 FROM w_acc_tk.w_ic_sam_stock b 
+            WHERE b.sam_type=#{sam_type} and b.produce_type=#{produce_type} and b.is_instock=#{is_instock} 
+            GROUP BY b.sam_type HAVING COUNT(b.logic_no)>=#{order_num}
+    </select>
+    
+    <select id="checkResetStore"  parameterType="ProduceOrder" resultType="Integer">
+        SELECT 1 FROM w_acc_tk.w_ic_sam_stock b 
+            WHERE b.logic_no=#{start_logic_no}
+            
+    </select>
+    
+    <select id="getMinLogicNo"  parameterType="ProduceOrder" resultType="String">
+        SELECT logic_no min_logic_no FROM ( SELECT logic_no FROM w_acc_tk.w_ic_sam_stock 
+            WHERE sam_type=#{sam_type} AND (stock_state=#{stock_state_first} or stock_state=#{stock_state_second}) 
+            AND produce_type =#{produce_type} AND is_instock=#{is_instock}
+            <if test="stLogicNoEle != null and stLogicNoEle !='' and stLogicNoSeven != null and stLogicNoSeven !=''" >  
+                and substr(logic_no,0,9) = #{stLogicNoEle}  and to_number(substr(logic_no,10)) &gt;= #{stLogicNoSeven}
+            </if> 
+            ORDER BY logic_no) WHERE ROWNUM=1 
+    </select>
+    
+    <select id="checkAddInfoExist"  parameterType="ProduceOrder" resultType="String">
+        SELECT logic_no FROM w_acc_tk.w_ic_sam_stock 
+            WHERE sam_type=#{sam_type} AND (stock_state=#{stock_state_first} or stock_state=#{stock_state_second}) 
+            AND produce_type =#{produce_type} AND is_instock=#{is_instock}
+            and logic_no= #{start_logic_no}
+    </select>
+    
+    <select id="checkInfo"  parameterType="ProduceOrder" resultType="String">
+       SELECT a.finish_flag FROM w_acc_tk.w_ic_sam_order_plan  a
+            WHERE   a.start_logic_no = #{start_logic_no} and a.order_no like 'CZDD%' and 
+            to_char(a.make_order_time,'yyyy-mm-dd hh24:mi:ss')=(select to_char(max(b.make_order_time), 'yyyy-mm-dd hh24:mi:ss') from w_acc_tk.w_ic_sam_order_plan b where 
+            b.start_logic_no=#{start_logic_no}   and b.order_no like 'CZDD%')
+        
+    </select>
+    
+<!--    <select id="isExitsInStock"  parameterType="ProduceOrder" resultType="Integer">
+       SELECT count(*) FROM w_acc_tk.w_ic_sam_stock b
+            WHERE   b.logic_no =#{start_logic_no} and b.is_instock ='1' and b.is_bad ='2' 
+        
+    </select>
+    -->
+    <select id="checkResetInfoExist"  parameterType="ProduceOrder" resultType="String">
+        SELECT logic_no FROM w_acc_tk.w_ic_sam_stock 
+            WHERE sam_type=#{sam_type} AND stock_state=#{stock_state_first}
+            AND produce_type =#{produce_type} AND is_instock=#{is_instock} and is_bad=#{is_bad}
+            and logic_no= #{start_logic_no}
+    </select>
+    
+    <update id="updateMinLogicNo" parameterType="ProduceOrder" >
+        UPDATE w_acc_tk.w_ic_sam_stock SET stock_state = #{stock_state_third} WHERE logic_no = #{start_logic_no}            
+            and exists ( SELECT logic_no FROM w_acc_tk.w_ic_sam_stock 
+            WHERE sam_type=#{sam_type} AND stock_state in(#{stock_state_first},#{stock_state_second}) 
+            and produce_type = #{produce_type} AND is_instock=#{is_instock} and logic_no = #{start_logic_no})      
+    </update>
+    
+    <update id="updateResetLogicNo" parameterType="ProduceOrder" >
+        UPDATE w_acc_tk.w_ic_sam_stock SET stock_state = #{stock_state_third} WHERE logic_no = #{start_logic_no}            
+            and exists ( SELECT logic_no FROM w_acc_tk.w_ic_sam_stock 
+            WHERE sam_type=#{sam_type} AND stock_state  = #{stock_state_first}
+            and produce_type = #{produce_type} AND is_instock=#{is_instock} and logic_no = #{start_logic_no})      
+    </update>
+    
+    <insert id="insertSamLogicNos" parameterType="ProduceOrder" >
+        INSERT INTO w_acc_tk.w_ic_sam_logic_nos (order_no, start_logic_no, end_logic_no) VALUES (#{orderNo},#{stLogicNo},#{enLogicNo})
+    </insert>
+    
+    <update id="auditPlan" parameterType="ProduceOrder" >
+        UPDATE w_acc_tk.w_ic_sam_order_plan SET order_state = #{finish_flag}, audit_order_oper=#{audit_order_oper}, audit_order_time = SYSDATE, start_logic_no=#{start_logic_no}
+            WHERE order_no = #{order_no} and order_state = #{order_state} and exists
+            (SELECT 1 FROM w_acc_tk.w_ic_sam_stock b WHERE b.sam_type=#{sam_type} and b.produce_type=#{produce_type} and b.is_instock=#{is_instock}
+            GROUP BY b.sam_type HAVING COUNT(b.logic_no)&gt;=#{order_num})   
+    </update>
+    <update id="auditPlanForCz" parameterType="ProduceOrder" >
+        UPDATE w_acc_tk.w_ic_sam_order_plan SET order_state = #{finish_flag}, audit_order_oper=#{audit_order_oper}, audit_order_time = SYSDATE, start_logic_no=#{start_logic_no}
+            WHERE order_no = #{order_no} and order_state = #{order_state} and exists
+            (SELECT 1 FROM w_acc_tk.w_ic_sam_stock b WHERE b.sam_type=#{sam_type} and b.produce_type=#{produce_type} and b.is_instock=#{is_instock} and b.logic_no=#{start_logic_no}
+            GROUP BY b.sam_type HAVING COUNT(b.logic_no)&gt;=#{order_num})   
+    </update>
+    
+    <select id="checkLogicNosPlanOrder"  parameterType="ProduceOrder" resultMap="rmProduceOrder">
+        SELECT DISTINCT i.logic_no as start_logic_no FROM w_acc_tk.w_ic_sam_logic_nos s,w_acc_tk.w_ic_sam_stock i 
+        WHERE s.order_no=#{order_no}
+        AND i.stock_state=#{stock_state_first}
+        AND i.produce_type = #{produce_type}
+        AND i.is_instock=#{is_instock}
+        AND to_number(substr(i.logic_no,10,7)) &gt;=to_number(substr(s.start_logic_no,10,7))
+        AND to_number(substr(i.logic_no,10,7)) &lt;=to_number(substr(s.end_logic_no,10,7))
+        AND substr(i.logic_no,1,9) = substr(s.start_logic_no,1,9)
+    </select>
+</mapper>

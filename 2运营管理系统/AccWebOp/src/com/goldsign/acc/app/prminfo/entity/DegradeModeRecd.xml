@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.DegradeModeRecdMapper">
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.prminfo.entity.DegradeModeRecd">
+    <constructor>
+      <idArg column="WATER_NO" javaType="java.lang.Long" jdbcType="DECIMAL" />
+      <arg column="LINE_ID" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="STATION_ID" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="DEGRADE_MODE_ID" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="START_TIME" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="END_TIME" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="SET_OPER_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CANCEL_OPER_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="HDL_FLAG" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="VERSION_NO" javaType="java.lang.String" jdbcType="CHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    WATER_NO, LINE_ID, STATION_ID, DEGRADE_MODE_ID, START_TIME, END_TIME, SET_OPER_ID, 
+    CANCEL_OPER_ID, HDL_FLAG, VERSION_NO
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from w_acc_st.W_OP_PRM_DEGRADE_MODE_RECD
+    where WATER_NO = #{waterNo,jdbcType=DECIMAL}
+  </select>
+  
+  <select id="existselectRecord" parameterType="com.goldsign.acc.app.prminfo.entity.DegradeModeRecd" resultMap="BaseResultMap">
+   
+<!--    <include refid="Base_Column_List" />-->
+    select  *
+    from w_acc_st.W_OP_PRM_DEGRADE_MODE_RECD
+    where LINE_ID = #{lineId,jdbcType=CHAR}  and STATION_ID = #{stationId,jdbcType=CHAR}
+    and DEGRADE_MODE_ID = #{degradeModeId,jdbcType=CHAR} and START_TIME = #{startTime,jdbcType=CHAR}
+    and  END_TIME = #{endTime,jdbcType=CHAR}
+  </select>
+  
+  <select id="selectSeqNextval" resultType="java.lang.Long">
+    select w_acc_st.w_seq_w_op_prm_degrade_recd.nextval from dual
+  </select>
+  <select id="selectDegradeModeRecds" parameterType="com.goldsign.acc.app.prminfo.entity.DegradeModeRecd" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from W_ACC_ST.W_OP_PRM_DEGRADE_MODE_RECD
+    where 1=1
+    <if test="lineId !=null and lineId !=''">
+        and LINE_ID = #{lineId,jdbcType=CHAR}
+    </if>
+    <if test="stationId !=null and stationId !=''">
+        and STATION_ID = #{stationId,jdbcType=CHAR}
+    </if>
+    <if test="degradeModeId !=null and degradeModeId !=''">
+        and DEGRADE_MODE_ID = #{degradeModeId,jdbcType=CHAR}
+    </if>
+    <if test="hdlFlag !=null and hdlFlag !=''">
+        and HDL_FLAG = #{hdlFlag,jdbcType=CHAR}
+    </if>
+    <if test="waterNo !=null and waterNo !=''">
+        and WATER_NO = #{waterNo,jdbcType=DECIMAL}
+    </if>
+    <if test="versionNo !=null and versionNo !=''">
+        and VERSION_NO = #{versionNo,jdbcType=CHAR}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from w_acc_st.W_OP_PRM_DEGRADE_MODE_RECD
+    where WATER_NO = #{waterNo,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.goldsign.acc.app.prminfo.entity.DegradeModeRecd">
+    insert into w_acc_st.W_OP_PRM_DEGRADE_MODE_RECD (WATER_NO, LINE_ID, STATION_ID, 
+      DEGRADE_MODE_ID, START_TIME, END_TIME, 
+      SET_OPER_ID, CANCEL_OPER_ID, HDL_FLAG, 
+      VERSION_NO)
+    values (#{waterNo,jdbcType=DECIMAL}, #{lineId,jdbcType=CHAR}, #{stationId,jdbcType=CHAR}, 
+      #{degradeModeId,jdbcType=CHAR}, #{startTime,jdbcType=CHAR}, #{endTime,jdbcType=CHAR}, 
+      #{setOperId,jdbcType=VARCHAR}, #{cancelOperId,jdbcType=VARCHAR}, #{hdlFlag,jdbcType=CHAR}, 
+      #{versionNo,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.prminfo.entity.DegradeModeRecd">
+    insert into w_acc_st.W_OP_PRM_DEGRADE_MODE_RECD
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="waterNo != null">
+        WATER_NO,
+      </if>
+      <if test="lineId != null">
+        LINE_ID,
+      </if>
+      <if test="stationId != null">
+        STATION_ID,
+      </if>
+      <if test="degradeModeId != null">
+        DEGRADE_MODE_ID,
+      </if>
+      <if test="startTime != null">
+        START_TIME,
+      </if>
+      <if test="endTime != null">
+        END_TIME,
+      </if>
+      <if test="setOperId != null">
+        SET_OPER_ID,
+      </if>
+      <if test="cancelOperId != null">
+        CANCEL_OPER_ID,
+      </if>
+      <if test="hdlFlag != null">
+        HDL_FLAG,
+      </if>
+      <if test="versionNo != null">
+        VERSION_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="waterNo != null">
+        #{waterNo,jdbcType=DECIMAL},
+      </if>
+      <if test="lineId != null">
+        #{lineId,jdbcType=CHAR},
+      </if>
+      <if test="stationId != null">
+        #{stationId,jdbcType=CHAR},
+      </if>
+      <if test="degradeModeId != null">
+        #{degradeModeId,jdbcType=CHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=CHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=CHAR},
+      </if>
+      <if test="setOperId != null">
+        #{setOperId,jdbcType=VARCHAR},
+      </if>
+      <if test="cancelOperId != null">
+        #{cancelOperId,jdbcType=VARCHAR},
+      </if>
+      <if test="hdlFlag != null">
+        #{hdlFlag,jdbcType=CHAR},
+      </if>
+      <if test="versionNo != null">
+        #{versionNo,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.goldsign.acc.app.prminfo.entity.DegradeModeRecd">
+    update w_acc_st.W_OP_PRM_DEGRADE_MODE_RECD
+    <set>
+      <if test="lineId != null">
+        LINE_ID = #{lineId,jdbcType=CHAR},
+      </if>
+      <if test="stationId != null">
+        STATION_ID = #{stationId,jdbcType=CHAR},
+      </if>
+      <if test="degradeModeId != null">
+        DEGRADE_MODE_ID = #{degradeModeId,jdbcType=CHAR},
+      </if>
+      <if test="startTime != null">
+        START_TIME = #{startTime,jdbcType=CHAR},
+      </if>
+      <if test="endTime != null">
+        END_TIME = #{endTime,jdbcType=CHAR},
+      </if>
+      <if test="setOperId != null">
+        SET_OPER_ID = #{setOperId,jdbcType=VARCHAR},
+      </if>
+      <if test="cancelOperId != null">
+        CANCEL_OPER_ID = #{cancelOperId,jdbcType=VARCHAR},
+      </if>
+      <if test="hdlFlag != null">
+        HDL_FLAG = #{hdlFlag,jdbcType=CHAR},
+      </if>
+      <if test="versionNo != null">
+        VERSION_NO = #{versionNo,jdbcType=CHAR},
+      </if>
+    </set>
+    where WATER_NO = #{waterNo,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.goldsign.acc.app.prminfo.entity.DegradeModeRecd">
+    update w_acc_st.W_OP_PRM_DEGRADE_MODE_RECD
+    set LINE_ID = #{lineId,jdbcType=CHAR},
+      STATION_ID = #{stationId,jdbcType=CHAR},
+      DEGRADE_MODE_ID = #{degradeModeId,jdbcType=CHAR},
+      START_TIME = #{startTime,jdbcType=CHAR},
+      END_TIME = #{endTime,jdbcType=CHAR},
+      SET_OPER_ID = #{setOperId,jdbcType=VARCHAR},
+      CANCEL_OPER_ID = #{cancelOperId,jdbcType=VARCHAR},
+      HDL_FLAG = #{hdlFlag,jdbcType=CHAR},
+      VERSION_NO = #{versionNo,jdbcType=CHAR}
+    where WATER_NO = #{waterNo,jdbcType=DECIMAL}
+  </update>
+</mapper>

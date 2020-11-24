@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.st.mapper.StRptIndexMapper">
+    
+    <resultMap type="com.goldsign.acc.app.st.entity.StRptIndex" id="rmStRptIndex">
+        
+        <result column="table_name" property="table_name" /> 
+        <result column="table_type" property="table_type" />
+        <result column="origin_table_name" property="origin_table_name" /> 
+        <result column="begin_balance_no" property="begin_balance_no" /> 
+        <result column="end_balance_no" property="end_balance_no" /> 
+        <result column="min_squad_day" property="min_squad_day" /> 
+        <result column="max_squad_day" property="max_squad_day" />
+        <result column="recd_count" property="recd_count" /> 
+        <result column="begin_date" property="begin_date" /> 
+        <result column="end_date" property="end_date" /> 
+        <result column="create_time" property="create_time" />    
+    </resultMap>
+    
+    <select id="getTableTye"   resultType="String">
+        select b.origin_table_name from  w_acc_st.w_st_cfg_clear_table b
+        where b.is_squadday ='1'
+    </select>
+    <select id="getTableTye1"   resultType="String">
+        select b.origin_table_name from  w_acc_st.w_st_cfg_clear_table b
+        where b.is_squadday ='0' 
+        and b.primarytable is NULL
+        and b.db_type ='rpt'
+    </select>
+    <select id="getTableTye2"   resultType="String">
+        select b.origin_table_name b
+        from  w_acc_st.w_st_cfg_clear_table b
+        where b.is_squadday ='0' 
+        and b.primarytable is not NULL
+        and b.db_type ='rpt'
+    </select>
+    
+    <select id="queryPlan"  parameterType="map" resultMap="rmStRptIndex">
+        select * from w_acc_st.w_st_idx_rpt_history where 1=1
+        
+        <if test="q_table_types != null">
+            
+               and origin_table_name in  
+                <foreach item="item" index="index" collection="q_table_types" open="(" separator="," close=")">  
+                    #{item}  
+                </foreach> 
+                  
+                <if test="q_table_name != null and q_table_name !=''" >  
+                  and   table_name like concat(concat('%',#{q_table_name,jdbcType=CHAR}),'%') 
+                </if>
+                <if test="q_origin_table_name != null and q_origin_table_name !=''" >  
+                 and    origin_table_name like concat(concat('%',#{q_origin_table_name,jdbcType=CHAR}),'%') 
+                </if>
+            
+        </if>
+        <if test="q_table_name != null and q_table_name !=''" >  
+           and  table_name like concat(concat('%',#{q_table_name,jdbcType=CHAR}),'%') 
+        </if>
+        <if test="q_origin_table_name != null and q_origin_table_name !=''" >  
+         and   origin_table_name like concat(concat('%',#{q_origin_table_name,jdbcType=CHAR}),'%') 
+        </if>
+     
+        
+    </select>
+    
+    
+</mapper>
+
+

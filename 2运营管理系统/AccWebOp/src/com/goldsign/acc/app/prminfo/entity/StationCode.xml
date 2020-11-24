@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.StationCodeMapper">
+    
+    <resultMap type="StationCode" id="rmStationCode">
+        <result column="line_id" property="line_id" /> 
+        <result column="station_id" property="station_id" /> 
+        <result column="chinese_name" property="chinese_name" /> 
+        <result column="english_name" property="english_name" /> 
+        <result column="sc_ip" property="sc_ip" /> 
+        <result column="contc_id" property="contc_id" /> 
+        <result column="lc_ip" property="lc_ip" />
+        <result column="record_flag" property="record_flag" />
+        <result column="version_no" property="version_no" />
+        <result column="sequence" property="sequence" />
+        <result column="belong_line_id" property="belong_line_id" />
+        <result column="uygur_name" property="uygur_name" />
+        
+    </resultMap>
+
+    <select id="getStationCodes"  parameterType="StationCode" resultMap="rmStationCode">
+        select line_id,station_id,chinese_name,english_name,sc_ip,contc_id,lc_ip,record_flag,version_no,sequence,belong_line_id,uygur_name
+        from W_ACC_ST.W_OP_PRM_STATION 
+        where 1=1 
+        <if test="line_id !=null and line_id !=''">
+            and line_id =#{line_id} 
+        </if> 
+        <if test="contc_id !=null and contc_id !=''">
+            and contc_id =#{contc_id} 
+        </if>
+        <if test="sc_ip !=null and sc_ip !=''">
+            and sc_ip =#{sc_ip} 
+        </if>
+        <if test="station_id !=null and station_id !=''">
+            and station_id =#{station_id} 
+        </if>
+        <if test="version_no !=null and version_no !=''">
+            and version_no =#{version_no}
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag =#{record_flag}
+        </if> 
+        order by line_id,station_id
+    </select>
+    
+    <select id="getStationCodesByLineIds"  parameterType="StationCode" resultMap="rmStationCode">
+        select line_id,station_id,chinese_name,english_name,sc_ip,contc_id,lc_ip,record_flag,version_no,sequence,belong_line_id,uygur_name
+        from W_ACC_ST.W_OP_PRM_STATION 
+        where record_flag in('3','0','1')   
+        <if test="lineIdList != '' and lineIdList != null">  
+            and line_id in  
+            <foreach item="item" index="index" collection="lineIdList" open="(" separator="," close=")">  
+                #{item}  
+            </foreach>  
+        </if> 
+    </select>
+    
+    <!--草稿参数删除 -->
+     <delete id="deleteStationCodeForClone" parameterType="StationCode">
+            delete from W_ACC_ST.W_OP_PRM_STATION where  record_flag='3' and version_no='0000000000'                                                      
+    </delete>
+    
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="StationCode" >
+        insert into  W_ACC_ST.W_OP_PRM_STATION(line_id,station_id,chinese_name,english_name,sc_ip,contc_id,lc_ip,sequence,belong_line_id,uygur_name,record_flag,version_no)
+               select line_id,station_id,chinese_name,english_name,sc_ip,contc_id,lc_ip,sequence,belong_line_id,uygur_name,'3','0000000000'
+               from   W_ACC_ST.W_OP_PRM_STATION  
+               where record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    <update id="submitToOldFlag" parameterType="StationCode" >
+        update W_ACC_ST.W_OP_PRM_STATION set record_flag=#{record_flag_old}
+                    where record_flag=#{record_flag_new}                                               
+    </update>
+    
+    <!--草稿参数复制为当前或未来参数 -->
+     <insert id="submitFromDraftToCurOrFur" parameterType="StationCode" >
+        insert into  W_ACC_ST.W_OP_PRM_STATION(line_id,station_id,chinese_name,english_name,sc_ip,contc_id,lc_ip,sequence,belong_line_id,uygur_name,record_flag,version_no)
+               select line_id,station_id,chinese_name,english_name,sc_ip,contc_id,lc_ip,sequence,belong_line_id,uygur_name,#{record_flag_new},#{version_no_new}
+               from   W_ACC_ST.W_OP_PRM_STATION  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert> 
+    
+    <!-- 修改保存线路信息 -->
+    <update id="modifyStationCode" parameterType="StationCode" >
+        update W_ACC_ST.W_OP_PRM_STATION set 
+            chinese_name=#{chinese_name},english_name=#{english_name},
+            contc_id=#{contc_id}, sc_ip=#{sc_ip}, lc_ip=#{lc_ip},
+            sequence=#{sequence}, belong_line_id=#{belong_line_id},uygur_name=#{uygur_name}
+        where line_id=#{line_id} and  station_id=#{station_id} and record_flag=#{record_flag} and version_no=#{version_no} 
+    </update>
+    
+    <!-- 增加保存线路信息-->
+    <insert id="addStationCode" parameterType="StationCode" >
+        insert into  W_ACC_ST.W_OP_PRM_STATION(line_id,station_id,chinese_name,english_name,sc_ip,contc_id,lc_ip,sequence,belong_line_id,uygur_name,record_flag,version_no)
+        values(#{line_id},#{station_id},#{chinese_name},#{english_name},#{sc_ip},#{contc_id},#{lc_ip},#{sequence},#{belong_line_id},#{uygur_name},#{record_flag},#{version_no})        
+    </insert> 
+    
+    <delete id="deleteStationCode" parameterType="StationCode">
+        delete from W_ACC_ST.W_OP_PRM_STATION where line_id=#{line_id} and station_id=#{station_id} and record_flag=#{record_flag} and version_no=#{version_no}  
+    </delete>
+    
+    <select id="getStationCodesRecordFlagIs3"  parameterType="StationCode" resultMap="rmStationCode">
+        select line_id,station_id,chinese_name,english_name,sc_ip,contc_id,lc_ip,record_flag,version_no,sequence,belong_line_id,uygur_name
+        from W_ACC_ST.W_OP_PRM_STATION 
+        where record_flag='3' order by LINE_ID,STATION_ID
+    </select>
+    
+    <select id="queryToMap"  parameterType="StationCode"  resultType="map">
+        select line_id,station_id,chinese_name,english_name,sc_ip,contc_id,lc_ip,record_flag,version_no,sequence,belong_line_id,uygur_name
+        from W_ACC_ST.W_OP_PRM_STATION 
+        where 1=1 
+        <if test="line_id !=null and line_id !=''">
+            and line_id =#{line_id} 
+        </if> 
+        <if test="contc_id !=null and contc_id !=''">
+            and contc_id =#{contc_id} 
+        </if>
+        <if test="station_id !=null and station_id !=''">
+            and station_id =#{station_id} 
+        </if>
+        <if test="version_no !=null and version_no !=''">
+            and version_no =#{version_no}
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag =#{record_flag}
+        </if> 
+    </select>
+</mapper>

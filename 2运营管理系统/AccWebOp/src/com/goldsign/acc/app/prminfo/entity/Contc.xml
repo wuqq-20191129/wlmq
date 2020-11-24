@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.ContcMapper">
+    <resultMap type="Contc" id="rmContc">
+        
+        <result column="contc_id" property="contc_id" /> 
+        <result column="contc_name" property="contc_name" /> 
+        <result column="link_man" property="link_man" /> 
+        <result column="tel" property="tel" /> 
+        <result column="fax" property="fax" /> 
+        <result column="record_flag" property="record_flag" />
+        <result column="sequence" property="sequence" />
+    </resultMap>
+
+    
+     
+    <select id="getContc"  parameterType="Contc" resultMap="rmContc">
+        select contc_id,contc_name,link_man,tel,fax,sequence,record_flag
+        from W_ACC_ST.W_OP_PRM_CONTC where record_flag=#{record_flag}  
+        <if test="contc_id !=null and contc_id !=''">
+            and contc_id =#{contc_id} 
+        </if>
+        <if test="contc_name !=null and contc_name !=''">
+            or contc_name =#{contc_name} 
+        </if>
+        order by contc_id
+    </select>
+    
+    <select id="getContcById"  parameterType="Contc" resultMap="rmContc">
+        select contc_id,contc_name,link_man,tel,fax,sequence
+        from W_ACC_ST.W_OP_PRM_CONTC where record_flag=#{record_flag} 
+        <if test="contc_id !=null and contc_id !=''">
+            and contc_id =#{contc_id} 
+        </if>       
+    </select>
+    
+    <select id="getContcByName"  parameterType="Contc" resultMap="rmContc">
+        select contc_id,contc_name,link_man,tel,fax,sequence
+        from W_ACC_ST.W_OP_PRM_CONTC where record_flag=#{record_flag}
+        <if test="contc_name !=null and contc_name !=''">
+            and contc_name=#{contc_name} 
+        </if>
+        <if test="contc_id !=null and contc_id !=''">
+            and contc_id !=#{contc_id} 
+        </if>
+    </select>
+    
+    <select id="getContcBySequence"  parameterType="Contc" resultMap="rmContc">
+        select contc_id,contc_name,link_man,tel,fax,sequence
+        from W_ACC_ST.W_OP_PRM_CONTC where record_flag=#{record_flag}
+        <if test="sequence !=null and sequence !=''">
+            and sequence =#{sequence} 
+        </if>
+        <if test="contc_id !=null and contc_id !=''">
+            and contc_id !=#{contc_id} 
+        </if>        
+    </select>
+    
+    <insert id="addContc" parameterType="Contc" >
+        insert into W_ACC_ST.W_OP_PRM_CONTC(contc_id,contc_name,link_man,tel,fax,sequence,record_flag)
+        values(#{contc_id},#{contc_name},#{link_man},#{tel},#{fax},#{sequence},#{record_flag})               
+    </insert>
+    
+    <update id="modifyContc" parameterType="Contc" >
+        update W_ACC_ST.W_OP_PRM_CONTC set contc_name=#{contc_name},link_man=#{link_man},tel=#{tel},fax=#{fax},sequence=#{sequence}
+                   where  contc_id=#{contc_id} and record_flag=#{record_flag}                                               
+    </update>
+    
+    <delete id="deleteContc" parameterType="Contc">
+            delete from W_ACC_ST.W_OP_PRM_CONTC where contc_id=#{contc_id} and record_flag=#{record_flag}           
+    </delete>     
+    
+</mapper>

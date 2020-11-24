@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.query.mapper.TicketStorageMbInitiInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.query.entity.TicketStorageMbInitiInfo" >
+    <constructor >
+      <arg column="LOGICAL_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CARD_MAIN_TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CARD_SUB_TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="REQ_NO" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="PHY_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="PRINT_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="MANU_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="CARD_MONEY" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="PERI_AVADATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="KDC_VERSION" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="HDL_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="ORDER_NO" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="STATUS_FLAG" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CARD_TYPE" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CARD_AVA_DAYS" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="EXIT_LINE_CODE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="EXIT_STATION_CODE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="MODEL" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CARD_PRODUCER_CODE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="PHONE_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.goldsign.acc.app.query.entity.TicketStorageMbInitiInfo" >
+    insert into W_IC_MB_INITI_INFO (LOGICAL_ID, CARD_MAIN_TYPE, CARD_SUB_TYPE, 
+      REQ_NO, PHY_ID, PRINT_ID, 
+      MANU_TIME, CARD_MONEY, PERI_AVADATE, 
+      KDC_VERSION, HDL_TIME, ORDER_NO, 
+      STATUS_FLAG, CARD_TYPE, CARD_AVA_DAYS, 
+      EXIT_LINE_CODE, EXIT_STATION_CODE, MODEL, 
+      CARD_PRODUCER_CODE, PHONE_NO)
+    values (#{logicalId,jdbcType=VARCHAR}, #{cardMainType,jdbcType=VARCHAR}, #{cardSubType,jdbcType=VARCHAR}, 
+      #{reqNo,jdbcType=CHAR}, #{phyId,jdbcType=VARCHAR}, #{printId,jdbcType=VARCHAR}, 
+      #{manuTime,jdbcType=TIMESTAMP}, #{cardMoney,jdbcType=DECIMAL}, #{periAvadate,jdbcType=TIMESTAMP}, 
+      #{kdcVersion,jdbcType=CHAR}, #{hdlTime,jdbcType=TIMESTAMP}, #{orderNo,jdbcType=CHAR}, 
+      #{statusFlag,jdbcType=CHAR}, #{cardType,jdbcType=CHAR}, #{cardAvaDays,jdbcType=VARCHAR}, 
+      #{exitLineCode,jdbcType=VARCHAR}, #{exitStationCode,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, 
+      #{cardProducerCode,jdbcType=VARCHAR}, #{phoneNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.query.entity.TicketStorageMbInitiInfo" >
+    insert into W_IC_MB_INITI_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logicalId != null" >
+        LOGICAL_ID,
+      </if>
+      <if test="cardMainType != null" >
+        CARD_MAIN_TYPE,
+      </if>
+      <if test="cardSubType != null" >
+        CARD_SUB_TYPE,
+      </if>
+      <if test="reqNo != null" >
+        REQ_NO,
+      </if>
+      <if test="phyId != null" >
+        PHY_ID,
+      </if>
+      <if test="printId != null" >
+        PRINT_ID,
+      </if>
+      <if test="manuTime != null" >
+        MANU_TIME,
+      </if>
+      <if test="cardMoney != null" >
+        CARD_MONEY,
+      </if>
+      <if test="periAvadate != null" >
+        PERI_AVADATE,
+      </if>
+      <if test="kdcVersion != null" >
+        KDC_VERSION,
+      </if>
+      <if test="hdlTime != null" >
+        HDL_TIME,
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO,
+      </if>
+      <if test="statusFlag != null" >
+        STATUS_FLAG,
+      </if>
+      <if test="cardType != null" >
+        CARD_TYPE,
+      </if>
+      <if test="cardAvaDays != null" >
+        CARD_AVA_DAYS,
+      </if>
+      <if test="exitLineCode != null" >
+        EXIT_LINE_CODE,
+      </if>
+      <if test="exitStationCode != null" >
+        EXIT_STATION_CODE,
+      </if>
+      <if test="model != null" >
+        MODEL,
+      </if>
+      <if test="cardProducerCode != null" >
+        CARD_PRODUCER_CODE,
+      </if>
+      <if test="phoneNo != null" >
+        PHONE_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logicalId != null" >
+        #{logicalId,jdbcType=VARCHAR},
+      </if>
+      <if test="cardMainType != null" >
+        #{cardMainType,jdbcType=VARCHAR},
+      </if>
+      <if test="cardSubType != null" >
+        #{cardSubType,jdbcType=VARCHAR},
+      </if>
+      <if test="reqNo != null" >
+        #{reqNo,jdbcType=CHAR},
+      </if>
+      <if test="phyId != null" >
+        #{phyId,jdbcType=VARCHAR},
+      </if>
+      <if test="printId != null" >
+        #{printId,jdbcType=VARCHAR},
+      </if>
+      <if test="manuTime != null" >
+        #{manuTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cardMoney != null" >
+        #{cardMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="periAvadate != null" >
+        #{periAvadate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="kdcVersion != null" >
+        #{kdcVersion,jdbcType=CHAR},
+      </if>
+      <if test="hdlTime != null" >
+        #{hdlTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=CHAR},
+      </if>
+      <if test="statusFlag != null" >
+        #{statusFlag,jdbcType=CHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=CHAR},
+      </if>
+      <if test="cardAvaDays != null" >
+        #{cardAvaDays,jdbcType=VARCHAR},
+      </if>
+      <if test="exitLineCode != null" >
+        #{exitLineCode,jdbcType=VARCHAR},
+      </if>
+      <if test="exitStationCode != null" >
+        #{exitStationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="cardProducerCode != null" >
+        #{cardProducerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNo != null" >
+        #{phoneNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="qryInitInfo" resultMap="BaseResultMap" parameterType="com.goldsign.acc.app.query.entity.TicketStorageMbInitiInfo" >
+    select 
+    *
+    from w_acc_tk.W_IC_MB_INITI_INFO    
+    <trim prefix="where (" suffix=")" suffixOverrides=" and ">
+         <if test="orderNo != null">
+            ORDER_NO = #{orderNo,jdbcType=CHAR} and
+        </if>
+       
+    
+      
+        
+    </trim>  
+  
+     
+  </select>
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.commu.mapper.CmIdxHisMapper">
+    
+    <resultMap type="com.goldsign.acc.app.commu.entity.CmIdxHis" id="rmCmIdxHis">
+        
+        <result column="HIS_TABLE" property="hisTable" /> 
+        <result column="ORIGIN_TABLE_NAME" property="originTableName" /> 
+        <result column="BEGIN_DATE" property="beginDate" /> 
+        <result column="END_DATE" property="endDate" /> 
+        <result column="RECD_COUNT" property="recdCount" /> 
+        <result column="RECD_TYPE" property="recdType" /> 
+      
+    </resultMap>
+    
+     <select id="queryPlan"  parameterType="com.goldsign.acc.app.commu.entity.CmIdxHis" resultMap="rmCmIdxHis">
+        select * from w_acc_cm.w_cm_idx_history
+        <where> 
+            <if test="originTableName != null and originTableName !=''" >  
+                ORIGIN_TABLE_NAME like concat(concat('%',#{originTableName}),'%')
+            </if> 
+            <if test="hisTable != null and hisTable !=''" >  
+                and HIS_TABLE like concat(concat('%',#{hisTable}),'%')
+            </if> 
+            
+        </where>
+        order by HIS_TABLE
+    </select>
+    
+    
+</mapper>
+
+
+

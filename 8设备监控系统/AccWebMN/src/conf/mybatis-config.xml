@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases> 
+        <typeAlias alias="PubFlag" type="com.goldsign.acc.frame.entity.PubFlag"/>
+        <typeAlias alias="OperationLog" type="com.goldsign.acc.frame.entity.OperationLog"/>
+        <typeAlias alias="Config" type="com.goldsign.acc.app.config.entity.Config"/>
+        <typeAlias alias="ConfigKey" type="com.goldsign.acc.app.config.entity.ConfigKey"/>
+        
+        <!--ACC与LCC通信情况 -->
+        <typeAlias alias="Lcc" type="com.goldsign.acc.app.system.entity.Lcc"/>
+
+        <typeAlias alias="String" type="java.lang.String"/>
+
+    </typeAliases> 
+
+    <mappers>
+        <!-- add by zhongzq 20180613-->
+        <mapper resource="com/goldsign/acc/frame/entity/MonitorStatu.xml"/>
+        <!-- add by zhongzq 20190415-->
+        <mapper resource="com/goldsign/acc/frame/entity/EmailRecipients.xml"/>
+        <!-- add by zhongzq 20190418-->
+        <mapper resource="com/goldsign/acc/frame/entity/EmailContent.xml"/>
+        <mapper resource="com/goldsign/acc/frame/entity/EmailErrorLog.xml"/>
+        <!--软件版本 -->
+        <mapper resource="com/goldsign/acc/frame/entity/Version.xml"/> 
+        <!--公共参数 -->
+        <mapper resource="com/goldsign/acc/frame/entity/PubFlag.xml"/> 
+        <mapper resource="com/goldsign/acc/app/password/entity/SysOperator.xml"/> 
+        <!--系统配置 -->
+        <mapper resource="com/goldsign/acc/app/config/entity/ConfigMapper.xml"/> 
+        <!--操作日志 参数操作日志 -->
+        <mapper resource="com/goldsign/acc/frame/entity/OperationLog.xml"/> 
+        <!--文件参数 -->
+        <mapper resource="com/goldsign/acc/frame/entity/Config.xml"/> 
+        <!--文件时间 -->
+        <mapper resource="com/goldsign/acc/app/system/entity/Date.xml"/> 
+        
+        
+        <!--集群 -->
+        <mapper resource="com/goldsign/acc/app/system/entity/Cluster.xml"/> 
+        <!--服务器硬件 -->
+        <mapper resource="com/goldsign/acc/app/system/entity/Hardware.xml"/> 
+        <!--服务器硬盘 -->
+        <mapper resource="com/goldsign/acc/app/system/entity/Disk.xml"/> 
+        <!--服务器磁盘空间 -->
+        <mapper resource="com/goldsign/acc/app/system/entity/DiskSpace.xml"/>
+        <!--cpu温度 -->
+        <mapper resource="com/goldsign/acc/app/system/entity/CpuDegrees.xml"/>
+        <!--服务器oracle空间 -->
+        <mapper resource="com/goldsign/acc/app/system/entity/Sybase.xml"/> 
+        
+        <!--服务器网卡 -->
+        <mapper resource="com/goldsign/acc/app/system/entity/NetCard.xml"/> 
+        <!--ACC与LCC通信情况 -->
+        <mapper resource="com/goldsign/acc/app/system/entity/Lcc.xml"/>
+        
+        <!--时钟同步  开始-->
+        <!--ACC同步-->
+        <mapper resource="com/goldsign/acc/app/system/entity/NtpAccSyn.xml"/>
+        <!--LCC同步-->
+        <mapper resource="com/goldsign/acc/app/system/entity/NtpLccSyn.xml"/> 
+        <!--PC同步-->
+        <mapper resource="com/goldsign/acc/app/system/entity/NtpPcSyn.xml"/>
+        <!-- 时钟同步 结束-->
+    </mappers>
+</configuration>

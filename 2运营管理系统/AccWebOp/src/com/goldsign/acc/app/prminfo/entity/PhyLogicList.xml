@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.PhyLogicListMapper">
+    
+    <resultMap type="PhyLogicList" id="rmPhyLogicList">
+        <result column="water_no" property="water_no" /> 
+        <result column="physic_no" property="physic_no" /> 
+        <result column="logic_no" property="logic_no" /> 
+    </resultMap>
+
+    <select id="getPhyLogicLists"  parameterType="PhyLogicList" resultMap="rmPhyLogicList">
+        select physic_no,water_no,logic_no
+        from W_ACC_ST.W_OP_PRM_PHY_LOGIC_LIST 
+        where 1=1 
+        <if test="water_no !=null and water_no !=''">
+            and water_no =#{water_no} 
+        </if>
+        order by logic_no
+    </select>
+    
+    <select id="getPhyLogicListsByInWaterNos"  parameterType="PhyLogicList" resultMap="rmPhyLogicList">
+        select physic_no,water_no,logic_no
+        from W_ACC_ST.W_OP_PRM_PHY_LOGIC_LIST 
+        where 1=1 
+        <if test="waterNoList != '' and waterNoList != null">  
+            and water_no in  
+            <foreach item="item" index="index" collection="waterNoList" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach>  
+        </if> 
+    </select>
+    
+    <select id="getPhyLogicListsByInLogicNos"  parameterType="PhyLogicList" resultMap="rmPhyLogicList">
+        select physic_no,water_no,logic_no
+        from W_ACC_ST.W_OP_PRM_PHY_LOGIC_LIST 
+        where 1=1 
+        <if test="logicNoList != '' and logicNoList != null">  
+            and logic_no in  
+            <foreach item="item" index="index" collection="logicNoList" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach>  
+        </if> 
+    </select>
+    
+    <select id="getPhyLogicListsByInPhysicNos"  parameterType="PhyLogicList" resultMap="rmPhyLogicList">
+        select physic_no,water_no,logic_no
+        from W_ACC_ST.W_OP_PRM_PHY_LOGIC_LIST 
+        where 1=1 
+         <if test="physicNoList != '' and physicNoList != null">  
+            and physic_no in  
+            <foreach item="item" index="index" collection="physicNoList" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach>  
+        </if> 
+    </select>
+    
+    <!-- 增加保存线路信息-->
+    <insert id="addPhyLogicList" parameterType="PhyLogicList" >
+        insert into  W_ACC_ST.W_OP_PRM_PHY_LOGIC_LIST(physic_no,water_no,logic_no)
+        values(#{physic_no},#{water_no},#{logic_no})        
+    </insert> 
+    
+    <!-- 删除线路记录 -->
+    <delete id="deletePhyLogicList" parameterType="PhyLogicList">
+        delete from W_ACC_ST.W_OP_PRM_PHY_LOGIC_LIST where water_no=#{water_no}
+    </delete>
+    
+</mapper>

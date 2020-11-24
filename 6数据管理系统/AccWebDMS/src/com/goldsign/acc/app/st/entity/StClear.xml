@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.st.mapper.StClearMapper">
+    
+    <resultMap type="com.goldsign.acc.app.st.entity.StClear" id="rmStClear">
+        
+        <result column="ORIGIN_TABLE_NAME" property="originTableName" /> 
+        <result column="DEST_TABLE_NAME" property="destTableName" /> 
+        <result column="BALANCE_WATER_NO" property="balanceWaterNo" /> 
+        <result column="BEGIN_CLEAR_DATETIME" property="beginClearDatetime" /> 
+        <result column="END_CLEAR_DATETIME" property="endClearDatetime" /> 
+        <result column="SPENT_TIME" property="spentTime" /> 
+        <result column="CLEAR_RECD_COUNT" property="clearRecdCount" /> 
+        <result column="ERR_DISCRIBE" property="errDiscribe" /> 
+        <result column="SQL_LABEL" property="sqlLabel" /> 
+      
+   
+    </resultMap>
+    
+    <select id="queryPlan"  parameterType="com.goldsign.acc.app.st.entity.StClear" resultMap="rmStClear">
+        select * from w_acc_st.w_st_log_clear_table
+        <where> 
+            <if test="originTableName != null and originTableName !=''" >  
+                ORIGIN_TABLE_NAME like concat(concat('%',#{originTableName}),'%')
+            </if> 
+            <if test="destTableName != null and destTableName !=''" >  
+                and DEST_TABLE_NAME like concat(concat('%',#{destTableName}),'%')
+            </if> 
+            <if test="balanceWaterNo != null and balanceWaterNo !=''" >  
+                and BALANCE_WATER_NO like concat(concat('%',#{balanceWaterNo}),'%')
+            </if> 
+            <if test="beginClearDatetime != null and beginClearDatetime !=''" >  
+                and BEGIN_CLEAR_DATETIME &gt;= #{beginClearDatetime}
+            </if> 
+            <if test="endClearDatetime != null and endClearDatetime !=''" >  
+                and END_CLEAR_DATETIME  &lt;= #{endClearDatetime}
+            </if> 
+            
+        </where>
+    </select>
+    
+    
+</mapper>
+
+

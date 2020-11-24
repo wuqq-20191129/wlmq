@@ -1,0 +1,11 @@
+2013-04-09 16:50:40,389 [http-bio-8084-exec-2] INFO  com.goldsign.frame.util.FrameDBUtil - *********系统配置数据********************
+2013-04-09 16:50:40,389 [http-bio-8084-exec-2] INFO  com.goldsign.frame.util.FrameDBUtil - ***************************************
+2013-04-09 16:50:40,436 [http-bio-8084-exec-1] INFO  org.apache.struts.util.PropertyMessageResources - Initializing, config='org.apache.struts.actions.LocalStrings', returnNull=true
+2013-04-09 16:55:30,877 [http-bio-8084-exec-29] INFO  com.goldsign.frame.util.FrameDBUtil - *********系统配置数据********************
+2013-04-09 16:55:30,877 [http-bio-8084-exec-29] INFO  com.goldsign.frame.util.FrameDBUtil - ***************************************
+2013-04-09 16:59:57,716 [http-bio-8084-exec-27] INFO  com.goldsign.frame.util.FrameDBUtil - *********系统配置数据********************
+2013-04-09 16:59:57,716 [http-bio-8084-exec-27] INFO  com.goldsign.frame.util.FrameDBUtil - ***************************************
+2013-04-09 17:09:42,155 [http-bio-8084-exec-30] INFO  com.goldsign.frame.util.FrameDBUtil - *********系统配置数据********************
+2013-04-09 17:09:42,155 [http-bio-8084-exec-30] INFO  com.goldsign.frame.util.FrameDBUtil - ***************************************
+2013-04-09 17:49:31,015 [http-bio-8084-exec-24] INFO  com.goldsign.frame.util.FrameDBUtil - *********系统配置数据********************
+2013-04-09 17:49:31,015 [http-bio-8084-exec-24] INFO  com.goldsign.frame.util.FrameDBUtil - ***************************************

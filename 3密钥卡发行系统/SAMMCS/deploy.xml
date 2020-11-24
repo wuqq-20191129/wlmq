@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="SAMMCS" default="deploy" basedir="." >
+    
+    <echo message="项目名称 ${ant.project.name}"/>
+    
+    <property name="project.encoding" value="UTF-8"/><!--项目编码-->
+    
+    <property name="build.dir" value="./dist"/> <!-- 生成位置 -->
+    <property name="lib.dir" value="${build.dir}/lib"/> <!-- lib文件位置 -->
+    <property name="src.dir" value="./src"/> <!-- java源文件目录 -->
+    <property name="class.dir" value="${build.dir}/classes"/><!--初始化 编译之后的临时存放目录-->
+    <property name="jarFile" value="${build.dir}/${ant.project.name}.jar"/> <!-- jar文件 -->
+    <property name="deploy.dir" value="E:/vss/长沙地铁清分系统\开发库（新）/项目发布/生产系统/密钥卡发行系统/${ant.project.name}"/> <!-- 发布目录 -->
+    <property name="updateLib.dir" value="E:/svn/Goldsign/长沙地铁清分项目/自动升级程序/代码开发/AUTOUPDATE/dist/lib"/> <!-- 发布目录 -->
+    
+    <!-- 设置 classpath,即编译时需要引用的库文件 -->
+    <path id="classpath">
+        <fileset dir="${lib.dir}"> <!-- 引用lib下的所有jar -->
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+    
+    <!-- 清除已经生成的jar、临时classes和发布文件夹 -->
+    <target name="clean">
+        <echo message="-clean...清理！"/>
+        <delete dir="${class.dir}"/>
+        <delete file="${jarFile}"/>
+        <delete dir="${deploy.dir}"/>
+    </target>
+    
+    <!-- 生成临时classes文件夹 -->
+    <target name="init" depends="clean">
+        <echo message="-init...初始化！"/>
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${class.dir}"/>
+        <mkdir dir="${deploy.dir}"/>
+    </target>
+    
+    <!-- 编译src.dir下的所有java文件。fork被设置为true,这样可指定编译使用的JDK，此处使用jdk1.5,必须根据java源文件的编码来设置encoding. -->
+    <target name="compile" depends="init">
+        <echo message="-compile...编译！"/>
+        <javac srcdir="${src.dir}" destdir="${class.dir}"
+            debug="on"
+            deprecation="off"
+            optimize="off"
+            includes="**"
+            includeantruntime="on"
+            encoding="${project.encoding}"
+            fork="yes"
+        >
+            <classpath refid="classpath"/>
+            <!--<compilerarg value="-Xlint:unchecked"/>-->
+        </javac>
+        
+    </target>
+    
+    <!-- 打包jar -->
+    <target name="jar" depends="compile">
+        <echo message="-jar...打包！"/>
+        <jar destfile="${jarFile}" basedir="${class.dir}" includes="**/*.class **/*.xml"/>
+        
+        <delete dir="${class.dir}"/>
+    </target>
+    
+    <!-- 发布jar -->
+    <target name="deploy" depends="jar">
+        <echo message="-deploy...发布！"/>
+        
+        <copy todir="${deploy.dir}/config" preservelastmodified="true">
+            <fileset dir="config" />
+        </copy>
+        <copy todir="${deploy.dir}/data" preservelastmodified="true">
+            <fileset dir="data" />
+        </copy>
+        <copy todir="${deploy.dir}/images" preservelastmodified="true">
+            <fileset dir="images" />
+        </copy>
+        <copy todir="${deploy.dir}/log" preservelastmodified="true">
+            <fileset dir="log" />
+        </copy>
+        <copy todir="${deploy.dir}" preservelastmodified="true">
+            <fileset file="*.bat" />
+        </copy>
+        <copy todir="${deploy.dir}" preservelastmodified="true">
+            <fileset file="*.exe" />
+        </copy>
+        <copy todir="${deploy.dir}" preservelastmodified="true">
+            <fileset file="*.dll" />
+        </copy>
+        <copy todir="${deploy.dir}/lib" preservelastmodified="true">
+            <fileset file="*.properties" />
+        </copy>
+        <copy todir="${deploy.dir}/lib" preservelastmodified="true" flatten="true">
+            <fileset dir="${lib.dir}" />
+        </copy>
+        <copy todir="${deploy.dir}/lib" preservelastmodified="true">
+             <fileset file="${jarFile}"/>      
+        </copy>
+        <copy todir="${deploy.dir}" preservelastmodified="true">
+            <fileset file="*.cfg" />
+        </copy>
+        <copy todir="${deploy.dir}/lib" preservelastmodified="true" flatten="true">
+            <fileset file="${updateLib.dir}/*.jar" />
+        </copy>
+        
+    </target>
+
+</project>

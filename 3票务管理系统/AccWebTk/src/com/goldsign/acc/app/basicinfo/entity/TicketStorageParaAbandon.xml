@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper  namespace = "com.goldsign.acc.app.basicinfo.mapper.TicketStorageParaAbandonMapper">
+    
+    <resultMap type = "com.goldsign.acc.app.basicinfo.entity.TicketStorageParaAbandon"  id = "rmTicketStorageParaAbandon">
+        <result column="water_no"  property="water_no"/>
+        <result column="line_id"  property="line_id"/>
+        <result column="station_id"  property="station_id"/>
+        <result column="report_date"  property="report_date"/>
+        <result column="report_date_start"  property="report_date_start"/>
+        <result column="report_date_end"  property="report_date_end"/>
+        <result column="remark"  property="remark"/>
+        <result column="storage_id"  property="storage_id"/>
+        <result column="sys_operator_id"  property="sys_operator_id"/>
+        <result column="sys_group_id"  property="sys_group_id"/>
+        <result column="sys_storage_id"  property="sys_storage_id"/>
+        </resultMap>
+    
+    <select id="queryParm"   resultMap="rmTicketStorageParaAbandon">
+        select water_no,report_date,line_id,station_id,remark 
+                from w_acc_tk.w_ic_prm_abandon_ticket_para where 1=1
+        <if test="report_date_start !=null and report_date_start !=''">
+           and to_char(report_date,'yyyy-mm-dd') &gt;= #{report_date_start} 
+        </if>
+        <if test="report_date_end !=null and report_date_end !=''">
+           and to_char(report_date,'yyyy-mm-dd') &lt;=  #{report_date_end} 
+        </if>
+        <if test="line_id !=null and line_id !=''">
+              and trim(line_id) =#{line_id} 
+        </if> 
+        <if test="station_id !=null and station_id !=''">
+            and trim(station_id) =#{station_id}
+        </if>
+         order by water_no
+    </select> 
+    
+   <select id="getListForAdd"   resultMap="rmTicketStorageParaAbandon">
+       
+       select water_no,report_date,line_id,station_id,remark 
+                from w_acc_tk.w_ic_prm_abandon_ticket_para
+       where  water_no = #{water_no} 
+        order by water_no
+    </select>
+    
+    <select id="getWaterNo"   resultType="String">
+       
+       select max(water_no)
+                from w_acc_tk.w_ic_prm_abandon_ticket_para
+     
+    </select>
+    
+    <select id="getUserStoreSet"  parameterType="TicketStorageParaAbandon" resultMap="rmTicketStorageParaAbandon">
+        select sg.sys_group_id,sg.sys_storage_id 
+            from w_acc_st.w_op_sys_group_operator sgo , w_acc_st.w_op_sys_group sg 
+            where sgo.sys_group_id=sg.sys_group_id 
+            and sys_operator_id=#{sys_operator_id}
+    </select>
+   
+    <update id="modifyTicketStorageParaAbandon" parameterType="TicketStorageParaAbandon" >
+       update w_acc_tk.w_ic_prm_abandon_ticket_para set report_date =to_date(#{report_date},'yyyy-mm-dd'),
+        line_id =#{line_id},station_id =#{station_id},
+       remark =#{remark}
+        where water_no = #{water_no}                                            
+    </update>
+     
+    <insert id="addTicketStorageParaAbandon" parameterType="TicketStorageParaAbandon" >
+        insert into w_acc_tk.w_ic_prm_abandon_ticket_para(water_no,report_date,line_id,station_id,remark)
+        values(W_ACC_TK.W_SEQ_W_IC_TK_ABANDON_PRM.nextval,to_date(#{report_date},'yyyy-mm-dd'),#{line_id},#{station_id},#{remark})        
+        
+    </insert>
+    
+    <delete id="deleteTicketStorageParaAbandon" parameterType="TicketStorageParaAbandon">
+        delete from w_acc_tk.w_ic_prm_abandon_ticket_para 
+        where water_no = #{water_no}            
+    </delete>
+</mapper>
+
+
+

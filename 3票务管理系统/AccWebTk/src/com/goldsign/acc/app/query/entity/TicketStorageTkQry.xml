@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.query.mapper.TicketStorageTkQryMapper" >
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.query.entity.TicketStorageTkQry" >
+    <constructor >
+      <arg column="BILL_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="REASON_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="STORAGE_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="AREA_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="DETAIL_PLACE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="START_BOX_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="END_BOX_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="FORM_MAKER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="VERIFY_PERSON" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="VERIFY_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+     
+      <arg column="REASON_ID_TEXT" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="STORAGE_ID_TEXT" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="AREA_ID_TEXT" jdbcType="VARCHAR" javaType="java.lang.String" />
+     
+    </constructor>
+  </resultMap>
+  <parameterMap type="map" id="MapTicketStorageTkQry">  
+      <parameter property="P_LOGICAL_ID" jdbcType="VARCHAR" mode="IN"/>  
+      <parameter property="P_ERRMSG" jdbcType="VARCHAR" mode="OUT"/>  
+      <parameter property="P_RESULT" jdbcType="VARCHAR" mode="OUT"/> 
+      <parameter property="INFO_CUR" jdbcType="CURSOR" javaType="ResultSet" resultMap="BaseResultMap" mode="OUT"/>  
+  </parameterMap>   
+  
+  <select id="tkqry"  parameterMap="MapTicketStorageTkQry" statementType="CALLABLE">
+      {call W_ACC_TK.W_UP_IC_QUERY_CARD_LOCAL(?,?,?,?)}
+  </select>
+ 
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.system.mapper.DiskSpaceMapper">
+    
+    <resultMap type="com.goldsign.acc.app.system.entity.DiskSpace" id="rmDiskSpace">
+        <result column="status_date" property="statusDate"/>
+        <result column="ip" property="ip" /> 
+        <result column="status" property="status" /> 
+        <result column="remark" property="remark" /> 
+        <result column="name" property="name" /> 
+        <result column="type" property="type" /> 
+        <result column="ip_value" property="ip_value" /> 
+    </resultMap>
+    
+    <select id="queryPlan"  parameterType="com.goldsign.acc.app.system.entity.DiskSpace" resultMap="rmDiskSpace">
+        select A.ip,A.file_system,A.avail,A.capacity,A.mounted_on ,A.status,A.status_date,A.remark,
+	B.name,B.type ,B.ip_value 
+	from w_acc_mn.w_mtr_current_disk_space_info A,w_acc_mn.w_mtr_device_code B 
+	where A.ip =B.ip(+) order by ip_value
+    </select>
+    
+    <select id="queryCapacityConfig" resultType="String">
+       select config_value as capacity from w_acc_mn.W_MTR_CONFIG t where t.config_name ='COMMAND_FIND_USE_SPACE_WARNING'
+    </select>
+    
+     <update id="updatePlan" parameterType="com.goldsign.acc.app.system.entity.DiskSpace" >
+        update w_acc_mn.w_mtr_current_disk_space_info set avail=#{avail}, capacity=#{capacity},mounted_on=#{mounted_on},status=#{status},
+         status_date=to_date(#{statusDate},'yyyy-mm-dd hh24:mi:ss'),remark=#{remark}  where ip=#{ip} and file_system=#{file_system}
+    </update>
+    
+    <insert id="insertPlanOne" parameterType="com.goldsign.acc.app.system.entity.DiskSpace" >
+        insert into w_acc_mn.w_mtr_current_disk_space_info(ip,file_system,avail,capacity,mounted_on,status,status_date,remark) 
+            values(#{ip},#{file_system},#{avail},#{capacity},#{mounted_on},#{status},to_date(#{statusDate},'yyyy-mm-dd hh24:mi:ss'),#{remark})
+    </insert>
+   
+    <insert id="insertPlanTwo" parameterType="com.goldsign.acc.app.system.entity.DiskSpace" >
+        insert into w_acc_mn.w_mtr_his_disk_space_info(ip,file_system,avail,capacity,mounted_on,status,status_date,remark)
+            values(#{ip},#{file_system},#{avail},#{capacity},#{mounted_on},#{status},to_date(#{statusDate},'yyyy-mm-dd hh24:mi:ss'),#{remark})
+    </insert>
+</mapper>
+
+
+

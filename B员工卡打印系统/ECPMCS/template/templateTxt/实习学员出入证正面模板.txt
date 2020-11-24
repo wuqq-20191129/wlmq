@@ -1,0 +1,4 @@
+CardType#0504
+Background#PassPicSmall.jpg#254#400
+Image#BackPhoto##C:/Users/Administrator/Pictures/little.jpg#0#-6#640#1024
+Text#EmployeeID#工号#宋体#8#1#000000#465#35#190#40#5

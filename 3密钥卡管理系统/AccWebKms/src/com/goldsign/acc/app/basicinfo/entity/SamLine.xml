@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicinfo.mapper.SamLineMapper">
+    
+    <resultMap type="com.goldsign.acc.app.basicinfo.entity.SamLine" id="rmSamLine">      
+        <result column="line_es_code" property="line_es_code" /> 
+        <result column="line_es_desc" property="line_es_desc" /> 
+        <result column="type" property="type" />
+        <result column="code" property="code" />   
+        <result column="code_text" property="code_text" /> 
+        <result column="remark" property="remark" />  
+        <result column="recode_flag_es_line" property="recode_flag_es_line" />
+        <result column="distribute_place" property="distribute_place" />    
+    </resultMap>
+    
+    <select id="querySamLine" parameterType="com.goldsign.acc.app.basicinfo.entity.SamLine" resultMap="rmSamLine">
+        select a.line_es_code,a.line_es_desc,a.remark,b.code_text from W_ACC_TK.W_IC_SAM_LINE_ES a,W_ACC_TK.W_IC_SAM_PUB_FLAG b where a.type = b.code(+) and b.type = #{recode_flag_es_line}
+        <if test="line_es_code != '' and line_es_code != null">
+            and a.line_es_code like concat(concat('%',upper(#{line_es_code})),'%')
+        </if>
+        <if test="line_es_desc != '' and line_es_desc != null">
+            and a.line_es_desc like concat(concat('%',upper(#{line_es_desc})),'%')
+        </if>
+    </select>
+    
+    <select id="querySamLineById" parameterType="com.goldsign.acc.app.basicinfo.entity.SamLine" resultMap="rmSamLine">
+        select a.line_es_code,a.line_es_desc,a.remark,b.code_text from W_ACC_TK.W_IC_SAM_LINE_ES a,W_ACC_TK.W_IC_SAM_PUB_FLAG b where a.type = b.code(+) and b.type = #{recode_flag_es_line}
+        and  a.line_es_code = #{line_es_code}       
+    </select>
+    
+    <select id="querySamLineByName" parameterType="com.goldsign.acc.app.basicinfo.entity.SamLine" resultMap="rmSamLine">
+        select a.line_es_code,a.line_es_desc,a.remark,b.code_text from W_ACC_TK.W_IC_SAM_LINE_ES a,W_ACC_TK.W_IC_SAM_PUB_FLAG b where a.type = b.code(+) and b.type = #{recode_flag_es_line}
+        and  a.line_es_desc = #{line_es_desc}       
+    </select>
+    
+    <select id="queryIsUsed" parameterType="com.goldsign.acc.app.basicinfo.entity.SamLine" resultMap="rmSamLine">
+        select 1 from W_ACC_TK.W_IC_SAM_LINE_ES a，W_ACC_tk.W_IC_SAM_STOCK b where b.distribute_place = a.line_es_code and  a.line_es_code = #{line_es_code}
+    </select>
+    
+    <select id="checkIsDefin" parameterType="com.goldsign.acc.app.basicinfo.entity.SamLine" resultMap="rmSamLine">
+        select 1 from W_ACC_TK.W_IC_SAM_LINE_ES where line_es_desc = #{line_es_desc} and line_es_code &lt;&gt; #{line_es_code}
+    </select>
+    
+    <insert id="addSamLine" parameterType="com.goldsign.acc.app.basicinfo.entity.SamLine">
+        insert into W_ACC_TK.W_IC_SAM_LINE_ES (line_es_code, line_es_desc, type, remark) values (#{line_es_code}, #{line_es_desc}, #{type}, #{remark})
+    </insert>
+    
+    <delete id="deleteSamLine" parameterType="com.goldsign.acc.app.basicinfo.entity.SamLine">        
+        delete from W_ACC_TK.W_IC_SAM_LINE_ES where line_es_code = #{line_es_code}     
+    </delete>
+    
+    <update id="modifySamLine" parameterType="com.goldsign.acc.app.basicinfo.entity.SamLine">
+        update W_ACC_TK.W_IC_SAM_LINE_ES set line_es_desc = #{line_es_desc}, type = #{type} , remark = #{remark} WHERE line_es_code = #{line_es_code}  
+    </update>
+    
+</mapper>

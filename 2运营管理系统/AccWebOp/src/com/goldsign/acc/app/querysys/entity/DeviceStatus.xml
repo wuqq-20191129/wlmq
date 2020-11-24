@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.DeviceStatusMapper">
+    <resultMap type="DeviceStatus" id="rmDeviceStatus">
+        <result column="line_id" property="line_id" /> 
+        <result column="station_id" property="station_id" /> 
+        <result column="dev_type_id" property="dev_type_id" /> 
+        <result column="device_id" property="device_id" /> 
+        <result column="status_id" property="status_id" />
+        <result column="status_value" property="status_value" />
+        <result column="status_datetime" property="status_datetime" />
+        <result column="acc_status_value" property="acc_status_value" />
+        <result column="status_name" property="status_name" />
+    </resultMap>
+
+    
+     
+    <select id="getDeviceStatus"  parameterType="DeviceStatus" resultMap="rmDeviceStatus">
+        select A.line_id line_id,A.station_id station_id,A.dev_type_id dev_type_id,
+               A.device_id device_id,A.status_id status_id,A.status_value status_value,
+               A.status_datetime status_datetime,B.acc_status_value acc_status_value,B.status_name status_name
+        from   w_acc_cm.w_cm_dev_his_status A,w_acc_st.w_op_cod_com_status_mapping B 
+        where A.status_id=B.status_id and A.status_value=B.status_value 
+        <if test="line_id !=null and line_id !=''">
+            and A.line_id = #{line_id} 
+        </if>
+        <if test="station_id !=null and station_id !=''">
+            and A.station_id = #{station_id} 
+        </if>
+        <if test="dev_type_id !=null and dev_type_id !=''">
+            and A.dev_type_id = #{dev_type_id} 
+        </if>
+        <if test="device_id !=null and device_id !=''">
+            and A.device_id = #{device_id} 
+        </if>
+        <if test="status_id !=null and status_id !=''">
+            and A.status_id = #{status_id} 
+        </if>
+        <if test="acc_status_value !=null and acc_status_value !=''">
+            and B.acc_status_value = #{acc_status_value} 
+        </if>
+        <if test="beginDate !=null and beginDate !=''">
+            and A.status_datetime &gt;= to_date(#{beginDate}, 'yyyy-mm-dd hh24:mi:ss') 
+        </if> 
+        <if test="endDate !=null and endDate !=''">
+            and A.status_datetime &lt;= to_date(#{endDate}, 'yyyy-mm-dd hh24:mi:ss') 
+        </if>
+        order by status_datetime DESC
+    </select>
+</mapper>

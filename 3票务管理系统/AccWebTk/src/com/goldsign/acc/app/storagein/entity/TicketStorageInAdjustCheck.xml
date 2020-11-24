@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.storagein.mapper.TicketStorageInAdjustCheckMapper">
+                  
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.storagein.entity.TicketStorageIcChkStorageForCheckIn">    
+    <!--盘点表-->
+    <result column="CHECK_BILL_NO" property="checkBillNo" /> 
+    <result column="CHECK_PERSON" property="checkPerson" /> 
+    <result column="CHECK_DATE" property="checkDate" /> 
+    <result column="VERIFY_DATE" property="verifyDate" /> 
+    <result column="VERIFY_PERSON" property="verifyPerson" /> 
+    <result column="RECORD_FLAG" property="recordFlag" /> 
+    <result column="LOCKED" property="locked" /> 
+    <result column="IN_LOCKED" property="inLocked" /> 
+    
+    <!--盘点明细表-->
+    <result property="storageId" column="STORAGE_ID"/>
+    <result property="areaId" column="AREA_ID"/>
+    <result property="icMainType" column="IC_MAIN_TYPE"/>
+    <result property="icSubType" column="IC_SUB_TYPE"/>
+    <result property="storageId" column="STORAGE_ID"/>
+
+    <result property="waterNo" column="WATER_NO"/>
+    <result property="chestId" column="CHEST_ID"/>
+    <result property="storeyId" column="STOREY_ID"/>
+    <result property="baseId" column="BASE_ID"/>
+    <result property="boxId" column="BOX_ID"/>
+    <result property="sysAmount" column="SYS_AMOUNT"/>
+    <result property="realAmount" column="REAL_AMOUNT"/>
+    <result property="cardMoney" column="CARD_MONEY"/>
+
+    <result property="diffAmount" column="diffAmount"/>
+    
+    <result property="lineId" column="LINE_ID"/>
+    <result property="stationId" column="STATION_ID"/>
+    <result property="exitLineId" column="EXIT_LINE_ID"/>
+    <result property="exitStationId" column="EXIT_STATION_ID"/>
+    <result property="model" column="MODEL"/>
+
+  </resultMap>
+
+  <select id="getChkStoragesList" parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageIcChkStorageForCheckIn" resultMap="BaseResultMap">
+    select 
+        b.water_no,b.check_bill_no,b.storage_id,b.area_id,b.chest_id,b.storey_id,b.base_id,b.box_id,
+        b.ic_main_type,b.ic_sub_type,b.sys_amount,b.real_amount,b.card_money,nvl(b.real_amount,0)-nvl(b.sys_amount,0) diffAmount,
+        a.check_person,a.check_date,a.verify_date,a.verify_person,a.record_flag
+    from w_acc_tk.W_IC_CHK_STORAGE a,w_acc_tk.W_IC_CHK_STORAGE_DETAIL b
+    where a.CHECK_BILL_NO = b.CHECK_BILL_NO and b.sys_amount &lt; b.real_amount
+    and a.CHECK_BILL_NO = #{checkBillNo,jdbcType=CHAR} 
+    
+  </select>
+  
+  <select id="getChkStoragesListForSelect" parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageIcChkStorageForCheckIn" resultMap="BaseResultMap">
+    select b.water_no,b.check_bill_no,b.storage_id,b.area_id,b.chest_id,b.storey_id,b.base_id,b.box_id,
+           b.ic_main_type,b.ic_sub_type,b.card_money,b.sys_amount,b.real_amount,a.check_person,a.check_date,
+           a.verify_date,a.verify_person,b.line_id,b.station_id,b.exit_line_id,b.exit_station_id,b.model 
+    from w_acc_tk.w_ic_chk_storage A,w_acc_tk.w_ic_chk_storage_detail B where b.sys_amount &lt; b.real_amount
+    and b.check_bill_no=a.check_bill_no and a.in_locked='0' and a.record_flag='0'
+    and b.storage_id  in
+    <foreach item="storageId" index="index" collection="storageIdList" open="(" separator="," close=")">
+        #{storageId}
+    </foreach>   
+                 
+    order by b.check_bill_no,b.water_no
+                 
+                
+    
+  </select>
+  
+  
+ 
+</mapper>

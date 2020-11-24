@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.system.mapper.CpuDegreesMapper">
+    <resultMap id="BaseResultMap" type="com.goldsign.acc.app.system.entity.CpuDegrees">
+        <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+        <result column="IP" jdbcType="VARCHAR" property="ip"/>
+        <result column="STATUS" jdbcType="VARCHAR" property="status"/>
+        <result column="DEGREES_INFO" jdbcType="VARCHAR" property="degreesInfo"/>
+        <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    </resultMap>
+    <insert id="insertIntoCur" parameterType="com.goldsign.acc.app.system.entity.CpuDegrees">
+    insert into W_ACC_MN.W_MTR_CURRENT_CPUDEGREES_INFO (STATUS_DATE, IP, STATUS,
+      DEGREES_INFO, REMARK)
+    values (to_date(#{statusDate,jdbcType=TIMESTAMP},'yyyy-mm-dd hh24:mi:ss'), #{ip,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+      #{degreesInfo,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+    <update id="update" parameterType="com.goldsign.acc.app.system.entity.CpuDegrees">
+    update W_ACC_MN.W_MTR_CURRENT_CPUDEGREES_INFO set  STATUS_DATE=to_date(#{statusDate,jdbcType=TIMESTAMP},'yyyy-mm-dd hh24:mi:ss'),STATUS = #{status,jdbcType=VARCHAR},
+     DEGREES_INFO= #{degreesInfo,jdbcType=VARCHAR}, REMARK = #{remark,jdbcType=VARCHAR} where IP = #{ip,jdbcType=VARCHAR}
+  </update>
+    <insert id="insertIntoHis" parameterType="com.goldsign.acc.app.system.entity.CpuDegrees">
+    insert into W_ACC_MN.W_MTR_HIS_CPUDEGREES_INFO (STATUS_DATE, IP, STATUS,
+      DEGREES_INFO, REMARK)
+    values (to_date(#{statusDate,jdbcType=TIMESTAMP},'yyyy-mm-dd hh24:mi:ss'), #{ip,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+      #{degreesInfo,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+    <select id="queryPlan" parameterType="com.goldsign.acc.app.system.entity.CpuDegrees" resultMap="BaseResultMap">
+        select A.status_date,A.ip,A.DEGREES_INFO,A.status,A.remark,B.name,B.ip_value
+        from w_acc_mn.W_MTR_CURRENT_CPUDEGREES_INFO A, w_acc_mn.w_mtr_device_code B
+        where A.ip =B.ip(+) order by ip_value
+    </select>
+</mapper>

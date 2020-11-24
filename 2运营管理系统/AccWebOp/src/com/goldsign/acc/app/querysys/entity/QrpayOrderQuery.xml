@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.QrpayOrderQueryMapper">
+    
+    <resultMap type="com.goldsign.acc.app.querysys.entity.QrpayOrderQuery" id="rmQrpayOrderQuery">
+        <result column="WATER_NO" property="waterNo" />
+        <result column="ORDER_NO" property="orderNo" /> 
+        <result column="SALE_FEE" property="saleFee" /> 
+        <result column="SALE_TIMES" property="saleTimes" />
+        <result column="DEAL_FEE" property="dealFee" />
+        <result column="STATUS" property="status" /> 
+        <result column="ORDER_DATE" property="orderDate" /> 
+        <result column="INSERT_DATE" property="insertDate" />
+        <result column="CARD_TYPE" property="cardType" /> 
+        <result column="QRPAY_ID" property="qrpayId" /> 
+        <result column="QRPAY_DATA" property="qrpayData" />
+        <result column="PHONE_NO" property="phoneNo" /> 
+        <result column="PAY_DATE" property="payDate" /> 
+        <result column="PAY_STATUS" property="payStatus" />
+        <result column="PAY_CHANNEL_TYPE" property="payChannelType" /> 
+        <result column="PAY_CHANNEL_CODE" property="payChannelCode" /> 
+        <result column="SALE_FEE_TOTAL" property="saleFeeTotal" />
+        <result column="SALE_TIMES_TOTAL" property="saleTimesTotal" /> 
+        <result column="DEAL_FEE_TOTAL" property="dealFeeTotal" /> 
+        <result column="ACC_SEQ" property="accSeq" />
+        <result column="ORDER_IP" property="orderIp" /> 
+        <result column="CARD_TYPE_TOTAL" property="cardTypeTotal" /> 
+        <result column="VALID_TIME" property="validTime" />
+        <result column="REFUND_FEE" property="refundFee" /> 
+        <result column="REMARK" property="remark" /> 
+        <result column="UPDATE_TIME" property="updateTime" /> 
+        <result column="LAST_STATUS" property="lastStatus" />
+        <result column="MODIFY_OPERATE" property="modify_operate" /> 
+        <result column="AUDIT_OPERATE" property="audit_operate" />
+        <result column="UNUSUAL" property="unusual" />  
+    </resultMap>
+    
+    <select id = "getdate"  parameterType="com.goldsign.acc.app.querysys.entity.QrcodeOrderQuery" resultType="int">
+       select count(1) from w_acc_ol.w_ol_buf_qrpay_order where ORDER_NO =#{orderNo}
+    </select>
+    
+    <select id="getQrpayOrder"  parameterType="com.goldsign.acc.app.querysys.entity.QrpayOrderQuery" resultMap="rmQrpayOrderQuery">
+        SELECT * FROM 
+        (
+        SELECT * FROM w_acc_ol.w_ol_buf_qrpay_order a
+        UNION ALL 
+        SELECT * FROM w_acc_ol.w_ol_qrpay_order b
+        )e
+        <where>
+            <if test="orderNo !=null and orderNo !=''">
+                ORDER_NO =#{orderNo}
+            </if>
+            <if test="beginTime != null and beginTime !=''" >  
+                and ORDER_DATE &gt;= to_date(#{beginTime},'yyyy-mm-dd hh24:mi:ss')
+            </if> 
+            <if test="endTime != null and endTime !=''" >  
+                and ORDER_DATE  &lt;= to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss')
+            </if> 
+            <if test="status != null and status !=''" >  
+                and STATUS =#{status}
+            </if> 
+            <if test="qrpayData != null and qrpayData !=''" >  
+                and QRPAY_DATA like #{qrpayData}
+            </if>
+            <if test="unusual == &quot;0&quot;" >  
+                and status = '1'
+                and (sale_times = 0 or sale_times is null)
+            </if>  
+        </where>
+        order by WATER_NO desc
+    </select>
+    
+    <select id="getQrpayOrderForAudit"  parameterType="com.goldsign.acc.app.querysys.entity.QrpayOrderQuery" resultMap="rmQrpayOrderQuery">
+        select 
+        t.order_no,
+        t.sale_times,
+        t.status,
+        t.status,
+        t.order_ip,
+        t.remark
+       
+        from w_acc_ol.w_ol_qrpay_order t
+        where  t.order_no =#{orderNo}
+    </select>
+    
+    
+    <update id="modifyQrpayOrder" parameterType="com.goldsign.acc.app.querysys.entity.QrpayOrderQuery" >
+        
+        update w_acc_ol.w_ol_qrpay_order 
+        set  remark   = #{remark}
+        where order_no = #{orderNo}
+                                                
+    </update>
+    
+    
+    <update id="auditQrpayOrder" parameterType="com.goldsign.acc.app.querysys.entity.QrpayOrderQuery" >
+        
+        update w_acc_ol.w_ol_qrpay_order t
+        set t.status      = '4',
+        t.update_time = sysdate,
+        t.last_status = t.status
+        where order_no = #{orderNo}
+                                                
+    </update>
+    
+    
+    
+    <insert id="insertModifyOpe" parameterType="com.goldsign.acc.app.querysys.entity.QrpayOrderQuery">
+        insert into W_ACC_ST.W_OP_LOG_QR_OL
+        (order_no,modify_operate,audit_operate,operate_time,lock_dev,module_flag,remark)
+        values(#{orderNo},#{modify_operate},#{audit_operate},sysdate,#{orderIp},'1',#{remark})
+    </insert>
+        
+    
+</mapper>
+
+
+

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.TvmStopsellDefMapper">
+    <resultMap type="TvmStopsellDef" id="rmTvmStopsellDef">
+        
+        <result column="version_no" property="version_no" /> 
+        <result column="record_flag" property="record_flag" /> 
+        <result column="parm_type_id" property="parm_type_id" /> 
+        <result column="timetable_id" property="timetable_id" /> 
+        <result column="start_station" property="start_station" /> 
+        <result column="dest_station" property="dest_station" /> 
+        <result column="stopsell_time1" property="stopsell_time1" /> 
+        <result column="stopsell_time2" property="stopsell_time2" /> 
+        <result column="stopsell_endtime" property="stopsell_endtime" /> 
+    </resultMap>
+
+    
+     
+    <select id="getTvmStopsellDefs"  parameterType="TvmStopsellDef" resultMap="rmTvmStopsellDef">
+        select version_no,record_flag,parm_type_id,timetable_id,start_station,
+               dest_station,stopsell_time1,stopsell_time2,stopsell_endtime 
+        from   W_ACC_ST.W_Op_Prm_Tvm_Stopsell_Detail_D
+        where  record_flag=#{record_flag} and version_no=#{version_no} and parm_type_id =#{parm_type_id}
+        <if test="start_line_id !=null and start_line_id !=''">
+            and substr(start_station,0,2) =#{start_line_id} 
+        </if> 
+        <if test="start_station !=null and start_station !=''">
+            and substr(start_station,3,2) =#{start_station} 
+        </if> 
+        <if test="dest_line_id !=null and dest_line_id !=''">
+            and substr(dest_station,0,2) =#{dest_line_id} 
+        </if> 
+        <if test="dest_station !=null and dest_station !=''">
+            and substr(dest_station,3,2) =#{dest_station} 
+        </if>
+        order by start_station,dest_station,stopsell_time1,stopsell_time2,stopsell_endtime
+    </select>
+    
+    <select id="getTvmStopsellDefById"  parameterType="TvmStopsellDef" resultMap="rmTvmStopsellDef">
+       select version_no,record_flag,parm_type_id,timetable_id,start_station,
+               dest_station,stopsell_time1,stopsell_time2,stopsell_endtime 
+        from   W_ACC_ST.W_Op_Prm_Tvm_Stopsell_Detail_D
+        where  record_flag=#{record_flag} and version_no=#{version_no} and parm_type_id =#{parm_type_id} 
+               and start_station =#{start_station} and dest_station =#{dest_station}
+    </select>
+    
+    <insert id="addTvmStopsellDef" parameterType="TvmStopsellDef" >
+        insert into W_ACC_ST.W_Op_Prm_Tvm_Stopsell_Detail_D(
+                    version_no,record_flag,parm_type_id,timetable_id,start_station,
+                    dest_station,stopsell_time1,stopsell_time2,stopsell_endtime)
+        values      (#{version_no},#{record_flag},#{parm_type_id},#{timetable_id},#{start_station},
+                    #{dest_station},#{stopsell_time1},#{stopsell_time2},#{stopsell_endtime})       
+    </insert>
+    <update id="modifyTvmStopsellDef" parameterType="TvmStopsellDef" >
+        update W_ACC_ST.W_Op_Prm_Tvm_Stopsell_Detail_D set 
+            stopsell_time1=#{stopsell_time1},stopsell_time2=#{stopsell_time2},stopsell_endtime=#{stopsell_endtime}
+            where  start_station=#{start_station} and dest_station=#{dest_station} and parm_type_id=#{parm_type_id}
+                   and record_flag=#{record_flag} and version_no=#{version_no}  
+    </update>
+    <delete id="deleteTvmStopsellDef" parameterType="TvmStopsellDef">
+        delete from W_ACC_ST.W_Op_Prm_Tvm_Stopsell_Detail_D 
+        where  record_flag=#{record_flag} and version_no=#{version_no}  and parm_type_id=#{parm_type_id} 
+               and start_station =#{start_station} and dest_station =#{dest_station} 
+        
+    </delete>
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    
+    <update id="submitToOldFlag" parameterType="TvmStopsellDef" >
+        update W_ACC_ST.W_Op_Prm_Tvm_Stopsell_Detail_D set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new} and parm_type_id=#{parm_type_id}                                              
+    </update>
+    <!--草稿参数复制为当前或未来参数 -->
+     <insert id="submitFromDraftToCurOrFur" parameterType="TvmStopsellDef" >
+        insert into  W_ACC_ST.W_Op_Prm_Tvm_Stopsell_Detail_D(
+               version_no,record_flag,parm_type_id,timetable_id,start_station,
+               dest_station,stopsell_time1,stopsell_time2,stopsell_endtime)
+        select #{version_no_new},#{record_flag_new},parm_type_id,timetable_id,start_station,
+               dest_station,stopsell_time1,stopsell_time2,stopsell_endtime
+        from    W_ACC_ST.W_Op_Prm_Tvm_Stopsell_Detail_D  
+        where   record_flag=#{record_flag} and version_no=#{version_no} and parm_type_id=#{parm_type_id}                                       
+    </insert>
+    
+    <!--草稿参数删除 -->
+     <delete id="deleteTvmStopsellDefsForClone" parameterType="TvmStopsellDef">
+            delete from W_ACC_ST.W_Op_Prm_Tvm_Stopsell_Detail_D where  record_flag='3' and version_no='0000000000'  and parm_type_id=#{parm_type_id}                                                     
+    </delete>
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="TvmStopsellDef" >
+        insert into  W_ACC_ST.W_Op_Prm_Tvm_Stopsell_Detail_D(
+                version_no,record_flag,parm_type_id,timetable_id,start_station,
+                dest_station,stopsell_time1,stopsell_time2,stopsell_endtime)
+        select '0000000000','3',parm_type_id,timetable_id,start_station,
+               dest_station,stopsell_time1,stopsell_time2,stopsell_endtime
+               from   W_ACC_ST.W_Op_Prm_Tvm_Stopsell_Detail_D  
+               where   record_flag=#{record_flag} and version_no=#{version_no} and parm_type_id=#{parm_type_id}                                     
+    </insert>
+    
+</mapper>

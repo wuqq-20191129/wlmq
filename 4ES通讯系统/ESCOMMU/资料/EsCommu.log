@@ -1,0 +1,338 @@
+2017-10-19 14:51:06,406 [main] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 14:51:06,467 [Thread-5] INFO  com.goldsign.escommu.thread.CommuBufferGetThread - 新的一天:20171019
+2017-10-19 14:51:06,467 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 14:51:06,469 [Thread-5] INFO  com.goldsign.escommu.thread.CommuBufferGetThread - 开始更新缓存----------时间点：1451
+2017-10-19 14:51:06,471 [Thread-5] INFO  com.goldsign.escommu.thread.CommuBufferGetThread - 更新线路缓存信息...长度：4
+2017-10-19 14:51:06,480 [Thread-5] INFO  com.goldsign.escommu.thread.CommuBufferGetThread - 更新站点缓存信息...长度：58
+2017-10-19 14:51:06,487 [Thread-5] INFO  com.goldsign.escommu.thread.CommuBufferGetThread - 更新票种缓存信息...长度：17
+2017-10-19 14:51:06,496 [Thread-5] INFO  com.goldsign.escommu.thread.CommuBufferGetThread - 更新设备缓存信息...长度：4
+2017-10-19 14:51:08,482 [Thread-22] INFO  com.goldsign.escommu.thread.ComAuditFileThread - 2017-10-19 14:51:08-开始生成审计和错误文件。。。。。。
+2017-10-19 14:51:08,493 [main] INFO  com.goldsign.escommu.util.SocketUtil - 服务器正常启动！正在监听端口 : 5002
+2017-10-19 14:51:08,714 [Thread-22] INFO  com.goldsign.escommu.thread.ComAuditFileThread - -取得审计文件，长度：0
+2017-10-19 14:51:08,715 [Thread-22] INFO  com.goldsign.escommu.thread.ComAuditFileThread - 2017-10-19 14:51:08-审计文件完成，错误文件开始!
+2017-10-19 14:51:08,718 [Thread-22] INFO  com.goldsign.escommu.thread.ComAuditFileThread - -取得错误文件，长度：0
+2017-10-19 14:51:08,719 [Thread-22] INFO  com.goldsign.escommu.thread.ComAuditFileThread - 2017-10-19 14:51:08-完成生成审计和错误文件。。。。。。下次时间：2017102002
+2017-10-19 14:51:12,788 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.149:62225
+2017-10-19 14:51:12,795 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：003
+2017-10-19 14:51:12,804 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 14:51:12,805 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@496a512a,序列号:1
+2017-10-19 14:51:12,808 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：14
+2017-10-19 14:56:06,470 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 14:57:18,600 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 14:57:18,601 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 连接关闭!
+2017-10-19 14:57:23,711 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.149:62608
+2017-10-19 14:57:23,712 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：003
+2017-10-19 14:57:23,716 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 14:57:23,716 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@5100b9a1,序列号:1
+2017-10-19 14:57:23,720 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：8
+2017-10-19 14:57:23,730 [172.20.18.149] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.149,1次,取得锁成功！
+2017-10-19 14:57:23,731 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 14:57:24,650 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 14:57:24,651 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 连接关闭!
+2017-10-19 14:57:44,413 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.149:62638
+2017-10-19 14:57:44,414 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：003
+2017-10-19 14:57:44,418 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 14:57:44,418 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@1d90743b,序列号:1
+2017-10-19 14:57:44,420 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：6
+2017-10-19 14:57:59,455 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 14:57:59,486 [172.20.18.149] ERROR com.goldsign.escommu.processor.MessageProcessor - 调用消息(id=98) 错误! Message sequ:0.java.net.SocketException: Connection reset
+2017-10-19 14:57:59,486 [172.20.18.149] ERROR com.goldsign.escommu.connection.CommuConnection - 172.20.18.149-接收消息时间超过3秒为：15065
+2017-10-19 14:57:59,487 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 14:57:59,488 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 连接关闭!
+2017-10-19 14:58:29,352 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.149:62680
+2017-10-19 14:58:29,353 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：003
+2017-10-19 14:58:29,357 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 14:58:29,357 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@75ae2312,序列号:1
+2017-10-19 14:58:29,360 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：7
+2017-10-19 14:58:52,661 [172.20.18.149] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.149被强释放，172.20.18.149,1次,取得锁成功！
+2017-10-19 14:58:52,661 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 14:58:53,054 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 14:58:53,054 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 连接关闭!
+2017-10-19 15:01:06,474 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 15:05:25,683 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.149:63132
+2017-10-19 15:05:25,684 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：003
+2017-10-19 15:05:25,688 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 15:05:25,688 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@32e690d0,序列号:1
+2017-10-19 15:05:25,691 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：7
+2017-10-19 15:05:25,692 [172.20.18.149] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.149被强释放，172.20.18.149,1次,取得锁成功！
+2017-10-19 15:05:25,693 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 15:05:26,548 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 15:05:26,549 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 连接关闭!
+2017-10-19 15:06:06,477 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 15:07:17,005 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.149:63300
+2017-10-19 15:07:17,007 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：003
+2017-10-19 15:07:17,010 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 15:07:17,010 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@2fcaf949,序列号:1
+2017-10-19 15:07:17,013 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：6
+2017-10-19 15:07:17,014 [172.20.18.149] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.149被强释放，172.20.18.149,1次,取得锁成功！
+2017-10-19 15:07:17,014 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 15:07:17,881 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 15:07:17,882 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 连接关闭!
+2017-10-19 15:11:06,481 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 15:16:06,483 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 15:21:06,486 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 15:26:06,490 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 15:31:06,492 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 15:36:06,495 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 15:41:06,498 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 15:46:06,501 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 15:48:19,340 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.149:65366
+2017-10-19 15:48:19,341 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：003
+2017-10-19 15:48:19,345 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 15:48:19,346 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@11f4318b,序列号:1
+2017-10-19 15:48:19,348 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：7
+2017-10-19 15:48:19,349 [172.20.18.149] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.149被强释放，172.20.18.149,1次,取得锁成功！
+2017-10-19 15:48:19,349 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 15:48:20,235 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 15:48:20,235 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 连接关闭!
+2017-10-19 15:51:06,504 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 15:56:06,507 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 15:57:48,072 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.149:49322
+2017-10-19 15:57:48,073 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：003
+2017-10-19 15:57:48,075 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 15:57:48,076 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@5b113582,序列号:1
+2017-10-19 15:57:48,078 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：5
+2017-10-19 15:57:48,083 [172.20.18.149] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.149被强释放，172.20.18.149,1次,取得锁成功！
+2017-10-19 15:57:48,083 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 15:57:48,742 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 15:57:48,742 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 连接关闭!
+2017-10-19 16:01:06,510 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 16:06:06,512 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 16:11:06,515 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 16:16:06,517 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 16:20:59,318 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.149:50089
+2017-10-19 16:20:59,319 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：003
+2017-10-19 16:20:59,323 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 16:20:59,324 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@674ea068,序列号:1
+2017-10-19 16:20:59,326 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：6
+2017-10-19 16:20:59,326 [172.20.18.149] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.149被强释放，172.20.18.149,1次,取得锁成功！
+2017-10-19 16:20:59,327 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 16:21:00,027 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 16:21:00,028 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 连接关闭!
+2017-10-19 16:21:06,520 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 16:21:43,826 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.149:50098
+2017-10-19 16:21:43,827 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：003
+2017-10-19 16:21:43,831 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 16:21:43,831 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@3bb69ddd,序列号:1
+2017-10-19 16:21:43,849 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：22
+2017-10-19 16:24:12,115 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.16.163:55873
+2017-10-19 16:24:12,116 [172.20.16.163] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：008
+2017-10-19 16:24:12,119 [172.20.16.163] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 16:24:12,120 [172.20.16.163] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@752c9bd8,序列号:1
+2017-10-19 16:24:12,122 [172.20.16.163] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：6
+2017-10-19 16:24:12,354 [172.20.16.163] INFO  com.goldsign.escommu.parmdstrb.Parameter0601 - 参数文件 PRM008.0601.20171019.01 生成成功！ 
+2017-10-19 16:24:12,360 [172.20.16.163] INFO  com.goldsign.escommu.parmdstrb.Parameter0602 - 参数文件 PRM008.0602.20171019.01 生成成功！ 
+2017-10-19 16:24:12,376 [172.20.16.163] INFO  com.goldsign.escommu.parmdstrb.Parameter0603 - 参数文件 PRM008.0603.20171019.01 生成成功！ 
+2017-10-19 16:24:12,381 [172.20.16.163] INFO  com.goldsign.escommu.parmdstrb.Parameter0604 - 参数文件 PRM008.0604.20171019.01 生成成功！ 
+2017-10-19 16:24:12,383 [172.20.16.163] INFO  com.goldsign.escommu.message.ConstructMessage47 - 成功构造消息47! 
+2017-10-19 16:24:12,635 [172.20.16.163] INFO  com.goldsign.escommu.parmdstrb.Parameter0203 - 参数文件 PRM008.0203.20171019.01 生成成功！ 
+2017-10-19 16:24:12,637 [172.20.16.163] INFO  com.goldsign.escommu.message.ConstructMessage49 - 成功构造消息49! 
+2017-10-19 16:24:12,859 [172.20.16.163] INFO  com.goldsign.escommu.message.ConstructMessage33 - 成功构造消息33! 
+2017-10-19 16:24:13,173 [172.20.16.163] INFO  com.goldsign.escommu.message.ConstructMessage43 - 成功构造消息43! 
+2017-10-19 16:24:13,409 [172.20.16.163] INFO  com.goldsign.escommu.message.ConstructMessage41 - 成功构造消息41! 
+2017-10-19 16:25:11,872 [172.20.16.163] INFO  com.goldsign.escommu.message.ConstructMessage31 - 成功构造消息31! 
+2017-10-19 16:25:12,105 [172.20.16.163] ERROR com.goldsign.escommu.dao.DeviceStateUpdateDao - 错误:
+java.sql.SQLException: ORA-12899: 列 "W_ACC_TK"."W_IC_ES_STATUS"."REMARK" 的值太大 (实际值: 35, 最大值: 30)
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:439)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:395)
+	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:802)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:436)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:186)
+	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:521)
+	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:205)
+	at oracle.jdbc.driver.T4CPreparedStatement.executeForRows(T4CPreparedStatement.java:1008)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1307)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3449)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeUpdate(OraclePreparedStatement.java:3530)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeUpdate(OraclePreparedStatementWrapper.java:1350)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:101)
+	at com.goldsign.escommu.dbutil.DbHelper.executeUpdate(DbHelper.java:439)
+	at com.goldsign.escommu.dao.DeviceStateUpdateDao.deviceStateUpdate(DeviceStateUpdateDao.java:43)
+	at com.goldsign.escommu.message.Message44.process(Message44.java:57)
+	at com.goldsign.escommu.message.Message44.run(Message44.java:34)
+	at com.goldsign.escommu.processor.MessageProcessor.run(MessageProcessor.java:55)
+	at com.goldsign.escommu.connection.CommuConnection.processReaderResultDirectly(CommuConnection.java:197)
+	at com.goldsign.escommu.connection.CommuConnection.run(CommuConnection.java:121)
+	at java.lang.Thread.run(Thread.java:745)
+2017-10-19 16:26:06,524 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 16:31:06,527 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 16:31:36,108 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.235:57441
+2017-10-19 16:31:36,109 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：001
+2017-10-19 16:31:36,111 [172.20.18.235] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 16:31:36,112 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@3db2aab7,序列号:1
+2017-10-19 16:31:36,114 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：5
+2017-10-19 16:31:36,117 [172.20.18.235] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.149被强释放，172.20.18.235,1次,取得锁成功！
+2017-10-19 16:31:36,117 [172.20.18.235] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 16:31:37,952 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.235 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 16:31:37,952 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.235 - 连接关闭!
+2017-10-19 16:32:23,642 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.235:57447
+2017-10-19 16:32:23,643 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：001
+2017-10-19 16:32:23,646 [172.20.18.235] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 16:32:23,646 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@3e26f6fc,序列号:1
+2017-10-19 16:32:23,649 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：6
+2017-10-19 16:32:36,126 [172.20.18.235] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.235被强释放，172.20.18.235,250次,取得锁成功！
+2017-10-19 16:32:36,127 [172.20.18.235] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 16:32:36,157 [172.20.18.235] ERROR com.goldsign.escommu.connection.CommuConnection - 172.20.18.235-接收消息时间超过3秒为：12507
+2017-10-19 16:32:36,158 [172.20.18.235] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.235,解锁成功！
+2017-10-19 16:32:36,158 [172.20.18.235] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 16:32:56,576 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.235 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 16:32:56,576 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.235 - 连接关闭!
+2017-10-19 16:36:06,530 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 16:39:00,966 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.235:57721
+2017-10-19 16:39:00,967 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：001
+2017-10-19 16:39:00,970 [172.20.18.235] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 16:39:00,971 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@55b88e27,序列号:1
+2017-10-19 16:39:00,973 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：6
+2017-10-19 16:39:00,973 [172.20.18.235] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.235,1次,取得锁成功！
+2017-10-19 16:39:00,974 [172.20.18.235] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 16:39:01,463 [172.20.18.235] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.235,解锁成功！
+2017-10-19 16:39:01,463 [172.20.18.235] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 16:40:41,585 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.235 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 16:40:41,585 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.235 - 连接关闭!
+2017-10-19 16:41:06,533 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 16:44:40,463 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 16:44:40,464 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 连接关闭!
+2017-10-19 16:45:11,761 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.235:57770
+2017-10-19 16:45:11,762 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：001
+2017-10-19 16:45:11,765 [172.20.18.235] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 16:45:11,765 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@5e0ff4b8,序列号:1
+2017-10-19 16:45:11,768 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：6
+2017-10-19 16:45:11,772 [172.20.18.235] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.235,1次,取得锁成功！
+2017-10-19 16:45:11,772 [172.20.18.235] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 16:45:11,872 [172.20.18.235] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.235,解锁成功！
+2017-10-19 16:45:11,872 [172.20.18.235] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 16:45:33,654 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.235 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 16:45:33,654 [172.20.18.235] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.235 - 连接关闭!
+2017-10-19 16:46:06,221 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.149:50663
+2017-10-19 16:46:06,222 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：003
+2017-10-19 16:46:06,225 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 16:46:06,225 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@181a2a89,序列号:1
+2017-10-19 16:46:06,227 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：5
+2017-10-19 16:46:06,230 [172.20.18.149] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.149,1次,取得锁成功！
+2017-10-19 16:46:06,230 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 16:46:06,535 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 16:46:07,166 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 16:46:07,167 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 连接关闭!
+2017-10-19 16:46:58,808 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.149:50684
+2017-10-19 16:46:58,809 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：003
+2017-10-19 16:46:58,811 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 16:46:58,812 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@7d1a28dc,序列号:1
+2017-10-19 16:46:58,814 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：5
+2017-10-19 16:47:06,280 [172.20.18.149] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.149被强释放，172.20.18.149,150次,取得锁成功！
+2017-10-19 16:47:06,281 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 16:47:06,303 [172.20.18.149] ERROR com.goldsign.escommu.processor.MessageProcessor - 调用消息(id=98) 错误! Message sequ:0.java.net.SocketException: Connection reset
+2017-10-19 16:47:06,303 [172.20.18.149] ERROR com.goldsign.escommu.connection.CommuConnection - 172.20.18.149-接收消息时间超过3秒为：7489
+2017-10-19 16:47:06,304 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 16:47:06,304 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 连接关闭!
+2017-10-19 16:51:06,538 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 16:56:06,541 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 17:01:06,544 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 17:01:16,768 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.149:50945
+2017-10-19 17:01:16,769 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：003
+2017-10-19 17:01:16,773 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 17:01:16,773 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@40c471ea,序列号:1
+2017-10-19 17:01:16,779 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：10
+2017-10-19 17:01:16,780 [172.20.18.149] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.149被强释放，172.20.18.149,1次,取得锁成功！
+2017-10-19 17:01:16,780 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 17:01:17,706 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 17:01:17,707 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 连接关闭!
+2017-10-19 17:03:50,859 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.149:50986
+2017-10-19 17:03:50,860 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：003
+2017-10-19 17:03:50,864 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 17:03:50,864 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@da69797,序列号:1
+2017-10-19 17:03:50,866 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：6
+2017-10-19 17:03:50,867 [172.20.18.149] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.149被强释放，172.20.18.149,1次,取得锁成功！
+2017-10-19 17:03:50,867 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 17:03:51,807 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 17:03:51,807 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 连接关闭!
+2017-10-19 17:04:36,890 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.149:50998
+2017-10-19 17:04:36,891 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：003
+2017-10-19 17:04:36,894 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 17:04:36,894 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@6f814207,序列号:1
+2017-10-19 17:04:36,896 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：5
+2017-10-19 17:04:50,877 [172.20.18.149] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.149被强释放，172.20.18.149,280次,取得锁成功！
+2017-10-19 17:04:50,877 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 17:04:50,912 [172.20.18.149] ERROR com.goldsign.escommu.processor.MessageProcessor - 调用消息(id=98) 错误! Message sequ:0.java.net.SocketException: Connection reset
+2017-10-19 17:04:50,912 [172.20.18.149] ERROR com.goldsign.escommu.connection.CommuConnection - 172.20.18.149-接收消息时间超过3秒为：14015
+2017-10-19 17:04:50,913 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 17:04:50,913 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 连接关闭!
+2017-10-19 17:06:06,546 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 17:11:06,555 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 17:15:25,290 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.149:51249
+2017-10-19 17:15:25,291 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：003
+2017-10-19 17:15:25,294 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 17:15:25,294 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@48f03889,序列号:1
+2017-10-19 17:15:25,296 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：5
+2017-10-19 17:15:25,297 [172.20.18.149] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.149被强释放，172.20.18.149,1次,取得锁成功！
+2017-10-19 17:15:25,297 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 17:15:25,725 [172.20.18.149] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.149,解锁成功！
+2017-10-19 17:15:25,726 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 17:16:06,558 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 17:21:06,561 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 17:26:06,563 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 17:31:06,566 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 17:36:06,569 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 17:41:06,571 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 17:46:06,574 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 17:48:48,436 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.16.163:52562
+2017-10-19 17:48:48,437 [main] ERROR com.goldsign.escommu.util.SocketUtil - 连接已经存在！地址：172.20.16.163
+2017-10-19 17:48:48,444 [main] ERROR com.goldsign.escommu.util.SocketUtil - 创建连接失败 - com.goldsign.escommu.exception.CommuException: 连接已经存在！地址：172.20.16.163
+2017-10-19 17:49:34,414 [172.20.16.163] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.16.163 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 17:49:34,415 [172.20.16.163] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.16.163 - 连接关闭!
+2017-10-19 17:49:57,032 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.16.163:52570
+2017-10-19 17:49:57,033 [172.20.16.163] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：008
+2017-10-19 17:49:57,036 [172.20.16.163] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 17:49:57,036 [172.20.16.163] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@27e05095,序列号:1
+2017-10-19 17:49:57,038 [172.20.16.163] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：5
+2017-10-19 17:49:57,256 [172.20.16.163] INFO  com.goldsign.escommu.parmdstrb.Parameter0601 - 参数文件 PRM008.0601.20171019.01 生成成功！ 
+2017-10-19 17:49:57,259 [172.20.16.163] INFO  com.goldsign.escommu.parmdstrb.Parameter0602 - 参数文件 PRM008.0602.20171019.01 生成成功！ 
+2017-10-19 17:49:57,263 [172.20.16.163] INFO  com.goldsign.escommu.parmdstrb.Parameter0603 - 参数文件 PRM008.0603.20171019.01 生成成功！ 
+2017-10-19 17:49:57,265 [172.20.16.163] INFO  com.goldsign.escommu.parmdstrb.Parameter0604 - 参数文件 PRM008.0604.20171019.01 生成成功！ 
+2017-10-19 17:49:57,266 [172.20.16.163] INFO  com.goldsign.escommu.message.ConstructMessage47 - 成功构造消息47! 
+2017-10-19 17:49:57,540 [172.20.16.163] INFO  com.goldsign.escommu.parmdstrb.Parameter0203 - 参数文件 PRM008.0203.20171019.01 生成成功！ 
+2017-10-19 17:49:57,540 [172.20.16.163] INFO  com.goldsign.escommu.message.ConstructMessage49 - 成功构造消息49! 
+2017-10-19 17:49:57,779 [172.20.16.163] INFO  com.goldsign.escommu.message.ConstructMessage33 - 成功构造消息33! 
+2017-10-19 17:49:58,042 [172.20.16.163] INFO  com.goldsign.escommu.message.ConstructMessage43 - 成功构造消息43! 
+2017-10-19 17:49:58,302 [172.20.16.163] INFO  com.goldsign.escommu.message.ConstructMessage41 - 成功构造消息41! 
+2017-10-19 17:50:08,694 [172.20.16.163] INFO  com.goldsign.escommu.message.ConstructMessage31 - 成功构造消息31! 
+2017-10-19 17:50:16,028 [172.20.16.163] INFO  com.goldsign.escommu.message.ConstructMessage31 - 成功构造消息31! 
+2017-10-19 17:50:16,289 [172.20.16.163] ERROR com.goldsign.escommu.dao.DeviceStateUpdateDao - 错误:
+java.sql.SQLException: ORA-12899: 列 "W_ACC_TK"."W_IC_ES_STATUS"."REMARK" 的值太大 (实际值: 35, 最大值: 30)
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:439)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:395)
+	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:802)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:436)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:186)
+	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:521)
+	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:205)
+	at oracle.jdbc.driver.T4CPreparedStatement.executeForRows(T4CPreparedStatement.java:1008)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1307)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3449)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeUpdate(OraclePreparedStatement.java:3530)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeUpdate(OraclePreparedStatementWrapper.java:1350)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:101)
+	at com.goldsign.escommu.dbutil.DbHelper.executeUpdate(DbHelper.java:439)
+	at com.goldsign.escommu.dao.DeviceStateUpdateDao.deviceStateUpdate(DeviceStateUpdateDao.java:43)
+	at com.goldsign.escommu.message.Message44.process(Message44.java:57)
+	at com.goldsign.escommu.message.Message44.run(Message44.java:34)
+	at com.goldsign.escommu.processor.MessageProcessor.run(MessageProcessor.java:55)
+	at com.goldsign.escommu.connection.CommuConnection.processReaderResultDirectly(CommuConnection.java:197)
+	at com.goldsign.escommu.connection.CommuConnection.run(CommuConnection.java:121)
+	at java.lang.Thread.run(Thread.java:745)
+2017-10-19 17:51:06,577 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 17:56:06,579 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 18:01:06,582 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1
+2017-10-19 18:01:23,083 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 读消息返回，错误( 1002)!连接将被关闭!
+2017-10-19 18:01:23,083 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 172.20.18.149 - 连接关闭!
+2017-10-19 18:01:36,137 [main] INFO  com.goldsign.escommu.util.SocketUtil - 接受新的连接请求，来自 172.20.18.149:52138
+2017-10-19 18:01:36,138 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 取设备ID：003
+2017-10-19 18:01:36,141 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage45 - 成功构造消息45! 
+2017-10-19 18:01:36,141 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息:[B@368cd5e4,序列号:1
+2017-10-19 18:01:36,143 [172.20.18.149] INFO  com.goldsign.escommu.connection.CommuConnection - 发送审计消息成功.耗时：5
+2017-10-19 18:01:36,144 [172.20.18.149] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.149,1次,取得锁成功！
+2017-10-19 18:01:36,144 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 18:01:36,576 [172.20.18.149] INFO  com.goldsign.escommu.message.Message98 - 172.20.18.149,解锁成功！
+2017-10-19 18:01:36,576 [172.20.18.149] INFO  com.goldsign.escommu.message.ConstructMessage99 - 成功构造消息99! 
+2017-10-19 18:06:06,585 [Thread-4] INFO  com.goldsign.escommu.thread.CommuLogLevelThread - 设置日志级别为：1

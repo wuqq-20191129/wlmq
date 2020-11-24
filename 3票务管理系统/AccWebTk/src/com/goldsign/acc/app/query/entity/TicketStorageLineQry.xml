@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.query.mapper.TicketStorageLineQryMapper">
+    
+    <resultMap type="com.goldsign.acc.app.query.entity.TicketStorageLineQry" id="rmTicketStorageLineQry">
+        
+        <result column="DEPT_ID" property="deptId" /> 
+        <result column="TICKETTYPE_ID" property="tickettypeId" /> 
+        <result column="VALUE" property="value" /> 
+        <result column="SALENUM" property="salenum" /> 
+        <result column="RETURNNUM" property="returnnum" /> 
+        <result column="CURRENTTOTAL" property="currenttotal" /> 
+        <result column="REPORTDATE" property="reportdate" /> 
+        <result column="STORAGE_ID" property="storageId" /> 
+      
+    </resultMap>
+    
+    <select id="query"  parameterType="com.goldsign.acc.app.query.entity.TicketStorageLineQry" resultMap="rmTicketStorageLineQry">
+        select substr(a.dept_id,0,2) DEPT_ID, a.tickettype_id, sum(a.currenttotal) CURRENTTOTAL  from w_acc_tk.w_ic_inf_station_sale a 
+        where 
+        a.reportdate = 
+        (select max(b.reportdate) from w_acc_tk.w_ic_inf_station_sale b where a.dept_id=b.dept_id and a.tickettype_id =b.tickettype_id)
+            <if test="deptId != null and deptId !=''" >  
+                and substr(a.dept_id,0,2) = #{deptId}
+            </if> 
+            <if test="tickettypeId != null and tickettypeId !=''" >  
+                and a.TICKETTYPE_ID = #{tickettypeId}
+            </if> 
+        group by substr(a.dept_id,0,2) ,a.tickettype_id
+        order by substr(a.dept_id,0,2) ,a.tickettype_id
+    </select>
+    
+    
+</mapper>
+
+

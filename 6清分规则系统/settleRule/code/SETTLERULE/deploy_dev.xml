@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<project name="SETTLERULE" default="default" basedir="."> 
+    <target name="sendFilesToFTP"> 
+        <ftp server="127.0.0.1" port="21" userid="settlerule" password="123456" remotedir="/" depends="yes" verbose="yes"> 
+            <fileset dir="${basedir}/dist"> 
+                <include name="*.war" /> 
+            </fileset>
+            <fileset dir="${basedir}"> 
+                <include name="deploy_sit.xml" /> 
+                <include name="sr-oracle-ds.xml" /> 
+                <include name="ant.bat" /> 
+            </fileset>
+        </ftp> 
+    </target> 
+</project>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.system.mapper.LccMapper">
+    
+    <resultMap type="com.goldsign.acc.app.system.entity.Lcc" id="rmLcc">
+
+        <result column="status_date" property="statusDate"/>
+        <result column="ip" property="ip" /> 
+        <result column="status" property="status" /> 
+        <result column="name" property="name" /> 
+
+    </resultMap>
+    
+    <select id="getLcc"  parameterType="Lcc" resultMap="rmLcc">
+        select A.ip,A.status,A.status_date,A.remark,B.name,B.type,B.ip_value 
+        from w_acc_mn.w_mtr_current_lcc_info A,  w_acc_mn.w_mtr_device_code B 
+        where A.ip = B.ip(+) order by ip_value           
+    </select>
+    
+    <update id="updateLcc" parameterType="Lcc" >
+        update w_acc_mn.w_mtr_current_lcc_info set 
+        status_date = to_date( #{statusDate}, 'yyyy-mm-dd hh24:mi:ss'), status= #{status}, remark= #{remark}
+        where ip= #{ip}
+    </update>
+    
+    <insert id="insertIntoCur" parameterType="Lcc" >
+        insert into w_acc_mn.w_mtr_current_lcc_info 
+        (status_date,ip,status,remark) 
+        values(to_date( #{statusDate}, 'yyyy-mm-dd hh24:mi:ss'), #{ip}, #{status}, #{remark} )
+    </insert>
+    
+    <insert id="insertIntoHis" parameterType="Lcc" >
+       insert into w_acc_mn.w_mtr_his_lcc_info
+        (status_date,ip,status,remark) 
+        values(to_date( #{statusDate}, 'yyyy-mm-dd hh24:mi:ss'), #{ip}, #{status}, #{remark} )
+    </insert>
+    
+</mapper>

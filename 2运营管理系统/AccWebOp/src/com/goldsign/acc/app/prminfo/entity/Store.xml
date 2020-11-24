@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.StoreMapper">
+    <resultMap type="Store" id="rmStore">
+        
+        <result column="store_id" property="store_id" /> 
+        <result column="store_name" property="store_name" /> 
+        <result column="link_man" property="link_man" /> 
+        <result column="tel" property="tel" /> 
+        <result column="fax" property="fax" /> 
+        <result column="terminal_no" property="terminal_no" /> 
+        <result column="address" property="address" />  
+        <result column="record_flag" property="record_flag" />  
+    </resultMap>
+
+    
+     
+    <select id="getStore"  parameterType="Store" resultMap="rmStore">
+        select store_id,store_name,link_man,tel,fax,terminal_no,address,record_flag
+        from W_ACC_ST.W_OP_COD_STORE where record_flag=#{record_flag}  
+        <if test="store_id !=null and store_id !=''">
+            and store_id =#{store_id} 
+        </if>
+        <if test="store_name !=null and store_name !=''">
+            and store_name like '%${store_name}%' 
+        </if>
+        order by store_id
+    </select>
+    
+    <select id="getStoreById"  parameterType="Store" resultMap="rmStore">
+        select store_id,store_name,link_man,tel,fax,terminal_no,address
+        from W_ACC_ST.W_OP_COD_STORE where record_flag=#{record_flag} and store_id=#{store_id}        
+    </select>
+    
+    <select id="getStoreByName"  parameterType="Store" resultMap="rmStore">
+        select store_id,store_name,link_man,tel,fax,terminal_no,address
+        from W_ACC_ST.W_OP_COD_STORE where record_flag=#{record_flag} and store_name=#{store_name} 
+        <if test="store_id !=null and store_id !=''">
+            and store_id !=#{store_id} 
+        </if>       
+    </select>
+    
+    <insert id="addStore" parameterType="Store" >
+        insert into W_ACC_ST.W_OP_COD_STORE(store_id,store_name,link_man,tel,fax,terminal_no,address,record_flag)
+        values(#{store_id},#{store_name},#{link_man},#{tel},#{fax},#{terminal_no},#{address},#{record_flag})               
+    </insert>
+    
+    <update id="modifyStore" parameterType="Store" >
+        update W_ACC_ST.W_OP_COD_STORE set store_name=#{store_name},link_man=#{link_man},tel=#{tel},fax=#{fax},terminal_no=#{terminal_no},address=#{address}
+                   where  store_id=#{store_id} and record_flag=#{record_flag}                                               
+    </update>
+    
+    <delete id="deleteStore" parameterType="Store">
+            delete from W_ACC_ST.W_OP_COD_STORE where store_id=#{store_id} and record_flag=#{record_flag}           
+    </delete>     
+    
+</mapper>

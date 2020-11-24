@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.OperatorLogMapper">
+    
+    <resultMap type="OperatorLog" id="rmOperatorLog">
+        
+        <result column="flow_id" property="flow_id" /> 
+        <result column="sys_operator_id" property="sys_operator_id" /> 
+        <result column="login_time" property="login_time" /> 
+        <result column="logout_time" property="logout_time" /> 
+        <result column="remark" property="remark" /> 
+    </resultMap>
+    
+    <select id="getOperatorLogs"  parameterType="OperatorLog" resultMap="rmOperatorLog">
+        select flow_id,sys_operator_id,login_time,logout_time,remark
+        from   W_ACC_ST.W_OP_LOG_USER_ACCESS
+        where 1=1
+        <if test="beginDate !=null and beginDate !=''">
+            and login_time  &gt;= to_date(#{beginDate}, 'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        <if test="endDate !=null and endDate !=''">
+            and login_time  &lt;= to_date(#{endDate}, 'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        <if test="sys_operator_id !=null and sys_operator_id !=''">
+            and sys_operator_id  = #{sys_operator_id}
+        </if>
+        order by login_time DESC,flow_id,sys_operator_id
+    </select>
+    
+</mapper>

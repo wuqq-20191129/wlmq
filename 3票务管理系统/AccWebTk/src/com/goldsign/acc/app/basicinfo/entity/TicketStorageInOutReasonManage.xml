@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicinfo.mapper.TicketStorageInOutReasonManageMapper">
+    <resultMap type="com.goldsign.acc.app.basicinfo.entity.TicketStorageInOutReasonManage" id="rmTicketStorageInOutReasonManage">
+        
+        <result column="reason_id" property="reason_id" /> 
+        <result column="reason_describe" property="reason_describe" />
+        <result column="in_out_flag" property="in_out_flag" />
+        <result column="in_out_sub_type" property="in_out_sub_type" /> 
+        <result column="es_worktype_id" property="es_worktype_id" />
+        <result column="in_out_desc" property="in_out_desc" />
+        <result column="in_out_sub_type_desc" property="in_out_sub_type_desc" />  
+        <result column="es_worktype_name" property="es_worktype_name" /> 
+    </resultMap>
+     
+        <select id="queryTicketStorageInOutReasonManage"  parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageInOutReasonManage" resultMap="rmTicketStorageInOutReasonManage">
+        select a.reason_id,a.reason_describe,a.in_out_desc,a.in_out_sub_type,a.in_out_sub_type_desc,a.es_worktype_id,a.in_out_flag,b.es_worktype_name 
+        from  W_ACC_TK.W_IC_COD_IN_OUT a,w_acc_tk.w_ic_cod_es_work_type b 
+        where a.es_worktype_id = b.es_worktype_id(+)
+        <if test="reason_describe !=null and reason_describe !=''">
+            and a.reason_describe like concat(concat('%',#{reason_describe}),'%') 
+        </if>
+        <if test="in_out_flag !=null and in_out_flag !=''">
+            and a.in_out_flag =#{in_out_flag} 
+        </if>
+        <if test="in_out_sub_type !=null and in_out_sub_type !=''">
+            and a.in_out_sub_type =#{in_out_sub_type} 
+        </if>
+<!--        <if test="es_worktype_id !=null and es_worktype_id !=''">
+            and a.es_worktype_id =#{es_worktype_id} 
+        </if>-->
+    order by a.reason_id
+    </select>
+    
+    <select id="queryTicketStorageInOutReasonManageById"  parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageInOutReasonManage" resultMap="rmTicketStorageInOutReasonManage">
+        select reason_id,reason_describe,in_out_flag,es_worktype_id  from  W_ACC_TK.W_IC_COD_IN_OUT where  reason_id =#{reason_id}        
+    </select>
+    
+    <select id="queryTicketStorageInOutReasonManageByFlag"  parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageInOutReasonManage" resultMap="rmTicketStorageInOutReasonManage">
+        select reason_id,reason_describe,in_out_flag,es_worktype_id  from  W_ACC_TK.W_IC_COD_IN_OUT where  in_out_flag =#{in_out_flag}   
+        <if test="reason_id !=null and reason_id !=''">
+            and reason_id !=#{reason_id} 
+        </if>
+    </select>
+    
+    <select id="queryTicketStorageInOutReasonManageByEs"  parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageInOutReasonManage" resultMap="rmTicketStorageInOutReasonManage">
+        select reason_id,reason_describe,in_out_flag,es_worktype_id  from  W_ACC_TK.W_IC_COD_IN_OUT where  es_worktype_id =#{es_worktype_id}   
+        <if test="reason_id !=null and reason_id !=''">
+            and reason_id !=#{reason_id} 
+        </if>
+    </select>
+    
+    <select id="queryTicketStorageInOutReasonManageByName"  parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageInOutReasonManage" resultMap="rmTicketStorageInOutReasonManage">
+        select reason_id,reason_describe,in_out_flag,es_worktype_id  from  W_ACC_TK.W_IC_COD_IN_OUT where  reason_describe =#{reason_describe}   
+        <if test="reason_id !=null and reason_id !=''">
+            and reason_id !=#{reason_id} 
+        </if>
+    </select>
+    
+    <insert id="addTicketStorageInOutReasonManage" parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageInOutReasonManage" >
+        insert into W_ACC_TK.W_IC_COD_IN_OUT(reason_id,reason_describe,in_out_flag,es_worktype_id,in_out_desc) values(#{reason_id},#{reason_describe},#{in_out_flag},#{es_worktype_id},#{in_out_desc})               
+    </insert>
+    
+    <update id="modifyTicketStorageInOutReasonManage" parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageInOutReasonManage" >
+        update W_ACC_TK.W_IC_COD_IN_OUT set reason_describe =#{reason_describe},in_out_flag =#{in_out_flag},es_worktype_id =#{es_worktype_id},in_out_desc=#{in_out_desc} where reason_id =#{reason_id}                                                 
+    </update>
+    
+    <delete id="deleteTicketStorageInOutReasonManage" parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageInOutReasonManage">
+        delete from W_ACC_TK.W_IC_COD_IN_OUT where reason_id =#{reason_id}          
+    </delete>     
+    
+</mapper>
+

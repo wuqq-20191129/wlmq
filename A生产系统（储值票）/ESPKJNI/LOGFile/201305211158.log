@@ -1,0 +1,147 @@
+2013-05-21 11:58:00 ACCAPI_Open Finished!
+2013-05-21 11:58:01 启动灯亮
+2013-05-21 11:58:09 Call ACCAPI_SendCard() Status:
+2013-05-21 11:58:09 Card[0].CurrSite=0; Card[0].TagSite=0; Card[0].CardNo=0; Card[0].State=0; Card[0].RecyBox=0;
+2013-05-21 11:58:09 Card[1].CurrSite=0; Card[1].TagSite=0; Card[1].CardNo=0; Card[1].State=0; Card[1].RecyBox=0;
+2013-05-21 11:58:09 Card[2].CurrSite=0; Card[2].TagSite=0; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2013-05-21 11:58:09 Card[3].CurrSite=0; Card[3].TagSite=0; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2013-05-21 11:58:09 Card[4].CurrSite=0; Card[4].TagSite=0; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2013-05-21 11:58:09 Card[5].CurrSite=0; Card[5].TagSite=0; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2013-05-21 11:58:09 Card[6].CurrSite=0; Card[6].TagSite=0; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2013-05-21 11:58:10 发卡成功
+2013-05-21 11:58:10 Card[0].CurrSite=1; Card[0].TagSite=2; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2013-05-21 11:58:10 Card[1].CurrSite=0; Card[1].TagSite=0; Card[1].CardNo=0; Card[1].State=0; Card[1].RecyBox=0;
+2013-05-21 11:58:10 Card[2].CurrSite=0; Card[2].TagSite=0; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2013-05-21 11:58:10 Card[3].CurrSite=0; Card[3].TagSite=0; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2013-05-21 11:58:10 Card[4].CurrSite=0; Card[4].TagSite=0; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2013-05-21 11:58:10 Card[5].CurrSite=0; Card[5].TagSite=0; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2013-05-21 11:58:10 Card[6].CurrSite=0; Card[6].TagSite=0; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2013-05-21 11:58:10 Call ACCAPI_MoveCard() Status:
+2013-05-21 11:58:10 Card[0].CurrSite=1; Card[0].TagSite=2; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2013-05-21 11:58:10 Card[1].CurrSite=0; Card[1].TagSite=0; Card[1].CardNo=0; Card[1].State=0; Card[1].RecyBox=0;
+2013-05-21 11:58:10 Card[2].CurrSite=0; Card[2].TagSite=0; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2013-05-21 11:58:10 Card[3].CurrSite=0; Card[3].TagSite=0; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2013-05-21 11:58:10 Card[4].CurrSite=0; Card[4].TagSite=0; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2013-05-21 11:58:10 Card[5].CurrSite=0; Card[5].TagSite=0; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2013-05-21 11:58:10 Card[6].CurrSite=0; Card[6].TagSite=0; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2013-05-21 11:58:10 走卡之前
+2013-05-21 11:58:10 电磁铁状态：0x0
+2013-05-21 11:58:10 走卡前开始结束状态：0x2  0x0
+2013-05-21 11:58:10 走卡成功
+2013-05-21 11:58:10 Card[0].CurrSite=2; Card[0].TagSite=2; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2013-05-21 11:58:10 Card[1].CurrSite=0; Card[1].TagSite=0; Card[1].CardNo=0; Card[1].State=0; Card[1].RecyBox=0;
+2013-05-21 11:58:10 Card[2].CurrSite=0; Card[2].TagSite=0; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2013-05-21 11:58:10 Card[3].CurrSite=0; Card[3].TagSite=0; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2013-05-21 11:58:10 Card[4].CurrSite=0; Card[4].TagSite=0; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2013-05-21 11:58:10 Card[5].CurrSite=0; Card[5].TagSite=0; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2013-05-21 11:58:10 Card[6].CurrSite=0; Card[6].TagSite=0; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2013-05-21 11:58:10 走卡后开始结束状态：0x40  0x20
+2013-05-21 11:58:10 Call ACCAPI_SendCard() Status:
+2013-05-21 11:58:10 Card[0].CurrSite=2; Card[0].TagSite=3; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2013-05-21 11:58:10 Card[1].CurrSite=0; Card[1].TagSite=3; Card[1].CardNo=0; Card[1].State=0; Card[1].RecyBox=0;
+2013-05-21 11:58:10 Card[2].CurrSite=0; Card[2].TagSite=3; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2013-05-21 11:58:10 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2013-05-21 11:58:10 Card[4].CurrSite=0; Card[4].TagSite=3; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2013-05-21 11:58:10 Card[5].CurrSite=0; Card[5].TagSite=3; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2013-05-21 11:58:10 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2013-05-21 11:58:11 发卡成功
+2013-05-21 11:58:11 Card[0].CurrSite=2; Card[0].TagSite=3; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2013-05-21 11:58:11 Card[1].CurrSite=1; Card[1].TagSite=2; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2013-05-21 11:58:11 Card[2].CurrSite=0; Card[2].TagSite=3; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2013-05-21 11:58:11 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2013-05-21 11:58:11 Card[4].CurrSite=0; Card[4].TagSite=3; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2013-05-21 11:58:11 Card[5].CurrSite=0; Card[5].TagSite=3; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2013-05-21 11:58:11 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2013-05-21 11:58:11 Call ACCAPI_MoveCard() Status:
+2013-05-21 11:58:11 Card[0].CurrSite=2; Card[0].TagSite=3; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2013-05-21 11:58:11 Card[1].CurrSite=1; Card[1].TagSite=2; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2013-05-21 11:58:11 Card[2].CurrSite=0; Card[2].TagSite=3; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2013-05-21 11:58:11 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2013-05-21 11:58:11 Card[4].CurrSite=0; Card[4].TagSite=3; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2013-05-21 11:58:11 Card[5].CurrSite=0; Card[5].TagSite=3; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2013-05-21 11:58:11 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2013-05-21 11:58:11 走卡之前
+2013-05-21 11:58:11 电磁铁状态：0x0
+2013-05-21 11:58:11 走卡前开始结束状态：0x40  0x20
+2013-05-21 11:58:11 走卡成功
+2013-05-21 11:58:11 Card[0].CurrSite=3; Card[0].TagSite=3; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2013-05-21 11:58:11 Card[1].CurrSite=2; Card[1].TagSite=2; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2013-05-21 11:58:11 Card[2].CurrSite=0; Card[2].TagSite=3; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2013-05-21 11:58:11 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2013-05-21 11:58:11 Card[4].CurrSite=0; Card[4].TagSite=3; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2013-05-21 11:58:11 Card[5].CurrSite=0; Card[5].TagSite=3; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2013-05-21 11:58:11 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2013-05-21 11:58:11 走卡后开始结束状态：0x60  0x30
+2013-05-21 11:58:11 Call ACCAPI_SendCard() Status:
+2013-05-21 11:58:11 Card[0].CurrSite=3; Card[0].TagSite=3; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2013-05-21 11:58:11 Card[1].CurrSite=2; Card[1].TagSite=3; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2013-05-21 11:58:11 Card[2].CurrSite=0; Card[2].TagSite=3; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2013-05-21 11:58:11 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2013-05-21 11:58:11 Card[4].CurrSite=0; Card[4].TagSite=3; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2013-05-21 11:58:11 Card[5].CurrSite=0; Card[5].TagSite=3; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2013-05-21 11:58:11 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2013-05-21 11:58:12 发卡成功
+2013-05-21 11:58:12 Card[0].CurrSite=3; Card[0].TagSite=3; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2013-05-21 11:58:12 Card[1].CurrSite=2; Card[1].TagSite=3; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2013-05-21 11:58:12 Card[2].CurrSite=1; Card[2].TagSite=2; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2013-05-21 11:58:12 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2013-05-21 11:58:12 Card[4].CurrSite=0; Card[4].TagSite=3; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2013-05-21 11:58:12 Card[5].CurrSite=0; Card[5].TagSite=3; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2013-05-21 11:58:12 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2013-05-21 11:58:12 Call ACCAPI_MoveCard() Status:
+2013-05-21 11:58:12 Card[0].CurrSite=3; Card[0].TagSite=3; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2013-05-21 11:58:12 Card[1].CurrSite=2; Card[1].TagSite=3; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2013-05-21 11:58:12 Card[2].CurrSite=1; Card[2].TagSite=2; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2013-05-21 11:58:12 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2013-05-21 11:58:12 Card[4].CurrSite=0; Card[4].TagSite=3; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2013-05-21 11:58:12 Card[5].CurrSite=0; Card[5].TagSite=3; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2013-05-21 11:58:12 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2013-05-21 11:58:12 走卡之前
+2013-05-21 11:58:12 电磁铁状态：0x1
+2013-05-21 11:58:12 走卡前开始结束状态：0x60  0x30
+2013-05-21 11:58:12 走卡成功
+2013-05-21 11:58:12 Card[0].CurrSite=0; Card[0].TagSite=0; Card[0].CardNo=1000000; Card[0].State=2; Card[0].RecyBox=1;
+2013-05-21 11:58:12 Card[1].CurrSite=3; Card[1].TagSite=3; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2013-05-21 11:58:12 Card[2].CurrSite=2; Card[2].TagSite=2; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2013-05-21 11:58:12 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2013-05-21 11:58:12 Card[4].CurrSite=0; Card[4].TagSite=3; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2013-05-21 11:58:12 Card[5].CurrSite=0; Card[5].TagSite=3; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2013-05-21 11:58:12 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2013-05-21 11:58:12 走卡后开始结束状态：0x70  0x30
+2013-05-21 11:58:12 Call ACCAPI_SendCard() Status:
+2013-05-21 11:58:12 Card[0].CurrSite=0; Card[0].TagSite=3; Card[0].CardNo=1000000; Card[0].State=2; Card[0].RecyBox=1;
+2013-05-21 11:58:12 Card[1].CurrSite=3; Card[1].TagSite=3; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2013-05-21 11:58:12 Card[2].CurrSite=2; Card[2].TagSite=3; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2013-05-21 11:58:12 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2013-05-21 11:58:12 Card[4].CurrSite=0; Card[4].TagSite=3; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2013-05-21 11:58:12 Card[5].CurrSite=0; Card[5].TagSite=3; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2013-05-21 11:58:12 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2013-05-21 11:58:13 发卡成功
+2013-05-21 11:58:13 Card[0].CurrSite=1; Card[0].TagSite=2; Card[0].CardNo=1000003; Card[0].State=1; Card[0].RecyBox=0;
+2013-05-21 11:58:13 Card[1].CurrSite=3; Card[1].TagSite=3; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2013-05-21 11:58:13 Card[2].CurrSite=2; Card[2].TagSite=3; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2013-05-21 11:58:13 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2013-05-21 11:58:13 Card[4].CurrSite=0; Card[4].TagSite=3; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2013-05-21 11:58:13 Card[5].CurrSite=0; Card[5].TagSite=3; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2013-05-21 11:58:13 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2013-05-21 11:58:13 Call ACCAPI_MoveCard() Status:
+2013-05-21 11:58:13 Card[0].CurrSite=1; Card[0].TagSite=2; Card[0].CardNo=1000003; Card[0].State=1; Card[0].RecyBox=0;
+2013-05-21 11:58:13 Card[1].CurrSite=3; Card[1].TagSite=3; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2013-05-21 11:58:13 Card[2].CurrSite=2; Card[2].TagSite=3; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2013-05-21 11:58:13 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2013-05-21 11:58:13 Card[4].CurrSite=0; Card[4].TagSite=3; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2013-05-21 11:58:13 Card[5].CurrSite=0; Card[5].TagSite=3; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2013-05-21 11:58:13 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2013-05-21 11:58:13 走卡之前
+2013-05-21 11:58:13 电磁铁状态：0x1
+2013-05-21 11:58:13 走卡前开始结束状态：0x70  0x30
+2013-05-21 11:58:18 走卡命令发送超时!
+2013-05-21 11:58:18 走卡失败
+2013-05-21 11:58:18 Card[0].CurrSite=2; Card[0].TagSite=2; Card[0].CardNo=1000003; Card[0].State=1; Card[0].RecyBox=0;
+2013-05-21 11:58:18 Card[1].CurrSite=0; Card[1].TagSite=7; Card[1].CardNo=1000001; Card[1].State=4; Card[1].RecyBox=5;
+2013-05-21 11:58:18 Card[2].CurrSite=3; Card[2].TagSite=3; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2013-05-21 11:58:18 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2013-05-21 11:58:18 Card[4].CurrSite=0; Card[4].TagSite=3; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2013-05-21 11:58:18 Card[5].CurrSite=0; Card[5].TagSite=3; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2013-05-21 11:58:18 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2013-05-21 11:58:18 走卡失败后开始结束状态：0x70  0x30

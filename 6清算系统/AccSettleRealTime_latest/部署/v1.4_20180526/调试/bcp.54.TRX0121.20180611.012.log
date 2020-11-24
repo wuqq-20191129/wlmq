@@ -1,0 +1,110 @@
+
+SQL*Loader: Release 11.2.0.3.0 - Production on Mon Jun 11 13:25:13 2018
+
+Copyright (c) 1982, 2011, Oracle and/or its affiliates.  All rights reserved.
+
+Control File:   /home/acc/settle/control/54.ctl
+Data File:      /home/acc/settle/bcp/2018061101/bcp.54.TRX0121.20180611.012
+  Bad File:     /home/acc/settle/bcpbad/2018061101/bcp.54.TRX0121.20180611.012.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 50
+Bind array:     64 rows, maximum of 256000 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table W_ACC_ST.W_ST_BUF_DEAL, loaded from every logical record.
+Insert option in effect for this table: APPEND
+TRAILING NULLCOLS option in effect
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+RECORD_VER                          FIRST     *   ,       CHARACTER            
+LINE_ID                              NEXT     *   ,       CHARACTER            
+STATION_ID                           NEXT     *   ,       CHARACTER            
+DEV_TYPE_ID                          NEXT     *   ,       CHARACTER            
+DEVICE_ID                            NEXT     *   ,       CHARACTER            
+SAM_LOGICAL_ID                       NEXT     *   ,       CHARACTER            
+SAM_TRADE_SEQ                        NEXT     *   ,       CHARACTER            
+DEAL_DATETIME                        NEXT     *   ,       DATE yyyymmddhh24miss
+CARD_MAIN_ID                         NEXT     *   ,       CHARACTER            
+CARD_SUB_ID                          NEXT     *   ,       CHARACTER            
+CARD_LOGICAL_ID                      NEXT     *   ,       CHARACTER            
+CARD_PHYSICAL_ID                     NEXT     *   ,       CHARACTER            
+CARD_STATUS_ID                       NEXT     *   ,       CHARACTER            
+DEAL_FEE                             NEXT     *   ,       CHARACTER            
+DEAL_BALANCE_FEE                     NEXT     *   ,       CHARACTER            
+CARD_CHARGE_SEQ                      NEXT     *   ,       CHARACTER            
+CARD_CONSUME_SEQ                     NEXT     *   ,       CHARACTER            
+PAY_MODE_ID                          NEXT     *   ,       CHARACTER            
+RECEIPT_ID                           NEXT     *   ,       CHARACTER            
+TAC                                  NEXT     *   ,       CHARACTER            
+ENTRY_LINE_ID                        NEXT     *   ,       CHARACTER            
+ENTRY_STATION_ID                     NEXT     *   ,       CHARACTER            
+ENTRY_SAM_LOGICAL_ID                 NEXT     *   ,       CHARACTER            
+ENTRY_DATETIME                       NEXT     *   ,       DATE yyyymmddhh24miss
+OPERATOR_ID                          NEXT     *   ,       CHARACTER            
+SHIFT_ID                             NEXT     *   ,       CHARACTER            
+LAST_SAM_LOGICAL_ID                  NEXT     *   ,       CHARACTER            
+LAST_DEAL_DATETIME                   NEXT     *   ,       DATE yyyymmddhh24miss
+DEAL_NO_DISCOUNT_FEE                 NEXT     *   ,       CHARACTER            
+CARD_APP_FLAG                        NEXT     *   ,       CHARACTER            
+LIMIT_MODE                           NEXT     *   ,       CHARACTER            
+LIMIT_ENTRY_STATION                  NEXT     *   ,       CHARACTER            
+LIMIT_EXIT_STATION                   NEXT     *   ,       CHARACTER            
+WORK_MODE                            NEXT     *   ,       CHARACTER            
+CITY_CODE                            NEXT     *   ,       CHARACTER            
+BUSINESS_CODE                        NEXT     *   ,       CHARACTER            
+TAC_DEAL_TYPE                        NEXT     *   ,       CHARACTER            
+TAC_DEV_ID                           NEXT     *   ,       CHARACTER            
+CARD_APP_MODE                        NEXT     *   ,       CHARACTER            
+MOBILE_NO                            NEXT     *   ,       CHARACTER            
+PAID_CHANNEL_TYPE                    NEXT     *   ,       CHARACTER            
+PAID_CHANNEL_CODE                    NEXT     *   ,       CHARACTER            
+LAST_CHARGE_DATETIME                 NEXT     *   ,       DATE yyyymmddhh24miss
+ISSUE_UNIT                           NEXT     *   ,       CHARACTER            
+KEY_VERSION                          NEXT     *   ,       CHARACTER            
+KEY_INDEX                            NEXT     *   ,       CHARACTER            
+KEY_RANDOM_NO                        NEXT     *   ,       CHARACTER            
+ALGORITHM_FLAG                       NEXT     *   ,       CHARACTER            
+HOLDER_NAME                          NEXT     *   ,       CHARACTER            
+IDENTITY_TYPE                        NEXT     *   ,       CHARACTER            
+IDENTITY_ID                          NEXT     *   ,       CHARACTER            
+BUY_TK_NUM                           NEXT     *   ,       CHARACTER            
+BUY_TK_UNIT_FEE                      NEXT     *   ,       CHARACTER            
+BALANCE_WATER_NO                     NEXT     *   ,       CHARACTER            
+BALANCE_WATER_NO_SUB                 NEXT     *   ,       CHARACTER            
+FILE_NAME                            NEXT     *   ,       CHARACTER            
+CHECK_FLAG                           NEXT     *   ,       CHARACTER            
+WATER_NO                             NEXT     *   ,       CHARACTER            
+    SQL string for column : "W_ACC_ST.W_SEQ_W_ST_BUF_DEAL.nextval"
+
+value used for ROWS parameter changed from 64 to 17
+Record 1: Rejected - Error on table W_ACC_ST.W_ST_BUF_DEAL, column LAST_CHARGE_DATETIME.
+ORA-01843: not a valid month
+
+
+Table W_ACC_ST.W_ST_BUF_DEAL:
+  0 Rows successfully loaded.
+  1 Row not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                 254388 bytes(17 rows)
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:             1
+Total logical records rejected:         1
+Total logical records discarded:        0
+
+Run began on Mon Jun 11 13:25:13 2018
+Run ended on Mon Jun 11 13:25:13 2018
+
+Elapsed time was:     00:00:00.07
+CPU time was:         00:00:00.03

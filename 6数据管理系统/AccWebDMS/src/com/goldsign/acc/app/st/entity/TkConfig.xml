@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.st.mapper.TkConfigMapper">
+    <resultMap type="com.goldsign.acc.app.st.entity.TkConfig" id = "rmTkConfig">
+        <result column="ORIGIN_TABLE_NAME" property="originTableName"/>
+        <result column="AB_NAME" property="abName"/>
+        <result column="KEEP_DAYS" property="keepDays"/>
+        <result column="DIVIDE_RECD_COUNT" property="divideRecdCount"/>
+        <result column="CLEAR_FLAG" property="clearFlag"/>
+        <result column="CREATE_SQL" property="createSql"/>
+        <result column="TABLE_COLUMNS" property="tableColumns"/>
+        <result column="RECD_TYPE" property="recdType"/>
+        <result column="DEAL_TYPE" property="dealType"/>
+        <result column="DATE_TYPE" property="dateType"/>
+    </resultMap>
+    <select id="queryPlan" parameterType="com.goldsign.acc.app.st.entity.TkConfig" resultMap="rmTkConfig">
+        select ORIGIN_TABLE_NAME,KEEP_DAYS,DIVIDE_RECD_COUNT,
+        case when CLEAR_FLAG=0 then '删除' when CLEAR_FLAG=1 then '迁移' else null end as CLEAR_FLAG,
+        AB_NAME,RECD_TYPE from w_acc_tk.W_IC_CFG_CLEAR_TABLE
+        <where>
+            1=1
+            <if test="originTableName != null and originTableName !=''">
+               and ORIGIN_TABLE_NAME like concat(concat('%',#{originTableName}),'%')
+            </if>
+        </where>
+    </select>
+    <update id="modifyPlan" parameterType="com.goldsign.acc.app.st.entity.TkConfig">
+        update w_acc_tk.W_IC_CFG_CLEAR_TABLE  t set t.KEEP_DAYS=#{keepDays},t.DIVIDE_RECD_COUNT=#{divideRecdCount}
+       where t.ORIGIN_TABLE_NAME=#{originTableName}
+    </update>
+</mapper>

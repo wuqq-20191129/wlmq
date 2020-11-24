@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.storageout.mapper.TicketStorageOutProduceMapper">
+    
+    <resultMap type="com.goldsign.acc.app.storageout.entity.TicketStorageOutProducePlan" id="rmOutProducePlan">
+        
+        <result column="bill_no" property="bill_no" /> 
+        <result column="out_bill_no" property="out_bill_no" /> 
+        <result column="bill_date" property="bill_date" /> 
+        <result column="form_maker" property="form_maker" /> 
+        <result column="operator" property="operator" /> 
+        <result column="verify_person" property="verify_person" /> 
+        <result column="execute_date" property="execute_date" /> 
+        <result column="verify_date" property="verify_date" /> 
+        <result column="record_flag" property="record_flag" /> 
+        <result column="remark" property="remark" /> 
+        
+        <result column="out_bill_record_flag" property="out_bill_record_flag" /> 
+
+    </resultMap>
+    <resultMap type="com.goldsign.acc.app.storageout.entity.TicketStorageOutProduceOutBill" id="rmOutProduceOutBill">
+        
+        <result column="bill_no" property="bill_no" /> 
+        <result column="form_maker" property="form_maker" /> 
+        <result column="bill_date" property="bill_date" /> 
+        <result column="drawer" property="drawer" /> 
+        <result column="administer" property="administer" /> 
+        <result column="accounter" property="accounter" /> 
+        <result column="distribute_bill_no" property="distribute_bill_no" /> 
+        <result column="record_flag" property="record_flag" /> 
+        <result column="verify_date" property="verify_date" /> 
+        <result column="verify_person" property="verify_person" /> 
+        <result column="remark" property="remark" /> 
+        <result column="bill_type" property="bill_type" /> 
+        <result column="in_flag" property="in_flag" /> 
+        
+
+    </resultMap>
+
+    
+    <resultMap type="com.goldsign.acc.app.storageout.entity.TicketStorageOutProduceOutBill" id="rmOutProduceOutBillDetail">
+        <result column="water_no" property="water_no" />
+        <result column="bill_no" property="bill_no" /> 
+        <result column="reason_id" property="reason_id" /> 
+        <result column="storage_id" property="storage_id" /> 
+        <result column="area_id" property="area_id" /> 
+        <result column="ic_main_type" property="ic_main_type" /> 
+        <result column="ic_sub_type" property="ic_sub_type" /> 
+        <result column="out_num" property="out_num" /> 
+        <result column="valid_date" property="valid_date" /> 
+        <result column="card_money" property="card_money" /> 
+        <result column="line_id" property="line_id" /> 
+        <result column="station_id" property="station_id" /> 
+        <result column="card_type" property="card_type" /> 
+        <result column="make_num" property="make_num" /> 
+        <result column="es_worktype_id" property="es_worktype_id" />
+        <result column="card_money_produce" property="card_money_produce" />
+        
+        <result column="valid_date_produce" property="valid_date_produce" />
+        <result column="card_ava_days" property="card_ava_days" />
+        <result column="exit_line_id" property="exit_line_id" />
+        <result column="exit_station_id" property="exit_station_id" />
+        <result column="model" property="model" />
+
+
+        <result column="detail_place" property="detail_place" />
+        <result column="start_box_id" property="start_box_id" />
+        <result column="end_box_id" property="end_box_id" />
+        <result column="start_logical_id" property="start_logical_id" />
+        <result column="end_logical_id" property="end_logical_id" />
+        <result column="section_num" property="section_num" />
+
+        
+
+    </resultMap>
+    
+    <resultMap type="com.goldsign.acc.app.storageout.entity.TicketStorageOutProducePlan" id="rmOutProducePlanDetail">   
+        <result column="water_no" property="water_no" /> 
+        <result column="bill_no" property="bill_no" /> 
+        <result column="es_worktype_id" property="es_worktype_id" /> 
+        <result column="storage_id" property="storage_id" /> 
+        <result column="area_id" property="area_id" /> 
+        <result column="ic_main_type" property="ic_main_type" /> 
+        <result column="ic_sub_type" property="ic_sub_type" /> 
+        <result column="card_money" property="card_money" /> 
+        <result column="valid_date" property="valid_date" /> 
+        <result column="line_id" property="line_id" /> 
+        <result column="station_id" property="station_id" />
+        <result column="draw_quantity" property="draw_quantity" />
+        <result column="make_quantity" property="make_quantity" />
+        <result column="machine_no" property="machine_no" />
+        <result column="card_type" property="card_type" />
+        <result column="reason_id" property="reason_id" />
+        <result column="card_money_produce" property="card_money_produce" />
+        <result column="card_ava_days" property="card_ava_days" />
+        <result column="exit_line_id" property="exit_line_id" />
+        <result column="exit_station_id" property="exit_station_id" />
+        <result column="model" property="model" />
+        <result column="sale_flag" property="sale_flag" />
+        <result column="test_flag" property="test_flag" />
+        <result column="order_type" property="order_type" />
+
+    </resultMap>
+    
+    <resultMap type="com.goldsign.acc.app.storageout.entity.TicketStorageOutProduceOrder" id="rmOutProduceOrder">
+        <result column="order_no" property="order_no" />
+        <result column="card_main_code" property="card_main_code" /> 
+        <result column="card_sub_code" property="card_sub_code" /> 
+        <result column="card_type" property="card_type" /> 
+        <result column="cardstartava" property="cardstartava" /> 
+        <result column="card_per_ava" property="card_per_ava" /> 
+        <result column="card_mon" property="card_mon" /> 
+        <result column="burse_uplimit" property="burse_uplimit" /> 
+        <result column="pro_num" property="pro_num" /> 
+        <result column="b_serial_no" property="b_serial_no" /> 
+        <result column="e_serial_no" property="e_serial_no" /> 
+        <result column="gen_time" property="gen_time" /> 
+        <result column="oper_id" property="oper_id" /> 
+        <result column="fini_pronum" property="fini_pronum" /> 
+        <result column="es_operator_id" property="es_operator_id" /> 
+        <result column="hdl_flag" property="hdl_flag" />
+        <result column="line_code" property="line_code" />
+        
+        <result column="station_code" property="station_code" />
+        <result column="achieve_time" property="achieve_time" />
+        <result column="card_ava_days" property="card_ava_days" />
+        <result column="exit_line_code" property="exit_line_code" />
+        <result column="exit_station_code" property="exit_station_code" />
+
+
+        <result column="model" property="model" />
+        <result column="max_recharge_val" property="max_recharge_val" />
+        <result column="sale_flag" property="sale_flag" />
+        <result column="test_flag" property="test_flag" />
+       
+
+    </resultMap>
+    
+    <parameterMap type="map" id="MapBillPlanAudit">  
+        <parameter property="piBillNoPlanTemp" jdbcType="VARCHAR" mode="IN"/>  
+        <parameter property="piOperator" jdbcType="VARCHAR" mode="IN"/> 
+        <parameter property="piBillNoPlanFormal" jdbcType="VARCHAR" mode="OUT"/>   
+        <parameter property="poRetCode" jdbcType="INTEGER" mode="OUT"/> 
+        <parameter property="poRetMsg" jdbcType="VARCHAR" mode="OUT"/>  
+    </parameterMap> 
+    <parameterMap type="map" id="MapBillOutAudit">  
+        <parameter property="piBillNoOut" jdbcType="VARCHAR" mode="IN"/>  
+        <parameter property="piOperator" jdbcType="VARCHAR" mode="IN"/> 
+       
+        <parameter property="poRetCode" jdbcType="INTEGER" mode="OUT"/> 
+        <parameter property="poRetMsg" jdbcType="VARCHAR" mode="OUT"/>  
+    </parameterMap>
+    
+
+        
+    <insert id="addPlan" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutProducePlan" >
+        insert into w_acc_tk.w_ic_out_date_plan(bill_no,out_bill_no,bill_date,form_maker,operator,record_flag,remark)
+        values(#{bill_no},#{out_bill_no},sysdate,#{form_maker},#{operator},#{record_flag},#{remark})
+                                  
+    </insert>
+    <select id="auditPlan" parameterMap="MapBillPlanAudit" statementType="CALLABLE">
+        {call W_ACC_TK.W_UP_IC_OUT_PRODUCE_BYBOX(?,?,?,?,?)}
+                                  
+    </select>
+    
+    <delete id="deletePlan" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutProducePlan" >
+        delete from  w_acc_tk.w_ic_out_date_plan where bill_no=#{bill_no}
+                                  
+    </delete>
+    
+    <select id="queryPlan"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutProducePlan" resultMap="rmOutProducePlan">
+        select A.bill_no,A.out_bill_no,A.bill_date,A.form_maker,
+        A.operator,A.verify_person,A.execute_date,A.verify_date,A.record_flag,A.remark,
+        C.record_flag out_bill_record_flag 
+        from w_acc_tk.w_ic_out_date_plan A, 
+             w_acc_tk.w_ic_out_bill C
+        where A.out_bill_no= C.bill_no(+)
+        <if test="(bill_no !=null and bill_no !='') 
+                       or (form_maker !=null and form_maker !='') 
+                       or (record_flag !=null and record_flag !='') 
+                       or (bill_date_begin !=null and bill_date_begin !='') 
+                       or (bill_date_end !=null and bill_date_end !='') 
+                       or (ic_main_type !=null and  ic_main_type !='' ) 
+                       or (ic_sub_type !=null and  ic_sub_type !='') 
+                       or (reason_id !=null and  reason_id !='')
+                       or ( storage_id !=null and  storage_id !='')
+                   ">
+            and  A.bill_no like '%'
+        </if>
+                
+                
+                 
+        <if test="bill_no !=null and bill_no !=''">
+            and A.bill_no =#{bill_no}
+        </if>  
+                
+        <if test="form_maker !=null and form_maker !=''">
+            and A.form_maker =#{form_maker}
+        </if>
+                
+        <if test="record_flag !=null and record_flag !=''">
+            and A.record_flag =#{record_flag}
+        </if>
+                
+        <if test="bill_date_begin !=null and bill_date_begin !=''">
+            and A.bill_date &gt;= to_date(concat(#{bill_date_begin},' 00:00:00'),'yyyy-mm-dd  hh24:mi:ss')
+        </if>
+                
+        <if test="bill_date_end !=null and bill_date_end !=''">
+            and A.bill_date &lt;= to_date(concat(#{bill_date_end}, ' 23:59:59 '),'yyyy-mm-dd  hh24:mi:ss')
+        </if>
+                
+        <!--
+        <if test="bill_date_end !=null and bill_date_end !=''">
+            and A.bill_date <= to_date(#{bill_date_end},'yyyy-mm-dd')
+        </if>
+        -->
+                
+               
+        <if test=" (ic_main_type !=null and  ic_main_type !='')  
+                            or (ic_sub_type !=null and  ic_sub_type !='')  
+                            or (reason_id !=null and  reason_id !='')  
+                            or (storage_id !=null and  storage_id !='') ">
+            and exists(select 1 from w_acc_tk.w_ic_out_date_plan_detail B  where A.bill_no =B.bill_no
+                      
+        </if>
+                
+        <if test=" ic_main_type !=null and  ic_main_type !=''">
+            and  B.ic_main_type =#{ic_main_type}
+        </if>
+                
+        <if test=" ic_sub_type !=null and  ic_sub_type !=''">
+            and  B.ic_sub_type =#{ic_sub_type}
+        </if>
+        <if test=" reason_id !=null and  reason_id !=''">
+            and  B.reason_id =#{reason_id}
+        </if>
+        <if test=" storage_id !=null and  storage_id !=''">
+            and  B.storage_id =#{storage_id} 
+        </if>
+                
+        <if test=" (ic_main_type !=null and  ic_main_type !='')  
+                            or (ic_sub_type !=null and  ic_sub_type !='')  
+                            or (reason_id !=null and  reason_id !='')  
+                            or (storage_id !=null and  storage_id !='') ">
+            ) 
+                      
+        </if>
+        <!--order by A.bill_no,A.bill_date--> 
+        order by A.bill_no desc
+         
+    </select>
+    <select id="queryPlanDetail"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutProducePlan" resultMap="rmOutProducePlanDetail">
+        select B.bill_no,B.water_no,B.es_worktype_id,B.storage_id,B.area_id,B.ic_main_type,
+        B.ic_sub_type,B.card_money,
+        (case when B.valid_date= to_date('1970-01-01' ,'yyyy-mm-dd')  then '' 
+         else to_char(B.valid_date,'yyyy-mm-dd')  end) valid_date,
+        B.line_id,B.station_id,
+        B.draw_quantity,B.make_quantity,B.machine_no ,B.card_type,B.reason_id,B.card_money_produce,
+        B.card_ava_days,B.exit_line_id,B.exit_station_id,B.model,B.sale_flag,B.test_flag,B.order_type, 
+        A.operator,A.record_flag 
+        from w_acc_tk.w_ic_out_date_plan A,w_acc_tk.w_ic_out_date_plan_detail B 
+        where B.bill_no = A.bill_no and B.bill_no =#{bill_no}
+        
+    </select>
+    <insert id="addPlanDetail" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutProducePlan" >
+        insert into w_acc_tk.w_ic_out_date_plan_detail(water_no,bill_no,es_worktype_id,storage_id,area_id,ic_main_type, ic_sub_type,
+        draw_quantity,make_quantity,machine_no,card_type,reason_id,card_money,valid_date,
+        line_id,station_id,card_money_produce,card_ava_days,
+        exit_line_id,exit_station_id,model,sale_flag,test_flag,order_type)
+        values(w_acc_tk.w_seq_w_ic_out_date_plan_dtl.nextval,#{bill_no},#{es_worktype_id},#{storage_id},#{area_id},#{ic_main_type},#{ic_sub_type},
+        #{draw_quantity},#{make_quantity},#{machine_no},#{card_type},#{reason_id},#{card_money},to_date(nvl(#{valid_date},'1970-01-01'),'yyyy-mm-dd'),
+        nvl(#{line_id},' '),nvl(#{station_id},' '),#{card_money_produce},#{card_ava_days},
+        nvl(#{exit_line_id},' '),nvl(#{exit_station_id},' '),#{model},#{sale_flag},#{test_flag},#{order_type})
+                                  
+    </insert>
+    
+    <delete id="deletePlanDetail" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutProducePlan" >
+        delete from  w_acc_tk.w_ic_out_date_plan_detail where bill_no=#{bill_no} and water_no=#{water_no}                                
+    </delete>
+    <update id="modifyPlanDetail" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutProducePlan" >
+        update w_acc_tk.w_ic_out_date_plan_detail set es_worktype_id=#{es_worktype_id},storage_id=#{storage_id},area_id=#{area_id},ic_main_type=#{ic_main_type}, ic_sub_type=#{ic_sub_type},
+        draw_quantity=#{draw_quantity},make_quantity=#{make_quantity},machine_no=#{machine_no},card_type=#{card_type},reason_id=#{reason_id},
+        card_money=#{card_money}, valid_date=to_date(nvl(#{valid_date},'1970-01-01'),'yyyy-mm-dd'),
+        line_id=nvl(#{line_id},' '),station_id=nvl(#{station_id},' '),card_money_produce=#{card_money_produce},card_ava_days=#{card_ava_days},
+        exit_line_id=nvl(#{exit_line_id},' '),exit_station_id=nvl(#{exit_station_id},' '),model=#{model},sale_flag=#{sale_flag},test_flag=#{test_flag},order_type=#{order_type}
+        where bill_no=#{bill_no} and water_no=#{water_no}
+
+                                  
+    </update>
+     <!--出库单 -->
+    <select id="queryOutBill"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutProduceOutBill" resultMap="rmOutProduceOutBill">
+        select bill_no,form_maker,bill_date,drawer,administer,accounter,distribute_bill_no,
+        record_flag,verify_date,verify_person,remark,bill_type,in_flag 
+        from w_acc_tk.w_ic_out_bill 
+        where  bill_no =#{bill_no}
+        
+    </select>
+    <!--出库单明细 -->
+    <select id="queryOutBillDetail"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutProduceOutBill" resultMap="rmOutProduceOutBillDetail">
+        SELECT B.water_no, B.bill_no,B.reason_id, B.storage_id,B.area_id,
+               B.ic_main_type, B.ic_sub_type,B.out_num, 
+                (case when B.valid_date= to_date('1970-01-01' ,'yyyy-mm-dd')  then '' 
+                 else to_char(B.valid_date,'yyyy-mm-dd')  end) valid_date,
+               B.card_money, B.line_id,
+               B.station_id, B.card_type, B.es_worktype_id, B.make_num,B.card_money_produce,
+               B.valid_date_produce,B.card_ava_days,B.exit_line_id,B.exit_station_id,
+               B.model,C.detail_place, C.start_box_id,C.end_box_id,C.start_logical_id,
+               C.end_logical_id,C.section_num 
+        FROM w_acc_tk.w_ic_out_bill_detail B, w_acc_tk.w_ic_out_bill_detail_box C 
+        WHERE B.bill_no = #{bill_no} AND B.bill_no = C.bill_no(+) AND B.water_no =C.water_no(+)
+
+       
+    </select>
+    <!--出库单审核 -->
+    <select id="auditOutBill" parameterMap="MapBillOutAudit" statementType="CALLABLE">
+        {call W_ACC_TK.w_up_ic_out_prod_genorder(?,?,?,?)}
+                                  
+    </select>
+    
+    <!--订单 -->
+    <select id="queryOrder"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutProduceOrder" resultMap="rmOutProduceOrder">
+        select a.order_no,a.card_main_code,a.card_sub_code,a.card_type,
+               to_char(a.card_per_ava,'yyyy-mm-dd') card_per_ava,a.card_mon,a.burse_uplimit,a.pro_num,a.b_serial_no,
+               a.e_serial_no,a.gen_time ,a.oper_id,a.fini_pronum,a.es_operator_id,
+               a.hdl_flag,a.line_code,a.station_code,a.achieve_time,a.cardstartava,
+               a.card_ava_days,a.exit_line_code,a.exit_station_code,a.model, 
+               a.max_recharge_val,a.sale_flag,a.test_flag
+        FROM w_acc_tk.w_ic_pdu_order_form a , w_acc_tk.w_ic_pdu_plan_order_mapping b 
+        WHERE b.plan_bill_no= #{bill_no} AND a.order_no =b.order_no
+        order by a.order_no
+        
+
+       
+    </select>
+    
+    <select id="getPlanDetailListCount"  parameterType="String" resultType="int">
+        select count(*)
+        FROM w_acc_tk.w_ic_out_date_plan_detail 
+        WHERE bill_no=#{bill_no} 
+       
+    </select>
+    
+    <select id="getOutDetailCountForDeleteOutBill"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutProducePlan" resultType="int">
+        
+        select count(*) from w_acc_tk.w_ic_out_date_plan_detail where bill_no in
+        <foreach item="outProducePlan" index="index" collection="list" open="(" separator="," close=")">
+             #{outProducePlan.bill_no}
+        </foreach>
+         
+    </select>
+    
+    
+    
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.frame.mapper.EmailErrorLogMapper">
+    <resultMap id="BaseResultMap" type="com.goldsign.acc.frame.entity.EmailErrorLog">
+        <result column="PASER_TIME" jdbcType="VARCHAR" property="paserTime"/>
+        <result column="SENDER" jdbcType="VARCHAR" property="sender"/>
+        <result column="ERROR_MSG" jdbcType="VARCHAR" property="errorMsg"/>
+        <result column="INSERT_TIME" jdbcType="VARCHAR" property="insertTime"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.goldsign.acc.frame.entity.EmailErrorLog">
+    insert into W_ACC_MN.W_MTR_LOG_EMAIL_ERROR (PASER_TIME, SENDER, ERROR_MSG,
+      INSERT_TIME)
+    values (#{paserTime,jdbcType=VARCHAR}, #{sender,jdbcType=VARCHAR}, #{errorMsg,jdbcType=VARCHAR}, 
+      to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'))
+  </insert>
+    <insert id="insertSelective" parameterType="com.goldsign.acc.frame.entity.EmailErrorLog">
+        insert into W_ACC_MN.W_MTR_LOG_EMAIL_ERROR
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="paserTime != null">
+                PASER_TIME,
+            </if>
+            <if test="sender != null">
+                SENDER,
+            </if>
+            <if test="errorMsg != null">
+                ERROR_MSG,
+            </if>
+            <if test="insertTime != null">
+                INSERT_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="paserTime != null">
+                #{paserTime,jdbcType=VARCHAR},
+            </if>
+            <if test="sender != null">
+                #{sender,jdbcType=VARCHAR},
+            </if>
+            <if test="errorMsg != null">
+                #{errorMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="insertTime != null">
+                #{insertTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>

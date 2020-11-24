@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper  namespace = "com.goldsign.acc.app.basicinfo.mapper.TicketStorageParaInMapper">
+    
+    <resultMap type = "com.goldsign.acc.app.basicinfo.entity.TicketStorageParaIn"  id = "rmTicketStorageParaIn">
+        <result column="water_no"  property="water_no"/>
+        <result column="rpt_date"  property="rpt_date"/>
+        <result column="sys_time"  property="sys_time"/>
+        <result column="rpt_date_start"  property="rpt_date_start"/>
+        <result column="rpt_date_end"  property="rpt_date_end"/>
+        <result column="store_num"  property="store_num"/>
+        <result column="useless_num"  property="useless_num"/>
+        <result column="ic_main_type"  property="ic_main_type"/>
+        <result column="ic_sub_type"  property="ic_sub_type"/>
+        <result column="new_num"  property="new_num"/>
+        <result column="not_in_num"  property="not_in_num"/>
+        <result column="para_flag"  property="para_flag"/>
+        <result column="storage_id"  property="storage_id"/>
+        <result column="remark"  property="remark"/>
+        <result column="sys_operator_id"  property="sys_operator_id"/>
+        <result column="sys_group_id"  property="sys_group_id"/>
+        <result column="sys_storage_id"  property="sys_storage_id"/>
+    </resultMap>
+    
+    <select id="queryParm"   resultMap="rmTicketStorageParaIn">
+        select water_no,rpt_date,sys_time,ic_main_type,ic_sub_type,store_num,useless_num,new_num,not_in_num,remark,para_flag,storage_id
+        from w_acc_tk.w_ic_prm_token_para where 1=1
+        <if test="rpt_date_start !=null and rpt_date_start !=''">
+            and to_char(rpt_date,'yyyy-mm-dd') &gt;= #{rpt_date_start} 
+        </if>
+        <if test="rpt_date_end !=null and rpt_date_end !=''">
+            and to_char(rpt_date,'yyyy-mm-dd') &lt;=  #{rpt_date_end} 
+        </if>
+        <if test="ic_main_type !=null and ic_main_type !=''">
+            and trim(ic_main_type) =#{ic_main_type} 
+        </if> 
+        <if test="ic_sub_type !=null and ic_sub_type !=''">
+            and trim(ic_sub_type) =#{ic_sub_type}
+        </if>
+        <if test="para_flag !=null and para_flag !=''">
+            and para_flag =#{para_flag}
+        </if>
+        <if test="storage_id !=null and storage_id !=''">
+            and storage_id =#{storage_id}
+        </if>
+        order by water_no DESC
+    </select> 
+    
+    <select id="getListForAdd"   resultMap="rmTicketStorageParaIn">
+       
+        select water_no water_no,rpt_date,sys_time,ic_main_type,ic_sub_type,store_num,useless_num,new_num,not_in_num,remark,para_flag,storage_id
+        from w_acc_tk.w_ic_prm_token_para 
+        where water_no = #{water_no}
+       
+        <!--       and ic_main_type =#{ic_main_type} and ic_sub_type =#{ic_sub_type}
+        and para_flag =#{para_flag} and useless_num =#{useless_num}
+        and new_num =#{new_num} and not_in_num =#{not_in_num}
+        and storage_id =#{storage_id} and remark =#{remark}-->
+        
+    </select>
+    
+    <select id="getListForModify"   resultMap="rmTicketStorageParaIn">
+       
+        select water_no,rpt_date,sys_time,ic_main_type,ic_sub_type,store_num,useless_num,new_num,not_in_num,remark,para_flag,storage_id
+        from w_acc_tk.w_ic_prm_token_para 
+        where water_no = #{water_no}
+        
+    </select>
+    
+    <select id="getWaterNo"   resultType="String">
+       
+        select max(water_no) from w_acc_tk.w_ic_prm_token_para 
+        
+        
+    </select>
+    
+    <select id="getUserStoreSet"  parameterType="TicketStorageParaIn" resultMap="rmTicketStorageParaIn">
+        select sg.sys_group_id,sg.sys_storage_id 
+        from w_acc_st.w_op_sys_group_operator sgo , w_acc_st.w_op_sys_group sg 
+        where sgo.sys_group_id=sg.sys_group_id 
+        and sys_operator_id=#{sys_operator_id}
+    </select>
+   
+    <update id="modifyTicketStorageParaIn" parameterType="TicketStorageParaIn" >
+        update w_acc_tk.w_ic_prm_token_para set rpt_date =to_date(#{rpt_date},'yyyy-mm-dd'),
+        ic_main_type =#{ic_main_type},ic_sub_type =#{ic_sub_type},
+        para_flag =#{para_flag},useless_num =#{useless_num},
+        new_num =#{new_num}, not_in_num =#{not_in_num},
+        storage_id =#{storage_id},remark =#{remark}
+        where water_no = #{water_no}                                            
+    </update>
+     
+    <insert id="addTicketStorageParaIn" parameterType="TicketStorageParaIn" >
+        insert into w_acc_tk.w_ic_prm_token_para(water_no,rpt_date,sys_time,store_num,ic_main_type,ic_sub_type,para_flag,useless_num,new_num,not_in_num,storage_id,remark)
+        values(w_acc_tk.W_SEQ_W_IC_TK_TOKEN_PRM.nextval,to_date(#{rpt_date},'yyyy-mm-dd'),to_date(#{sys_time},'yyyy-mm-dd'),#{store_num},#{ic_main_type},#{ic_sub_type},#{para_flag},#{useless_num},
+        #{new_num},#{not_in_num},#{storage_id},#{remark})        
+        
+    </insert>
+    
+    <delete id="deleteTicketStorageParaIn" parameterType="TicketStorageParaIn">
+        delete from w_acc_tk.w_ic_prm_token_para 
+        where water_no = #{water_no}            
+    </delete>
+</mapper>
+
+
+

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.NonReturnOpLogMapper">
+    <resultMap id="BaseResultMap" type="com.goldsign.acc.app.querysys.entity.NonReturnOpLog">
+        <result column="OPERATOR_ID" jdbcType="VARCHAR" property="operatorId" />
+        <result column="OPERATE_TIME" jdbcType="VARCHAR" property="operateTime" />
+        <result column="OPERATE_TYPE" jdbcType="VARCHAR" property="operateType" />
+        <result column="RECEIPT_ID" jdbcType="VARCHAR" property="receiptId" />
+        <result column="CARD_PRINT_ID" jdbcType="VARCHAR" property="cardPrintId" />
+        <result column="CARD_BALANCE_FEE" jdbcType="DECIMAL" property="cardBalanceFee" />
+        <result column="IS_BROKEN" jdbcType="VARCHAR" property="isBroken" />
+        <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+        <result column="DEPOSIT_FEE" jdbcType="DECIMAL" property="depositFee" />
+        <result column="PENALTY_FEE" jdbcType="DECIMAL" property="penaltyFee" />
+        <result column="ACTUAL_RETURN_BALA" jdbcType="DECIMAL" property="actualReturnBala" />
+        <result column="PENALTY_REASON" jdbcType="VARCHAR" property="penaltyReason" />
+        <result column="HDL_FLAG" jdbcType="CHAR" property="hdlFlag" />
+        <result column="OLD_NO" jdbcType="VARCHAR" property="oldNo" />
+        <result column="IDENTITY_TYPE" jdbcType="CHAR" property="identityType" />
+        <result column="IDENTITY_ID" jdbcType="VARCHAR" property="identityId" />
+        <result column="RETURN_TYPE" jdbcType="CHAR" property="returnType" />
+    </resultMap>
+    <resultMap id="CodeMap" type="com.goldsign.acc.app.querysys.entity.CodePubFlag">
+        <id column="CODE" jdbcType="VARCHAR" property="code" />
+        <result column="CODE_TEXT" jdbcType="VARCHAR" property="codeText" />
+    </resultMap>
+
+    <select id = "getNonReturnOpLog" parameterType="com.goldsign.acc.app.querysys.entity.NonReturnOpLog" resultMap="BaseResultMap">
+        select OPERATOR_ID, to_char(OPERATE_TIME,'YYYY-MM-DD HH24:MI:SS') as OPERATE_TIME, OPERATE_TYPE,
+        RECEIPT_ID, CARD_PRINT_ID, CARD_BALANCE_FEE,
+        IS_BROKEN, REMARK, DEPOSIT_FEE,
+        PENALTY_FEE, ACTUAL_RETURN_BALA, PENALTY_REASON,
+        HDL_FLAG, OLD_NO, IDENTITY_TYPE,
+        IDENTITY_ID, RETURN_TYPE from W_ACC_ST.W_OP_LOG_NON_RETURN
+        where return_type = '1'
+        <if test="operatorId != null">
+            and OPERATOR_ID = #{operatorId,jdbcType=VARCHAR}
+        </if>
+        <if test="beginDatetime != null">
+            and  OPERATE_TIME &gt;= to_date(#{beginDatetime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        </if>
+        <if test="endDatetime != null">
+            and  OPERATE_TIME &lt;= to_date(#{endDatetime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        </if>
+        <if test="operateType != null">
+            and  OPERATE_TYPE = #{operateType,jdbcType=CHAR}
+        </if>
+        <if test="cardPrintId != null">
+            and  CARD_PRINT_ID like '%${cardPrintId}%'
+        </if>
+        <if test="receiptId != null">
+            and  RECEIPT_ID like '%${receiptId}%'
+        </if>
+
+    </select>
+
+
+    <select id = "getOperatorName"  resultMap="CodeMap">
+        select distinct operator_id as code, sys_operator_name as code_text
+        from w_acc_st.w_op_log_non_return, w_acc_st.w_op_sys_operator
+        where operator_id = sys_operator_id  and return_type = '1'
+    </select>
+    <select id = "getOperationType"  resultMap="CodeMap">
+        select distinct operate_type as code from w_acc_st.w_op_log_non_return where return_type = '1'
+    </select>
+
+    <insert id ="insertLog" parameterType="com.goldsign.acc.app.querysys.entity.NonReturnOpLog">
+        insert into W_ACC_ST.W_OP_LOG_NON_RETURN
+        ( OPERATOR_ID , OPERATE_TIME , OPERATE_TYPE , RECEIPT_ID , CARD_PRINT_ID ,
+          CARD_BALANCE_FEE , IS_BROKEN , REMARK , DEPOSIT_FEE , PENALTY_FEE ,
+          ACTUAL_RETURN_BALA , PENALTY_REASON , HDL_FLAG , OLD_NO ,RETURN_TYPE
+        )
+        VALUES(#{operatorId,jdbcType=VARCHAR},sysdate,#{operateType,jdbcType=VARCHAR},#{receiptId,jdbcType=VARCHAR},#{cardPrintId,jdbcType=VARCHAR},#{cardBalanceFee,jdbcType=DECIMAL},#{isBroken,jdbcType=VARCHAR},
+       #{remark,jdbcType=VARCHAR},#{depositFee,jdbcType=DECIMAL},#{penaltyFee,jdbcType=DECIMAL},#{actualReturnBala,jdbcType=DECIMAL},#{penaltyReason,jdbcType=VARCHAR},#{hdlFlag,jdbcType=VARCHAR},#{oldNo,jdbcType=VARCHAR},#{returnType,jdbcType=VARCHAR}
+        )
+    </insert>
+
+</mapper>

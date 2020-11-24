@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.StatusMappingMapper">
+    <resultMap type="StatusMapping" id="rmStatusMapping">
+        
+        <result column="status_id" property="status_id" /> 
+        <result column="status_value" property="status_value" /> 
+        <result column="acc_status_id" property="acc_status_id" /> 
+        <result column="status_name" property="status_name" /> 
+        <result column="acc_status_name" property="acc_status_name" /> 
+    </resultMap>
+
+    
+     
+    <select id="getStatusMapping"  parameterType="StatusMapping" resultMap="rmStatusMapping">
+        select status_id,status_value,status_name,acc_status_name
+        from W_ACC_ST.W_OP_COD_COM_STATUS_MAPPING where 1=1
+        <if test="status_id !=null and status_id !=''">
+            and status_id=#{status_id} 
+        </if> 
+        <if test="status_value !=null and status_value !=''">
+            and status_value=#{status_value}     
+        </if>
+        <if test="acc_status_value !=null and acc_status_value !=''">
+            and acc_status_value=#{acc_status_value}     
+        </if>
+        order by status_id,status_value
+    </select>
+    
+    <select id="getStatusMappingById"  parameterType="StatusMapping" resultMap="rmStatusMapping">
+        select status_id,status_value,status_name,acc_status_name
+        from W_ACC_ST.W_OP_COD_COM_STATUS_MAPPING
+        where status_id=#{status_id} and status_value=#{status_value}        
+    </select>
+    
+    <insert id="addStatusMapping" parameterType="StatusMapping" >
+        insert into W_ACC_ST.W_OP_COD_COM_STATUS_MAPPING(status_id,status_value,acc_status_value,status_name,acc_status_name)
+        values(#{status_id},#{status_value},#{acc_status_value},#{status_name},#{acc_status_name})               
+    </insert>
+    
+    <update id="modifyStatusMapping" parameterType="StatusMapping" >
+        update W_ACC_ST.W_OP_COD_COM_STATUS_MAPPING set acc_status_value=#{acc_status_value},status_name=#{status_name},acc_status_name=#{acc_status_name}
+        where status_id=#{status_id} and status_value=#{status_value}                                                
+    </update>
+    
+    <delete id="deleteStatusMapping" parameterType="StatusMapping">
+            delete from W_ACC_ST.W_OP_COD_COM_STATUS_MAPPING where status_id=#{status_id} and status_value=#{status_value}              
+    </delete>     
+    
+</mapper>

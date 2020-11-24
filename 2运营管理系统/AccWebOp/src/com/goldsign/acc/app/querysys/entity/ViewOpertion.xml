@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.ViewOpertionMapper">
+    <resultMap type="ViewOpertion" id="rmViewOpertion">
+        <result column="water_no" property="water_no" /> 
+        <result column="operator_id" property="operator_id" /> 
+        <result column="op_type" property="op_type" /> 
+        <result column="op_time" property="op_time" /> 
+        <result column="app" property="app" />
+        <result column="module" property="module" /> 
+        <result column="content" property="content" /> 
+    </resultMap>
+    <resultMap type="ViewOpertion" id="samViewOpertion">
+        <result column="water_no" property="water_no" /> 
+        <result column="operator_id" property="operator_id" /> 
+        <result column="op_type_name" property="op_type_name" /> 
+        <result column="op_time" property="op_time" /> 
+        <result column="app" property="app" />
+        <result column="module" property="module" /> 
+        <result column="content" property="content" /> 
+    </resultMap>
+    
+    <select id="getOPViewOpertions"  parameterType="ViewOpertion" resultMap="rmViewOpertion">
+        select t.water_no water_no,t.operator_id operator_id,t.op_type op_type,t.op_time op_time,b.code_text app,t.module module,t.content content
+        from   W_ACC_ST.W_OP_LOG_USER_OPERATE t,w_acc_st.w_op_sys_module a , w_acc_st.w_op_cod_pub_flag b 
+        where a.module_id =t.module     and  b.type ='35' and  b.code =a.sys_flag 
+        <if test="operator_id !=null and operator_id !=''">
+            and trim(t.operator_id) = #{operator_id}
+        </if> 
+        <if test="begin_date !=null and begin_date !=''">
+            and t.op_time  &gt;= to_date(#{begin_date}, 'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        <if test="end_date !=null and end_date !=''">
+            and t.op_time  &lt;= to_date(#{end_date}, 'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        
+        order by t.op_time DESC
+    </select>
+    
+    <!--获取票务管理系统操作日志-->
+    <select id="getTKViewOpertions"  parameterType="ViewOpertion" resultMap="rmViewOpertion">
+        select t.water_no water_no,t.operator_id operator_id,t.op_type op_type,t.op_time op_time,b.code_text app,t.module module,t.content content
+        from   w_acc_tk.w_ic_log_user_operate t,w_acc_st.w_op_sys_module a , w_acc_st.w_op_cod_pub_flag b 
+        where a.module_id =t.module     and  b.type ='35' and  b.code =a.sys_flag 
+        <if test="operator_id !=null and operator_id !=''">
+            and trim(t.operator_id) = #{operator_id}
+        </if> 
+        <if test="begin_date !=null and begin_date !=''">
+            and t.op_time  &gt;= to_date(#{begin_date}, 'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        <if test="end_date !=null and end_date !=''">
+            and t.op_time  &lt;= to_date(#{end_date}, 'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        
+        order by t.op_time DESC
+    </select>
+    
+    <!--获取密钥卡管理系统操作日志-->
+    <select id="getSAMViewOpertions"  parameterType="ViewOpertion" resultMap="samViewOpertion">
+        select t.serialno water_no,t.operator_id operator_id,t.oper_type op_type_name,t.op_time op_time,b.code_text app,t.module_id module,t.description content
+        from   W_ACC_TK.W_IC_SAM_OPER_LOGGING t,w_acc_st.w_op_sys_module a , w_acc_st.w_op_cod_pub_flag b 
+        where a.module_id =t.module_id     and  b.type ='35' and  b.code =a.sys_flag 
+        <if test="operator_id !=null and operator_id !=''">
+            and trim(t.operator_id) = #{operator_id}
+        </if> 
+        <if test="begin_date !=null and begin_date !=''">
+            and t.op_time  &gt;= to_date(#{begin_date}, 'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        <if test="end_date !=null and end_date !=''">
+            and t.op_time  &lt;= to_date(#{end_date}, 'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        
+        order by t.op_time DESC
+    </select>
+    
+    <!--获取数据管理系统操作日志-->
+    <select id="getDMViewOpertions"  parameterType="ViewOpertion" resultMap="rmViewOpertion">
+        select t.water_no water_no,t.operator_id operator_id,t.op_type op_type,t.op_time op_time,b.code_text app,t.module module,t.content content
+        from   W_ACC_ST.W_OP_DM_LOG_USER_OPERATE t,w_acc_st.w_op_sys_module a , w_acc_st.w_op_cod_pub_flag b 
+        where a.module_id =t.module     and  b.type ='35' and  b.code =a.sys_flag 
+        <if test="operator_id !=null and operator_id !=''">
+            and trim(t.operator_id) = #{operator_id}
+        </if> 
+        <if test="begin_date !=null and begin_date !=''">
+            and t.op_time  &gt;= to_date(#{begin_date}, 'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        <if test="end_date !=null and end_date !=''">
+            and t.op_time  &lt;= to_date(#{end_date}, 'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        
+        order by t.op_time DESC
+    </select>
+    
+    <!--获取设备监控系统操作日志-->
+    <select id="getMNViewOpertions"  parameterType="ViewOpertion" resultMap="rmViewOpertion">
+        select t.water_no water_no,t.operator_id operator_id,t.op_type op_type,t.op_time op_time,b.code_text app,t.module module,t.content content
+        from   W_ACC_MN.W_MN_LOG_USER_OPERATE t,w_acc_st.w_op_sys_module a , w_acc_st.w_op_cod_pub_flag b 
+        where a.module_id =t.module     and  b.type ='35' and  b.code =a.sys_flag 
+        <if test="operator_id !=null and operator_id !=''">
+            and trim(t.operator_id) = #{operator_id}
+        </if> 
+        <if test="begin_date !=null and begin_date !=''">
+            and t.op_time  &gt;= to_date(#{begin_date}, 'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        <if test="end_date !=null and end_date !=''">
+            and t.op_time  &lt;= to_date(#{end_date}, 'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        
+        order by t.op_time DESC
+    </select>
+    
+    <!--获取清分规则系统操作日志-->
+    <select id="getRLViewOpertions"  parameterType="ViewOpertion" resultMap="rmViewOpertion">
+        select t.water_no water_no,t.operator_id operator_id,t.op_type op_type,t.op_time op_time,b.code_text app,t.module module,t.content content
+        from   W_ACC_RL.W_RL_LOG_USER_OPERATE t,w_acc_st.w_op_sys_module a , w_acc_st.w_op_cod_pub_flag b 
+        where a.module_id =t.module     and  b.type ='35' and  b.code =a.sys_flag 
+        <if test="operator_id !=null and operator_id !=''">
+            and trim(t.operator_id) = #{operator_id}
+        </if> 
+        <if test="begin_date !=null and begin_date !=''">
+            and t.op_time  &gt;= to_date(#{begin_date}, 'yyyy-mm-dd hh24:mi:ss')
+        </if> 
+        <if test="end_date !=null and end_date !=''">
+            and t.op_time  &lt;= to_date(#{end_date}, 'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        
+        order by t.op_time DESC
+    </select>
+    
+    <select id="getModuleName" parameterType="ViewOpertion" resultType="String">
+        select module_name from w_acc_st.W_OP_SYS_MODULE 
+        where module_id = #{module} 
+    </select>
+</mapper>

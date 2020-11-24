@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.StCardCheckResultMapper" >
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.querysys.entity.StCardCheckResult" >
+    <constructor >
+      <arg column="CARD_MAIN_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CARD_SUB_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CARD_LOGICAL_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CARD_PHYSICAL_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="TOTAL_CHARGE_NUM" jdbcType="DECIMAL" javaType="java.lang.Long" />
+      <arg column="TOTAL_CONSUME_NUM" jdbcType="DECIMAL" javaType="java.lang.Long" />
+      <arg column="TOTAL_CHARGE_FEE" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="TOTAL_CONSUME_FEE" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="CARD_CHARGE_SEQ" jdbcType="DECIMAL" javaType="java.lang.Long" />
+      <arg column="CARD_CONSUME_SEQ" jdbcType="DECIMAL" javaType="java.lang.Long" />
+      <arg column="SYSTEM_BALANCE_FEE" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="CARD_BALANCE_FEE" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="DIFF_CARD_SYS_FEE" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="DIFF_CARD_SYS_NUM" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="BALANCE_WATER_NO" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="BALANCE_WATER_NO_SUB" jdbcType="DECIMAL" javaType="java.lang.Long" />
+      <arg column="CARD_MONEY" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+    </constructor>
+  </resultMap>
+
+  <insert id="insert" parameterType="com.goldsign.acc.app.querysys.entity.StCardCheckResult" >
+    insert into W_ST_CARD_CHECK_RESULT (CARD_MAIN_ID, CARD_SUB_ID, CARD_LOGICAL_ID,
+      CARD_PHYSICAL_ID, TOTAL_CHARGE_NUM, TOTAL_CONSUME_NUM,
+      TOTAL_CHARGE_FEE, TOTAL_CONSUME_FEE, CARD_CHARGE_SEQ,
+      CARD_CONSUME_SEQ, SYSTEM_BALANCE_FEE, CARD_BALANCE_FEE,
+      DIFF_CARD_SYS_FEE, DIFF_CARD_SYS_NUM, BALANCE_WATER_NO,
+      BALANCE_WATER_NO_SUB, CARD_MONEY)
+    values (#{cardMainId,jdbcType=CHAR}, #{cardSubId,jdbcType=CHAR}, #{cardLogicalId,jdbcType=VARCHAR},
+      #{cardPhysicalId,jdbcType=VARCHAR}, #{totalChargeNum,jdbcType=DECIMAL}, #{totalConsumeNum,jdbcType=DECIMAL},
+      #{totalChargeFee,jdbcType=DECIMAL}, #{totalConsumeFee,jdbcType=DECIMAL}, #{cardChargeSeq,jdbcType=DECIMAL},
+      #{cardConsumeSeq,jdbcType=DECIMAL}, #{systemBalanceFee,jdbcType=DECIMAL}, #{cardBalanceFee,jdbcType=DECIMAL},
+      #{diffCardSysFee,jdbcType=DECIMAL}, #{diffCardSysNum,jdbcType=DECIMAL}, #{balanceWaterNo,jdbcType=CHAR},
+      #{balanceWaterNoSub,jdbcType=DECIMAL}, #{cardMoney,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.querysys.entity.StCardCheckResult" >
+    insert into W_ST_CARD_CHECK_RESULT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cardMainId != null" >
+        CARD_MAIN_ID,
+      </if>
+      <if test="cardSubId != null" >
+        CARD_SUB_ID,
+      </if>
+      <if test="cardLogicalId != null" >
+        CARD_LOGICAL_ID,
+      </if>
+      <if test="cardPhysicalId != null" >
+        CARD_PHYSICAL_ID,
+      </if>
+      <if test="totalChargeNum != null" >
+        TOTAL_CHARGE_NUM,
+      </if>
+      <if test="totalConsumeNum != null" >
+        TOTAL_CONSUME_NUM,
+      </if>
+      <if test="totalChargeFee != null" >
+        TOTAL_CHARGE_FEE,
+      </if>
+      <if test="totalConsumeFee != null" >
+        TOTAL_CONSUME_FEE,
+      </if>
+      <if test="cardChargeSeq != null" >
+        CARD_CHARGE_SEQ,
+      </if>
+      <if test="cardConsumeSeq != null" >
+        CARD_CONSUME_SEQ,
+      </if>
+      <if test="systemBalanceFee != null" >
+        SYSTEM_BALANCE_FEE,
+      </if>
+      <if test="cardBalanceFee != null" >
+        CARD_BALANCE_FEE,
+      </if>
+      <if test="diffCardSysFee != null" >
+        DIFF_CARD_SYS_FEE,
+      </if>
+      <if test="diffCardSysNum != null" >
+        DIFF_CARD_SYS_NUM,
+      </if>
+      <if test="balanceWaterNo != null" >
+        BALANCE_WATER_NO,
+      </if>
+      <if test="balanceWaterNoSub != null" >
+        BALANCE_WATER_NO_SUB,
+      </if>
+      <if test="cardMoney != null" >
+        CARD_MONEY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cardMainId != null" >
+        #{cardMainId,jdbcType=CHAR},
+      </if>
+      <if test="cardSubId != null" >
+        #{cardSubId,jdbcType=CHAR},
+      </if>
+      <if test="cardLogicalId != null" >
+        #{cardLogicalId,jdbcType=VARCHAR},
+      </if>
+      <if test="cardPhysicalId != null" >
+        #{cardPhysicalId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalChargeNum != null" >
+        #{totalChargeNum,jdbcType=DECIMAL},
+      </if>
+      <if test="totalConsumeNum != null" >
+        #{totalConsumeNum,jdbcType=DECIMAL},
+      </if>
+      <if test="totalChargeFee != null" >
+        #{totalChargeFee,jdbcType=DECIMAL},
+      </if>
+      <if test="totalConsumeFee != null" >
+        #{totalConsumeFee,jdbcType=DECIMAL},
+      </if>
+      <if test="cardChargeSeq != null" >
+        #{cardChargeSeq,jdbcType=DECIMAL},
+      </if>
+      <if test="cardConsumeSeq != null" >
+        #{cardConsumeSeq,jdbcType=DECIMAL},
+      </if>
+      <if test="systemBalanceFee != null" >
+        #{systemBalanceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="cardBalanceFee != null" >
+        #{cardBalanceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="diffCardSysFee != null" >
+        #{diffCardSysFee,jdbcType=DECIMAL},
+      </if>
+      <if test="diffCardSysNum != null" >
+        #{diffCardSysNum,jdbcType=DECIMAL},
+      </if>
+      <if test="balanceWaterNo != null" >
+        #{balanceWaterNo,jdbcType=CHAR},
+      </if>
+      <if test="balanceWaterNoSub != null" >
+        #{balanceWaterNoSub,jdbcType=DECIMAL},
+      </if>
+      <if test="cardMoney != null" >
+        #{cardMoney,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+   <select id="carChkQry" parameterType="com.goldsign.acc.app.querysys.entity.StCardCheckResult" resultMap="BaseResultMap">
+    select
+   *
+    from w_acc_st.W_ST_CARD_CHECK_RESULT
+    where 1 = 1
+    <if test="cardLogicalId != null">
+       and CARD_LOGICAL_ID like '%${cardLogicalId}%'
+      </if>
+      <if test="cardMainId != null">
+      and  CARD_MAIN_ID = #{cardMainId,jdbcType=CHAR}
+      </if>
+      <if test="cardSubId != null">
+       and CARD_SUB_ID = #{cardSubId,jdbcType=CHAR}
+      </if>
+
+      <if test="diffCardSysFee != null">
+          <if test="operator !=null">
+            <if test="operator ==  &quot;1&quot;">
+              and DIFF_CARD_SYS_FEE &gt;to_number(#{diffCardSysFee,jdbcType=VARCHAR})
+            </if>
+            <if test="operator ==  &quot;2&quot;">
+                and DIFF_CARD_SYS_FEE &gt;=to_number(#{diffCardSysFee,jdbcType=VARCHAR})
+            </if>
+            <if test="operator ==  &quot;3&quot;">
+                and DIFF_CARD_SYS_FEE = to_number(#{diffCardSysFee,jdbcType=VARCHAR})
+            </if>
+            <if test="operator ==  &quot;4&quot;">
+                and DIFF_CARD_SYS_FEE  &lt;= to_number(#{diffCardSysFee,jdbcType=VARCHAR})
+            </if>
+            <if test="operator ==  &quot;5&quot;">
+                and DIFF_CARD_SYS_FEE  &lt; to_number(#{diffCardSysFee,jdbcType=VARCHAR})
+            </if>
+          </if>
+      </if>
+
+  </select>
+  <select id="cardQryByMap" parameterType="map" resultMap="BaseResultMap">
+    select
+   *
+    from w_acc_st.W_ST_CARD_CHECK_RESULT
+    where CARD_LOGICAL_ID
+	in
+	<foreach item="item" index="index" collection="logicMaps" open="("
+		separator="," close=")">
+		#{item}
+	</foreach>
+
+  </select>
+  <select id="carChkQryToMap" parameterType="com.goldsign.acc.app.querysys.entity.StCardCheckResult" resultType="map">
+      select
+      *
+      from w_acc_st.W_ST_CARD_CHECK_RESULT
+     where 1 = 1
+    <if test="cardLogicalId != null">
+       and CARD_LOGICAL_ID like '%${cardLogicalId}%'
+      </if>
+      <if test="cardMainId != null">
+      and  CARD_MAIN_ID = #{cardMainId,jdbcType=CHAR}
+      </if>
+      <if test="cardSubId != null">
+       and CARD_SUB_ID = #{cardSubId,jdbcType=CHAR}
+      </if>
+
+      <if test="diffCardSysFee != null">
+          <if test="operator !=null">
+            <if test="operator ==  &quot;1&quot;">
+              and DIFF_CARD_SYS_FEE &gt;to_number(#{diffCardSysFee,jdbcType=VARCHAR})
+            </if>
+            <if test="operator ==  &quot;2&quot;">
+                and DIFF_CARD_SYS_FEE &gt;=to_number(#{diffCardSysFee,jdbcType=VARCHAR})
+            </if>
+            <if test="operator ==  &quot;3&quot;">
+                and DIFF_CARD_SYS_FEE = to_number(#{diffCardSysFee,jdbcType=VARCHAR})
+            </if>
+            <if test="operator ==  &quot;4&quot;">
+                and DIFF_CARD_SYS_FEE  &lt;= to_number(#{diffCardSysFee,jdbcType=VARCHAR})
+            </if>
+            <if test="operator ==  &quot;5&quot;">
+                and DIFF_CARD_SYS_FEE  &lt; to_number(#{diffCardSysFee,jdbcType=VARCHAR})
+            </if>
+          </if>
+      </if>
+  </select>
+</mapper>

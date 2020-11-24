@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper  namespace = "com.goldsign.acc.app.basicinfo.mapper.TicketStorageDistributeReserveManageMapper">
+    
+    <resultMap type = "com.goldsign.acc.app.basicinfo.entity.TicketStorageDistributeReserveManage"  id = "rmTicketStorageDistributeReserveManage">
+        <result column="line_id"  property="line_id"/>
+        <result column="station_id"  property="station_id"/>
+        <result column="storage_id"  property="storage_id"/>
+        <result column="ic_main_type"  property="ic_main_type"/>
+        <result column="ic_sub_type"  property="ic_sub_type"/>
+        <result column="card_money"  property="card_money"/>
+        <result column="reverve_num"  property="reverve_num"/>
+        <result column="remark"  property="remark"/>
+    </resultMap>
+    
+    <select id="queryParm"   resultMap="rmTicketStorageDistributeReserveManage">
+        select line_id,station_id,storage_id,ic_main_type,ic_sub_type,card_money,reverve_num,remark
+                 from w_acc_tk.w_ic_prm_distribute_reserve  where 1=1
+        <if test="line_id !=null and line_id !=''">
+              and line_id =#{line_id} 
+        </if> 
+        <if test="station_id !=null and station_id !=''">
+              and station_id =#{station_id} 
+        </if>
+        <if test="storage_id !=null and storage_id !=''">
+              and storage_id =#{storage_id} 
+        </if>  
+        <if test="ic_main_type !=null and ic_main_type !=''">
+              and trim(ic_main_type) =#{ic_main_type} 
+        </if> 
+        <if test="ic_sub_type !=null and ic_sub_type !=''">
+            and trim(ic_sub_type) =#{ic_sub_type}
+        </if>
+         order by line_id,station_id,ic_main_type,ic_sub_type
+    </select> 
+    
+   <select id="getListForAdd"   resultMap="rmTicketStorageDistributeReserveManage">
+       
+       select line_id,station_id,storage_id,ic_main_type,ic_sub_type,card_money,reverve_num,remark
+                 from w_acc_tk.w_ic_prm_distribute_reserve  
+       where ic_main_type =#{ic_main_type} and ic_sub_type =#{ic_sub_type} and line_id =#{line_id} and station_id =#{station_id} 
+       and card_money =#{card_money} and storage_id=#{storage_id}
+        order by ic_main_type,ic_sub_type,ic_main_type,ic_sub_type
+    </select>
+   
+    <update id="modifyTicketStorageDistributeReserveManage" parameterType="TicketStorageDistributeReserveManage" >
+       update w_acc_tk.w_ic_prm_distribute_reserve set reverve_num=#{reverve_num},remark=#{remark} 
+        where ic_main_type =#{ic_main_type} and ic_sub_type =#{ic_sub_type} and trim(line_id) =#{line_id} and trim(station_id) =#{station_id}
+        and   card_money = #{card_money}  and storage_id = #{storage_id}                                      
+    </update>
+    
+    <insert id="addTicketStorageDistributeReserveManage" parameterType="TicketStorageDistributeReserveManage" >
+        insert into w_acc_tk.w_ic_prm_distribute_reserve(line_id,station_id,storage_id,ic_main_type,ic_sub_type,card_money,reverve_num,remark)
+        values(#{line_id},#{station_id},#{storage_id},#{ic_main_type},#{ic_sub_type},#{card_money},#{reverve_num},#{remark})        
+        
+    </insert>
+    
+    <delete id="deleteTicketStorageDistributeReserveManage" parameterType="TicketStorageDistributeReserveManage">
+        delete from w_acc_tk.w_ic_prm_distribute_reserve
+        where trim(line_id) =#{line_id}  and trim(station_id) =#{station_id} and trim(storage_id) =#{storage_id} 
+        and ic_main_type =#{ic_main_type} and ic_sub_type =#{ic_sub_type}  and   card_money = #{card_money}       
+    </delete>
+</mapper>
+
+
+

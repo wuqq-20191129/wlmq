@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.IcBcLogicNoMapper">
+    
+    <resultMap type="IcBcLogicNo" id="rmIcBcLogicNo">
+        <result column="bill_no" property="bill_no" /> 
+        <result column="bill_date" property="bill_date" /> 
+        <result column="batch_no" property="batch_no" /> 
+        <result column="year" property="year" /> 
+        <result column="produce_factory_id" property="produce_factory_id" /> 
+        <result column="start_logicno" property="start_logicno" /> 
+        <result column="blank_card_type" property="blank_card_type" />
+        <result column="qty" property="qty" />
+        <result column="end_logicno" property="end_logicno" />
+        <result column="record_flag" property="record_flag" />
+        <result column="form_maker" property="form_maker" />
+        <result column="verify_date" property="verify_date" />
+        <result column="verify_person" property="verify_person" />
+        <result column="remark" property="remark" />
+        <result column="is_used" property="is_used" />
+    </resultMap>
+
+    <select id="getIcBcLogicNos" resultMap="rmIcBcLogicNo">
+        select 
+            bill_no,bill_date,batch_no,year,produce_factory_id,start_logicno,blank_card_type,qty,end_logicno,record_flag,form_maker,verify_date,verify_person,remark,is_used
+        from W_ACC_TK.W_IC_BC_LOGIC_NO   
+        where record_flag='0' and blank_card_type='1' order by start_logicno asc 
+    </select>
+    
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<!DOCTYPE struts-config PUBLIC '-//Apache Software Foundation//DTD Struts Configuration 1.1//EN' 'http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd'>
+
+<struts-config>
+    <!-- Data Sources -->
+    <data-sources></data-sources>
+    <!-- Form Beans -->
+    <form-beans>
+        <!--登录页面  -->
+        <form-bean name="loginForm" type="org.apache.struts.action.DynaActionForm">
+            <form-property name="Account" type="java.lang.String" />
+            <form-property name="Password" type="java.lang.String" />
+            <form-property name="NewPassword" type="java.lang.String" />
+            <form-property name="RePassword" type="java.lang.String" />	
+            <form-property name="Flag" type="java.lang.String" />											
+        </form-bean>
+        <!-- 菜单 -->
+        <form-bean name="menuForm" type="org.apache.struts.action.DynaActionForm">
+            <form-property name="MenuId" type="java.lang.String" />
+        </form-bean>
+            
+    </form-beans>
+    <!-- Global Exceptions -->
+    <global-exceptions></global-exceptions>
+    <!-- Global Forwards -->
+    <global-forwards>
+        <!-- framework global forwards -->
+        
+        <forward name="EXCEPTION_DEFAULT_PAGE" path="/core/exception_default_page.xml" />
+
+        <forward name="showMessage" path="/jsp/showMessage.jsp" />
+        <forward name="failure" path="/jsp/failure.jsp" />
+        <forward name="error" path="/jsp/showErrorMessage.jsp" />
+		
+        <!-- 
+     	<forward name="loginFailure" path="/index.htm" />
+     	 -->
+		 
+    </global-forwards>
+    <!-- Action Mappings -->
+    <action-mappings>
+        <action path="/Action2XML" type="com.goldsign.frame.struts.Action2XML" />
+            
+        <action path="/login"   name="loginForm"   scope="request" type="com.goldsign.frame.web.LoginManager">
+            <forward name="success" path="/jsp/index2.htm" />					
+            <forward name="loginFailure" path="/index_1.jsp" />											
+            <forward name="editpwd" path="/index_2.jsp" />
+        </action>
+        <action path="/topJsp" type="com.goldsign.frame.struts.BaseForwardAction" parameter="/jsp/top.jsp" />
+        <action path="/leftJsp" type="com.goldsign.frame.struts.BaseForwardAction" parameter="/jsp/left.jsp" />
+        <action path="/logout" type="com.goldsign.frame.struts.BaseForwardAction" parameter="/jsp/logout.jsp" />
+        <action path="/leftMenu" name="menuForm" scope="request" type="com.goldsign.frame.web.MenuManager">
+            <forward name="success" path="/leftJsp.do" />
+        </action>
+        
+        <action name="fileActionForm" parameter="method" path="/fileAction" scope="request" type="com.goldsign.frame.web.FileAction" validate="true">
+            <forward name="upLoadFileResult" path="/result.jsp"/>
+            <forward name="error" path="/fail.jsp"></forward>
+        </action>
+
+        
+        <!-- 权重数据生成 -->
+        <action path="/generateDataAction" scope="request" type="com.goldsign.rule.web.GenerateDataAction">
+            <forward name="query" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/GenerateData.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward> 
+        </action>
+        
+        <!-- 权重 -->
+        <action path="/distanceProportionAction" scope="request" type="com.goldsign.rule.web.DistanceProportionAction">
+            <forward name="query" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/DistanceProportion.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward> 
+        </action>
+        
+        <!-- 路径详细 -->
+        <action path="/distanceDetailAction" scope="request" type="com.goldsign.rule.web.DistanceDetailAction">
+            <forward name="query" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/DistanceDetail.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward> 
+        </action>
+        
+        <!-- OD路径 -->
+        <action path="/distanceODAction" scope="request" type="com.goldsign.rule.web.DistanceODAction">
+            <forward name="query" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/DistanceOD.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward> 
+        </action>
+        
+        <!-- 站点里程参数设置-->
+        <action path="/paramsStationAction" scope="request" type="com.goldsign.rule.web.ParamsStationAction">
+            <forward name="query" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/ParamsStation.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward> 
+        </action>
+        
+         <!-- 参数设置  -->
+        <action path="/paramsAction" scope="request" type="com.goldsign.rule.web.ParamsAction">
+            <forward name="query" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/Params.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward> 
+        </action>
+        
+        <!-- 线路车站查询  -->
+        <action path="/lineStationAction" scope="request" type="com.goldsign.rule.web.LineStationAction">
+            <forward name="query" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/LineStation.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward> 
+        </action>
+        
+        <!-- 阀值配置  -->
+        <action path="/paramsThresAction" scope="request" type="com.goldsign.rule.web.ParamsThresAction">
+            <forward name="query" path="/Action2XML.do" className="com.goldsign.frame.struts.Action2XMLForward">
+                <set-property property="XSLFile" value="xsl/ParamsThres.xsl" />
+                <set-property property="includeParm" value="false" />
+            </forward> 
+        </action>
+        
+    </action-mappings>
+    <controller contentType="text/html"/>
+    <!-- Message Resources-->
+    <message-resources parameter="com.goldsign.frame.resource.ApplicationMessage" />
+    <!-- framework message resource -->
+    <message-resources key="FRAMEWORKMESSAGE" parameter="com.goldsign.frame.resources.FrameMessage" />
+       
+    <plug-in className="com.goldsign.frame.struts.AppPlugIn">
+        <set-property property="loggerServiceConfig" value="/WEB-INF/config/Log4jConfig.xml" />
+    </plug-in>
+        
+    <plug-in className="com.goldsign.frame.struts.AppConfigPlugIn">
+        <set-property property="jndiPrefix" value="java:comp/env/" />
+		
+    </plug-in>
+    
+</struts-config>

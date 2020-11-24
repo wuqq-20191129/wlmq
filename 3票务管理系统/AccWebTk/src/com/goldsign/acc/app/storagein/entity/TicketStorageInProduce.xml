@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.storagein.mapper.TicketStorageInProduceMapper">
+    
+    <parameterMap type="map" id="AddInBillMap">  
+        <parameter property="pi_related_bill_no" jdbcType="VARCHAR" mode="IN"/>  
+        <parameter property="pi_in_type" jdbcType="VARCHAR" mode="IN"/> 
+        <parameter property="pi_form_maker" jdbcType="VARCHAR" mode="IN"/> 
+        <parameter property="pi_hand_man" jdbcType="VARCHAR" mode="IN"/> 
+        <parameter property="pi_administer" jdbcType="VARCHAR" mode="IN"/> 
+        <parameter property="pi_accounter" jdbcType="VARCHAR" mode="IN"/> 
+        <parameter property="pi_remark" jdbcType="VARCHAR" mode="IN"/>
+       
+        <parameter property="po_bill_no" jdbcType="VARCHAR" mode="OUT"/> 
+        <parameter property="po_retMsg" jdbcType="VARCHAR" mode="OUT"/>  
+        <parameter property="po_retCode" jdbcType="INTEGER" mode="OUT"/>  
+        <!--<parameter property="p_memo" jdbcType="VARCHAR" mode="OUT"/>-->  
+    </parameterMap>
+    
+    <parameterMap type="map" id="AuditInBillMap">  
+        <parameter property="pi_bill_no" jdbcType="VARCHAR" mode="IN"/>  
+        <parameter property="pi_operator_id" jdbcType="VARCHAR" mode="IN"/> 
+        <!--<parameter property="pi_module_id" jdbcType="VARCHAR" mode="IN"/>--> 
+       
+        <parameter property="po_retMsg" jdbcType="VARCHAR" mode="OUT"/> 
+        <parameter property="po_retCode" jdbcType="INTEGER" mode="OUT"/>  
+        <parameter property="po_related_bill_no" jdbcType="VARCHAR" mode="OUT"/>  
+    </parameterMap>
+    
+    
+    <!--入库单增加--> 
+    <select id="addInBill" parameterMap="AddInBillMap" statementType="CALLABLE">
+        {call w_acc_tk.w_up_ic_in_add_sr(?,?,?,?,?,?,?,?,?,?)}
+                                  
+    </select>
+    
+    <!--入库单审核--> 
+    <select id="auditInBill" parameterMap="AuditInBillMap" statementType="CALLABLE">
+        {call w_acc_tk.w_up_ic_in_audit_sr(?,?,?,?,?)}
+                                  
+    </select>
+    
+    <update id="modifyInBill" parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInBill" >
+        update w_acc_tk.w_ic_in_store_bill set hand_man=#{hand_man},administer=#{administer},accounter=#{accounter},remark=#{remark}
+        where bill_no=#{bill_no}
+
+    </update>
+    
+    
+    <update id="modifyPduProduceBillForDeleteInBill" parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInBill" >      
+        update w_acc_tk.w_ic_pdu_produce_bill set in_flag='0' 
+        where bill_no = (select b.related_bill_no from w_acc_tk.w_ic_in_store_bill b where b.bill_no=#{bill_no})
+
+    </update>
+    <delete id="deleteInBill" parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInBill" >
+        delete from  w_acc_tk.w_ic_in_store_bill where bill_no=#{bill_no}
+                                  
+    </delete>
+    <delete id="deleteInOutDiffForDeleteInBill" parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInBill" >
+        delete from  w_acc_tk.w_ic_in_out_diff_produce where in_bill_no=#{bill_no}
+                                  
+    </delete>
+    
+    <select id="getInDetailCountForDeleteInBill"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInBill" resultType="int">
+        
+        select count(*) from w_acc_tk.w_ic_in_store_detail where bill_no in
+        <foreach item="inBill" index="index" collection="list" open="(" separator="," close=")">
+             #{inBill.bill_no}
+        </foreach>
+         
+    </select>
+    
+    <select id="getInOutDiffCount"  parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageInBill" resultType="int">
+        select count(*) from w_acc_tk.w_ic_in_out_diff_produce where in_bill_no = #{bill_no}
+    </select>
+    
+    
+    
+    
+
+    
+    
+    
+</mapper>

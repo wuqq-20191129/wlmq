@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.DevControlMapper">
+    
+    <resultMap type="DevControl" id="rmDevControl">
+        <result column="logoff_idle_sc" property="logoff_idle_sc" /> 
+        <result column="interval_connectsc" property="interval_connectsc" /> 
+        <result column="logoff_idle_bom" property="logoff_idle_bom" /> 
+        <result column="time_out_pass" property="time_out_pass" /> 
+        <result column="operator_id" property="operator_id" /> 
+        <result column="degrade_time" property="degrade_time" /> 
+        <result column="upper_amount" property="upper_amount" /> 
+        <result column="upper_count" property="upper_count" /> 
+        <result column="upper_sjt" property="upper_sjt" /> 
+        <result column="under_amount" property="under_amount" /> 
+        <result column="under_count" property="under_count" /> 
+        <result column="under_sjt" property="under_sjt" /> 
+        <result column="version_no" property="version_no" /> 
+        <result column="record_flag" property="record_flag" /> 
+    </resultMap>
+
+    <select id="getDevControls"  parameterType="DevControl" resultMap="rmDevControl">
+        select logoff_idle_sc,interval_connectsc,logoff_idle_bom,time_out_pass,operator_id,degrade_time,
+            upper_amount,upper_count,upper_sjt,under_amount,under_count,under_sjt,version_no,record_flag
+        from W_ACC_ST.W_OP_PRM_DEV_CONTRL 
+        where 1=1
+        <if test="version_no !=null and version_no !=''">
+            and version_no =#{version_no}
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag =#{record_flag}
+        </if> 
+    </select>
+    
+    <!--草稿参数删除 -->
+     <delete id="deleteDevControlForClone" parameterType="DevControl">
+            delete from W_ACC_ST.W_OP_PRM_DEV_CONTRL where  record_flag='3' and version_no='0000000000'                                                    
+    </delete>
+    
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="DevControl" >
+        insert into  W_ACC_ST.W_OP_PRM_DEV_CONTRL(logoff_idle_sc,interval_connectsc,logoff_idle_bom,time_out_pass,degrade_time,
+            upper_amount,upper_count,upper_sjt,under_amount,under_count,under_sjt,record_flag,version_no)
+               select logoff_idle_sc,interval_connectsc,logoff_idle_bom,time_out_pass,degrade_time,
+                upper_amount,upper_count,upper_sjt,under_amount,under_count,under_sjt,'3','0000000000'
+               from   W_ACC_ST.W_OP_PRM_DEV_CONTRL  
+               where record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    <update id="submitToOldFlag" parameterType="DevControl" >
+        update W_ACC_ST.W_OP_PRM_DEV_CONTRL set record_flag=#{record_flag_old}
+                    where record_flag=#{record_flag_new}                                               
+    </update>
+    
+    <!--草稿参数复制为当前或未来参数 -->
+     <insert id="submitFromDraftToCurOrFur" parameterType="DevControl" >
+        insert into  W_ACC_ST.W_OP_PRM_DEV_CONTRL(logoff_idle_sc,interval_connectsc,logoff_idle_bom,time_out_pass,degrade_time,
+            upper_amount,upper_count,upper_sjt,under_amount,under_count,under_sjt,record_flag,version_no)
+               select logoff_idle_sc,interval_connectsc,logoff_idle_bom,time_out_pass,degrade_time,
+            upper_amount,upper_count,upper_sjt,under_amount,under_count,under_sjt,#{record_flag_new},#{version_no_new}
+               from   W_ACC_ST.W_OP_PRM_DEV_CONTRL  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    <!-- 修改保存线路信息 -->
+    <update id="modifyDevControl" parameterType="DevControl" >
+        update W_ACC_ST.W_OP_PRM_DEV_CONTRL set 
+            logoff_idle_sc=#{logoff_idle_sc},interval_connectsc=#{interval_connectsc},logoff_idle_bom=#{logoff_idle_bom},time_out_pass=#{time_out_pass},
+            degrade_time=#{degrade_time},upper_amount=#{upper_amount},upper_count=#{upper_count},upper_sjt=#{upper_sjt},under_amount=#{under_amount},
+            under_count=#{under_count},under_sjt=#{under_sjt}
+        where version_no=#{version_no} 
+    </update>
+    
+    <!-- 增加保存线路信息-->
+    <insert id="addDevControl" parameterType="DevControl" >
+        insert into  W_ACC_ST.W_OP_PRM_DEV_CONTRL(logoff_idle_sc,interval_connectsc,logoff_idle_bom,time_out_pass,degrade_time,
+            upper_amount,upper_count,upper_sjt,under_amount,under_count,under_sjt,version_no,record_flag)
+        values(#{logoff_idle_sc},#{interval_connectsc},#{logoff_idle_bom},#{time_out_pass},#{degrade_time},#{upper_amount},#{upper_count},
+            #{upper_sjt},#{under_amount},#{under_count},#{under_sjt},#{version_no},#{record_flag})        
+    </insert> 
+    
+    <!-- 删除线路记录 -->
+    <delete id="deleteDevControl" parameterType="DevControl">
+        delete from W_ACC_ST.W_OP_PRM_DEV_CONTRL where version_no=#{version_no}  
+    </delete>
+    
+    <select id="queryToMap"  parameterType="DevControl" resultType="map">
+        select logoff_idle_sc,interval_connectsc,logoff_idle_bom,time_out_pass,operator_id,degrade_time,
+            upper_amount,upper_count,upper_sjt,under_amount,under_count,under_sjt,version_no,record_flag
+        from W_ACC_ST.W_OP_PRM_DEV_CONTRL 
+        where 1=1
+        <if test="version_no !=null and version_no !=''">
+            and version_no =#{version_no}
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag =#{record_flag}
+        </if> 
+    </select>
+</mapper>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prmdev.mapper.ACCDeviceMapper">
+    <resultMap type="com.goldsign.acc.app.prmdev.entity.ACCDevice" id="rmACCDevice">
+        <result column="line_id" property="line_id" /> 
+        <result column="station_id" property="station_id" /> 
+        <result column="dev_type_id" property="dev_type_id" /> 
+        <result column="device_id" property="device_id" /> 
+        <result column="csc_num" property="csc_num" /> 
+        <result column="array_id" property="array_id" /> 
+        <result column="concourse_id" property="concourse_id" /> 
+        <result column="ip_address" property="ip_address" /> 
+        <result column="store_id" property="store_id" /> 
+        <result column="dev_serial" property="dev_serial" /> 
+        <result column="version_no" property="version_no" /> 
+        <result column="config_date" property="config_date" />  
+        <result column="dev_name" property="dev_name" /> 
+    </resultMap>
+     
+    <select id="getACCDevices"  parameterType="com.goldsign.acc.app.prmdev.entity.ACCDevice" resultMap="rmACCDevice">
+        select line_id,station_id,dev_type_id,device_id,csc_num,array_id,concourse_id,ip_address,store_id,
+        dev_serial,record_flag,version_no,to_char(config_date,'yyyy-mm-dd') config_date,dev_name
+        from W_ACC_ST.W_OP_PRM_DEV_CODE_ACC where record_flag=#{record_flag,jdbcType=CHAR} and version_no=#{version_no,jdbcType=CHAR}  
+        <if test="line_id !=null and line_id !=''">
+            and line_id =#{line_id,jdbcType=CHAR} 
+        </if> 
+        <if test="station_id !=null and station_id !=''">
+            and station_id =#{station_id,jdbcType=CHAR} 
+        </if>
+        <if test="dev_type_id !=null and dev_type_id !=''">
+            and dev_type_id =#{dev_type_id,jdbcType=CHAR}
+        </if>
+        <if test="device_id !=null and device_id !=''">
+            and device_id =#{device_id,jdbcType=CHAR}
+        </if> 
+        <if test="dev_serial !=null and dev_serial !=''">
+            and dev_serial =#{dev_serial,jdbcType=CHAR}
+        </if> 
+        order by line_id,station_id,dev_type_id,device_id
+    </select>
+    <select id="getACCDeviceById"  parameterType="com.goldsign.acc.app.prmdev.entity.ACCDevice" resultMap="rmACCDevice">
+        select line_id,station_id,dev_type_id,device_id,csc_num,array_id,concourse_id,ip_address,store_id,
+        dev_serial,record_flag,version_no,to_char(config_date,'yyyy-mm-dd') config_date,dev_name
+        from W_ACC_ST.W_OP_PRM_DEV_CODE_ACC where record_flag=#{record_flag,jdbcType=CHAR} and version_no=#{version_no,jdbcType=CHAR}  
+                                              <if test="line_id !=null and line_id !=''">
+                                                    and line_id =#{line_id,jdbcType=CHAR} 
+                                                </if> 
+                                                <if test="station_id !=null and station_id !=''">
+                                                    and station_id =#{station_id,jdbcType=CHAR} 
+                                                </if>
+                                              and dev_type_id =#{dev_type_id,jdbcType=CHAR} and device_id =#{device_id,jdbcType=CHAR}
+    </select>
+    <insert id="addACCDevice" parameterType="com.goldsign.acc.app.prmdev.entity.ACCDevice" >
+        insert into W_ACC_ST.W_OP_PRM_DEV_CODE_ACC(line_id,station_id,dev_type_id,device_id,csc_num,
+                    array_id,concourse_id,ip_address,store_id,
+                    dev_serial,record_flag,version_no,config_date,dev_name)
+                                      values(#{line_id,jdbcType=CHAR},#{station_id,jdbcType=CHAR},#{dev_type_id,jdbcType=CHAR},#{device_id,jdbcType=CHAR},#{csc_num},
+                                             #{array_id},#{concourse_id},#{ip_address},#{store_id,jdbcType=CHAR},
+                                             #{dev_serial},#{record_flag,jdbcType=CHAR},#{version_no,jdbcType=CHAR},to_date(#{config_date},'yyyy-mm-dd'),#{dev_name})        
+    </insert>
+    <update id="modifyACCDevice" parameterType="com.goldsign.acc.app.prmdev.entity.ACCDevice" >
+        update W_ACC_ST.W_OP_PRM_DEV_CODE_ACC set csc_num=#{csc_num},
+                    array_id=#{array_id},concourse_id=#{concourse_id},ip_address=#{ip_address},store_id=#{store_id,jdbcType=CHAR},
+                    dev_serial=#{dev_serial},config_date=to_date(#{config_date},'yyyy-mm-dd'),dev_name=#{dev_name}
+                    where 1=1 
+                        <if test="line_id !=null and line_id !=''">
+                            and line_id =#{line_id,jdbcType=CHAR} 
+                        </if> 
+                        <if test="station_id !=null and station_id !=''">
+                            and station_id =#{station_id,jdbcType=CHAR} 
+                        </if>
+                        and dev_type_id=#{dev_type_id,jdbcType=CHAR} and device_id=#{device_id,jdbcType=CHAR} 
+                        and record_flag=#{record_flag,jdbcType=CHAR} and version_no=#{version_no,jdbcType=CHAR}                                          
+    </update>
+    <delete id="deleteACCDevice" parameterType="com.goldsign.acc.app.prmdev.entity.ACCDevice">
+            delete from W_ACC_ST.W_OP_PRM_DEV_CODE_ACC where 1=1
+                    <if test="line_id !=null and line_id !=''">
+                        and line_id =#{line_id,jdbcType=CHAR} 
+                    </if> 
+                    <if test="station_id !=null and station_id !=''">
+                        and station_id =#{station_id,jdbcType=CHAR} 
+                    </if>
+                    and dev_type_id=#{dev_type_id,jdbcType=CHAR} 
+                    and device_id=#{device_id,jdbcType=CHAR} and record_flag=#{record_flag,jdbcType=CHAR} and version_no=#{version_no,jdbcType=CHAR} 
+        
+    </delete>
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    <update id="submitToOldFlag" parameterType="com.goldsign.acc.app.prmdev.entity.ACCDevice" >
+        update W_ACC_ST.W_OP_PRM_DEV_CODE_ACC set record_flag=#{record_flag_old}
+                    where record_flag=#{record_flag_new}                                               
+    </update>
+    <!--草稿参数复制为当前或未来参数 -->
+     <insert id="submitFromDraftToCurOrFur" parameterType="com.goldsign.acc.app.prmdev.entity.ACCDevice" >
+        insert into  W_ACC_ST.W_OP_PRM_DEV_CODE_ACC(line_id,station_id,dev_type_id,device_id,csc_num, array_id,concourse_id,
+                                                ip_address,store_id,dev_serial,config_date,dev_name,record_flag,version_no)
+               select line_id,station_id,dev_type_id,device_id,csc_num, array_id,concourse_id,
+                      ip_address,store_id,dev_serial,config_date,dev_name,#{record_flag_new},#{version_no_new}
+               from   W_ACC_ST.W_OP_PRM_DEV_CODE_ACC  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    <!--草稿参数删除 -->
+     <delete id="deleteACCDevicesForClone" parameterType="com.goldsign.acc.app.prmdev.entity.ACCDevice">
+            delete from W_ACC_ST.W_OP_PRM_DEV_CODE_ACC where  record_flag='3' and version_no='0000000000'                                                      
+    </delete>
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="com.goldsign.acc.app.prmdev.entity.ACCDevice" >
+        insert into  W_ACC_ST.W_OP_PRM_DEV_CODE_ACC(line_id,station_id,dev_type_id,device_id,csc_num, array_id,concourse_id,
+                                                ip_address,store_id,dev_serial,config_date,dev_name,record_flag,version_no)
+               select line_id,station_id,dev_type_id,device_id,csc_num, array_id,concourse_id,
+                      ip_address,store_id,dev_serial,config_date,dev_name,'3','0000000000'
+               from   W_ACC_ST.W_OP_PRM_DEV_CODE_ACC  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+</mapper>

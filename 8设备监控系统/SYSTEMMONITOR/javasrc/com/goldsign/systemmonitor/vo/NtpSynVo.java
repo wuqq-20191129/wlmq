@@ -1,0 +1,101 @@
+package com.goldsign.systemmonitor.vo;
+
+public class NtpSynVo {
+	private  String statusDate ;
+	private  String ip          ;
+	private  String ipSource   ;
+	private  String statusDateSyn ;
+	private  String diff        ;
+	private  String status      ;
+	private  String remark     ;
+	private String statusText;
+	
+	private String name;
+	private String type;
+
+	public NtpSynVo() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getDiff() {
+		return diff;
+	}
+
+	public void setDiff(String diff) {
+		this.diff = diff;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public String getIpSource() {
+		return ipSource;
+	}
+
+	public void setIpSource(String ipSource) {
+		this.ipSource = ipSource;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getStatusDate() {
+		return statusDate;
+	}
+
+	public void setStatusDate(String statusDate) {
+		this.statusDate = statusDate;
+	}
+
+	public String getStatusDateSyn() {
+		return statusDateSyn;
+	}
+
+	public void setStatusDateSyn(String statusDateSyn) {
+		this.statusDateSyn = statusDateSyn;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getStatusText() {
+		return statusText;
+	}
+
+	public void setStatusText(String statusText) {
+		this.statusText = statusText;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Config> 
+    <Common>
+        <StationId>9900</StationId>
+        <DeviceType>09</DeviceType>
+        <DeviceNo>126</DeviceNo>
+        <SystemFlag>10</SystemFlag>
+    </Common>
+    <DataConnectionPool>
+        <Driver>oracle.jdbc.driver.OracleDriver</Driver>
+        
+        <URL>jdbc:oracle:thin:@(description=
+            (load_balance=yes)
+            (failover=yes)
+            (connect_data=
+                (service_name=waccdb)
+            )
+            (address_list=
+                (address=
+                    (protocol=tcp)
+                    (host=10.99.10.15)
+                    (port=1521)
+                )
+            )
+    	)</URL>
+        <User encrypt="true">30102D2730163325182E3C34</User>
+        <Password encrypt="true">063F3C67657133257779</Password>
+        <!--
+        <URL>jdbc:oracle:thin:@10.99.11.81:1521:wacctstdb</URL>
+        <User encrypt="true">30102D2730163325</User>
+        <Password encrypt="true">30102D2730163325</Password>-->
+        <MaxActive>40</MaxActive>
+        <MaxIdle>20</MaxIdle>
+        <MaxWait>20000</MaxWait>
+    </DataConnectionPool>
+    <RwDevice>
+        <RwPort>COM1</RwPort>
+    </RwDevice>
+    <Upload>
+        <LocalFile>/data/upload/print</LocalFile>
+    </Upload>
+    <PhotoDir>
+        <ImgDir>D:/photo</ImgDir><!-- 图片原文件夹 -->
+        <BmpDir>D:/bmp</BmpDir><!-- Bmp文件夹-->
+        <Suffix>jpg</Suffix>
+        <!-- picture size -->
+        <Height>315</Height>
+        <Width>228</Width>
+        <!-- print position 已调整过坐标值  648 61-->
+        <Pox>234</Pox>
+        <Poy>200</Poy>
+    </PhotoDir>
+    <Printer>
+        <Driver>Zebra ZXP Series 3C USB Card Printer</Driver>
+        <PrinterType>31</PrinterType>
+        <PrinterStep>2000</PrinterStep>
+        <Font>Arial</Font>
+        <FontSize>8</FontSize>
+        <FontStyle>1</FontStyle>
+        <FontColor>000000</FontColor>
+        <FontX>115</FontX>
+        <FontY>640</FontY>
+        <FontH>100</FontH>
+        <FontW>420</FontW>
+        <FontAlign>4</FontAlign>
+    </Printer>
+</Config>

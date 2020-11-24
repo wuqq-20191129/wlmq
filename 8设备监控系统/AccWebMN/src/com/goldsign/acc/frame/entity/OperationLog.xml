@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldsign.acc.frame.mapper.OperationLogMapper"> 
+    <insert id="addLog" parameterType="OperationLog" > 
+        insert into W_ACC_MN.W_MN_LOG_USER_OPERATE(water_no,operator_id,op_time,module,op_type,content) 
+        values(w_acc_st.w_seq_op_log_user_operate.nextval,#{operator_id},sysdate,#{module},#{op_type},#{content}) 
+    </insert>
+    <select id="getButtonOperationType"  resultType="String">
+        select operation_type from w_acc_st.W_OP_COD_BTN_TYPE  where command_name=#{id}
+    </select>
+    
+</mapper>

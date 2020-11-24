@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.LineCodeMapper">
+    
+    <resultMap type="LineCode" id="rmLineCode">
+        <result column="line_id" property="line_id" /> 
+        <result column="version_no" property="version_no" /> 
+        <result column="line_name" property="line_name" /> 
+        <result column="record_flag" property="record_flag" /> 
+        <result column="lc_ip" property="lc_ip" /> 
+        <result column="lc_line_id" property="lc_line_id" /> 
+        <result column="sequence" property="sequence" />
+        <result column="uygur_name" property="uygur_name" />
+        <result column="direction_flag" property="direction_flag" />
+        <result column="line_flag" property="line_flag" />
+    </resultMap> 
+
+    <select id="getLineCodes"  parameterType="LineCode" resultMap="rmLineCode">
+        select line_id,version_no,line_name,record_flag,lc_ip,lc_line_id,sequence,uygur_name,direction_flag,line_flag
+        from W_ACC_ST.W_OP_PRM_LINE 
+        where 1=1 
+        <if test="line_id !=null and line_id !=''">
+            and line_id =#{line_id} 
+        </if> 
+        <if test="line_name !=null and line_name !=''">
+            and line_name =#{line_name} 
+        </if>
+        <if test="version_no !=null and version_no !=''">
+            and version_no =#{version_no}
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag =#{record_flag}
+        </if> 
+    </select>
+    
+    <select id="getLineCodesLikeName"  parameterType="LineCode" resultMap="rmLineCode">
+        select line_id,version_no,line_name,record_flag,lc_ip,lc_line_id,sequence,uygur_name,direction_flag,line_flag
+        from W_ACC_ST.W_OP_PRM_LINE 
+        where 1=1  
+        <if test="line_id !=null and line_id !=''">
+            and line_id =#{line_id} 
+        </if> 
+        <if test="line_name !=null and line_name !=''">
+            and line_name like #{line_name} 
+        </if>
+        <if test="version_no !=null and version_no !=''">
+            and version_no =#{version_no}
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag =#{record_flag}
+        </if> 
+    </select>
+    
+    <!--草稿参数删除 -->
+     <delete id="deleteLineCodeForClone" parameterType="LineCode">
+            delete from W_ACC_ST.W_OP_PRM_LINE where  record_flag='3' and version_no='0000000000'                                                      
+    </delete>
+    
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="LineCode" >
+        insert into  W_ACC_ST.W_OP_PRM_LINE(line_id,line_name,lc_ip,lc_line_id,sequence,uygur_name,record_flag,version_no,direction_flag,line_flag)
+               select line_id,line_name,lc_ip,lc_line_id,sequence,uygur_name,'3','0000000000',direction_flag,line_flag
+               from   W_ACC_ST.W_OP_PRM_LINE  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    <update id="submitToOldFlag" parameterType="LineCode" >
+        update W_ACC_ST.W_OP_PRM_LINE set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new}                                               
+    </update>
+    
+    <!--草稿参数复制为当前或未来参数 -->
+     <insert id="submitFromDraftToCurOrFur" parameterType="LineCode" >
+        insert into  W_ACC_ST.W_OP_PRM_LINE(line_id,line_name,lc_ip,lc_line_id,sequence,uygur_name,direction_flag,line_flag,record_flag,version_no)
+               select line_id,line_name,lc_ip,lc_line_id,sequence,uygur_name,direction_flag,line_flag,#{record_flag_new},#{version_no_new}
+               from   W_ACC_ST.W_OP_PRM_LINE  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    <!-- 修改保存线路信息 -->
+    <update id="modifyLineCode" parameterType="LineCode" >
+        update W_ACC_ST.W_OP_PRM_LINE set 
+            line_name=#{line_name},lc_ip=#{lc_ip},
+            sequence=#{sequence},uygur_name=#{uygur_name},direction_flag=#{direction_flag},line_flag=#{line_flag}
+        where line_id=#{line_id} and record_flag=#{record_flag} and version_no=#{version_no} 
+    </update>
+    
+    <!-- 增加保存线路信息-->
+    <insert id="addLineCode" parameterType="LineCode" >
+        insert into  W_ACC_ST.W_OP_PRM_LINE(line_id,line_name,lc_ip,sequence,uygur_name,record_flag,version_no,direction_flag,line_flag)
+        values(#{line_id},#{line_name},#{lc_ip},#{sequence},#{uygur_name},#{record_flag},#{version_no},#{direction_flag},#{line_flag})        
+    </insert> 
+    
+    <!-- 删除线路记录 -->
+    <delete id="deleteLineCode" parameterType="LineCode">
+        delete from W_ACC_ST.W_OP_PRM_LINE where line_id=#{line_id} and record_flag=#{record_flag} and version_no=#{version_no}  
+    </delete>
+    
+    <select id="queryToMap"  parameterType="LineCode" resultType="map">
+        select line_id,version_no,line_name,record_flag,lc_ip,lc_line_id,sequence,uygur_name,direction_flag,line_flag
+        from W_ACC_ST.W_OP_PRM_LINE 
+        where 1=1 
+        <if test="line_id !=null and line_id !=''">
+            and line_id =#{line_id} 
+        </if> 
+        <if test="line_name !=null and line_name !=''">
+            and line_name =#{line_name} 
+        </if>
+        <if test="version_no !=null and version_no !=''">
+            and version_no =#{version_no}
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag =#{record_flag}
+        </if> 
+    </select>
+</mapper>

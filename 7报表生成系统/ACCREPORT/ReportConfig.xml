@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Config>
+	<Common>
+		<!--APP config -->
+                <!--
+		<ReportsParm>0</ReportsParm>
+                <ReportsCode>0</ReportsCode>
+                <ReportsLine></ReportsLine>
+                -->
+		<!--0 indicate all report_module, 1:99-999 indicate only, 2:99-999 indicate not-->
+		<!-- <BackUpLog>/export/home/ditie/ACC-REPORT/log</BackUpLog> -->
+		<BackUpLog>/home/wweb/report/log</BackUpLog> 
+		<GeneratorInterval>30000</GeneratorInterval>
+		<OneReportMaxTime>100000</OneReportMaxTime>
+                
+		<RasUrl>http://172.20.19.14:9080/reportProxy/jsp/ReportGenerator.jsp</RasUrl> 
+                <!--<RasUrl>http://localhost:8084/AccReportProxy/jsp/ReportGenerator.jsp</RasUrl>--> 
+
+	<!--<FilePath>/home/wweb/apache-tomcat-8.5.15/webapps/REPORTSEARCH.war/pdf/</FilePath-->
+    <FilePath>/home/wweb/apache-tomcat-8.5.15/webapps/reportSearch/pdf/</FilePath>
+	<MinReportGenTime>800</MinReportGenTime> 
+        
+	</Common>
+	<!--Database name of the report database.-->
+	<!--To set user and password, please add "@@" before it. Eg: <User>@@user</User>, <Password>@@password</Password> -->
+	<!-- 
+	<ReportDbCP>
+	<Driver>com.sybase.jdbc2.jdbc.SybDriver</Driver>
+    	<URL>jdbc:sybase:Tds:127.0.0.1:5001</URL>
+    	<Database>dt1030</Database>
+    	<User encrypt="true">2E2C2F37</User>
+    	<Password encrypt="true">372E3F372426352A</Password>
+    	<MaxActive>40</MaxActive>
+    	<MaxIdle>20</MaxIdle>
+    	<MaxWait>60000</MaxWait>
+	</ReportDbCP>
+	 -->
+         <!-- 
+	 <ReportDbCP>
+	<Driver>oracle.jdbc.driver.OracleDriver</Driver>
+    	<URL>jdbc:oracle:thin:@172.20.19.203:1521:epay1</URL>
+    	<Database></Database>
+    	<User encrypt="true">262C2F1B203D</User>
+    	<Password encrypt="true">262C2F1B203D</Password>
+    	<MaxActive>40</MaxActive>
+    	<MaxIdle>20</MaxIdle>
+    	<MaxWait>60000</MaxWait>
+	</ReportDbCP>
+         -->
+        <ReportServer>
+            <ServerName>epay69</ServerName>
+            <HandleServer>1</HandleServer>
+            <User>report</User>
+    	    <Password encrypt="true">372E3F372426352A</Password>          
+        </ReportServer>
+         <ReportDbCP>
+	<Driver>oracle.jdbc.driver.OracleDriver</Driver>
+    	<URL>jdbc:oracle:thin:@172.20.19.29:1521:wacc</URL>
+    	<Database></Database>
+    	<User encrypt="true">30102D273016343A182E3C34</User>
+    	<Password encrypt="true">30102D273016343A182E3C34</Password>
+    	<MaxActive>40</MaxActive>
+    	<MaxIdle>20</MaxIdle>
+    	<MaxWait>60000</MaxWait>
+	</ReportDbCP>
+	<ReportThreads>
+	  <ThreadNum>10</ThreadNum>
+	  <ThreadNumBigReport>5</ThreadNumBigReport>
+	  <ThreadNumMaxReport>5</ThreadNumMaxReport>
+	  <ThreadSleepTime>2000</ThreadSleepTime>
+          <MaxCount>1</MaxCount>
+	 
+	 <ThreadDelayQueue></ThreadDelayQueue> 
+	 <ThreadMaxQueue></ThreadMaxQueue>
+         <ThreadDelayQueueReportCode></ThreadDelayQueueReportCode>
+	 <ThreadPriorityQueue></ThreadPriorityQueue>
+	<ThreadDelayTime>60000</ThreadDelayTime>
+      </ReportThreads>
+      <!--
+	<ReportDb>
+	    <Driver>com.sybase.jdbc2.jdbc.SybDriver</Driver>
+    	<URL>jdbc:sybase:Tds:10.90.1.17:5000</URL>
+    	<Database>dt_center</Database>
+    	<User encrypt="true">2E2C2F37</User>
+    	<Password encrypt="true">7E7E74263F28232B</Password>
+	</ReportDb>
+	-->
+
+	
+</Config>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper  namespace = "com.goldsign.acc.app.basicinfo.mapper.TicketStorageDistributeCardParmMapper">
+    
+    <resultMap type = "com.goldsign.acc.app.basicinfo.entity.TicketStorageDistributeCardParm"  id = "rmTicketStorageDistributeCardParm">
+        <result column="ic_main_type"  property="ic_main_type"/>
+        <result column="ic_sub_type"  property="ic_sub_type"/>
+        <result column="circle"  property="circle"/>
+        <result column="remark"  property="remark"/>
+    </resultMap>
+    
+    <select id="queryParm"   resultMap="rmTicketStorageDistributeCardParm">
+        select ic_main_type,ic_sub_type,circle,remark 
+                	from w_acc_tk.w_ic_prm_distribute_circle where 1=1
+        <if test="ic_main_type !=null and ic_main_type !=''">
+              and trim(ic_main_type) =#{ic_main_type} 
+        </if> 
+        <if test="ic_sub_type !=null and ic_sub_type !=''">
+            and trim(ic_sub_type) =#{ic_sub_type}
+        </if>
+         order by ic_main_type,ic_sub_type
+    </select> 
+    
+   <select id="getListForAdd"   resultMap="rmTicketStorageDistributeCardParm">
+       
+       select ic_main_type,ic_sub_type,circle,remark 
+                	from w_acc_tk.w_ic_prm_distribute_circle
+       where ic_main_type =#{ic_main_type} and ic_sub_type =#{ic_sub_type}
+        order by ic_main_type,ic_sub_type
+    </select>
+   
+    <update id="modifyTicketStorageDistributeCardParm" parameterType="TicketStorageDistributeCardParm" >
+       update w_acc_tk.w_ic_prm_distribute_circle set circle=#{circle},remark=#{remark} 
+        where ic_main_type =#{ic_main_type} and ic_sub_type =#{ic_sub_type}                                               
+    </update>
+    
+    <insert id="addTicketStorageDistributeCardParm" parameterType="TicketStorageDistributeCardParm" >
+        insert into w_acc_tk.w_ic_prm_distribute_circle(ic_main_type,ic_sub_type,circle,remark)
+        values(#{ic_main_type},#{ic_sub_type},#{circle},#{remark})        
+        
+    </insert>
+    
+    <delete id="deleteTicketStorageDistributeCardParm" parameterType="TicketStorageDistributeCardParm">
+        delete from w_acc_tk.w_ic_prm_distribute_circle
+        where ic_main_type =#{ic_main_type} and ic_sub_type =#{ic_sub_type}           
+    </delete>
+</mapper>
+
+
+

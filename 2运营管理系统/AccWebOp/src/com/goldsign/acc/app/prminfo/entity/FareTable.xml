@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.FareTableMapper">
+    <resultMap type="FareTable" id="rmFareTable">
+        
+        <result column="water_no" property="water_no" /> 
+        <result column="fare_table_id" property="fare_table_id" /> 
+        <result column="fare" property="fare" /> 
+        <result column="fare_zone" property="fare_zone" /> 
+        <result column="fare_name" property="fare_name" /> 
+        <result column="version_no" property="version_no" /> 
+        <result column="record_flag" property="record_flag" />  
+    </resultMap>
+
+    
+     
+    <select id="getFareTables"  parameterType="FareTable" resultMap="rmFareTable">
+        select water_no,fare_table_id,fare,fare_zone,fare_name,version_no,record_flag
+        from W_ACC_ST.W_OP_PRM_FARE_TABLE where record_flag=#{record_flag} and version_no=#{version_no}  
+        <if test="fare_table_id !=null and fare_table_id !=''">
+            and fare_table_id =#{fare_table_id} 
+        </if> 
+        <if test="fare !=null and fare !=''">
+            and fare =#{fare} 
+        </if>
+        <if test="fare_zone !=null and fare_zone !=''">
+            and fare_zone =#{fare_zone}
+        </if>
+        order by fare_table_id ,to_number(fare_zone)
+    </select>
+    <select id="getFareTableById"  parameterType="FareTable" resultMap="rmFareTable">
+        select water_no,fare_table_id,fare,fare_zone,fare_name,version_no,record_flag
+        from W_ACC_ST.W_OP_PRM_FARE_TABLE where record_flag=#{record_flag} and version_no=#{version_no}  
+                                              and fare_table_id =#{fare_table_id} and fare_zone =#{fare_zone} 
+        
+    </select>
+    
+    <insert id="addFareTable" parameterType="FareTable" >
+        insert into W_ACC_ST.W_OP_PRM_FARE_TABLE(water_no,fare_table_id,fare,fare_zone,fare_name,version_no,record_flag)
+               values(W_ACC_ST.W_SEQ_W_OP_PRM_FARE_TABLE.nextval,#{fare_table_id},#{fare},#{fare_zone},#{fare_name},#{version_no},#{record_flag})        
+        
+    </insert>
+    <update id="modifyFareTable" parameterType="FareTable" >
+        update W_ACC_ST.W_OP_PRM_FARE_TABLE set fare_table_id=#{fare_table_id},
+                    fare=#{fare},fare_zone=#{fare_zone},fare_name=#{fare_name}
+                    where  water_no=#{water_no} and record_flag=#{record_flag} and version_no=#{version_no}                                          
+        
+    </update>
+    <delete id="deleteFareTable" parameterType="FareTable">
+            delete from W_ACC_ST.W_OP_PRM_FARE_TABLE where water_no=#{water_no} 
+        
+    </delete>
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    
+    <update id="submitToOldFlag" parameterType="FareTable" >
+        update W_ACC_ST.W_OP_PRM_FARE_TABLE set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new}                                               
+    </update>
+    <!--草稿参数复制为当前或未来参数 -->
+     <insert id="submitFromDraftToCurOrFur" parameterType="FareTable" >
+        insert into  W_ACC_ST.W_OP_PRM_FARE_TABLE(water_no,fare_table_id,fare,fare_zone,fare_name,version_no,record_flag)
+               select W_ACC_ST.W_SEQ_W_OP_PRM_FARE_TABLE.nextval,fare_table_id,fare,fare_zone,fare_name,#{version_no_new,#{record_flag_new}}
+               from   W_ACC_ST.W_OP_PRM_FARE_TABLE  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    <!--草稿参数删除 -->
+     <delete id="deleteFareTablesForClone" parameterType="FareTable">
+            delete from W_ACC_ST.W_OP_PRM_FARE_TABLE where  record_flag='3' and version_no='0000000000'                                                      
+    </delete>
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="FareTable" >
+        insert into  W_ACC_ST.W_OP_PRM_FARE_TABLE(water_no,fare_table_id,fare,fare_zone,fare_name,version_no,record_flag)
+               select W_ACC_ST.W_SEQ_W_OP_PRM_FARE_TABLE.nextval,fare_table_id,fare,fare_zone,fare_name,'0000000000','3'
+               from   W_ACC_ST.W_OP_PRM_FARE_TABLE  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    
+     
+    
+</mapper>

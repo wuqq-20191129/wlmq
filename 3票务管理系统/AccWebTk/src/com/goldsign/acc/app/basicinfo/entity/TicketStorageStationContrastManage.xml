@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicinfo.mapper.TicketStorageStationContrastManageMapper">
+    <resultMap type="TicketStorageStationContrastManage" id="rmTicketStorageStationContrastManage">
+        <result column="line_id" property="line_id" /> 
+        <result column="station_id" property="station_id" />
+        <result column="ic_line_id" property="ic_line_id" />
+        <result column="ic_station_id" property="ic_station_id" />
+        <result column="line_name" property="line_name" />
+        <result column="station_name" property="station_name" />
+        <result column="ic_line_name" property="ic_line_name" />
+        <result column="ic_station_name" property="ic_station_name" />
+        <result column="sys_group_id" property="sys_group_id" />
+        <result column="sys_storage_id" property="sys_storage_id" />
+        <result column="sys_operator_id" property="sys_operator_id" />
+    </resultMap>
+     
+    <select id="getTicketStorageStationContrastManage"  parameterType="TicketStorageStationContrastManage" resultMap="rmTicketStorageStationContrastManage">
+        select a.line_id as ic_line_id,a.station_id as ic_staion_id,a.line_code as line_id,a.station_code as station_id,b.line_name,c.chinese_name as station_name ,d.LINE_NAME as ic_line_name,e.CHINESE_NAME as ic_station_name
+            from W_ACC_TK.W_ic_cod_station_contrast a,W_ACC_ST.W_op_prm_line b,W_ACC_ST.W_op_prm_station c,W_ACC_TK.W_ic_cod_line d,W_ACC_TK.W_ic_cod_station e 
+            where a.line_code=b.line_id and a.line_code=c.line_id and a.station_code=c.station_id 
+            and a.line_id=rtrim(d.LINE_ID) and a.STATION_ID=rtrim(e.STATION_ID) and a.LINE_ID=rtrim(e.LINE_ID)
+            and b.record_flag='0' and c.record_flag='0'
+        <if test="line_id !=null and line_id !=''">
+            and a.line_code =#{line_id}
+        </if>
+        <if test="station_id !=null and station_id !=''">
+            and a.station_code =#{station_id}
+        </if>
+    </select>
+     
+    <select id="isExistRecord"  parameterType="TicketStorageStationContrastManage" resultMap="rmTicketStorageStationContrastManage">
+        select * from W_ACC_TK.W_ic_cod_area where area_name=#{area_name}
+    </select>
+    
+    <select id="getUserStoreSet"  parameterType="TicketStorageStationContrastManage" resultMap="rmTicketStorageStationContrastManage">
+        select sg.sys_group_id,sg.sys_storage_id 
+            from w_acc_st.w_op_sys_group_operator sgo , w_acc_st.w_op_sys_group sg 
+            where sgo.sys_group_id=sg.sys_group_id 
+            and sys_operator_id=#{sys_operator_id}
+    </select>
+    
+    <select id="getLincodeCondition"  parameterType="TicketStorageStationContrastManage" resultMap="rmTicketStorageStationContrastManage">
+        SELECT line_id FROM w_acc_tk.w_ic_cod_storage_line where 1=1
+        <if test="storageIdList != '' and storageIdList != null">  
+            and storage_id in  
+            <foreach item="item" index="index" collection="storageIdList" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach>  
+        </if>
+    </select>
+    
+    <select id="getLinesID"  parameterType="TicketStorageStationContrastManage" resultMap="rmTicketStorageStationContrastManage">
+        SELECT line_id,line_name FROM w_acc_tk.w_ic_cod_line where 1=1
+        <if test="lineIdList != '' and lineIdList != null">  
+            and line_id in  
+            <foreach item="item" index="index" collection="lineIdList" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach>  
+        </if>
+    </select>
+     
+    <select id="getStorageVector" resultMap="rmTicketStorageStationContrastManage">
+        select storage_id as line_id,storage_name as line_name from W_ACC_TK.W_ic_cod_storage
+    </select>
+    
+    <select id="ifExistCardType" parameterType="TicketStorageStationContrastManage" resultType="java.lang.Integer" >
+       select count(*) as num from W_ACC_TK.W_ic_cod_station_contrast where line_code=#{line_id} and station_code=#{station_id}
+    </select>
+    
+    <select id="ifExistIcCardType" parameterType="TicketStorageStationContrastManage" resultType="java.lang.Integer" >
+       select count(*) as num from W_ACC_TK.W_ic_cod_station_contrast where line_id=#{ic_line_id} and station_id=#{ic_station_id}
+    </select>
+    
+    <insert id="addTicketStorageStationContrastManage" parameterType="TicketStorageStationContrastManage" >
+        insert into W_ACC_TK.W_ic_cod_station_contrast(line_code,station_code,line_id,station_id) values(#{line_id},#{station_id},#{ic_line_id},#{ic_station_id})           
+    </insert>
+    
+    <update id="modifyTicketStorageStationContrastManage" parameterType="TicketStorageStationContrastManage" >
+        update W_ACC_TK.W_ic_cod_station_contrast set  line_id=#{ic_line_id},station_id=#{ic_station_id} where line_code=#{line_id} and station_code=#{station_id}                                              
+    </update>
+    
+    <delete id="deleteTicketStorageStationContrastManage" parameterType="TicketStorageStationContrastManage">
+        delete from W_ACC_TK.W_ic_cod_station_contrast where line_code=#{line_id} and station_code=#{station_id}     
+    </delete>     
+    
+</mapper>
+

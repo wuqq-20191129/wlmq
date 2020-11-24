@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicinfo.mapper.TicketStorageBillTypeManageMapper">
+    <resultMap type="com.goldsign.acc.app.basicinfo.entity.TicketStorageBillTypeManage" id="rmTicketStorageBillTypeManage">
+        
+        <result column="bill_type_id" property="bill_type_id" /> 
+        <result column="bill_main_type_id" property="bill_main_type_id" />
+        <result column="bill_name" property="bill_name" />
+    </resultMap>
+     
+    <select id="queryTicketStorageBillTypeManage"  parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageBillTypeManage" resultMap="rmTicketStorageBillTypeManage">
+        select bill_type_id,bill_main_type_id,bill_name  from  W_ACC_TK.W_IC_COD_BILL_TYPE where 1=1 
+        <if test="bill_type_id !=null and bill_type_id !=''">
+            and bill_type_id like concat(concat('%',upper(#{bill_type_id})),'%' )
+        </if> 
+        <if test="bill_main_type_id !=null and bill_main_type_id !=''">
+            and bill_main_type_id like concat(concat('%',#{bill_main_type_id}),'%') 
+        </if>
+        <if test="bill_name !=null and bill_name !=''">
+            and bill_name =#{bill_name}
+        </if>
+        order by bill_main_type_id
+    </select>
+    
+    <select id="queryTicketStorageBillTypeManageByName"  parameterType="com.goldsign.acc.app.basicinfo.entity.TicketStorageBillTypeManage" resultMap="rmTicketStorageBillTypeManage">
+        select bill_type_id,bill_main_type_id,bill_name  from  W_ACC_TK.W_IC_COD_BILL_TYPE where bill_type_id=#{bill_type_id} 
+        and bill_main_type_id=#{bill_main_type_id}         
+    </select>
+  
+</mapper>
+

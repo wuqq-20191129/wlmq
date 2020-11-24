@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.SystemRateLineMapper">
+    <resultMap type="SystemRateLine" id="rmSystemRateLine">
+        
+        <result column="line_id" property="line_id" /> 
+        <result column="service_rate" property="service_rate" /> 
+        <result column="record_flag" property="record_flag" /> 
+        <result column="version_no" property="version_no" />
+        
+    </resultMap>
+
+    
+     
+    <select id="getSystemRateLine"  parameterType="SystemRateLine" resultMap="rmSystemRateLine">
+        select line_id,version_no,service_rate,record_flag from w_acc_st.w_op_prm_line_service_rate  
+        where record_flag=#{record_flag} and version_no=#{version_no}   
+        order by line_id
+    </select>
+    <select id="getSystemRateLineById"  parameterType="SystemRateLine" resultMap="rmSystemRateLine">
+        select line_id,version_no,service_rate,record_flag
+        from w_acc_st.w_op_prm_line_service_rate where record_flag=#{record_flag} and version_no=#{version_no}
+        <if test="line_id != null and line_id !=''">
+            and line_id =#{line_id}
+        </if>  
+                                              
+        
+    </select>
+    
+    <insert id="addSystemRateLine" parameterType="SystemRateLine" >
+        insert into w_acc_st.w_op_prm_line_service_rate(line_id,version_no,service_rate,record_flag)
+                                      values(#{line_id},#{version_no},#{service_rate},#{record_flag})        
+        
+    </insert>
+    
+    <update id="modifySystemRateLine" parameterType="SystemRateLine" >
+
+        update w_acc_st.w_op_prm_line_service_rate set service_rate=#{service_rate}
+                    where  line_id=#{line_id}  and record_flag=#{record_flag} and version_no=#{version_no}                                                  
+    </update>
+    
+    <delete id="deleteSystemRateLine" parameterType="SystemRateLine">
+            delete from w_acc_st.w_op_prm_line_service_rate 
+                        where  line_id=#{line_id} and version_no=#{version_no}           
+        
+    </delete>
+     <!--草稿参数删除 -->
+    <delete id="deleteSystemRateLineForClone" parameterType="SystemRateLine">
+        delete from W_ACC_ST.W_OP_PRM_LINE_SERVICE_RATE where  record_flag='3' and version_no='0000000000'                                                      
+    </delete>
+    
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="SystemRateLine" >
+        insert into  W_ACC_ST.W_OP_PRM_LINE_SERVICE_RATE(line_id,service_rate,record_flag,version_no)
+        select line_id,service_rate,'3','0000000000'
+        from   W_ACC_ST.W_OP_PRM_LINE_SERVICE_RATE  
+        where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    
+     <update id="submitToOldFlag" parameterType="SystemRateLine" >
+        update W_ACC_ST.W_OP_PRM_LINE_SERVICE_RATE set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new}                                               
+    </update>
+    
+    <!--草稿参数复制为当前或未来参数 -->
+    <insert id="submitFromDraftToCurOrFur" parameterType="SystemRateLine" >
+        insert into  W_ACC_ST.W_OP_PRM_LINE_SERVICE_RATE(line_id,service_rate,record_flag,version_no)
+        select line_id,service_rate,#{record_flag_new},#{version_no_new}
+        from   W_ACC_ST.W_OP_PRM_LINE_SERVICE_RATE  
+        where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+
+
+</mapper>

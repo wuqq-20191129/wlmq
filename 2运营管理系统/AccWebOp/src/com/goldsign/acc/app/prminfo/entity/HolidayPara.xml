@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.HolidayParaMapper">
+    <resultMap type="HolidayPara" id="rmHolidayPara">
+        
+        <result column="water_no" property="water_no" /> 
+        <result column="holiday_type" property="holiday_type" /> 
+        <result column="start_date" property="start_date" /> 
+        <result column="end_date" property="end_date" /> 
+        <result column="version_no" property="version_no" /> 
+        <result column="record_flag" property="record_flag" /> 
+    </resultMap>
+
+    
+     
+    <select id="getHolidayParas"  parameterType="HolidayPara" resultMap="rmHolidayPara">
+        select water_no,holiday_type,
+            CONCAT(CONCAT(CONCAT(CONCAT(substr(start_date,1,4),'-'),substr(start_date,5,2)), '-'),substr(start_date,7,2)) start_date,
+            CONCAT(CONCAT(CONCAT(CONCAT(substr(end_date,1,4),'-'),substr(end_date,5,2)), '-'),substr(end_date,7,2)) end_date,
+            version_no,record_flag
+        from W_ACC_ST.W_OP_PRM_HOLIDAY_TABLE where record_flag=#{record_flag} and version_no=#{version_no}  
+        <if test="holiday_type !=null and holiday_type !=''">
+            and holiday_type =#{holiday_type} 
+        </if>
+        <if test="start_date !=null and start_date !=''">
+            and start_date =#{start_date} 
+        </if>
+        <if test="end_date !=null and end_date !=''">
+            and end_date =#{end_date} 
+        </if> 
+        order by holiday_type
+    </select>
+    <select id="getHolidayParaById"  parameterType="HolidayPara" resultMap="rmHolidayPara">
+        select water_no,holiday_type,
+            CONCAT(CONCAT(CONCAT(CONCAT(substr(start_date,1,4),'-'),substr(start_date,5,2)), '-'),substr(start_date,7,2)) start_date,
+            CONCAT(CONCAT(CONCAT(CONCAT(substr(end_date,1,4),'-'),substr(end_date,5,2)), '-'),substr(end_date,7,2)) end_date,
+            version_no,record_flag
+        from W_ACC_ST.W_OP_PRM_HOLIDAY_TABLE where not(start_date &gt; #{end_date} or end_date &lt; #{start_date}) 
+            and holiday_type=#{holiday_type} and version_no='0000000000'
+        <if test="water_no !=null and water_no !=''">
+            and water_no !=#{water_no}
+        </if>                                      
+        
+    </select>
+    
+    <insert id="addHolidayPara" parameterType="HolidayPara" >
+        insert into W_ACC_ST.W_OP_PRM_HOLIDAY_TABLE(water_no,holiday_type,start_date,end_date,version_no,record_flag)
+                                      values( W_ACC_ST.W_SEQ_W_OP_PRM_HOLIDAY_TABLE.nextval,#{holiday_type},#{start_date},
+                                             #{end_date},#{version_no},#{record_flag})        
+        
+    </insert>
+    
+    <update id="modifyHolidayPara" parameterType="HolidayPara" >
+        update W_ACC_ST.W_OP_PRM_HOLIDAY_TABLE set holiday_type=#{holiday_type},
+                    start_date=#{start_date},end_date=#{end_date}
+                    where  water_no=#{water_no} and record_flag=#{record_flag} and version_no=#{version_no}                                                 
+        
+    </update>
+    <delete id="deleteHolidayPara" parameterType="HolidayPara">
+            delete from W_ACC_ST.W_OP_PRM_HOLIDAY_TABLE where water_no=#{water_no}
+        
+    </delete>
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    
+    <update id="submitToOldFlag" parameterType="HolidayPara" >
+        update W_ACC_ST.W_OP_PRM_HOLIDAY_TABLE set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new}                                               
+    </update>
+    <!--草稿参数复制为当前或未来参数 -->
+     <insert id="submitFromDraftToCurOrFur" parameterType="HolidayPara" >
+        insert into  W_ACC_ST.W_OP_PRM_HOLIDAY_TABLE(water_no,holiday_type,start_date,end_date,version_no,record_flag)
+               select W_ACC_ST.W_SEQ_W_OP_PRM_HOLIDAY_TABLE.nextval,holiday_type,start_date,end_date,#{version_no_new},#{record_flag_new}
+               from   W_ACC_ST.W_OP_PRM_HOLIDAY_TABLE  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    <!--草稿参数删除 -->
+     <delete id="deleteHolidayParasForClone" parameterType="HolidayPara">
+            delete from W_ACC_ST.W_OP_PRM_HOLIDAY_TABLE where  record_flag='3' and version_no='0000000000'                                                      
+    </delete>
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="HolidayPara" >
+        insert into  W_ACC_ST.W_OP_PRM_HOLIDAY_TABLE(water_no,holiday_type,start_date,end_date,version_no,record_flag)
+               select W_ACC_ST.W_SEQ_W_OP_PRM_HOLIDAY_TABLE.nextval,holiday_type,start_date,end_date,'0000000000','3'
+               from   W_ACC_ST.W_OP_PRM_HOLIDAY_TABLE  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    
+     
+    
+</mapper>

@@ -1,0 +1,13 @@
+0304:0100普通单程票               Normal Single Journey Ticket                                عمومی بلیط یک طرفه                                                                   
+0304:0200普通储值票               Normal adult stored value ticket                            عمومی به صورت تصادفی دسترسی ارزش بلیط                                
+0304:0300普通乘次票               Normal multiplication ticket                                عمومی ضرب بار بلیط                                                                   
+0304:0500一类员工票               Normal Employee Ticket                                      一کلاس کارکنان بلیط                                                                 
+0304:0600OCT普通票                  Normal One Card Through Ticket                              OCTعمومی بلیط                                                                              
+0304:0700异型普通储值卡         Nomal Atypical stored value Ticket                          مختلف تىپلارنى ياراتماق کارت                                               
+0304:0800手机票普通储值卡      Mobile Normal adult stored value ticket                     دست بلیط عمومی به صورت تصادفی دسترسی ارزش کارت                
+0304:0201学生储值票               Student stored value ticket                                 ئوقۇغۇچى به صورت تصادفی دسترسی ارزش بلیط                          
+0304:0501二类员工票               Two types of employee tickets                               二کلاس کارکنان بلیط                                                                 
+0304:0601OCT学生票                  Student One Card Through Ticket                             OCTئوقۇغۇچى بلیط                                                                        
+0304:0202老人票                     Old Favorable stored value ticket                           مردم قدیمی بلیط                                                                        
+0304:0602OCT老人票                  Old Favorable One Card Through Ticket                       OCTمردم قدیمی بلیط                                                                     
+CRC:f26e18eb

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.RpLogDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.querysys.entity.RpLogDetail" >
+    <constructor >
+      <idArg column="WATER_NO" jdbcType="DECIMAL" javaType="java.lang.Long" />
+      <arg column="REPORT_CODE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="REPORT_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="REPORT_MODULE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="REPORT_SIZE" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="IS_DELAY" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="GEN_START_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="GEN_END_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="USE_TIME" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="GEN_THREAD" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="GEN_COUNT" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="BALANCE_WATER_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="SYS_LEVEL" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="REPORT_WATER_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    WATER_NO, REPORT_CODE, REPORT_NAME, REPORT_MODULE, REPORT_SIZE, IS_DELAY, GEN_START_TIME, 
+    GEN_END_TIME, USE_TIME, GEN_THREAD, GEN_COUNT, BALANCE_WATER_NO, SYS_LEVEL, REPORT_WATER_NO
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from W_RP_LOG_DETAIL
+    where WATER_NO = #{waterNo,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from W_RP_LOG_DETAIL
+    where WATER_NO = #{waterNo,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.goldsign.acc.app.querysys.entity.RpLogDetail" >
+    insert into W_RP_LOG_DETAIL (WATER_NO, REPORT_CODE, REPORT_NAME, 
+      REPORT_MODULE, REPORT_SIZE, IS_DELAY, 
+      GEN_START_TIME, GEN_END_TIME, USE_TIME, 
+      GEN_THREAD, GEN_COUNT, BALANCE_WATER_NO, 
+      SYS_LEVEL, REPORT_WATER_NO)
+    values (#{waterNo,jdbcType=DECIMAL}, #{reportCode,jdbcType=VARCHAR}, #{reportName,jdbcType=VARCHAR}, 
+      #{reportModule,jdbcType=VARCHAR}, #{reportSize,jdbcType=DECIMAL}, #{isDelay,jdbcType=CHAR}, 
+      #{genStartTime,jdbcType=TIMESTAMP}, #{genEndTime,jdbcType=TIMESTAMP}, #{useTime,jdbcType=DECIMAL}, 
+      #{genThread,jdbcType=VARCHAR}, #{genCount,jdbcType=DECIMAL}, #{balanceWaterNo,jdbcType=VARCHAR}, 
+      #{sysLevel,jdbcType=CHAR}, #{reportWaterNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.querysys.entity.RpLogDetail" >
+    insert into W_RP_LOG_DETAIL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="waterNo != null" >
+        WATER_NO,
+      </if>
+      <if test="reportCode != null" >
+        REPORT_CODE,
+      </if>
+      <if test="reportName != null" >
+        REPORT_NAME,
+      </if>
+      <if test="reportModule != null" >
+        REPORT_MODULE,
+      </if>
+      <if test="reportSize != null" >
+        REPORT_SIZE,
+      </if>
+      <if test="isDelay != null" >
+        IS_DELAY,
+      </if>
+      <if test="genStartTime != null" >
+        GEN_START_TIME,
+      </if>
+      <if test="genEndTime != null" >
+        GEN_END_TIME,
+      </if>
+      <if test="useTime != null" >
+        USE_TIME,
+      </if>
+      <if test="genThread != null" >
+        GEN_THREAD,
+      </if>
+      <if test="genCount != null" >
+        GEN_COUNT,
+      </if>
+      <if test="balanceWaterNo != null" >
+        BALANCE_WATER_NO,
+      </if>
+      <if test="sysLevel != null" >
+        SYS_LEVEL,
+      </if>
+      <if test="reportWaterNo != null" >
+        REPORT_WATER_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="waterNo != null" >
+        #{waterNo,jdbcType=DECIMAL},
+      </if>
+      <if test="reportCode != null" >
+        #{reportCode,jdbcType=VARCHAR},
+      </if>
+      <if test="reportName != null" >
+        #{reportName,jdbcType=VARCHAR},
+      </if>
+      <if test="reportModule != null" >
+        #{reportModule,jdbcType=VARCHAR},
+      </if>
+      <if test="reportSize != null" >
+        #{reportSize,jdbcType=DECIMAL},
+      </if>
+      <if test="isDelay != null" >
+        #{isDelay,jdbcType=CHAR},
+      </if>
+      <if test="genStartTime != null" >
+        #{genStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="genEndTime != null" >
+        #{genEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useTime != null" >
+        #{useTime,jdbcType=DECIMAL},
+      </if>
+      <if test="genThread != null" >
+        #{genThread,jdbcType=VARCHAR},
+      </if>
+      <if test="genCount != null" >
+        #{genCount,jdbcType=DECIMAL},
+      </if>
+      <if test="balanceWaterNo != null" >
+        #{balanceWaterNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sysLevel != null" >
+        #{sysLevel,jdbcType=CHAR},
+      </if>
+      <if test="reportWaterNo != null" >
+        #{reportWaterNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.goldsign.acc.app.querysys.entity.RpLogDetail" >
+    update W_RP_LOG_DETAIL
+    <set >
+      <if test="reportCode != null" >
+        REPORT_CODE = #{reportCode,jdbcType=VARCHAR},
+      </if>
+      <if test="reportName != null" >
+        REPORT_NAME = #{reportName,jdbcType=VARCHAR},
+      </if>
+      <if test="reportModule != null" >
+        REPORT_MODULE = #{reportModule,jdbcType=VARCHAR},
+      </if>
+      <if test="reportSize != null" >
+        REPORT_SIZE = #{reportSize,jdbcType=DECIMAL},
+      </if>
+      <if test="isDelay != null" >
+        IS_DELAY = #{isDelay,jdbcType=CHAR},
+      </if>
+      <if test="genStartTime != null" >
+        GEN_START_TIME = #{genStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="genEndTime != null" >
+        GEN_END_TIME = #{genEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useTime != null" >
+        USE_TIME = #{useTime,jdbcType=DECIMAL},
+      </if>
+      <if test="genThread != null" >
+        GEN_THREAD = #{genThread,jdbcType=VARCHAR},
+      </if>
+      <if test="genCount != null" >
+        GEN_COUNT = #{genCount,jdbcType=DECIMAL},
+      </if>
+      <if test="balanceWaterNo != null" >
+        BALANCE_WATER_NO = #{balanceWaterNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sysLevel != null" >
+        SYS_LEVEL = #{sysLevel,jdbcType=CHAR},
+      </if>
+      <if test="reportWaterNo != null" >
+        REPORT_WATER_NO = #{reportWaterNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where WATER_NO = #{waterNo,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.goldsign.acc.app.querysys.entity.RpLogDetail" >
+    update W_RP_LOG_DETAIL
+    set REPORT_CODE = #{reportCode,jdbcType=VARCHAR},
+      REPORT_NAME = #{reportName,jdbcType=VARCHAR},
+      REPORT_MODULE = #{reportModule,jdbcType=VARCHAR},
+      REPORT_SIZE = #{reportSize,jdbcType=DECIMAL},
+      IS_DELAY = #{isDelay,jdbcType=CHAR},
+      GEN_START_TIME = #{genStartTime,jdbcType=TIMESTAMP},
+      GEN_END_TIME = #{genEndTime,jdbcType=TIMESTAMP},
+      USE_TIME = #{useTime,jdbcType=DECIMAL},
+      GEN_THREAD = #{genThread,jdbcType=VARCHAR},
+      GEN_COUNT = #{genCount,jdbcType=DECIMAL},
+      BALANCE_WATER_NO = #{balanceWaterNo,jdbcType=VARCHAR},
+      SYS_LEVEL = #{sysLevel,jdbcType=CHAR},
+      REPORT_WATER_NO = #{reportWaterNo,jdbcType=VARCHAR}
+    where WATER_NO = #{waterNo,jdbcType=DECIMAL}
+  </update>
+   <select id="rpLogDetailQry" parameterType="com.goldsign.acc.app.querysys.entity.RpLogDetail" resultMap="BaseResultMap">
+    select 
+   <include refid="Base_Column_List" />
+    from w_acc_st.W_RP_LOG_DETAIL
+    where 1 = 1
+    <if test="reportCode != null">
+       and REPORT_CODE like '%${reportCode}%'
+      </if>
+    <if test="reportModule != null">
+       and REPORT_MODULE like '%${reportModule}%'
+      </if>
+      <if test="balanceWaterNo != null">
+      and  BALANCE_WATER_NO like '%${balanceWaterNo}%'
+      </if>
+      <if test="strGenStartTime != null">
+       and  GEN_START_TIME &gt;= to_date(#{strGenStartTime,jdbcType=VARCHAR},'yyyy-MM-dd ')  
+       and  GEN_START_TIME &lt;= to_date(#{strGenEndTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss ')  
+      </if>
+     <if test="reportSize != null" >
+       and REPORT_SIZE &lt;= #{reportSize,jdbcType=DECIMAL}
+      </if>
+    order by GEN_START_TIME desc
+          
+  </select>
+  
+  <select id="rpLogDetailQryToMap" parameterType="com.goldsign.acc.app.querysys.entity.RpLogDetail" resultType="map">
+    select 
+   <include refid="Base_Column_List" />
+    from w_acc_st.W_RP_LOG_DETAIL
+    where 1 = 1
+    <if test="reportCode != null">
+       and REPORT_CODE like '%${reportCode}%'
+      </if>
+    <if test="reportModule != null">
+       and REPORT_MODULE like '%${reportModule}%'
+      </if>
+      <if test="balanceWaterNo != null">
+      and  BALANCE_WATER_NO like '%${balanceWaterNo}%'
+      </if>
+      <if test="strGenStartTime != null">
+       
+       and  GEN_START_TIME &gt;= to_date(#{strGenStartTime,jdbcType=VARCHAR},'yyyy-MM-dd ') 
+      </if>
+     <if test="reportSize != null" >
+       and REPORT_SIZE &lt;= #{reportSize,jdbcType=DECIMAL}
+      </if>
+    order by GEN_START_TIME desc
+          
+  </select>
+</mapper>

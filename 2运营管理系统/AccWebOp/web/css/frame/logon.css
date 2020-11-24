@@ -1,0 +1,107 @@
+body {margin:0; padding:0;}
+
+h1
+{
+    position: absolute;
+    top: 1px;
+    left: 350px;
+    text-align: center;
+    color: #FFFFFF;
+    letter-spacing:10px;
+    text-shadow:1px 1px #000000;
+    font-family: 微软雅黑;
+    font-size: 2.5em;
+    font-weight:800;
+}
+
+.top {height: 100px; background: #1873AE; background-image: url("../../images/logo/logo.png"); background-position: 30px 30px; background-repeat: no-repeat;}
+
+.main {
+    height: 850px;
+    background: #e5f2fa; /* 一些不支持背景渐变的浏览器 */
+    background: -webkit-linear-gradient(#BCE0EE, #E5F2FA); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#BCE0EE, #E5F2FA); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#BCE0EE, #E5F2FA); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#BCE0EE, #E5F2FA); /* 标准的语法（必须放在最后） */
+}
+
+.main p {
+    position: absolute;
+    top: 300px;
+    left: 350px;
+    text-align: center;
+    color: #FFFFFF;
+    letter-spacing:15px;
+    text-shadow:1px 1px #000000;
+    font-family: 微软雅黑;
+    font-size: 3em;
+    font-weight:800;
+}
+
+.main div img {
+    position: relative;
+    top: 130px;
+    float: right;
+    opacity:0.8;
+    filter:alpha(opacity=80); /* IE8 及更早版本 */
+}
+
+.form {
+    position: relative;
+    top: 250px;
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+.form *:focus {outline: none;}
+
+.form ul {
+    list-style: none;
+}
+
+.form ul li{
+    height: 30px;
+    padding: 12px;
+}
+
+.form ul li input[type=text] {
+    width: 220px;
+    height: 25px;
+    border: 1px solid #1873AE;
+    padding: 3px 8px;
+    border-radius: 3px;
+/*    transition: padding 0.2s;
+    -o-transition: padding 0.2s;opera
+    -moz-transition: padding 0.2s;火狐
+    -webkit-transition: padding 0.2s;chrome safri*/
+}
+
+.form ul li input[type=text]:focus {border-color: #c12e2a;}
+
+.form ul li input[type=Password] {
+    width: 220px;
+    height: 25px;
+    border: 1px solid #1873AE;
+    padding: 3px 8px;
+    border-radius: 3px;
+}
+
+.form ul li input[type=Password]:focus {border-color: #c12e2a;}
+
+.button {
+    background-color: #008CBA; /* Green */
+    border: none;
+    color: white;
+    padding: 8px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 3px;
+    letter-spacing:5px;
+}
+
+.form ul li input[type=submit]:focus {background-color: #e7e7e7;}

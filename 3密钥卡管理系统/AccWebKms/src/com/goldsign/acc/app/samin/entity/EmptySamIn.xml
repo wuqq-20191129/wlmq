@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.samin.mapper.EmptySamInMapper">
+    
+    <resultMap type="com.goldsign.acc.app.samin.entity.EmptySamIn" id="rmEmptySamIn">
+        
+        <result column="ORDER_NO" property="orderNo" /> 
+        <result column="START_LOGIC_NO" property="startLogicNo" /> 
+        <result column="ORDER_NUM" property="orderNum" /> 
+        <result column="GET_CARD_OPER" property="getCardOper" /> 
+        <result column="IN_STOCK_TIME" property="inStockTime" /> 
+        <result column="IN_STOCK_OPER" property="inStockOper" /> 
+        <result column="ORDER_STATE" property="orderState" /> 
+        <result column="AUDIT_ORDER_OPER" property="auditOrderOper" /> 
+        <result column="AUDIT_ORDER_TIME" property="auditOrderTime" /> 
+        <result column="REMARK" property="remark" /> 
+        <result column="SAM_TYPE" property="samType" /> 
+   
+    </resultMap>
+    
+    <insert id="addPlan" parameterType="com.goldsign.acc.app.samin.entity.EmptySamIn" >
+        insert into w_acc_tk.w_ic_sam_in_new (order_no, start_logic_no, order_num, get_card_oper, in_stock_time, in_stock_oper, order_state, remark, sam_type)         
+        values( #{orderNo}, #{startLogicNo}, #{orderNum}, #{getCardOper}, sysdate, #{inStockOper}, #{orderState}, #{remark}, #{samType} )  
+    </insert>
+    
+    <select id="getSamType"  parameterType="com.goldsign.acc.app.samin.entity.EmptySamIn" resultType="Integer">
+        select count(1) from w_acc_tk.w_ic_sam_type where sam_type_code = #{samType}
+    </select>
+    
+    <select id="isExitLogicalNoInOrder"  parameterType="com.goldsign.acc.app.samin.entity.EmptySamIn" resultType="Integer">
+        select count(1) from w_acc_tk.w_ic_sam_in_new  where substr(start_logic_no,1,9)= #{eStartLogicNo} and
+        ( 
+        (to_number(substr(start_logic_no,10,7)) &lt;= to_number(#{fStartLogicNo}) and 
+        (to_number(substr(start_logic_no,10,7)) + order_num-1) &gt;= to_number(#{fStartLogicNo}))
+        or
+        ( to_number(substr(start_logic_no,10,7)) &gt;= to_number(#{fStartLogicNo}) and
+        to_number(substr(start_logic_no,10,7)) &lt;= to_number(#{fStartLogicNo})+ to_number(#{orderNum})-1) 
+        ) 
+        <if test="orderNo != null and orderNo !=''" >  
+            and  order_no != #{orderNo}
+        </if> 
+    </select>
+    
+    <select id="isExitLogicalNoInStock"  parameterType="com.goldsign.acc.app.samin.entity.EmptySamIn" resultType="Integer">
+        select count(1) from w_acc_tk.w_ic_sam_stock where substr(logic_no,1,9 )= #{eStartLogicNo} and 
+        to_number(substr(logic_no,10,7))&gt;= to_number(#{fStartLogicNo}) and 
+        to_number(substr(logic_no,10,7))&lt;= to_number(#{fStartLogicNo})+ to_number(#{orderNum})-1
+    </select>
+    
+    <select id="queryPlan"  parameterType="com.goldsign.acc.app.samin.entity.EmptySamIn" resultMap="rmEmptySamIn">
+        select * from w_acc_tk.w_ic_sam_in_new 
+        <where> 
+            <if test="orderNo != null and orderNo !=''" >  
+                order_no = #{orderNo}
+            </if> 
+            <if test="samType != null and samType !=''" >  
+                AND sam_type like #{samType}
+            </if>
+            <if test="orderState != null and orderState !=''" >  
+                AND order_state like #{orderState}
+            </if>
+            <if test="orderNolist != null and orderNolist.size() > 0 " >  
+                and order_no in
+                <foreach collection="orderNolist" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by order_no desc
+    </select>
+    
+    <delete id="deletePlan" parameterType="com.goldsign.acc.app.samin.entity.EmptySamIn" >
+        delete from  w_acc_tk.w_ic_sam_in_new where order_no = #{orderNo} and order_state = #{orderState}                          
+    </delete>
+    
+    <update id="modifyPlan" parameterType="com.goldsign.acc.app.samin.entity.EmptySamIn" >
+        update w_acc_tk.w_ic_sam_in_new 
+        set start_logic_no = #{startLogicNo}, order_num = #{orderNum}, get_card_oper = #{getCardOper}, in_stock_time = sysdate, 
+        in_stock_oper = #{inStockOper}, remark = #{remark}, sam_type = #{samType} 
+        where order_no = #{orderNo}  and order_state = #{orderState}              
+    </update>
+    
+    <update id="updateOrderState" parameterType="com.goldsign.acc.app.samin.entity.EmptySamIn" >
+        update w_acc_tk.w_ic_sam_in_new 
+        set audit_order_time = sysdate, audit_order_oper = #{auditOrderOper}, order_state = '1' WHERE order_no = #{orderNo} and order_state = '0'      
+    </update>
+    
+    <select id="getPlanInfo"  parameterType="com.goldsign.acc.app.samin.entity.EmptySamIn" resultMap="rmEmptySamIn">
+        select * from w_acc_tk.w_ic_sam_in_new where order_no = #{orderNo}
+    </select>
+    
+    <insert id="addLogicNoIntoStock" parameterType="com.goldsign.acc.app.samin.entity.EmptySamIn" >
+        insert into w_acc_tk.w_ic_sam_stock ( sam_type, logic_no, produce_type, stock_state, is_instock, is_bad )
+        select #{samType}, #{eStartLogicNo}||lpad(to_number( #{fStartLogicNo} )+ #{num},7,0), #{produceType}, 
+        #{stockState}, #{isInstock}, #{isBad} 
+        from w_acc_tk.w_ic_sam_type b where b.sam_type_code = #{samType} and not exists
+        ( select 1 from w_acc_tk.w_ic_sam_stock a where a.logic_no = #{eStartLogicNo}||lpad(to_number(#{fStartLogicNo})+ #{num},7,0))
+    </insert>
+    
+</mapper>

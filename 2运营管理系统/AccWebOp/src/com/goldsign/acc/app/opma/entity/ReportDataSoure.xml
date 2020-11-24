@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.opma.mapper.ReportDataSoureMapper">
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.opma.entity.ReportDataSoure">
+    <id column="DS_ID" jdbcType="VARCHAR" property="dsId" />
+    <result column="DS_USER" jdbcType="VARCHAR" property="dsUser" />
+    <result column="DS_PASS" jdbcType="VARCHAR" property="dsPass" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <select id="getReportDataSourceList" parameterType="ReportDataSoure"  resultMap="BaseResultMap">
+        select * from W_ACC_ST.W_OP_CFG_REPORT_PASS 
+        <if test="dsId !=null and dsId !=''">
+            where  ds_id =#{dsId} 
+        </if>  
+    </select>
+    <insert id ="addWithModel" parameterType="ReportDataSoure">
+        insert into W_ACC_ST.W_OP_CFG_REPORT_PASS
+        (DS_ID,
+        DS_USER,
+        DS_PASS,
+        REMARK)
+        VALUES(#{dsId},#{dsUser},#{dsPass},#{remark})
+    </insert>
+     <update id="updateWithModel" parameterType="ReportDataSoure" >
+        UPDATE W_ACC_ST.W_OP_CFG_REPORT_PASS
+        <set >
+            <if test="dsUser != null" >
+                DS_USER = #{dsUser,jdbcType=VARCHAR},
+            </if>
+            <if test="dsPass != null" >
+                DS_PASS = #{dsPass,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE DS_ID = #{dsId,jdbcType=VARCHAR}
+    </update>
+    <delete id="deleteByDsId" parameterType="ReportDataSoure">
+        delete from W_ACC_ST.W_OP_CFG_REPORT_PASS 
+        WHERE DS_ID = #{dsId,jdbcType=VARCHAR}
+    </delete>
+</mapper>

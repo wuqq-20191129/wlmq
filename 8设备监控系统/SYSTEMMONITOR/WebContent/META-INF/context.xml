@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/sysmonitor" workDir="D:/work/csMetro/workspace/设备监控平台/SYSTEMMONITOR/workdir">
+    <Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="8" maxIdle="4" name="jdbc/dbmon" password="acc_monitor" type="javax.sql.DataSource" url="jdbc:oracle:thin:@172.20.19.203:1521:epay1" username="acc_monitor"/>
+    <Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="8" maxIdle="4" name="jdbc/dbmon_1" password="acc_monitor" type="javax.sql.DataSource" url="jdbc:oracle:thin:@172.20.19.203:1521:epay1" username="acc_monitor"/>   
+    <Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="8" maxIdle="4" name="jdbc/tkdb_1" password="acc_tk" type="javax.sql.DataSource" url="jdbc:oracle:thin:@172.20.19.203:1521:epay1" username="acc_tk"/>   
+            
+    
+    <!--
+  <Resource name="jdbc/dbmon" auth="Container"
+
+            type="javax.sql.DataSource" 
+
+            username="acc_monitor" password="acc_monitor"
+
+            driverClassName="oracle.jdbc.driver.OracleDriver" 
+
+            url="jdbc:oracle:thin:@10.2.99.3:1521:ACC"
+
+            maxActive="8" maxIdle="4"/> 
+  
+    <Resource name="jdbc/tkdb_1" auth="Container"
+
+            type="javax.sql.DataSource" 
+
+            username="acc_tk" password="acc_tk"
+
+            driverClassName="oracle.jdbc.driver.OracleDriver" 
+
+            url="jdbc:oracle:thin:@10.2.99.3:1521:ACC"
+
+            maxActive="8" maxIdle="4"/> 
+            
+        <Resource name="jdbc/dbmon_1" auth="Container"
+
+            type="javax.sql.DataSource" 
+
+            username="chaxun" password="chaxun123"
+
+            driverClassName="oracle.jdbc.driver.OracleDriver" 
+
+            url="jdbc:oracle:thin:@10.99.1.11:1521:ACC1"
+
+            maxActive="8" maxIdle="4"/> 
+  
+-->
+  
+
+  
+    
+    
+       
+<!--
+    <Resource auth="Container" name="jdbc/db" scope="true" type="javax.sql.DataSource"/>
+          <ResourceParams name="jdbc/db">
+            <parameter>
+              <name>maxWait</name>
+              <value>500</value>
+            </parameter>
+            <parameter>
+              <name>maxActive</name>
+              <value>50</value>
+            </parameter>
+          
+            <parameter>
+              <name>password</name>
+           
+             <value>acc_st</value> 
+            </parameter>
+            <parameter>
+              <name>url</name>
+               <value>jdbc:oracle:thin:@172.20.19.203:1521:epay1</value>
+             
+            </parameter>
+            <parameter>
+              <name>driverClassName</name>
+              <value>oracle.jdbc.driver.OracleDriver</value>
+            </parameter>
+            <parameter>
+              <name>maxIdle</name>
+              <value>1</value>
+            </parameter>
+            <parameter>
+              <name>username</name>
+              <value>acc_st</value>
+            </parameter>
+          </ResourceParams>
+ -->         
+          
+          
+</Context>

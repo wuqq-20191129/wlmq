@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.query.mapper.TicketStorageUchkBillMapper" >
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.query.entity.TicketStorageUchkBill" >
+    <constructor >
+      <arg column="BILL_NO" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="BILL_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="BILL_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="RECORD_FLAG" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="STORAGE_ID" jdbcType="CHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <parameterMap type="map" id="MapTicketStorageUchkBill">        
+      <parameter property="P_ERRMSG" jdbcType="VARCHAR" mode="OUT"/>  
+      <parameter property="P_RESULT" jdbcType="VARCHAR" mode="OUT"/> 
+      <parameter property="INFO_CUR" jdbcType="CURSOR" javaType="ResultSet" resultMap="BaseResultMap" mode="OUT"/>  
+  </parameterMap>   
+  
+  <select id="unchkBillQry"  parameterMap="MapTicketStorageUchkBill" statementType="CALLABLE">
+      {call W_ACC_TK.W_UP_IC_QUERY_UNCHECK_BILL(?,?,?)}
+  </select>
+</mapper>

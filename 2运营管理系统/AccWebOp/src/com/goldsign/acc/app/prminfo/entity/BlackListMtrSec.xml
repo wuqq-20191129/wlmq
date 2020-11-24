@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.BlackListMtrSecMapper">
+    <resultMap id="BaseResultMap" type="com.goldsign.acc.app.prminfo.entity.BlackListMtrSec">
+        <result column="GEN_DATETIME" jdbcType="VARCHAR" property="genDatetime" />
+        <result column="BEGIN_LOGICAL_ID" jdbcType="VARCHAR" property="beginLogicalId" />
+        <result column="END_LOGICAL_ID" jdbcType="VARCHAR" property="endLogicalId" />
+        <result column="BLACK_TYPE" jdbcType="CHAR" property="blackType" />
+        <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+        <result column="ACTION_TYPE" jdbcType="VARCHAR" property="actionType" />
+        <result column="CREATE_DATETIME" jdbcType="VARCHAR" property="createDatetime" />
+        <result column="OPERATOR_ID" jdbcType="VARCHAR" property="operatorId" />
+        <result column="IS_SET" jdbcType="CHAR" property="isSet" />
+        <result column="BALANCE_WATER_NO" jdbcType="CHAR" property="balanceWaterNo" />
+        <result column="HANDLE_DATETIME" jdbcType="VARCHAR" property="handleDatetime" />
+        <result column="HANDLE_OPERATOR_ID" jdbcType="VARCHAR" property="handleOperatorId" />
+        <result column="HANDLE_TYPE" jdbcType="VARCHAR" property="handleType" />
+    </resultMap>
+    <select id="getBlackListMtrSec" parameterType="BlackListMtrSec"  resultMap="BaseResultMap">
+        select to_char(create_datetime,'YYYY-MM-DD HH24:MI:SS') as create_datetime ,to_char(gen_datetime,'YYYY-MM-DD') as gen_datetime,BEGIN_LOGICAL_ID,END_LOGICAL_ID,remark,black_type,operator_id,action_type from W_ACC_ST.W_OP_PRM_BLACK_LIST_MTR_SEC WHERE 1=1
+        <if test="beginLogicalId !=null and beginLogicalId !=''">
+            <if test="endLogicalId !=null and endLogicalId !=''">
+                and to_number(BEGIN_LOGICAL_ID) &lt;= to_number(#{beginLogicalId,jdbcType=VARCHAR})
+            </if>
+            <if test="endLogicalId == ''">
+                and BEGIN_LOGICAL_ID = #{beginLogicalId,jdbcType=VARCHAR}
+            </if>
+        </if>
+        <if test="endLogicalId !=null and endLogicalId !=''">
+            <if test="beginLogicalId !=null and beginLogicalId !=''">
+                and to_number(END_LOGICAL_ID) &gt;= to_number(#{endLogicalId,jdbcType=VARCHAR})
+            </if>
+            <if test="beginLogicalId == '' ">
+                and END_LOGICAL_ID = #{endLogicalId,jdbcType=VARCHAR}
+            </if>
+        </if>
+        <if test="blackType !=null and blackType !=''">
+            and  black_type =#{blackType}
+        </if>
+        <if test="operatorId !=null and operatorId !=''">
+             and  OPERATOR_ID =#{operatorId}
+        </if>
+        <if test="beginEffectiveTime !=null and beginEffectiveTime !=''">
+            and  gen_datetime &gt;= to_date(#{beginEffectiveTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+        </if>
+        <if test="endEffectiveTime !=null and endEffectiveTime !=''">
+            and  gen_datetime &lt;= to_date(#{endEffectiveTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+        </if>
+    </select >
+    <select id = "getAllBlackListMtrSecForCheck" resultMap="BaseResultMap">
+        select BEGIN_LOGICAL_ID,END_LOGICAL_ID from W_ACC_ST.W_OP_PRM_BLACK_LIST_MTR_SEC order by BEGIN_LOGICAL_ID
+    </select>
+    <select id = "getMaxBalanceWaterNo" resultType="java.lang.String">
+        select max(balance_water_no) from W_ACC_ST.W_OP_PRM_BLACK_LIST_M_SEC_HIS
+    </select>
+    <select id = "checkInBlackListMtr"  parameterType="BlackListMtrSec" resultType="java.lang.String">
+        select * from
+        ( select card_logical_id from W_ACC_ST.W_OP_PRM_BLACK_LIST_MTR where 1=1
+        and card_logical_id &gt;= #{beginLogicalId,jdbcType=VARCHAR}
+        and card_logical_id &lt;= #{endLogicalId,jdbcType=VARCHAR}
+        order by card_logical_id
+        ) where rownum = 1
+    </select>
+    <!--    <select id = "checkInBlackListMtr" parameterType="BlackListMtrSec" resultType="java.lang.String">
+        select card_logical_id from W_OP_PRM_BLACK_LIST_MTR
+        where card_logical_id>=#{beginLogicalId,jdbcType=VARCHAR} and  card_logical_id<= #{endLogicalId,jdbcType=VARCHAR}
+    </select>-->
+    <!--    <select id = "checkInBlackListMtr" parameterType="BlackListMtrSec" resultType="java.lang.String">
+        select max(balance_water_no) from W_OP_PRM_BLACK_LIST_M_SEC_HIS
+        where card_logical_id>=#{beginLogicalId,jdbcType=VARCHAR} and  card_logical_id<= #{endLogicalId,jdbcType=VARCHAR}
+    </select>
+    -->
+    <select id = "queryNum" resultType="java.lang.Integer">
+        select count(1) from W_ACC_ST.W_OP_PRM_BLACK_LIST_MTR_SEC
+    </select>
+    <update id="updateWithModel" parameterType="BlackListMtrSec" >
+        UPDATE W_ACC_ST.W_OP_PRM_BLACK_LIST_MTR_SEC
+        <set >
+            <if test="genDatetime != null" >
+                GEN_DATETIME = to_date(#{genDatetime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss'),
+            </if>
+            <if test="blackType != null" >
+                BLACK_TYPE = #{blackType,jdbcType=CHAR},
+            </if>
+            <if test="actionType != null" >
+                ACTION_TYPE = #{actionType,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="operatorId != null" >
+                OPERATOR_ID = #{operatorId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE BEGIN_LOGICAL_ID = #{beginLogicalId,jdbcType=VARCHAR} and END_LOGICAL_ID = #{endLogicalId,jdbcType=VARCHAR}
+    </update>
+
+    <insert id="insertIntoLog" parameterType="BlackListMtrSec">
+        insert into W_ACC_ST.W_OP_PRM_BLACK_LIST_M_SEC_LOG
+        (GEN_DATETIME,
+        BEGIN_LOGICAL_ID,
+        END_LOGICAL_ID,
+        BLACK_TYPE,
+        REMARK,
+        ACTION_TYPE,
+        CREATE_DATETIME,
+        OPERATOR_ID,
+        IS_SET,
+        BALANCE_WATER_NO,
+        HANDLE_DATETIME,
+        HANDLE_OPERATOR_ID,
+        HANDLE_TYPE)
+        SELECT    GEN_DATETIME,
+        BEGIN_LOGICAL_ID,
+        END_LOGICAL_ID,
+        BLACK_TYPE,
+        REMARK,
+        ACTION_TYPE,
+        CREATE_DATETIME,
+        OPERATOR_ID,
+        IS_SET,
+        #{balanceWaterNo,jdbcType=CHAR} as BALANCE_WATER_NO,
+        to_date(#{handleDatetime,jdbcType=VARCHAR}, 'YYYY-MM-DD HH24:MI:SS') as HANDLE_DATETIME,
+        #{handleOperatorId,jdbcType=VARCHAR} as HANDLE_OPERATOR_ID,
+        #{handleType,jdbcType=VARCHAR} as HANDLE_TYPE
+        from W_ACC_ST.W_OP_PRM_BLACK_LIST_MTR_SEC
+        WHERE BEGIN_LOGICAL_ID = #{beginLogicalId,jdbcType=VARCHAR} and END_LOGICAL_ID = #{endLogicalId,jdbcType=VARCHAR}
+    </insert>
+    <delete id="deleteByCardLogicalId" parameterType="BlackListMtrSec">
+        delete from W_ACC_ST.W_OP_PRM_BLACK_LIST_MTR_SEC
+        WHERE BEGIN_LOGICAL_ID = #{beginLogicalId,jdbcType=VARCHAR} and END_LOGICAL_ID = #{endLogicalId,jdbcType=VARCHAR}
+    </delete>
+    <insert id ="addWithModel" parameterType="BlackListMtrSec">
+        insert into W_ACC_ST.W_OP_PRM_BLACK_LIST_MTR_SEC
+        (GEN_DATETIME,
+        BEGIN_LOGICAL_ID,
+        END_LOGICAL_ID,
+        BLACK_TYPE,
+        REMARK,
+        ACTION_TYPE,
+        CREATE_DATETIME,
+        OPERATOR_ID)
+        VALUES(to_date(#{genDatetime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss'),#{beginLogicalId},#{endLogicalId},#{blackType},#{remark},#{actionType},to_date(#{createDatetime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss'),#{operatorId})
+    </insert>
+
+    <select id="getDistinctOperatorId"   resultMap="BaseResultMap">
+        select distinct operator_id  from  W_ACC_ST.W_OP_PRM_BLACK_LIST_MTR_SEC
+    </select >
+</mapper>

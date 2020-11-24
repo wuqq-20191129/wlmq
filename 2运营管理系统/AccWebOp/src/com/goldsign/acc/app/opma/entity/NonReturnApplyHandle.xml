@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.opma.mapper.NonReturnApplyHandleMapper">
+	<resultMap id="BaseResultMap"
+		type="com.goldsign.acc.app.opma.entity.NonReturnApplyHandle">
+		<id column="WATER_NO" jdbcType="INTEGER" property="waterNo" />
+		<result column="LINE_ID" jdbcType="CHAR" property="lineId" />
+		<result column="STATION_ID" jdbcType="CHAR" property="stationId" />
+		<result column="DEV_TYPE_ID" jdbcType="CHAR" property="devTypeId" />
+		<result column="DEVICE_ID" jdbcType="CHAR" property="deviceId" />
+		<result column="CARD_MAIN_ID" jdbcType="CHAR" property="cardMainId" />
+		<result column="CARD_SUB_ID" jdbcType="CHAR" property="cardSubId" />
+		<result column="CARD_LOGICAL_ID" jdbcType="VARCHAR" property="cardLogicalId" />
+		<result column="CARD_PHYSICAL_ID" jdbcType="VARCHAR" property="cardPhysicalId" />
+		<result column="CARD_PRINT_ID" jdbcType="VARCHAR" property="cardPrintId" />
+		<result column="APPLY_DATETIME" jdbcType="VARCHAR" property="applyDatetime" />
+		<result column="RECEIPT_ID" jdbcType="CHAR" property="receiptId" />
+		<result column="OPERATOR_ID" jdbcType="CHAR" property="operatorId" />
+		<result column="APPLY_NAME" jdbcType="VARCHAR" property="applyName" />
+		<result column="TEL_NO" jdbcType="VARCHAR" property="telNo" />
+		<result column="IDENTITY_TYPE" jdbcType="CHAR" property="identityType" />
+		<result column="IDENTITY_ID" jdbcType="VARCHAR" property="identityId" />
+		<result column="IS_BROKEN" jdbcType="CHAR" property="isBroken" />
+		<result column="SHIFT_ID" jdbcType="CHAR" property="shiftId" />
+		<result column="CARD_APP_FLAG" jdbcType="CHAR" property="cardAppFlag" />
+		<result column="BALANCE_WATER_NO" jdbcType="CHAR" property="balanceWaterNo" />
+		<result column="HDL_FLAG" jdbcType="CHAR" property="hdlFlag" />
+		<result column="DEPOSIT_FEE" jdbcType="DECIMAL" property="depositFee" />
+		<result column="CARD_BALANCE_FEE" jdbcType="DECIMAL" property="cardBalanceFee" />
+		<result column="SYSTEM_BALANCE_FEE" jdbcType="DECIMAL"
+			property="systemBalanceFee" />
+		<result column="PENALTY_FEE" jdbcType="DECIMAL" property="penaltyFee" />
+		<result column="RETURN_BALA" jdbcType="DECIMAL" property="returnBala" />
+		<result column="REMARK" jdbcType="VARCHAR" property="remark" />
+		<result column="RETURN_LINE_ID" jdbcType="CHAR" property="returnLineId" />
+		<result column="RETURN_STATION_ID" jdbcType="CHAR" property="returnStationId" />
+		<result column="RETURN_DEV_TYPE_ID" jdbcType="CHAR" property="returnDevTypeId" />
+		<result column="RETURN_DEVICE_ID" jdbcType="CHAR" property="returnDeviceId" />
+		<result column="ACTUAL_RETURN_BALA" jdbcType="DECIMAL"
+			property="actualReturnBala" />
+		<result column="AUDIT_FLAG" jdbcType="CHAR" property="auditFlag" />
+		<result column="PENALTY_REASON" jdbcType="CHAR" property="penaltyReason" />
+		<result column="RETURN_TYPE" jdbcType="CHAR" property="returnType" />
+		<result column="BUSINESS_RECEIPT_ID" jdbcType="CHAR"
+			property="businessReceiptId" />
+		<result column="MIN_RETURN_DATE" jdbcType="VARCHAR" property="minReturnDate" />
+		<result column="NON_HANDLE_FLAG" jdbcType="CHAR" property="nonHandleFlag" />
+	</resultMap>
+	<resultMap id="HisResultMap"
+		type="com.goldsign.acc.app.opma.entity.NonReturnApplyHandleHis">
+		<result column="CARD_PHYSICAL_ID" jdbcType="CHAR" property="cardPhysicalId" />
+		<result column="CARD_LOGICAL_ID" jdbcType="CHAR" property="cardLogicalId" />
+		<result column="DEVICE_ID" jdbcType="CHAR" property="deviceId" />
+		<result column="DEAL_DATETIME" jdbcType="VARCHAR" property="dealDatetime" />
+		<result column="PAY_MODE_ID" jdbcType="CHAR" property="payModeId" />
+		<result column="DEAL_FEE" jdbcType="DECIMAL" property="dealFee" />
+		<result column="RECEIPT_ID" jdbcType="CHAR" property="receiptId" />
+		<result column="TAC" jdbcType="CHAR" property="tac" />
+		<result column="LINE_ID" jdbcType="CHAR" property="lineId" />
+		<result column="STATION_ID" jdbcType="CHAR" property="stationId" />
+		<result column="DEAL_BALANCE_FEE" jdbcType="DECIMAL" property="dealBalanceFee" />
+		<result column="BALANCE_WATER_NO" jdbcType="CHAR" property="balanceWaterNo" />
+		<result column="ENTRY_DATETIME" jdbcType="TIMESTAMP" property="entryDatetime" />
+		<result column="DEAL_TYPE" jdbcType="CHAR" property="dealType" />
+		<result column="RED_FLAG" jdbcType="CHAR" property="redFlag" />
+		<result column="CARD_MAIN_ID" jdbcType="CHAR" property="cardMainId" />
+		<result column="CARD_SUB_ID" jdbcType="CHAR" property="cardSubId" />
+		<result column="GEN_TIME" jdbcType="VARCHAR" property="genTime" />
+		<result column="TCT_VALID_DAYS" jdbcType="DECIMAL" property="tctValidDays" />
+		<result column="TCT_ACTIVATE_DATETIME" jdbcType="VARCHAR"
+			property="tctActivateDatetime" />
+		<result column="CURRENT_BALANCE_WATER" jdbcType="CHAR"
+			property="currentBalanceWater" />
+
+	</resultMap>
+
+	<select id="getNonReturnApplyQuery"
+		parameterType="com.goldsign.acc.app.opma.entity.NonReturnApplyHandle"
+		resultMap="BaseResultMap">
+		select
+		WATER_NO, LINE_ID, STATION_ID, DEV_TYPE_ID, DEVICE_ID,
+		CARD_MAIN_ID,
+		CARD_SUB_ID,
+		CARD_LOGICAL_ID, CARD_PHYSICAL_ID,
+		CARD_PRINT_ID, APPLY_DATETIME, RECEIPT_ID,
+		OPERATOR_ID,
+		APPLY_NAME,
+		TEL_NO, IDENTITY_TYPE, IDENTITY_ID, IS_BROKEN, SHIFT_ID,
+		CARD_APP_FLAG,
+		BALANCE_WATER_NO, HDL_FLAG, DEPOSIT_FEE,
+		CARD_BALANCE_FEE, SYSTEM_BALANCE_FEE,
+		PENALTY_FEE,
+		RETURN_BALA,
+		A.REMARK, RETURN_LINE_ID, RETURN_STATION_ID, RETURN_DEV_TYPE_ID,
+		RETURN_DEVICE_ID,
+		ACTUAL_RETURN_BALA, AUDIT_FLAG, PENALTY_REASON,
+		RETURN_TYPE, BUSINESS_RECEIPT_ID
+		,to_char(APPLY_DATETIME+to_number(cfg_value),'yyyy-mm-dd') as
+		MIN_RETURN_DATE ,CASE WHEN
+		(TO_DATE(SYSDATE)>TO_DATE(APPLY_DATETIME+TO_NUMBER(CFG_VALUE)) and
+		HDL_FLAG = '2') THEN '1'
+		WHEN (HDL_FLAG in('1','3','4') and (AUDIT_FLAG is null or AUDIT_FLAG ='0')) THEN '2'
+		ELSE '0' END NON_HANDLE_FLAG
+		from
+		W_ACC_ST.W_ST_LIST_NON_RTN A,W_ACC_ST.W_ST_CFG_SYS_BASE B
+		where
+		hdl_flag !='8' and return_type = '1' and cfg_key
+		='sys.non_return_day'
+		and record_flag = '0'
+		<if test="beginDatetime != null">
+			and APPLY_DATETIME &gt;=
+			to_date(#{beginDatetime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+		</if>
+		<if test="endDatetime != null">
+			and APPLY_DATETIME &lt;=
+			to_date(#{endDatetime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+		</if>
+		<if test="lineId != null">
+			and LINE_ID = #{lineId}
+		</if>
+		<if test="stationId != null">
+			and STATION_ID = #{stationId}
+		</if>
+		<if test="cardPrintId != null">
+			and CARD_PRINT_ID like '%${cardPrintId}%'
+		</if>
+		<if test="businessReceiptId != null">
+			and BUSINESS_RECEIPT_ID like '%${businessReceiptId}%'
+		</if>
+		<if test="handleType != null">
+			<if test="handleType == &quot;2&quot;">
+				and HDL_FLAG = '2'
+			</if>
+			<if test="handleType == &quot;1&quot;">
+				and HDL_FLAG &lt;&gt; '2'
+			</if>
+		</if>
+		order by
+		audit_flag,hdl_flag,apply_datetime,shift_id,line_id,station_id,device_id,receipt_id
+	</select>
+
+	<select id="getNonReturnApplyQueryByBusinessReciptId"
+		parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		WATER_NO, LINE_ID,
+		STATION_ID, DEV_TYPE_ID, DEVICE_ID, CARD_MAIN_ID,
+		CARD_SUB_ID,
+		CARD_LOGICAL_ID, CARD_PHYSICAL_ID, CARD_PRINT_ID, APPLY_DATETIME,
+		RECEIPT_ID,
+		OPERATOR_ID,
+		APPLY_NAME, TEL_NO, IDENTITY_TYPE, IDENTITY_ID,
+		IS_BROKEN, SHIFT_ID,
+		CARD_APP_FLAG,
+		BALANCE_WATER_NO, HDL_FLAG,
+		DEPOSIT_FEE, CARD_BALANCE_FEE, SYSTEM_BALANCE_FEE,
+		PENALTY_FEE,
+		RETURN_BALA, A.REMARK, RETURN_LINE_ID, RETURN_STATION_ID,
+		RETURN_DEV_TYPE_ID,
+		RETURN_DEVICE_ID,
+		ACTUAL_RETURN_BALA, AUDIT_FLAG,
+		PENALTY_REASON, RETURN_TYPE, BUSINESS_RECEIPT_ID
+		,to_char(APPLY_DATETIME+to_number(cfg_value),'yyyy-mm-dd') as
+		MIN_RETURN_DATE
+		from W_ACC_ST.W_ST_LIST_NON_RTN
+		A,W_ACC_ST.W_ST_CFG_SYS_BASE B
+		where return_type = '1' and cfg_key
+		='sys.non_return_day' and record_flag =
+		'0'
+		and BUSINESS_RECEIPT_ID =
+		#{id}
+	</select>
+
+	<select id="isApplied"
+		parameterType="com.goldsign.acc.app.opma.entity.NonReturnApplyHandle"
+		resultType="java.lang.String">
+		select count(1) from W_ACC_ST.W_ST_LIST_NON_RTN where
+		hdl_flag
+		in('1','3','4')
+		and CARD_LOGICAL_ID = #{cardLogicalId} and
+		return_type = '1'
+	</select>
+	<select id="checkInBlackListMtr"
+		parameterType="com.goldsign.acc.app.opma.entity.NonReturnApplyHandle"
+		resultType="java.lang.String">
+		select count(1) from W_ACC_ST.W_OP_PRM_BLACK_LIST_MTR where
+		CARD_LOGICAL_ID
+		= #{cardLogicalId}
+	</select>
+	<select id="checkInBlackListMtrSec"
+		parameterType="com.goldsign.acc.app.opma.entity.NonReturnApplyHandle"
+		resultType="java.lang.String">
+		select count(1) from W_ACC_ST.W_OP_PRM_BLACK_LIST_MTR_SEC
+		where
+		BEGIN_LOGICAL_ID &gt;= #{cardLogicalId}
+		and END_LOGICAL_ID
+		&lt;=#{cardLogicalId}
+	</select>
+	<select id="getPenatly" statementType="CALLABLE" parameterType="java.util.Map">
+		{call W_ACC_ST.W_UP_NON_RETURN_QUERY_PENALTY
+		(
+		#{cardLogicalId,mode=IN,jdbcType=VARCHAR},
+		#{result,mode=OUT,jdbcType=VARCHAR})}
+	</select>
+	<select id="getDeposit"
+		parameterType="com.goldsign.acc.app.opma.entity.NonReturnApplyHandle"
+		resultType="java.lang.String">
+		select nvl(deposit_fee,0) from W_ACC_ST.w_st_act_svt where
+		CARD_MAIN_ID =#{cardMainId}
+		and CARD_SUB_ID = #{cardSubId}
+		and
+		card_logical_id = #{cardLogicalId}
+	</select>
+	<select id="getBalance"
+		parameterType="com.goldsign.acc.app.opma.entity.NonReturnApplyHandle"
+		resultMap="BaseResultMap">
+		select card_logical_id,card_balance_fee, system_balance_fee
+		from (select card_logical_id, card_balance_fee, system_balance_fee
+		from W_ACC_ST.W_ST_ACT_SVT
+		where card_logical_id = #{cardLogicalId}
+		order by card_logical_id)
+		where rownum = 1
+	</select>
+	<select id="getHisBalance"
+		parameterType="com.goldsign.acc.app.opma.entity.NonReturnApplyHandle"
+		resultMap="HisResultMap">
+		select card_logical_id, deal_balance_fee from (select
+		card_logical_id,deal_balance_fee
+		from w_acc_st.w_op_non_return_tk_hist
+		where card_logical_id = #{cardLogicalId}
+		and pay_mode_id in
+		('18', '10',
+		'11', '12', '14', '1A', '1C', '04', '06')
+		and deal_datetime =
+		(select
+		max(deal_datetime)
+		from w_acc_st.w_op_non_return_tk_hist
+		where
+		card_logical_id = #{cardLogicalId}
+		and pay_mode_id in
+		('18', '10', '11',
+		'12', '14', '1A', '1C', '04', '06')) order by
+		card_logical_id) where
+		rownum = 1
+	</select>
+	<update id="confirmRefundOrNot"
+		parameterType="com.goldsign.acc.app.opma.entity.NonReturnApplyHandle">
+		update W_ACC_ST.W_ST_LIST_NON_RTN set HDL_FLAG =
+		#{hdlFlag}, DEPOSIT_FEE =
+		#{depositFee}, CARD_BALANCE_FEE =
+		#{cardBalanceFee},
+		SYSTEM_BALANCE_FEE = #{systemBalanceFee},
+		PENALTY_FEE=#{penaltyFee},
+		RETURN_BALA = #{returnBala},
+		REMARK=#{remark,jdbcType=VARCHAR},
+		ACTUAL_RETURN_BALA=#{actualReturnBala},
+		PENALTY_REASON=#{penaltyReason} where
+		BUSINESS_RECEIPT_ID=#{businessReceiptId}
+	</update>
+	<update id="confirmAudit"
+		parameterType="com.goldsign.acc.app.opma.entity.NonReturnApplyHandle">
+		update W_ACC_ST.W_ST_LIST_NON_RTN set AUDIT_FLAG = '1'
+		where
+		BUSINESS_RECEIPT_ID=#{businessReceiptId}
+	</update>
+	<update id="confirmModify"
+		parameterType="com.goldsign.acc.app.opma.entity.NonReturnApplyHandle">
+		<if test="hdlFlag == &quot;2&quot;">
+			update W_ACC_ST.W_ST_LIST_NON_RTN set
+			HDL_FLAG =
+			#{hdlFlag}, AUDIT_FLAG = null, DEPOSIT_FEE = null,
+			CARD_BALANCE_FEE =
+			null, SYSTEM_BALANCE_FEE = null,
+			PENALTY_FEE=null, RETURN_BALA = null,
+			REMARK=#{remark,jdbcType=VARCHAR}, ACTUAL_RETURN_BALA=null,
+			PENALTY_REASON=null
+			where
+			BUSINESS_RECEIPT_ID=#{businessReceiptId}
+		</if>
+		<if test="hdlFlag == null">
+			update W_ACC_ST.W_ST_LIST_NON_RTN set
+			AUDIT_FLAG =
+			null,PENALTY_FEE= #{penaltyFee}, RETURN_BALA = #{returnBala}, PENALTY_REASON=#{penaltyReason,jdbcType=VARCHAR},
+			REMARK=#{remark,jdbcType=VARCHAR}, ACTUAL_RETURN_BALA= #{actualReturnBala}
+			where
+			BUSINESS_RECEIPT_ID=#{businessReceiptId}
+		</if>
+		<if test="hdlFlag == &quot;&quot;">
+			update W_ACC_ST.W_ST_LIST_NON_RTN set
+			AUDIT_FLAG =
+			null,REMARK=#{remark,jdbcType=VARCHAR}
+			where BUSINESS_RECEIPT_ID=#{businessReceiptId}
+		</if>
+		<if test="hdlFlag == &quot;6&quot;">
+			update W_ACC_ST.W_ST_LIST_NON_RTN set
+			HDL_FLAG =
+			#{hdlFlag}, AUDIT_FLAG = null, DEPOSIT_FEE = 0, CARD_BALANCE_FEE =
+			0,
+			SYSTEM_BALANCE_FEE = 0,
+			PENALTY_FEE=0, RETURN_BALA = 0,
+			REMARK=#{remark,jdbcType=VARCHAR}, ACTUAL_RETURN_BALA=0,
+			PENALTY_REASON=null
+			where
+			BUSINESS_RECEIPT_ID=#{businessReceiptId}
+		</if>
+	</update>
+
+	<select id="queryToMap"
+		parameterType="com.goldsign.acc.app.opma.entity.NonReturnApplyHandle"
+		resultType="map">
+		select
+		WATER_NO, LINE_ID, STATION_ID, DEV_TYPE_ID, DEVICE_ID,
+		CARD_MAIN_ID,
+		CARD_SUB_ID,
+		CARD_LOGICAL_ID, CARD_PHYSICAL_ID,
+		CARD_PRINT_ID, to_char(APPLY_DATETIME,'yyyy-mm-dd hh24:mi:ss') APPLY_DATETIME, RECEIPT_ID,
+		OPERATOR_ID,
+		APPLY_NAME,
+		TEL_NO, IDENTITY_TYPE, IDENTITY_ID, IS_BROKEN, SHIFT_ID,
+		CARD_APP_FLAG,
+		BALANCE_WATER_NO, HDL_FLAG, DEPOSIT_FEE,
+		CARD_BALANCE_FEE, SYSTEM_BALANCE_FEE,
+		PENALTY_FEE,
+		RETURN_BALA,
+		A.REMARK, RETURN_LINE_ID, RETURN_STATION_ID, RETURN_DEV_TYPE_ID,
+		RETURN_DEVICE_ID,
+		ACTUAL_RETURN_BALA, AUDIT_FLAG, PENALTY_REASON,
+		RETURN_TYPE, BUSINESS_RECEIPT_ID
+		,to_char(APPLY_DATETIME+to_number(cfg_value),'yyyy-mm-dd') as
+		MIN_RETURN_DATE ,CASE WHEN
+		(TO_DATE(SYSDATE)>TO_DATE(APPLY_DATETIME+TO_NUMBER(CFG_VALUE)) and
+		HDL_FLAG = '2') THEN '1'
+		ELSE '0' END NON_HANDLE_FLAG
+		from
+		W_ACC_ST.W_ST_LIST_NON_RTN A,W_ACC_ST.W_ST_CFG_SYS_BASE B
+		where
+		hdl_flag !='8' and return_type = '1' and cfg_key
+		='sys.non_return_day'
+		and record_flag = '0'
+		<if test="beginDatetime != null">
+			and APPLY_DATETIME &gt;=
+			to_date(#{beginDatetime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+		</if>
+		<if test="endDatetime != null">
+			and APPLY_DATETIME &lt;=
+			to_date(#{endDatetime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+		</if>
+		<if test="lineId != null">
+			and LINE_ID = #{lineId}
+		</if>
+		<if test="stationId != null">
+			and STATION_ID = #{stationId}
+		</if>
+		<if test="cardPrintId != null">
+			and CARD_PRINT_ID like '%${cardPrintId}%'
+		</if>
+		<if test="businessReceiptId != null">
+			and BUSINESS_RECEIPT_ID like '%${businessReceiptId}%'
+		</if>
+		<if test="handleType != null">
+			<if test="handleType == &quot;2&quot;">
+				and HDL_FLAG = '2'
+			</if>
+			<if test="handleType == &quot;1&quot;">
+				and HDL_FLAG &lt;&gt; '2'
+			</if>
+		</if>
+		order by
+		audit_flag,hdl_flag,apply_datetime,shift_id,line_id,station_id,device_id,receipt_id
+	</select>
+
+</mapper>

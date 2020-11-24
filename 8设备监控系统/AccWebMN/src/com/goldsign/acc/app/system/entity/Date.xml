@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.system.mapper.DateMapper">
+    
+    <resultMap type="com.goldsign.acc.app.system.entity.Date" id="rmDate">
+        
+        <result column="FILE_NAME" property="fileName" /> 
+        <result column="LATEST_TIME" property="latestTime" /> 
+
+    </resultMap>
+    
+    <select id="select"  parameterType="com.goldsign.acc.app.system.entity.Date" resultType="int">
+        select count(1) from w_acc_mn.w_mtr_ftp_file_latest 
+        where latest_time  &gt;= #{latestTime} and file_name =  #{fileName}
+    </select>
+    
+    <update id="update" parameterType="com.goldsign.acc.app.system.entity.Date" >
+        update w_acc_mn.w_mtr_ftp_file_latest 
+        set latest_time= #{latestTime} where file_name= #{fileName}
+    </update>
+   
+    <insert id="insertIntoCur" parameterType="com.goldsign.acc.app.system.entity.Date" >
+        insert into w_acc_mn.w_mtr_ftp_file_latest
+        (latest_time,file_name) 
+        values( #{latestTime}, #{fileName} )
+    </insert>
+    
+</mapper>
+
+
+
+

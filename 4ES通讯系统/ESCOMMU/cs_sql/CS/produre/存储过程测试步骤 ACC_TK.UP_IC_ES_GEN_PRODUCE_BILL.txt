@@ -1,0 +1,69 @@
+票务管理系统-车票出库-生产出库
+-》新建生产出库计划单（ic_out_date_plan）
+-》增加计划单明细（ic_out_date_plan_detail）
+-》审核
+-》生成出库单（ic_out_bill、ic_out_bill_detail）
+-》审核出库单
+-》生成生产订单（按单元数量（ic_cod_card_type_contrast）拆分出库单为N张出库订单）
+    （订单相关表：ic_pdu_plan_order_mapping、IC_PDU_ORDER_FORM）
+    
+-》初始化ic_cod_station_contrast设备对照表
+-》初始化ic_cod_card_type_contrast票卡类型对照表
+
+
+运营中心管理系统
+初始化数据
+IC_COD_STATION_CONTRAST 车站对照表
+ACC_ST.OP_PRM_SAM_LIST sam卡对照表（设备管理）
+
+
+票卡生产系统
+IC_ES_INITI_INFO_BUF --初始化
+IC_ES_HUNCH_INFO_BUF --预赋值
+IC_ES_AGAIN_INFO_BUF --重编码
+IC_ES_LOGOUT_INFO_BUF --注销
+
+ES通讯系统
+-》更新订单状态（IC_PDU_ORDER_FORM）
+-》生成生产工作单（IC_PDU_PRODUCE_BILL、IC_PDU_PRODUCE_BILL_detail）
+-》插入正式明细表
+IC_ES_INITI_INFO
+IC_ES_HUNCH_INFO
+IC_ES_AGAIN_INFO
+IC_ES_LOGOUT_INFO
+
+--日工作计划单 RJ2013000022
+SELECT * FROM ic_out_date_plan WHERE bill_no='RJ2013000024';
+SELECT * FROM ic_out_date_plan_detail WHERE bill_no='RJ2013000024';
+--生产出库单 SC2013000030
+SELECT * FROM ic_out_bill WHERE bill_no='SC2013000034'--distribute_bill_no = 'RJ2013000023';
+SELECT * FROM ic_out_bill_detail WHERE bill_no='SC2013000034';
+--生产订单号  00201307220001\00201307220002\00201307220003\00201307220004     01201307230001
+SELECT * FROM ic_pdu_plan_order_mapping WHERE plan_bill_no='RJ2013000026' AND  out_bill_no='SC2013000034';
+SELECT * FROM ic_pdu_order_form WHERE order_no IN('01201307240006','01201307240007','01201307240008','01201307240009','01201307240010'
+,'01201307240011');
+
+SELECT * FROM ic_pdu_produce_bill WHERE out_bill_no='SC2013000034';
+SELECT * FROM ic_pdu_produce_bill_detail t WHERE t.bill_no='SD2013000009';
+
+SELECT * FROM IC_COD_CARD_TYPE_CONTRAST WHERE card_main_type='02' AND card_sub_type='00';
+SELECT * FROM ic_cod_station_contrast 
+
+SELECT * FROM ic_pdu_plan_order_mapping a,ic_out_bill b WHERE a.plan_bill_no=b.distribute_bill_no(+);
+
+select  * from ic_cod_card_type_contrast FOR UPDATE
+
+
+--精简
+SELECT * FROM ic_pdu_order_form WHERE order_no IN(SELECT order_no FROM ic_pdu_plan_order_mapping WHERE out_bill_no='SC2013000066');
+
+SELECT * FROM ic_pdu_produce_bill WHERE out_bill_no='SC2013000066';
+
+--00
+DELETE IC_ES_INITI_INFO_BUF;
+--01
+DELETE IC_ES_HUNCH_INFO_BUF;
+--02
+DELETE IC_ES_AGAIN_INFO_BUF;
+--03
+DELETE IC_ES_LOGOUT_INFO_BUF;

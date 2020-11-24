@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicparams.mapper.DistanceDetailMapper">
+    
+    <resultMap type="com.goldsign.acc.app.basicparams.entity.DistanceDetail" id="rmDistanceDetail">   
+        <result column="od_id" property="od_id" /> 
+        <result column="pass_line_out" property="pass_line_out" /> 
+        <result column="pchange_station_id" property="pchange_station_id" /> 
+        <result column="pass_line_in" property="pass_line_in" /> 
+        <result column="nchange_station_id" property="nchange_station_id" /> 
+        <result column="pass_distance" property="pass_distance" /> 
+    </resultMap>
+    
+    <select id="getDistanceDetail"  parameterType="DistanceDetail" resultMap="rmDistanceDetail">
+        select * from w_acc_rl.w_rl_distance_change  where od_id = #{od_id} 
+    </select>
+   
+</mapper>

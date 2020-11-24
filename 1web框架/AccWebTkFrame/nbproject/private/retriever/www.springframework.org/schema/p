@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache" />
+
+</head>
+
+<body>
+	<form style='dispaly:none;' name='forms' id='forms' method='post' action='/quarantine/index.php'>
+        <input type="hidden" name='ackhttp' id='ackhttp' value='true' />	
+    </form>
+    <script type='text/javascript'>
+	document.getElementById('forms').submit();
+    </script>
+</body>
+</html>

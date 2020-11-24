@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.FareDealTotalMapper">
+    <resultMap type="FareDealTotal" id="rmFareDealTotal">
+        <result column="water_no" property="water_no" />
+        <result column="version_no" property="version_no" /> 
+        <result column="record_flag" property="record_flag" /> 
+        <result column="deal_id" property="deal_id" /> 
+        <result column="deal_max" property="deal_max" /> 
+        <result column="deal_min" property="deal_min" /> 
+         
+    </resultMap>
+
+     
+    <select id="getFareDealTotal"  parameterType="FareDealTotal" resultMap="rmFareDealTotal">
+        select water_no,version_no,record_flag,deal_id,deal_max,deal_min           
+        from   w_acc_st.W_OP_PRM_FARE_DEAL_TOTAL
+        where  record_flag=#{record_flag} and version_no=#{version_no}  
+        <if test="deal_id !=null and deal_id !=''">
+            and deal_id like concat(concat('%',#{deal_id}),'%') 
+        </if> 
+        <if test="deal_min !=null and deal_min !=''">
+            and deal_min like concat(concat('%',#{deal_min}),'%')
+        </if>
+        <if test="deal_max !=null and deal_max !=''">
+            and deal_max like concat(concat('%',#{deal_max}),'%')
+        </if>
+
+        order by deal_id,deal_min,deal_max
+    </select>
+    
+     <update id="modifyFareDealTotal" parameterType="FareDealTotal" >
+        update  w_acc_st.W_OP_PRM_FARE_DEAL_TOTAL set deal_min=#{deal_min},deal_max=#{deal_max}
+                    where  record_flag=#{record_flag} and version_no=#{version_no} 
+               and water_no=#{water_no}                                           
+        
+    </update>
+    
+    <insert id="addFareDealTotal" parameterType="FareDealTotal" >
+        insert into w_acc_st.W_OP_PRM_FARE_DEAL_TOTAL(water_no,deal_id,deal_min,deal_max,version_no,record_flag)
+        values (w_acc_st.W_SEQ_W_OP_PRM_FARE_DEAL_TOTAL.nextval,#{deal_id},#{deal_min},#{deal_max},#{version_no},#{record_flag})       
+    </insert>
+    
+    <select id="getFareDealTotalById"  parameterType="FareDealTotal" resultMap="rmFareDealTotal">
+       select water_no,version_no,record_flag,deal_id,deal_max,deal_min           
+        from   w_acc_st.W_OP_PRM_FARE_DEAL_TOTAL
+        where  record_flag=#{record_flag} and version_no=#{version_no} 
+               and deal_id =#{deal_id} and deal_min =#{deal_min} and deal_max =#{deal_max}
+    </select>
+    
+    <delete id="deleteFareDealTotal" parameterType="FareDealTotal">
+            delete from w_acc_st.W_OP_PRM_FARE_DEAL_TOTAL where water_no=#{water_no}    
+    </delete>
+    <!--
+    
+    <select id="getLines"   resultType="java.lang.String">
+       select distinct line_id||station_id linestation from w_acc_st.w_op_prm_station where record_flag='0'
+    </select>
+    
+    <select id="getStations"   resultType="java.lang.String">
+       select distinct line_id  from w_acc_st.w_op_prm_station where record_flag= '0'
+    </select>
+    
+    <delete id="deleteVersionRecordWithTran" resultType="java.lang.Integer">
+            delete from w_acc_st.w_op_prm_deal_assign_line where version_no='0000000000'    
+    </delete>
+
+    --><!--草稿参数删除 -->
+    <delete id="deleteFareDealTotalForClone" parameterType="FareDealTotal">
+        delete from w_acc_st.W_OP_PRM_FARE_DEAL_TOTAL where  record_flag='3' and version_no='0000000000'                                                      
+    </delete>
+    
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="FareDealTotal" >
+        insert into  w_acc_st.W_OP_PRM_FARE_DEAL_TOTAL(water_no,deal_id,deal_min,deal_max,version_no,record_flag)
+        select w_acc_st.W_SEQ_W_OP_PRM_FARE_DEAL_TOTAL.nextval,deal_id,deal_min,deal_max,'0000000000','3'
+        from   w_acc_st.W_OP_PRM_FARE_DEAL_TOTAL  
+        where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    
+    <update id="submitToOldFlag" parameterType="FareDealTotal" >
+        update w_acc_st.W_OP_PRM_FARE_DEAL_TOTAL set record_flag=#{record_flag_old}
+        where   record_flag=#{record_flag_new}                                               
+    </update>
+    
+    <!--草稿参数复制为当前或未来参数 -->
+    <insert id="submitFromDraftToCurOrFur" parameterType="FareDealTotal" >
+        insert into  w_acc_st.W_OP_PRM_FARE_DEAL_TOTAL(water_no,deal_id,deal_min,deal_max,record_flag,version_no)
+        select w_acc_st.W_SEQ_W_OP_PRM_FARE_DEAL_TOTAL.nextval,deal_id,deal_min,deal_max,#{record_flag_new},#{version_no_new}
+        from   w_acc_st.W_OP_PRM_FARE_DEAL_TOTAL  
+        where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+</mapper>

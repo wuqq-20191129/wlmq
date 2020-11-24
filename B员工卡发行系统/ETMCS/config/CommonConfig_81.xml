@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Config> 
+    <Common>
+        <StationId>9900</StationId>
+        <DeviceType>09</DeviceType>
+        <DeviceNo>201</DeviceNo>
+        <SystemFlag>07</SystemFlag>
+    </Common>
+    <DataConnectionPool>
+        <Driver>oracle.jdbc.driver.OracleDriver</Driver>
+        <URL>jdbc:oracle:thin:@10.99.11.81:1521:wacctstdb</URL>
+        <User encrypt="true">30102D2730163325</User>
+        <Password encrypt="true">30102D2730163325</Password>
+        
+        <MaxActive>20</MaxActive>
+        <MaxIdle>10</MaxIdle>
+        <MaxWait>20000</MaxWait>
+    </DataConnectionPool>
+    <RwDevice>
+        <RwPort>COM4</RwPort>
+    </RwDevice>
+    <KmsCommu>
+        <KmIp>10.99.10.50</KmIp>
+        <KmPort>8</KmPort>
+        <KmPin>83000991</KmPin>
+        <KmVersion>02</KmVersion> 
+    </KmsCommu>
+    <Upload>
+        <MakeCard>/data/upload/markcard</MakeCard>
+    </Upload>
+    <EsCommu>
+        <ServerIp>10.99.11.81</ServerIp>
+        <ServerPort>5002</ServerPort>
+    </EsCommu>
+</Config>

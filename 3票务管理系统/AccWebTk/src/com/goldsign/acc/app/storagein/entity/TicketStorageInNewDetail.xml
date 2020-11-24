@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.storagein.mapper.TicketStorageInNewDetailMapper">
+    <resultMap type="TicketStorageInNewDetail" id="rmTicketStorageInNewDetailByBillNo">
+        <result column="bill_no" property="bill_no" /> 
+        <result column="water_no" property="water_no" />
+        <result column="reason_id" property="reason_id" />
+        <result column="storage_id" property="storage_id" />
+        <result column="area_id" property="area_id" />
+        <result column="ic_main_type" property="ic_main_type" />
+        <result column="ic_sub_type" property="ic_sub_type" />
+        <result column="in_num" property="in_num" />
+        <result column="card_money" property="card_money" />
+        <result column="valid_date" property="valid_date" />
+        <result column="model" property="model" />
+    </resultMap>
+    
+    <select id="getTicketStorageInNewDetailByBillNo" parameterType="String" resultMap="rmTicketStorageInNewDetailByBillNo">
+        select bill_no,water_no,reason_id,storage_id,area_id,ic_main_type,ic_sub_type,
+                in_num,card_money,valid_date,model
+        from w_acc_tk.w_ic_in_store_detail where bill_no = #{billNo} order by water_no
+    </select>
+    
+    <select id="getHisTable" parameterType="String" resultType="String">
+        select his_table from w_acc_tk.w_ic_idx_history 
+        where origin_table_name='w_ic_in_store_detail' and substr(#{billNo},3,10) between begin_recd and end_recd 
+    </select>
+    
+    <select id="getTicketStorageInNewHisByBillNo" parameterType="Map" resultMap="rmTicketStorageInNewDetailByBillNo">
+        select bill_no,water_no,reason_id,storage_id,area_id,ic_main_type,ic_sub_type,
+                in_num,card_money,valid_date,model
+        from w_acc_tk.${tableName} where 1=1
+        <if test="billNo !=null and billNo !=''">
+            and bill_no = #{billNo}
+        </if> 
+        order by water_no
+    </select>
+    
+    <insert id="addTicketStorageInNewDetail" parameterType="TicketStorageInNewDetail" >
+        insert into w_acc_tk.w_ic_in_store_detail
+                    (water_no,card_money,bill_no,reason_id,storage_id,area_id,ic_main_type,
+                    ic_sub_type,detail_place,start_box_id,end_box_id,start_logical_id,
+                    end_logical_id,valid_date,line_id,station_id,in_num,report_date,
+                    line_id_reclaim,station_id_reclaim,exit_line_id,exit_station_id,model)
+           values   (w_acc_tk.W_SEQ_W_IC_IN_DETAIL.nextval,0,#{bill_no},#{reason_id},#{storage_id},#{area_id},#{ic_main_type},
+                    #{ic_sub_type},'','','','',
+                    '',to_date('1970-01-01','yyyy-mm-dd'),' ',' ',#{in_num},to_date('1970-01-01','yyyy-mm-dd'),
+                    '','',' ',' ','000')       
+    </insert>
+    
+    <select id="getDetailByStorage" parameterType="TicketStorageInNewDetail" resultMap="rmTicketStorageInNewDetailByBillNo">
+        select bill_no,water_no,reason_id,storage_id,area_id,ic_main_type,ic_sub_type,
+                in_num,card_money,valid_date,model
+        from w_acc_tk.w_ic_in_store_detail where  bill_no = #{bill_no} and storage_id !=#{storage_id}
+          order by water_no
+    </select>
+    
+    <delete id="deleteTicketStorageInNewDetail" parameterType="TicketStorageInNewDetail" >
+        delete from  w_acc_tk.w_ic_in_store_detail where water_no=${water_no}
+    </delete>
+    
+    <select id="getAllNumByBillNo" parameterType="TicketStorageInNewDetail" resultType="int">
+        select  nvl(sum(in_num),0) sumNum from w_acc_tk.w_ic_in_store_detail  
+        where 1=1
+        <if test="bill_no !=null and bill_no !=''">
+            and bill_no = #{bill_no}
+        </if> 
+        <if test="water_no !=null and water_no !=''">
+            and water_no!=#{water_no}
+        </if>  
+    </select>
+    
+    <select id="getMaxNumOfArea" parameterType="TicketStorageInNewDetail" resultType="int">
+        select upper_num-nvl(real_num,0) max_num from w_acc_tk.w_ic_cod_area
+        where  storage_id =#{storage_id} and area_id =#{area_id}
+    </select>
+    
+    <update id="modifyTicketStorageInNewDetail" parameterType="TicketStorageInNewDetail" >
+        update w_acc_tk.w_ic_in_store_detail set 
+            storage_id =#{storage_id},
+            area_id =#{area_id},
+            ic_main_type =#{ic_main_type},
+            ic_sub_type =#{ic_sub_type},
+            in_num =#{in_num}
+        where water_no = #{water_no}                                            
+    </update>
+</mapper>

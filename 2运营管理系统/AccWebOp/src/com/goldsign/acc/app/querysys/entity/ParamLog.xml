@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.ParamLogMapper">
+    <resultMap type="ParamLog" id="rmParamLog">
+        
+        <result column="water_no" property="water_no" /> 
+        <result column="operator_id" property="operator_id" /> 
+        <result column="param_type_id" property="param_type_id" /> 
+        <result column="op_type" property="op_type" /> 
+        <result column="op_time" property="op_time" /> 
+        <result column="result" property="result" /> 
+        <result column="remark" property="remark" /> 
+    </resultMap>
+
+    <select id="getParamLogs"  parameterType="ParamLog" resultMap="rmParamLog">
+        select water_no,operator_id,param_type_id,op_type,op_time,result,remark
+        from   W_ACC_ST.w_op_log_prm_operate
+        where  1=1
+        <if test="beginDate !=null and beginDate !=''">
+            and op_time &gt;= to_date(#{beginDate}, 'yyyy-mm-dd hh24:mi:ss') 
+        </if> 
+        <if test="endDate !=null and endDate !=''">
+            and op_time &lt;= to_date(#{endDate}, 'yyyy-mm-dd hh24:mi:ss') 
+        </if>
+        <if test="operator_id !=null and operator_id !=''">
+            and operator_id =#{operator_id} 
+        </if> 
+        <if test="param_type_id !=null and param_type_id !=''">
+            and param_type_id =#{param_type_id} 
+        </if>
+        order by op_time DESC,water_no 
+    </select>
+    
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.commu.mapper.CmClearLogMapper">
+    <resultMap type="CmClearLog" id="rmCmClearLog">
+        
+        <result column="origin_table_name" property="origin_table_name" /> 
+        <result column="begin_clear_datetime" property="begin_clear_datetime" /> 
+        <result column="end_clear_datetime" property="end_clear_datetime" /> 
+        <result column="clear_recd_count" property="clear_recd_count" /> 
+        <result column="err_discribe" property="err_discribe" /> 
+    </resultMap> 
+     
+    <select id="getCmClearLog"  parameterType="CmClearLog" resultMap="rmCmClearLog">
+        select origin_table_name,begin_clear_datetime,end_clear_datetime,clear_recd_count,err_discribe from W_ACC_CM.W_CM_LOG_CLEAR_TABLE t  where 1=1 
+        <if test="origin_table_name !=null and origin_table_name !=''">
+            and origin_table_name like '%${origin_table_name}%'
+        </if>
+        <if test="begin_clear_datetime != null and begin_clear_datetime !=''">
+            and  begin_clear_datetime &gt;= #{begin_clear_datetime}
+        </if>
+        <if test="end_clear_datetime != null and end_clear_datetime !=''">
+            and  end_clear_datetime &lt;= #{end_clear_datetime}
+        </if>
+        order by origin_table_name
+    </select>
+    
+</mapper>

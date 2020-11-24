@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.frame.mapper.PubFlagMapper">
+    <resultMap type="PubFlag" id="rmPubFlag">
+        <id column="code" property="code" />
+        <result column="code_text" property="code_text" />  
+    </resultMap>
+    <resultMap type="PubFlag" id="rmPubFlagType">
+        <id column="code" property="code" />
+        <result column="code_text" property="code_text" />  
+        <result column="code_type" property="code_type" />
+    </resultMap>
+    
+     
+    <select id="getLines"  resultMap="rmPubFlag">
+        select line_id code,line_name code_text  from w_acc_st.w_op_prm_line where record_flag='3' order by line_id
+    </select>
+    <select id="getStations"  resultMap="rmPubFlagType">
+        select LINE_ID code_type,STATION_ID code,CHINESE_NAME code_text  from w_acc_st.W_OP_PRM_STATION where record_flag='3' order by LINE_ID,STATION_ID
+    </select>
+    <select id="getDevTypes"  resultMap="rmPubFlag">
+        select DEV_TYPE_ID code,DEV_TYPE_NAME code_text  from w_acc_st.W_OP_PRM_DEV_TYPE where record_flag='3' order by DEV_TYPE_ID
+    </select>
+    <select id="getButtons"  resultMap="rmPubFlag">
+        select BTN_ID code,BTN_NAME code_text  from w_acc_st.W_OP_COD_BTN_TYPE  order by BTN_ID
+    </select>
+    <select id="getMerchants"  resultMap="rmPubFlag">
+        select STORE_ID code,STORE_NAME code_text  from w_acc_st.w_op_cod_store where record_flag='3' order by STORE_ID
+    </select>
+    <select id="getRecordFlags"  parameterType="String" resultType="PubFlag">
+        select  code, code_text  from w_acc_st.w_op_cod_pub_flag where type='45' and code=#{id}
+    </select>
+     
+    <select id="getCodesByType"  parameterType="int" resultType="PubFlag">
+        select  code, code_text  from w_acc_tk.w_ic_sam_pub_flag where type=#{type} order by code
+    </select>
+    
+    <select id="getSamType"  resultMap="rmPubFlag">
+        select sam_type_code code, sam_type_desc code_text  from w_acc_tk.w_ic_sam_type order by code
+    </select>
+    
+    <select id="getProduceType"  resultMap="rmPubFlag">
+        select code, code_text  from w_acc_tk.w_ic_sam_pub_flag where type='5' order by code
+    </select>
+    
+    <select id="getStockState"  resultMap="rmPubFlag">
+        select code, code_text  from w_acc_tk.w_ic_sam_pub_flag where type='6' order by code
+    </select>
+    
+    <select id="getIsInstock"  resultMap="rmPubFlag">
+        select code, code_text  from w_acc_tk.w_ic_sam_pub_flag where type='7' order by code
+    </select>
+    
+    <select id="getIsBad"  resultMap="rmPubFlag">
+        select code, code_text  from w_acc_tk.w_ic_sam_pub_flag where type='4' order by code
+    </select>
+    
+    <select id="getLineEs"  resultMap="rmPubFlag">
+        select LINE_ES_CODE code,LINE_ES_DESC code_text  from w_acc_tk.w_ic_sam_line_es order by code
+    </select>
+    
+    <select id="getInStockStates"  resultMap="rmPubFlag">
+        select code, code_text  from w_acc_tk.w_ic_sam_pub_flag where type='3' order by code
+    </select>
+    
+    <select id="getBillFinishs"  resultMap="rmPubFlag">
+        select code, code_text  from w_acc_tk.w_ic_sam_pub_flag where type='1' order by code
+    </select>
+    
+    <select id="getDistributePlace"  resultMap="rmPubFlag">
+        select line_es_code code,line_es_desc code_text from w_acc_tk.w_ic_sam_line_es  order by line_es_code
+    </select>
+    
+    <select id="getLineEsType"  resultMap="rmPubFlag">
+        select code, code_text  from w_acc_tk.w_ic_sam_pub_flag where type='2' order by code
+    </select>
+    
+    <select id="getIssueOrderNo"  resultMap="rmPubFlag">
+        SELECT t.order_no code,t.order_no code_text FROM w_acc_tk.w_ic_sam_out_issue t, w_acc_tk.w_ic_sam_order_plan a
+        WHERE t.pdu_order_no = a.order_no and t.order_state = '1'
+        AND t.in_stock_state !='2'
+         and a.finish_flag = '2'
+         and not exists ( select 1 from w_acc_tk.w_ic_sam_in_make b where b.issue_order_no = t.order_no)
+    </select>
+    
+    <select id="getSamTypeDescs"  resultMap="rmPubFlag">
+        select sam_type_code code, sam_type_desc code_text  from w_acc_tk.W_IC_SAM_TYPE  order by code
+    </select>
+    
+    <!-- 操作员-->
+    <select id="getOperators"  resultMap="rmPubFlag">
+        select sys_operator_id code,sys_operator_name code_text  from w_acc_st.w_op_sys_operator order by sys_operator_name
+    </select>
+</mapper>

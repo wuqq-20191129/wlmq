@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicinfo.mapper.SamTypeMapper">
+    
+    <resultMap type="com.goldsign.acc.app.basicinfo.entity.SamType" id="rmSamType">      
+        <result column="sam_type_code" property="sam_type_code" /> 
+        <result column="sam_type_desc" property="sam_type_desc" /> 
+        <result column="pdu_warn_threshhold" property="pdu_warn_threshhold" /> 
+        <result column="ety_warn_threshhold" property="ety_warn_threshhold" /> 
+        <result column="remark" property="remark" />  
+        <result column="sam_type" property="sam_type" />   
+    </resultMap>
+    
+    <select id="querySamType" parameterType="com.goldsign.acc.app.basicinfo.entity.SamType" resultMap="rmSamType">
+        select sam_type_code,sam_type_desc,pdu_warn_threshhold,ety_warn_threshhold,remark from W_ACC_TK.W_IC_SAM_TYPE where 1=1
+        <if test="sam_type_code != '' and sam_type_code != null">
+            and sam_type_code like concat(concat('%',#{sam_type_code}),'%')
+        </if>
+        <if test="sam_type_desc != '' and sam_type_desc != null">
+            and sam_type_desc =#{sam_type_desc}
+        </if>
+        order by sam_type_code
+    </select>
+    
+    <!-- 查询卡类型定义名称-->
+    <select id="getSamTypeDesc" parameterType="com.goldsign.acc.app.basicinfo.entity.SamType" resultType="java.lang.String">
+        select trim(sam_type_desc) from W_ACC_TK.W_IC_SAM_TYPE where sam_type_code=#{sam_type_desc}
+        
+    </select>
+    
+    <select id="querySamTypeById" parameterType="com.goldsign.acc.app.basicinfo.entity.SamType" resultMap="rmSamType">
+        select sam_type_code,sam_type_desc,pdu_warn_threshhold,ety_warn_threshhold,remark from W_ACC_TK.W_IC_SAM_TYPE where sam_type_code = #{sam_type_code}
+    </select>
+    
+    <select id="querySamTypeByName" parameterType="com.goldsign.acc.app.basicinfo.entity.SamType" resultMap="rmSamType">
+        select sam_type_code,sam_type_desc,pdu_warn_threshhold,ety_warn_threshhold,remark from W_ACC_TK.W_IC_SAM_TYPE where sam_type_desc = #{sam_type_desc}
+    </select>
+    
+    <select id="queryIsUsed" parameterType="com.goldsign.acc.app.basicinfo.entity.SamType" resultMap="rmSamType">
+        select 1 from W_ACC_TK.W_IC_SAM_TYPE a, W_ACC_TK.W_IC_SAM_STOCK b where b.sam_type = a.sam_type_code and a.sam_type_code = #{sam_type_code}
+    </select>
+    
+    <select id="checkInNew" parameterType="com.goldsign.acc.app.basicinfo.entity.SamType" resultMap="rmSamType">
+        select 1 from W_ACC_TK.W_IC_SAM_TYPE a, W_ACC_TK.W_IC_SAM_IN_NEW b where b.sam_type = a.sam_type_code and  a.sam_type_code = #{sam_type_code}        
+    </select>
+    
+    <select id="checkIsDefin" parameterType="com.goldsign.acc.app.basicinfo.entity.SamType" resultMap="rmSamType">
+        select 1 from W_ACC_TK.W_IC_SAM_TYPE where sam_type_desc = #{sam_type_desc} and sam_type_code &lt;&gt; #{sam_type_code}
+    </select>
+    
+    <insert id="addSamType" parameterType="com.goldsign.acc.app.basicinfo.entity.SamType">
+        insert into W_ACC_TK.W_IC_SAM_TYPE (sam_type_code,sam_type_desc,pdu_warn_threshhold,ety_warn_threshhold,remark) values (#{sam_type_code},#{sam_type_desc},#{pdu_warn_threshhold},#{ety_warn_threshhold},#{remark})
+    </insert>
+    
+    <delete id="deleteSamType" parameterType="com.goldsign.acc.app.basicinfo.entity.SamType">
+        delete from W_ACC_TK.W_IC_SAM_TYPE where sam_type_code = #{sam_type_code}
+    </delete>
+    
+    <update id="modifySamType" parameterType="com.goldsign.acc.app.basicinfo.entity.SamType">
+        update W_ACC_TK.W_IC_SAM_TYPE set sam_type_code = #{sam_type_code},sam_type_desc = #{sam_type_desc},pdu_warn_threshhold = #{pdu_warn_threshhold},ety_warn_threshhold = #{ety_warn_threshhold},remark = #{remark} where sam_type_code = #{sam_type_code}
+    </update>
+    
+</mapper>

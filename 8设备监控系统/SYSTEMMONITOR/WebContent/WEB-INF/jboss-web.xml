@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-web>
+
+    <security-domain flushOnSessionInvalidation="false"/>
+    <context-root>/sysmonitor</context-root>
+    <resource-ref>
+        <res-ref-name>jdbc/tkdb_1</res-ref-name>
+        <jndi-name>jdbc/tkdb_1</jndi-name>
+    </resource-ref>
+    <resource-ref>
+        <res-ref-name>jdbc/dbmon</res-ref-name>
+        <jndi-name>jdbc/dbmon</jndi-name>
+    </resource-ref>
+    <resource-ref>
+        <res-ref-name>jdbc/dbmon_1</res-ref-name>
+        <jndi-name>jdbc/dbmon_1</jndi-name>
+    </resource-ref>
+
+
+
+</jboss-web>
+

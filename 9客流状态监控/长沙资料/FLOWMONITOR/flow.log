@@ -1,0 +1,64 @@
+2017-09-18 10:55:12,060 [main] INFO  com.goldsign.fm.application.Main - 获取配置文件信息
+2017-09-18 10:55:15,248 [main] INFO  com.goldsign.fm.common.AppUtil - id:all_-1 name:线网
+2017-09-18 10:55:15,654 [main] INFO  com.goldsign.fm.common.AppUtil - 生成小时客流线网进出客流时间0秒
+2017-09-18 10:55:15,674 [main] INFO  com.goldsign.fm.common.AppUtil - 从数据库获取小时客流原始分时客流时间0秒
+2017-09-18 10:55:15,687 [main] INFO  com.goldsign.fm.common.AppUtil - lineCode result:0,进
+2017-09-18 10:55:15,687 [main] INFO  com.goldsign.fm.common.AppUtil - lineCode result:1,出
+2017-09-18 10:55:15,691 [main] INFO  com.goldsign.fm.common.AppUtil - 小时客流原始分时客流数据整理时间0秒
+2017-09-18 10:55:15,691 [main] INFO  com.goldsign.fm.common.AppUtil - 从数据库获取小时客流分时客流时间0秒
+2017-09-18 10:55:16,046 [main] INFO  com.goldsign.fm.common.AppUtil - 生成小时客流分时客流图形时间0秒
+2017-09-18 10:56:16,058 [Thread-5] INFO  com.goldsign.fm.thread.RefreshThread - 刷新节点：线网
+2017-09-18 10:56:16,059 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - id:all_-1 name:线网
+2017-09-18 10:56:16,094 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - 生成小时客流线网进出客流时间0秒
+2017-09-18 10:56:16,109 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - 从数据库获取小时客流原始分时客流时间0秒
+2017-09-18 10:56:16,109 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - lineCode result:0,进
+2017-09-18 10:56:16,110 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - lineCode result:1,出
+2017-09-18 10:56:16,110 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - 小时客流原始分时客流数据整理时间0秒
+2017-09-18 10:56:16,110 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - 从数据库获取小时客流分时客流时间0秒
+2017-09-18 10:56:16,126 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - 生成小时客流分时客流图形时间0秒
+2017-09-18 10:56:27,229 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:all_-1 name:线网
+2017-09-18 10:56:27,332 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - 从数据库获取票卡类型客流时间0秒
+2017-09-18 10:56:27,332 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - 从数据库获取票卡类型客流时间0秒
+2017-09-18 10:56:27,436 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - 生成票卡类型客流图形时间0秒
+2017-09-18 10:56:29,790 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:all_-1 name:线网
+2017-09-18 10:56:32,282 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:01_-1 name:一号线
+2017-09-18 10:56:33,057 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:01_01 name:尚双塘
+2017-09-18 10:56:35,402 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:01_02 name:中信广场
+2017-09-18 10:56:36,233 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:01_13 name:黄兴广场
+2017-09-18 10:56:36,961 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:01_15 name:培元桥
+2017-09-18 10:56:37,409 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:01_18 name:北辰三角洲
+2017-09-18 10:56:39,161 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_02 name:金星路
+2017-09-18 10:56:43,897 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_01 name:望城坡
+2017-09-18 10:56:44,737 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_03 name:西湖公园
+2017-09-18 10:56:45,577 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_05 name:橘子洲
+2017-09-18 10:56:47,305 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_06 name:湘江中路
+2017-09-18 10:56:48,985 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_07 name:五一广场
+2017-09-18 10:56:49,729 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_08 name:芙蓉广场
+2017-09-18 10:56:50,929 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_07 name:五一广场
+2017-09-18 10:56:51,889 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_09 name:迎宾路口
+2017-09-18 10:56:53,433 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_11 name:长沙火车站
+2017-09-18 10:56:54,362 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_10 name:袁家岭
+2017-09-18 10:56:54,961 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_12 name:锦泰广场
+2017-09-18 10:56:55,521 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_13 name:万家丽广场
+2017-09-18 10:57:16,127 [Thread-5] INFO  com.goldsign.fm.thread.RefreshThread - 刷新节点：万家丽广场
+2017-09-18 10:57:16,127 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - id:02_13 name:万家丽广场
+2017-09-18 10:58:12,873 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_14 name:人民东路
+2017-09-18 10:58:14,273 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_09 name:迎宾路口
+2017-09-18 10:58:14,897 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_12 name:锦泰广场
+2017-09-18 10:58:15,624 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_17 name:杜花路
+2017-09-18 10:58:16,245 [Thread-5] INFO  com.goldsign.fm.thread.RefreshThread - 刷新节点：杜花路
+2017-09-18 10:58:16,245 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - id:02_17 name:杜花路
+2017-09-18 10:58:16,641 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_19 name:光达
+2017-09-18 10:58:17,713 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_22 name:榔梨
+2017-09-18 10:58:18,393 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_21 name:文华艺术中心
+2017-09-18 10:58:19,089 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_16 name:沙湾公园
+2017-09-18 10:58:19,658 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_13 name:万家丽广场
+2017-09-18 10:58:27,633 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:02_-1 name:二号线
+2017-09-18 10:59:16,320 [Thread-5] INFO  com.goldsign.fm.thread.RefreshThread - 刷新节点：二号线
+2017-09-18 10:59:16,321 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - id:02_-1 name:二号线
+2017-09-18 11:00:16,322 [Thread-5] INFO  com.goldsign.fm.thread.RefreshThread - 刷新节点：二号线
+2017-09-18 11:00:16,322 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - id:02_-1 name:二号线
+2017-09-18 11:01:16,323 [Thread-5] INFO  com.goldsign.fm.thread.RefreshThread - 刷新节点：二号线
+2017-09-18 11:01:16,323 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - id:02_-1 name:二号线
+2017-09-18 11:02:16,324 [Thread-5] INFO  com.goldsign.fm.thread.RefreshThread - 刷新节点：二号线
+2017-09-18 11:02:16,324 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - id:02_-1 name:二号线

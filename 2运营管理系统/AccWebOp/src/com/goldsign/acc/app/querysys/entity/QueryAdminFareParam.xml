@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.querysys.mapper.QueryAdminFareParamMapper">
+    
+    <resultMap type="QueryAdminFareParam" id="rmQueryAdminFareParam">
+        <result column="admin_manager_name" property="admin_manager_name" />
+        <result column="admin_charge" property="admin_charge" />  
+    </resultMap>
+    
+    <select id="getQueryAdminFareParams"  parameterType="QueryAdminFareParam" resultMap="rmQueryAdminFareParam">
+        select distinct ar.admin_manager_name,amt.admin_charge  from w_acc_st.w_op_prm_admin_manager_type amt ,w_acc_st.w_op_prm_admin_reason ar 
+        where  amt.admin_manager_id = ar.admin_manager_id 
+        and amt.record_flag=#{record_flag} and ar.record_flag=#{record_flag}
+        <if test="admin_manager_name !=null and admin_manager_name !=''">
+            and ar.admin_manager_name = #{admin_manager_name} 
+        </if> 
+        and amt.admin_charge like #{admin_charge}
+        order by amt.admin_charge asc
+    </select>
+    
+    <select id="queryToMap"  parameterType="QueryAdminFareParam" resultType="map">
+         select distinct ar.admin_manager_name,amt.admin_charge  from w_acc_st.w_op_prm_admin_manager_type amt ,w_acc_st.w_op_prm_admin_reason ar 
+        where  amt.admin_manager_id = ar.admin_manager_id 
+        and amt.record_flag=#{record_flag} and ar.record_flag=#{record_flag}
+        <if test="admin_manager_name !=null and admin_manager_name !=''">
+            and ar.admin_manager_name = #{admin_manager_name} 
+        </if> 
+        and amt.admin_charge like #{admin_charge}
+        order by amt.admin_charge asc
+    </select>
+    
+</mapper>
+
+

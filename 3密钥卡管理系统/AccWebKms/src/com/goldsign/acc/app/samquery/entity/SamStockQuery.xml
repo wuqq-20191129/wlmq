@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.samquery.mapper.SamStockQueryMapper">
+    <resultMap type="SamStockQuery" id="rmSamStockQuery">
+        <result column="sam_type" property="sam_type" /> 
+        <result column="logic_no" property="logic_no" />
+        <result column="phy_no" property="phy_no" /> 
+        <result column="produce_type" property="produce_type" />
+        <result column="stock_state" property="stock_state" /> 
+        <result column="is_instock" property="is_instock" />
+        <result column="is_bad" property="is_bad" /> 
+        <result column="remark" property="remark" />
+    </resultMap>
+     
+    <select id="getSamStockQuery"  parameterType="SamStockQuery" resultMap="rmSamStockQuery">
+        select sam_type,logic_no,phy_no,produce_type,stock_state,is_instock,is_bad,remark from  W_ACC_TK.W_IC_SAM_STOCK where 1=1
+        <if test="sam_type !=null and sam_type !=''">
+            and sam_type =#{sam_type} 
+        </if>
+        <if test="beginLogicNo !=null and beginLogicNo !=''">
+            and logic_no &gt;= #{beginLogicNo} 
+        </if>
+        <if test="endLogicNo !=null and endLogicNo !=''">
+            and logic_no &lt;= #{endLogicNo} 
+        </if>
+        <if test="produce_type !=null and produce_type !=''">
+            and produce_type =#{produce_type} 
+        </if>
+        <if test="stock_state !=null and stock_state !=''">
+            and stock_state =#{stock_state} 
+        </if>
+        <if test="is_instock !=null and is_instock !=''">
+            and is_instock =#{is_instock} 
+        </if>
+        <if test="is_bad !=null and is_bad !=''">
+            and is_bad =#{is_bad} 
+        </if>
+        order by logic_no
+    </select>
+    
+</mapper>

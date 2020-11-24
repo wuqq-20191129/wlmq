@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.PrmVersionMapper">
+    <resultMap type="PrmVersion" id="rmPrmVersion">
+        <id column="parm_type_id" property="parm_type_id" />
+        <result column="version_no" property="version_no" />
+        <result column="record_flag" property="record_flag" />
+        <result column="begin_time" property="begin_time" />
+        <result column="end_time" property="end_time" />
+        <result column="version_date" property="version_date" />
+        
+        <result column="distribute_times" property="distribute_times" />
+        <result column="operator_id" property="operator_id" />
+        
+        <result column="app_line_name" property="app_line_name" />
+        <result column="remark" property="remark" />
+
+       
+    </resultMap>
+
+    <select id="selectPrmVersionByID" parameterType="String" resultMap="rmPrmVersion">
+        select * from w_acc_st.W_OP_PRM_PARA_VER where PARM_TYPE_ID = #{id}  order by 
+        (case when record_flag= '0' then '00'
+               when record_flag= '1' then '10'
+               when record_flag= '3' then '20'
+               when record_flag= '2' then '30'
+               when record_flag= '4' then '40'
+               when record_flag= '5' then '50'
+                                     else '60'
+          end),
+        version_no
+    </select>
+    <select id="selectPrmVersionForCurrent" parameterType="String" resultMap="rmPrmVersion">
+        select * from w_acc_st.W_OP_PRM_PARA_VER where PARM_TYPE_ID = #{id} and record_flag='0'
+    </select>
+    <select id="selectPrmVersionForSubmit" parameterType="PrmVersion" resultType="String">
+        select max(version_no) version_no_max from w_acc_st.W_OP_PRM_PARA_VER where PARM_TYPE_ID = #{parm_type_id} and 
+                                                       record_flag in('0','1','2','4') and substr(version_no,1,8)=#{version_valid_date}
+    </select>
+    <update id="modifyPrmVersionForDraft" parameterType="PrmVersion">
+        update w_acc_st.W_OP_PRM_PARA_VER set version_date=sysdate,operator_id=#{operator_id},
+                                              begin_time=to_date(concat(to_char(sysdate,'yyyy-mm-dd'),'00:00:00'),'yyyy-mm-dd hh24:mi:ss'),
+                                              end_time=to_date(concat(to_char(sysdate,'yyyy-mm-dd'),'23:59:59'),'yyyy-mm-dd hh24:mi:ss')
+                                            where parm_type_id=#{parm_type_id} and 
+                                                   record_flag='3' and version_no='0000000000'
+        
+    </update>
+    <update id="modifyPrmVersionForSubmit" parameterType="PrmVersion">
+        update w_acc_st.W_OP_PRM_PARA_VER set record_flag=#{record_flag_old}
+                                            where parm_type_id=#{parm_type_id} and 
+                                                   record_flag=#{record_flag_new} 
+        
+    </update>
+    
+    
+    <insert id="addPrmVersion" parameterType="PrmVersion">
+        insert into w_acc_st.W_OP_PRM_PARA_VER(parm_type_id,version_no,record_flag,version_date,operator_id,
+                                              begin_time,end_time,distribute_times,app_line_name,remark)
+                        values(#{parm_type_id},#{version_no_new},#{record_flag_new},sysdate,#{operator_id},
+                              to_date(#{begin_time_new},'yyyy-mm-dd hh24:mi:ss'),to_date(#{end_time_new},'yyyy-mm-dd hh24:mi:ss'),0,#{app_line_name},#{remark})
+    </insert>
+    
+</mapper>

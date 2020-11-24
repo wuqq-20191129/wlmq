@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.opma.mapper.SysGroupOperatorMapper" >
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.opma.entity.SysGroupOperatorKey" >
+    <constructor >
+      <idArg column="SYS_GROUP_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <idArg column="SYS_OPERATOR_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+   <select id="countByPrimaryKey" parameterType="com.goldsign.acc.app.opma.entity.SysGroupOperatorKey" resultType="int">
+    select count(*) from w_acc_st.W_OP_SYS_GROUP_OPERATOR
+    where SYS_GROUP_ID = #{sysGroupId,jdbcType=CHAR}
+      and SYS_OPERATOR_ID = #{sysOperatorId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.goldsign.acc.app.opma.entity.SysGroupOperatorKey" >
+    delete from w_acc_st.W_OP_SYS_GROUP_OPERATOR
+    where SYS_GROUP_ID = #{sysGroupId,jdbcType=CHAR}
+      and SYS_OPERATOR_ID = #{sysOperatorId,jdbcType=VARCHAR}
+  </delete>
+   <delete id="deleteGrpOprByGrpId" parameterType="java.lang.String" >
+    delete from w_acc_st.W_OP_SYS_GROUP_OPERATOR
+    where SYS_GROUP_ID = #{sysGroupId,jdbcType=CHAR}      
+  </delete>
+   <delete id="deleteGrpOprByOprId" parameterType="java.lang.String" >
+    delete from w_acc_st.W_OP_SYS_GROUP_OPERATOR
+    where SYS_OPERATOR_ID = #{sysOperatorId,jdbcType=VARCHAR}      
+  </delete>
+  <insert id="insert" parameterType="com.goldsign.acc.app.opma.entity.SysGroupOperatorKey" >
+    insert into w_acc_st.W_OP_SYS_GROUP_OPERATOR (SYS_GROUP_ID, SYS_OPERATOR_ID)
+    values (#{sysGroupId,jdbcType=CHAR}, #{sysOperatorId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.opma.entity.SysGroupOperatorKey" >
+    insert into w_acc_st.W_OP_SYS_GROUP_OPERATOR
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sysGroupId != null" >
+        SYS_GROUP_ID,
+      </if>
+      <if test="sysOperatorId != null" >
+        SYS_OPERATOR_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sysGroupId != null" >
+        #{sysGroupId,jdbcType=CHAR},
+      </if>
+      <if test="sysOperatorId != null" >
+        #{sysOperatorId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectByGroupId" resultMap="BaseResultMap" parameterType="map" >
+	select *
+	from w_acc_st.W_OP_SYS_GROUP_OPERATOR
+	where SYS_GROUP_ID 
+	in
+	<foreach item="item" index="index" collection="grpIds" open="("
+		separator="," close=")">
+		#{item}
+	</foreach>
+  </select>
+</mapper>

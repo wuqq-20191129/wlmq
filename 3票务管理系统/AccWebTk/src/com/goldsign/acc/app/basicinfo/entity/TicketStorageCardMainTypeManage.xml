@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.basicinfo.mapper.TicketStorageCardMainTypeManageMapper">
+    <resultMap type="TicketStorageCardMainTypeManage" id="rmTicketStorageCardMainTypeManage">
+        
+        <result column="ic_main_type" property="ic_main_type" /> 
+        <result column="ic_main_desc" property="ic_main_desc" />
+    </resultMap>
+     
+    <select id="getTicketStorageCardMainTypeManage"  parameterType="TicketStorageCardMainTypeManage" resultMap="rmTicketStorageCardMainTypeManage">
+        select ic_main_type,ic_main_desc  from  W_ACC_TK.W_IC_COD_CARD_MAIN_TYPE where 1=1
+        <if test="ic_main_type !=null and ic_main_type !=''">
+            and ic_main_type =#{ic_main_type} 
+        </if>
+        <if test="ic_main_desc !=null and ic_main_desc !=''">
+            or ic_main_desc =#{ic_main_desc} 
+        </if>
+        order by to_number(ic_main_type)
+    </select>
+ 
+    <select id="getTicketStorageCardMainTypeManageByName"  parameterType="TicketStorageCardMainTypeManage" resultMap="rmTicketStorageCardMainTypeManage">
+        select ic_main_type,ic_main_desc  from  W_ACC_TK.W_IC_COD_CARD_MAIN_TYPE where  ic_main_desc =#{ic_main_desc}   
+        <if test="ic_main_type !=null and ic_main_type !=''">
+            and ic_main_type !=#{ic_main_type} 
+        </if>
+    </select>
+
+    <update id="modifyTicketStorageCardMainTypeManage" parameterType="TicketStorageCardMainTypeManage" >
+        update W_ACC_TK.W_IC_COD_CARD_MAIN_TYPE set ic_main_desc =#{ic_main_desc}  where ic_main_type =#{ic_main_type}                                                 
+    </update>
+
+</mapper>
+

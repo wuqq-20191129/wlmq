@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.ChargeServerMapper">
+    
+    <resultMap type="ChargeServer" id="rmChargeServer">
+        <result column="server_ip" property="server_ip" /> 
+        <result column="server_port" property="server_port" /> 
+        <result column="server_desc" property="server_desc" /> 
+        <result column="server_level" property="server_level" /> 
+        <result column="record_flag" property="record_flag" />
+        <result column="version_no" property="version_no" />
+    </resultMap>
+
+    <select id="getChargeServers"  parameterType="ChargeServer" resultMap="rmChargeServer">
+        select server_ip,server_port,server_desc,server_level,record_flag ,version_no
+        from W_ACC_ST.W_OP_PRM_CHARGESERV_CONF 
+        where 1=1 
+        <if test="server_desc !=null and server_desc !=''">
+            and server_desc =#{server_desc} 
+        </if> 
+        <if test="server_ip !=null and server_ip !=''">
+            and server_ip =#{server_ip} 
+        </if>
+        <if test="server_port !=null and server_port !=''">
+            and server_port =#{server_port} 
+        </if>
+        <if test="server_level !=null and server_level !=''">
+            and server_level =#{server_level} 
+        </if>
+        <if test="version_no !=null and version_no !=''">
+            and version_no =#{version_no}
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag =#{record_flag}
+        </if> 
+    </select>
+    
+    <select id="checkChargeServers"  parameterType="ChargeServer" resultMap="rmChargeServer">
+        select server_ip,server_port,server_desc,server_level,record_flag ,version_no
+        from W_ACC_ST.W_OP_PRM_CHARGESERV_CONF 
+        where (server_desc =#{server_desc} or server_ip =#{server_ip} or server_level =#{server_level}) and record_flag =#{record_flag}
+    </select>
+    
+    <select id="getChargeServersLikeDesc"  parameterType="ChargeServer" resultMap="rmChargeServer">
+        select server_ip,server_port,server_desc,server_level,record_flag ,version_no
+        from W_ACC_ST.W_OP_PRM_CHARGESERV_CONF 
+        where 1=1   
+        <if test="server_desc !=null and server_desc !=''">
+            and server_desc like #{server_desc} 
+        </if>  
+        <if test="version_no !=null and version_no !=''">
+            and version_no =#{version_no}
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag =#{record_flag}
+        </if> 
+    </select>
+    
+    <!--草稿参数删除 -->
+     <delete id="deleteChargeServerForClone" parameterType="ChargeServer">
+            delete from W_ACC_ST.W_OP_PRM_CHARGESERV_CONF where  record_flag='3' and version_no='0000000000'                                                      
+    </delete>
+    
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="ChargeServer" >
+        insert into  W_ACC_ST.W_OP_PRM_CHARGESERV_CONF(server_ip,server_port,server_desc,server_level,record_flag ,version_no)
+               select server_ip,server_port,server_desc,server_level,'3','0000000000'
+               from   W_ACC_ST.W_OP_PRM_CHARGESERV_CONF  
+               where record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    <update id="submitToOldFlag" parameterType="ChargeServer" >
+        update W_ACC_ST.W_OP_PRM_CHARGESERV_CONF set record_flag=#{record_flag_old}
+                    where record_flag=#{record_flag_new}                                               
+    </update>
+    
+    <!--草稿参数复制为当前或未来参数 -->
+     <insert id="submitFromDraftToCurOrFur" parameterType="ChargeServer" >
+        insert into  W_ACC_ST.W_OP_PRM_CHARGESERV_CONF(server_ip,server_port,server_desc,server_level,record_flag ,version_no)
+               select server_ip,server_port,server_desc,server_level,#{record_flag_new},#{version_no_new}
+               from   W_ACC_ST.W_OP_PRM_CHARGESERV_CONF  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    
+    
+    <!-- 修改保存线路信息 没有这个方法-->
+    <update id="modifyChargeServer" parameterType="ChargeServer" >
+        update W_ACC_ST.W_OP_PRM_CHARGESERV_CONF set 
+            server_desc=#{server_desc},server_level=#{server_level}
+        where server_ip=#{server_ip} and server_port=#{server_port} and version_no=#{version_no} 
+    </update>
+    
+    <!-- 增加保存线路信息-->
+    <insert id="addChargeServer" parameterType="ChargeServer" >
+        insert into  W_ACC_ST.W_OP_PRM_CHARGESERV_CONF(server_ip,server_port,server_desc,server_level,record_flag ,version_no)
+        values(#{server_ip},#{server_port},#{server_desc},#{server_level},#{record_flag},#{version_no})        
+    </insert> 
+    
+    <delete id="deleteChargeServer" parameterType="ChargeServer">
+        delete from W_ACC_ST.W_OP_PRM_CHARGESERV_CONF where server_ip=#{server_ip} and server_port=#{server_port} and server_level=#{server_level} and record_flag=#{record_flag} and version_no=#{version_no}  
+    </delete>
+     
+    <select id="queryToMap"  parameterType="ChargeServer" resultType="map">
+        select server_ip,server_port,server_desc,server_level,record_flag ,version_no
+        from W_ACC_ST.W_OP_PRM_CHARGESERV_CONF 
+        where 1=1   
+        <if test="server_desc !=null and server_desc !=''">
+            and server_desc like #{server_desc} 
+        </if>  
+        <if test="version_no !=null and version_no !=''">
+            and version_no =#{version_no}
+        </if>
+        <if test="record_flag !=null and record_flag !=''">
+            and record_flag =#{record_flag}
+        </if> 
+    </select>
+</mapper>

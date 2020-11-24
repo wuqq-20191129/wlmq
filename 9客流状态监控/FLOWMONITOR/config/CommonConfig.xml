@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Config>	
+    <Common>
+          <!-- 刷新的时间间隔 -->
+          <FreshInterval>60000</FreshInterval>
+          <isLocked>false</isLocked>
+          
+          <!--五分钟客流进出站线路颜色-->
+          <Color5MinLine>0,238,238,0#1,137,104,205</Color5MinLine>
+          
+          <!-- 线路颜色 -->
+          <ColorLine>01,249,207,0#02,139,0,139#03,228,103,19#04,0,146,65#05,255,0,0#06,0,172,160#07,228,103,19#08,185,211,52#20,0,158,231</ColorLine>
+          
+          <!-- 票卡类型颜色（id为票卡主类型||子类型）-->
+          <ColorCard>0100,255,182,193#0101,255,20,147#0200,238,130,238#0201,255,0,255#0202,128,0,128#0300,147,112,219#0301,106,90,205#0302,0,0,255#0400,175,238,238#0401,0,255,255#0402,0,139,139#0500,127,255,170#0501,0,255,0#050x,0,128,0#060x,255,255,0#0700,255,165,0#0800,255,69,0#0900,139,0,0#1000,105,105,105#1100,128,128,0</ColorCard>
+          
+          <!-- 屏幕分辨率 -->
+          <ScreenW>1366</ScreenW>
+          <ScreenH>768</ScreenH>
+    </Common>
+    
+    <!--To set user and password, please add "@@" before it. Eg: <User>@@user</User>, <Password>@@password</Password> -->
+    <DataConnectionPool>
+        <!-- w_acc_st database -->
+        <Driver1>oracle.jdbc.driver.OracleDriver</Driver1>
+		<URL1>jdbc:oracle:thin:@(description=
+            (load_balance=yes)
+            (failover=yes)
+            (connect_data=
+                (service_name=waccdb)
+            )
+            (address_list=
+                (address=
+                    (protocol=tcp)
+                    (host=10.99.10.15)
+                    (port=1521)
+                )
+            )
+    	)</URL1>
+        <User1 encrypt="true">30102D273016343A182E3C34</User1>
+        <Password1 encrypt="true">063F3C676571343A777E</Password1>
+        <!-- w_acc_mn database -->
+        <Driver2>oracle.jdbc.driver.OracleDriver</Driver2>
+		<URL2>jdbc:oracle:thin:@(description=
+            (load_balance=yes)
+            (failover=yes)
+            (connect_data=
+                (service_name=waccdb)
+            )
+            (address_list=
+                (address=
+                    (protocol=tcp)
+                    (host=10.99.10.15)
+                    (port=1521)
+                )
+            )
+    	)</URL2>
+        <User2 encrypt="true">30102D2730162A20182E3C34</User2>
+        <Password2 encrypt="true">063F3C6765712A20767F</Password2>
+        <!-- w_acc_cm database -->
+        <Driver3>oracle.jdbc.driver.OracleDriver</Driver3>
+		<URL3>jdbc:oracle:thin:@(description=
+            (load_balance=yes)
+            (failover=yes)
+            (connect_data=
+                (service_name=waccdb)
+            )
+            (address_list=
+                (address=
+                    (protocol=tcp)
+                    (host=10.99.10.15)
+                    (port=1521)
+                )
+            )
+    	)</URL3>
+        
+		<User3 encrypt="true">30102D2730162423182E3C34</User3>
+        <Password3 encrypt="true">063F3C67657124237777</Password3>
+		
+		
+        <MaxActive>40</MaxActive>
+        <MaxIdle>20</MaxIdle>
+        <MaxWait>20000</MaxWait>
+    </DataConnectionPool>
+</Config>

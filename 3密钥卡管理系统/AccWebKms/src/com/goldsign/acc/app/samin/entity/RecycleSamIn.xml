@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.samin.mapper.RecycleSamInMapper">
+    
+    <resultMap type="com.goldsign.acc.app.samin.entity.RecycleSamIn" id="rmRecycleSamIn">
+        
+        <result column="ORDER_NO" property="orderNo" /> 
+        <result column="LINE_ES" property="lineEs" /> 
+        <result column="SAM_TYPE" property="samType" /> 
+        <result column="START_LOGIC_NO" property="startLogicNo" /> 
+        <result column="ORDER_NUM" property="orderNum" /> 
+        <result column="IN_STOCK_OPER" property="inStockOper" /> 
+        <result column="IN_STOCK_TIME" property="inStockTime" /> 
+        <result column="GET_CARD_OPER" property="getCardOper" /> 
+        <result column="IS_BAD" property="isBad" /> 
+        <result column="ORDER_STATE" property="orderState" /> 
+        <result column="AUDIT_ORDER_OPER" property="auditOrderOper" /> 
+        <result column="AUDIT_ORDER_TIME" property="auditOrderTime" /> 
+        <result column="REMARK" property="remark" />       
+   
+    </resultMap>
+    
+    <resultMap type="com.goldsign.acc.app.samin.entity.RecycleSamIn" id="rmSamLogicNos">
+        
+        <result column="ORDER_NO" property="orderNo" /> 
+        <result column="START_LOGIC_NO" property="startLogicNo" /> 
+        <result column="END_LOGIC_NO" property="endLogicNo" /> 
+
+    </resultMap>
+    
+    <insert id="addPlan" parameterType="com.goldsign.acc.app.samin.entity.RecycleSamIn" >
+        insert into w_acc_tk.w_ic_sam_in_recycle
+        ( order_no, line_es, sam_type, start_logic_no, order_num, in_stock_oper, in_stock_time , get_card_oper, is_bad, order_state, remark )  
+        select #{orderNo}, #{lineEs}, b.sam_type, #{startLogicNo}, #{orderNum}, #{inStockOper}, SYSDATE, #{getCardOper}, #{isBad}, #{orderState}, #{remark}
+        from w_acc_tk.w_ic_sam_stock b, w_acc_tk.w_ic_sam_type a, w_acc_tk.w_ic_sam_line_es c
+        where b.sam_type=a.sam_type_code and b.distribute_place=c.line_es_code and b.distribute_place = #{lineEs}
+        and b.sam_type= #{samType} and b.stock_state= #{stockState} and b.produce_type= #{produceType}
+        and b.is_instock= #{isInstock} and to_number(substr(b.logic_no,10,7))>= #{fStartLogicNo} and substr(b.logic_no,1,9)= #{eStartLogicNo}
+        group by b.sam_type having count(b.logic_no)>= #{orderNum}
+
+    </insert>
+    
+    <select id="checkStock"  parameterType="com.goldsign.acc.app.samin.entity.RecycleSamIn" resultType="String">
+        <if test="orderNum != null and orderNum !=''" >  
+            select  logic_no from (
+        </if> 
+        select logic_no from w_acc_tk.w_ic_sam_stock 
+        where to_number(substr(logic_no,10,7))>= to_number( #{fStartLogicNo} ) and 
+        substr(logic_no,1,9)= #{eStartLogicNo} and stock_state in (#{stockState})  and is_instock = #{isInstock}
+        and produce_type = #{produceType} and sam_type = #{samType} and distribute_place = #{lineEs} order by logic_no 
+        <if test="orderNum != null and orderNum !=''" >  
+            ) where rownum &lt;= #{orderNum}
+        </if> 
+    </select>
+    
+    <select id="queryPlan"  parameterType="com.goldsign.acc.app.samin.entity.RecycleSamIn" resultMap="rmRecycleSamIn">
+        select * from w_acc_tk.w_ic_sam_in_recycle
+        <where> 
+            <if test="orderNo != null and orderNo !=''" >  
+                order_no = #{orderNo}
+            </if> 
+            <if test="samType != null and samType !=''" >  
+                AND sam_type like #{samType}
+            </if>
+            <if test="orderState != null and orderState !=''" >  
+                AND order_state like #{orderState}
+            </if>
+             <if test="isBad != null and isBad !=''" >  
+                AND is_Bad = #{isBad}
+            </if>
+            <if test="orderNolist != null and orderNolist.size() > 0 " >  
+                and order_no in
+                <foreach collection="orderNolist" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by order_no desc
+    </select>
+    
+    <delete id="deletePlan" parameterType="com.goldsign.acc.app.samin.entity.RecycleSamIn" >
+        delete from  w_acc_tk.w_ic_sam_in_recycle where order_no = #{orderNo} and order_state = #{orderState}                          
+    </delete>
+    
+    <insert id="insertLogicNo" parameterType="com.goldsign.acc.app.samin.entity.RecycleSamIn" >
+        insert into w_acc_tk.w_ic_sam_logic_nos ( order_no, start_logic_no, end_logic_no ) values ( #{orderNo}, #{startLogicNo}, #{endLogicNo}) 
+    </insert>
+    
+    <update id="updateOrderState" parameterType="com.goldsign.acc.app.samin.entity.RecycleSamIn" >
+        update w_acc_tk.w_ic_sam_in_recycle set order_state = #{orderState}, audit_order_oper= #{auditOrderOper} , audit_order_time = sysdate, start_logic_no = #{startLogicNo}
+        where order_no = #{orderNo} and order_state= '0' and EXISTS(
+        select 1 from w_acc_tk.w_ic_sam_stock b , w_acc_tk.w_ic_sam_type a, w_acc_tk.w_ic_sam_line_es c
+        where b.sam_type = a.sam_type_code and b.distribute_place = c.line_es_code and b.distribute_place = #{lineEs}
+        and b.sam_type= #{samType} and b.stock_state= #{stockState} and b.produce_type= #{produceType} and b.is_instock= #{isInstock}
+        and to_number(substr(b.logic_no,10,7))>= #{fStartLogicNo} and substr(b.logic_no,1,9)= #{eStartLogicNo}
+        group by b.sam_type having count(b.logic_no)>= #{orderNum} )
+    </update>
+    
+    <update id="updateStock" parameterType="com.goldsign.acc.app.samin.entity.RecycleSamIn" >
+        update w_acc_tk.w_ic_sam_stock set distribute_place = #{lineEs} , stock_state = #{stockState} , is_instock = #{isInstock}
+        <if test="isBad != null and isBad !=''" >  
+            ,is_bad = #{isBad}
+        </if> 
+        where logic_no in 
+        <foreach collection="logicNos" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    
+    <update id="modifyPlan" parameterType="com.goldsign.acc.app.samin.entity.RecycleSamIn" >
+        update w_acc_tk.w_ic_sam_in_recycle set
+        line_es= #{lineEs}, sam_type= #{samType}, start_logic_no= #{startLogicNo}, order_num= #{orderNum}, get_card_oper= #{getCardOper}, is_bad= #{isBad}, remark= #{remark}
+        where order_no = #{orderNo} and order_state= #{orderState} and EXISTS(
+        select 1 from w_acc_tk.w_ic_sam_stock b , w_acc_tk.w_ic_sam_type a, w_acc_tk.w_ic_sam_line_es c
+        where b.sam_type = a.sam_type_code and b.distribute_place=c.line_es_code and b.distribute_place = #{lineEs}
+        and b.sam_type= #{samType} and b.stock_state= #{stockState} and b.produce_type= #{produceType} and b.is_instock= #{isInstock}
+        and to_number(substr(b.logic_no,10,7))>= #{fStartLogicNo} and substr(b.logic_no,1,9)= #{eStartLogicNo}
+        group by b.sam_type having count(b.logic_no)>= #{orderNum} )           
+    </update>
+    
+    <select id="queryPlanDetail"  parameterType="com.goldsign.acc.app.samin.entity.RecycleSamIn" resultMap="rmSamLogicNos">
+        select * from w_acc_tk.w_ic_sam_logic_nos where order_no = #{orderNo}
+    </select>
+    
+</mapper>
+

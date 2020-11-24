@@ -1,0 +1,8 @@
+ 地铁方配置地址：
+ 172.17.1.167 255.255.255.0   
+ 红山一卡通ftp地址172.17.1.1      
+ 上传路径：用户名：metro            密码：metro123  
+ 下载路径：用户名：metro_down 密码：metro_down123
+ 
+ /data/communfs/ftpoct/export/trx/2018061901
+ put XF80000013000000012018061901.ZIP

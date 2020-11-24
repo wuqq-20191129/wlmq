@@ -1,0 +1,29 @@
+2018-10-24 13:18:56,734 [main] INFO  com.goldsign.fm.application.Main - 获取配置文件信息
+2018-10-24 13:19:03,744 [main] INFO  com.goldsign.fm.common.AppUtil - id:all_-1 name:线网
+2018-10-24 13:19:16,311 [main] INFO  com.goldsign.fm.common.AppUtil - 生成小时客流线网进出客流时间12秒
+2018-10-24 13:19:16,331 [main] INFO  com.goldsign.fm.common.AppUtil - dorv result:0,19,11.0
+2018-10-24 13:19:16,332 [main] INFO  com.goldsign.fm.common.AppUtil - dorv result:1,19,5.0
+2018-10-24 13:19:16,332 [main] INFO  com.goldsign.fm.common.AppUtil - dorv result:0,12,280.0
+2018-10-24 13:19:16,332 [main] INFO  com.goldsign.fm.common.AppUtil - dorv result:0,18,31.0
+2018-10-24 13:19:16,332 [main] INFO  com.goldsign.fm.common.AppUtil - dorv result:1,18,16.0
+2018-10-24 13:19:16,332 [main] INFO  com.goldsign.fm.common.AppUtil - dorv result:1,12,280.0
+2018-10-24 13:19:16,332 [main] INFO  com.goldsign.fm.common.AppUtil - 从数据库获取小时客流原始分时客流时间0秒
+2018-10-24 13:19:16,332 [main] INFO  com.goldsign.fm.common.AppUtil - lineCode result:0,进
+2018-10-24 13:19:16,332 [main] INFO  com.goldsign.fm.common.AppUtil - lineCode result:1,出
+2018-10-24 13:19:16,334 [main] INFO  com.goldsign.fm.common.AppUtil - 小时客流原始分时客流数据整理时间0秒
+2018-10-24 13:19:16,334 [main] INFO  com.goldsign.fm.common.AppUtil - 从数据库获取小时客流分时客流时间0秒
+2018-10-24 13:19:16,425 [main] INFO  com.goldsign.fm.common.AppUtil - 生成小时客流分时客流图形时间0秒
+2018-10-24 13:19:19,701 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - id:all_-1 name:线网
+2018-10-24 13:19:19,763 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - 从数据库获取票卡类型客流时间0秒
+2018-10-24 13:19:19,763 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - 从数据库获取票卡类型客流时间0秒
+2018-10-24 13:19:19,795 [AWT-EventQueue-0] INFO  com.goldsign.fm.common.AppUtil - 生成票卡类型客流图形时间0秒
+2018-10-24 13:19:46,434 [Thread-5] INFO  com.goldsign.fm.thread.RefreshThread - 刷新节点：线网
+2018-10-24 13:19:46,434 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - id:all_-1 name:线网
+2018-10-24 13:19:46,464 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - 从数据库获取票卡类型客流时间0秒
+2018-10-24 13:19:46,464 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - 从数据库获取票卡类型客流时间0秒
+2018-10-24 13:19:46,504 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - 生成票卡类型客流图形时间0秒
+2018-10-24 13:20:16,506 [Thread-5] INFO  com.goldsign.fm.thread.RefreshThread - 刷新节点：线网
+2018-10-24 13:20:16,506 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - id:all_-1 name:线网
+2018-10-24 13:20:16,521 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - 从数据库获取票卡类型客流时间0秒
+2018-10-24 13:20:16,521 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - 从数据库获取票卡类型客流时间0秒
+2018-10-24 13:20:16,521 [Thread-5] INFO  com.goldsign.fm.common.AppUtil - 生成票卡类型客流图形时间0秒

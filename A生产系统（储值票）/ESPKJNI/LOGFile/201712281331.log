@@ -1,0 +1,220 @@
+2017-12-28 13:31:31 ACCAPI_Open Finished!
+2017-12-28 13:31:31 启动灯亮
+2017-12-28 13:31:36 ACCAPI_Init Machine Fault!
+2017-12-28 13:31:39 ACCAPI_Open Finished!
+2017-12-28 13:32:08 Call ACCAPI_SendCard() Status:
+2017-12-28 13:32:08 Card[0].CurrSite=0; Card[0].TagSite=0; Card[0].CardNo=0; Card[0].State=0; Card[0].RecyBox=0;
+2017-12-28 13:32:08 Card[1].CurrSite=0; Card[1].TagSite=0; Card[1].CardNo=0; Card[1].State=0; Card[1].RecyBox=0;
+2017-12-28 13:32:08 Card[2].CurrSite=0; Card[2].TagSite=0; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2017-12-28 13:32:08 Card[3].CurrSite=0; Card[3].TagSite=0; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2017-12-28 13:32:08 Card[4].CurrSite=0; Card[4].TagSite=0; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:32:08 Card[5].CurrSite=0; Card[5].TagSite=0; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:32:08 Card[6].CurrSite=0; Card[6].TagSite=0; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:32:09 发卡成功
+2017-12-28 13:32:09 Card[0].CurrSite=1; Card[0].TagSite=2; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:32:09 Card[1].CurrSite=0; Card[1].TagSite=0; Card[1].CardNo=0; Card[1].State=0; Card[1].RecyBox=0;
+2017-12-28 13:32:09 Card[2].CurrSite=0; Card[2].TagSite=0; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2017-12-28 13:32:09 Card[3].CurrSite=0; Card[3].TagSite=0; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2017-12-28 13:32:09 Card[4].CurrSite=0; Card[4].TagSite=0; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:32:09 Card[5].CurrSite=0; Card[5].TagSite=0; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:32:09 Card[6].CurrSite=0; Card[6].TagSite=0; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:34:43 Call ACCAPI_MoveCard() Status:
+2017-12-28 13:34:43 Card[0].CurrSite=1; Card[0].TagSite=2; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:34:43 Card[1].CurrSite=0; Card[1].TagSite=0; Card[1].CardNo=0; Card[1].State=0; Card[1].RecyBox=0;
+2017-12-28 13:34:43 Card[2].CurrSite=0; Card[2].TagSite=0; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2017-12-28 13:34:43 Card[3].CurrSite=0; Card[3].TagSite=0; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2017-12-28 13:34:43 Card[4].CurrSite=0; Card[4].TagSite=0; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:34:43 Card[5].CurrSite=0; Card[5].TagSite=0; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:34:43 Card[6].CurrSite=0; Card[6].TagSite=0; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:34:43 走卡之前
+2017-12-28 13:34:43 电磁铁状态：0x0
+2017-12-28 13:34:43 走卡前开始结束状态：0x78  0x0
+2017-12-28 13:34:43 走卡成功
+2017-12-28 13:34:43 Card[0].CurrSite=2; Card[0].TagSite=2; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:34:43 Card[1].CurrSite=0; Card[1].TagSite=0; Card[1].CardNo=0; Card[1].State=0; Card[1].RecyBox=0;
+2017-12-28 13:34:43 Card[2].CurrSite=0; Card[2].TagSite=0; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2017-12-28 13:34:43 Card[3].CurrSite=0; Card[3].TagSite=0; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2017-12-28 13:34:43 Card[4].CurrSite=0; Card[4].TagSite=0; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:34:43 Card[5].CurrSite=0; Card[5].TagSite=0; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:34:43 Card[6].CurrSite=0; Card[6].TagSite=0; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:34:43 走卡后开始结束状态：0x40  0x20
+2017-12-28 13:35:20 Call ACCAPI_SendCard() Status:
+2017-12-28 13:35:20 Card[0].CurrSite=2; Card[0].TagSite=3; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:35:20 Card[1].CurrSite=0; Card[1].TagSite=4; Card[1].CardNo=0; Card[1].State=0; Card[1].RecyBox=0;
+2017-12-28 13:35:20 Card[2].CurrSite=0; Card[2].TagSite=5; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2017-12-28 13:35:20 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2017-12-28 13:35:20 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:35:20 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:35:20 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:35:20 发卡成功
+2017-12-28 13:35:20 Card[0].CurrSite=2; Card[0].TagSite=3; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:35:20 Card[1].CurrSite=1; Card[1].TagSite=2; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2017-12-28 13:35:20 Card[2].CurrSite=0; Card[2].TagSite=5; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2017-12-28 13:35:20 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2017-12-28 13:35:20 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:35:20 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:35:20 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:35:54 Call ACCAPI_MoveCard() Status:
+2017-12-28 13:35:54 Card[0].CurrSite=2; Card[0].TagSite=3; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:35:54 Card[1].CurrSite=1; Card[1].TagSite=2; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2017-12-28 13:35:54 Card[2].CurrSite=0; Card[2].TagSite=5; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2017-12-28 13:35:54 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2017-12-28 13:35:54 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:35:54 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:35:54 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:35:54 走卡之前
+2017-12-28 13:35:54 电磁铁状态：0x0
+2017-12-28 13:35:54 走卡前开始结束状态：0x40  0x20
+2017-12-28 13:35:54 走卡成功
+2017-12-28 13:35:54 Card[0].CurrSite=3; Card[0].TagSite=3; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:35:54 Card[1].CurrSite=2; Card[1].TagSite=2; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2017-12-28 13:35:54 Card[2].CurrSite=0; Card[2].TagSite=5; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2017-12-28 13:35:54 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2017-12-28 13:35:54 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:35:54 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:35:54 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:35:54 走卡后开始结束状态：0x60  0x30
+2017-12-28 13:36:18 Call ACCAPI_SendCard() Status:
+2017-12-28 13:36:18 Card[0].CurrSite=3; Card[0].TagSite=3; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:36:18 Card[1].CurrSite=2; Card[1].TagSite=4; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2017-12-28 13:36:18 Card[2].CurrSite=0; Card[2].TagSite=5; Card[2].CardNo=0; Card[2].State=0; Card[2].RecyBox=0;
+2017-12-28 13:36:18 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2017-12-28 13:36:18 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:36:18 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:36:18 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:36:19 发卡成功
+2017-12-28 13:36:19 Card[0].CurrSite=3; Card[0].TagSite=3; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:36:19 Card[1].CurrSite=2; Card[1].TagSite=4; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2017-12-28 13:36:19 Card[2].CurrSite=1; Card[2].TagSite=2; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2017-12-28 13:36:19 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2017-12-28 13:36:19 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:36:19 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:36:19 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:36:36 Call ACCAPI_MoveCard() Status:
+2017-12-28 13:36:36 Card[0].CurrSite=3; Card[0].TagSite=3; Card[0].CardNo=1000000; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:36:36 Card[1].CurrSite=2; Card[1].TagSite=4; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2017-12-28 13:36:36 Card[2].CurrSite=1; Card[2].TagSite=2; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2017-12-28 13:36:36 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2017-12-28 13:36:36 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:36:36 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:36:36 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:36:36 走卡之前
+2017-12-28 13:36:36 电磁铁状态：0x1
+2017-12-28 13:36:36 走卡前开始结束状态：0x60  0x30
+2017-12-28 13:36:37 走卡成功
+2017-12-28 13:36:37 Card[0].CurrSite=0; Card[0].TagSite=0; Card[0].CardNo=1000000; Card[0].State=2; Card[0].RecyBox=1;
+2017-12-28 13:36:37 Card[1].CurrSite=3; Card[1].TagSite=4; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2017-12-28 13:36:37 Card[2].CurrSite=2; Card[2].TagSite=2; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2017-12-28 13:36:37 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2017-12-28 13:36:37 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:36:37 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:36:37 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:36:37 走卡后开始结束状态：0x70  0x30
+2017-12-28 13:36:56 Call ACCAPI_SendCard() Status:
+2017-12-28 13:36:56 Card[0].CurrSite=0; Card[0].TagSite=3; Card[0].CardNo=1000000; Card[0].State=2; Card[0].RecyBox=1;
+2017-12-28 13:36:56 Card[1].CurrSite=3; Card[1].TagSite=4; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2017-12-28 13:36:56 Card[2].CurrSite=2; Card[2].TagSite=5; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2017-12-28 13:36:56 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2017-12-28 13:36:56 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:36:56 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:36:56 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:36:57 发卡成功
+2017-12-28 13:36:57 Card[0].CurrSite=1; Card[0].TagSite=2; Card[0].CardNo=1000003; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:36:57 Card[1].CurrSite=3; Card[1].TagSite=4; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2017-12-28 13:36:57 Card[2].CurrSite=2; Card[2].TagSite=5; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2017-12-28 13:36:57 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2017-12-28 13:36:57 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:36:57 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:36:57 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:37:31 Call ACCAPI_MoveCard() Status:
+2017-12-28 13:37:31 Card[0].CurrSite=1; Card[0].TagSite=2; Card[0].CardNo=1000003; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:37:31 Card[1].CurrSite=3; Card[1].TagSite=4; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2017-12-28 13:37:31 Card[2].CurrSite=2; Card[2].TagSite=5; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2017-12-28 13:37:31 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2017-12-28 13:37:31 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:37:31 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:37:31 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:37:31 走卡之前
+2017-12-28 13:37:31 电磁铁状态：0x0
+2017-12-28 13:37:31 走卡前开始结束状态：0x70  0x30
+2017-12-28 13:37:31 走卡成功
+2017-12-28 13:37:31 Card[0].CurrSite=2; Card[0].TagSite=2; Card[0].CardNo=1000003; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:37:31 Card[1].CurrSite=4; Card[1].TagSite=4; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2017-12-28 13:37:31 Card[2].CurrSite=3; Card[2].TagSite=5; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2017-12-28 13:37:31 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2017-12-28 13:37:31 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:37:31 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:37:31 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:37:31 走卡后开始结束状态：0x70  0x38
+2017-12-28 13:37:50 Call ACCAPI_SendCard() Status:
+2017-12-28 13:37:50 Card[0].CurrSite=2; Card[0].TagSite=3; Card[0].CardNo=1000003; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:37:50 Card[1].CurrSite=4; Card[1].TagSite=4; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2017-12-28 13:37:50 Card[2].CurrSite=3; Card[2].TagSite=5; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2017-12-28 13:37:50 Card[3].CurrSite=0; Card[3].TagSite=3; Card[3].CardNo=0; Card[3].State=0; Card[3].RecyBox=0;
+2017-12-28 13:37:50 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:37:50 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:37:50 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:37:50 发卡成功
+2017-12-28 13:37:50 Card[0].CurrSite=2; Card[0].TagSite=3; Card[0].CardNo=1000003; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:37:50 Card[1].CurrSite=4; Card[1].TagSite=4; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2017-12-28 13:37:50 Card[2].CurrSite=3; Card[2].TagSite=5; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2017-12-28 13:37:50 Card[3].CurrSite=1; Card[3].TagSite=2; Card[3].CardNo=1000004; Card[3].State=1; Card[3].RecyBox=0;
+2017-12-28 13:37:50 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:37:50 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:37:50 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:38:24 Call ACCAPI_MoveCard() Status:
+2017-12-28 13:38:24 Card[0].CurrSite=2; Card[0].TagSite=3; Card[0].CardNo=1000003; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:38:24 Card[1].CurrSite=4; Card[1].TagSite=4; Card[1].CardNo=1000001; Card[1].State=1; Card[1].RecyBox=0;
+2017-12-28 13:38:24 Card[2].CurrSite=3; Card[2].TagSite=5; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2017-12-28 13:38:24 Card[3].CurrSite=1; Card[3].TagSite=2; Card[3].CardNo=1000004; Card[3].State=1; Card[3].RecyBox=0;
+2017-12-28 13:38:24 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:38:24 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:38:24 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:38:24 走卡之前
+2017-12-28 13:38:24 电磁铁状态：0x2
+2017-12-28 13:38:24 走卡前开始结束状态：0x70  0x38
+2017-12-28 13:38:25 走卡成功
+2017-12-28 13:38:25 Card[0].CurrSite=3; Card[0].TagSite=3; Card[0].CardNo=1000003; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:38:25 Card[1].CurrSite=0; Card[1].TagSite=0; Card[1].CardNo=1000001; Card[1].State=2; Card[1].RecyBox=2;
+2017-12-28 13:38:25 Card[2].CurrSite=4; Card[2].TagSite=5; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2017-12-28 13:38:25 Card[3].CurrSite=2; Card[3].TagSite=2; Card[3].CardNo=1000004; Card[3].State=1; Card[3].RecyBox=0;
+2017-12-28 13:38:25 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:38:25 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:38:25 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:38:25 走卡后开始结束状态：0x78  0x38
+2017-12-28 13:38:45 Call ACCAPI_SendCard() Status:
+2017-12-28 13:38:45 Card[0].CurrSite=3; Card[0].TagSite=3; Card[0].CardNo=1000003; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:38:45 Card[1].CurrSite=0; Card[1].TagSite=4; Card[1].CardNo=1000001; Card[1].State=2; Card[1].RecyBox=2;
+2017-12-28 13:38:45 Card[2].CurrSite=4; Card[2].TagSite=5; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2017-12-28 13:38:45 Card[3].CurrSite=2; Card[3].TagSite=3; Card[3].CardNo=1000004; Card[3].State=1; Card[3].RecyBox=0;
+2017-12-28 13:38:45 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:38:45 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:38:45 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:38:46 发卡成功
+2017-12-28 13:38:46 Card[0].CurrSite=3; Card[0].TagSite=3; Card[0].CardNo=1000003; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:38:46 Card[1].CurrSite=1; Card[1].TagSite=2; Card[1].CardNo=1000005; Card[1].State=1; Card[1].RecyBox=0;
+2017-12-28 13:38:46 Card[2].CurrSite=4; Card[2].TagSite=5; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2017-12-28 13:38:46 Card[3].CurrSite=2; Card[3].TagSite=3; Card[3].CardNo=1000004; Card[3].State=1; Card[3].RecyBox=0;
+2017-12-28 13:38:46 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:38:46 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:38:46 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:38:48 Call ACCAPI_MoveCard() Status:
+2017-12-28 13:38:48 Card[0].CurrSite=3; Card[0].TagSite=3; Card[0].CardNo=1000003; Card[0].State=1; Card[0].RecyBox=0;
+2017-12-28 13:38:48 Card[1].CurrSite=1; Card[1].TagSite=2; Card[1].CardNo=1000005; Card[1].State=1; Card[1].RecyBox=0;
+2017-12-28 13:38:48 Card[2].CurrSite=4; Card[2].TagSite=5; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2017-12-28 13:38:48 Card[3].CurrSite=2; Card[3].TagSite=3; Card[3].CardNo=1000004; Card[3].State=1; Card[3].RecyBox=0;
+2017-12-28 13:38:48 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:38:48 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:38:48 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:38:48 走卡之前
+2017-12-28 13:38:48 电磁铁状态：0x1
+2017-12-28 13:38:48 走卡前开始结束状态：0x78  0x38
+2017-12-28 13:38:49 走卡成功
+2017-12-28 13:38:49 Card[0].CurrSite=0; Card[0].TagSite=0; Card[0].CardNo=1000003; Card[0].State=2; Card[0].RecyBox=1;
+2017-12-28 13:38:49 Card[1].CurrSite=2; Card[1].TagSite=2; Card[1].CardNo=1000005; Card[1].State=1; Card[1].RecyBox=0;
+2017-12-28 13:38:49 Card[2].CurrSite=5; Card[2].TagSite=5; Card[2].CardNo=1000002; Card[2].State=1; Card[2].RecyBox=0;
+2017-12-28 13:38:49 Card[3].CurrSite=3; Card[3].TagSite=3; Card[3].CardNo=1000004; Card[3].State=1; Card[3].RecyBox=0;
+2017-12-28 13:38:49 Card[4].CurrSite=0; Card[4].TagSite=4; Card[4].CardNo=0; Card[4].State=0; Card[4].RecyBox=0;
+2017-12-28 13:38:49 Card[5].CurrSite=0; Card[5].TagSite=5; Card[5].CardNo=0; Card[5].State=0; Card[5].RecyBox=0;
+2017-12-28 13:38:49 Card[6].CurrSite=0; Card[6].TagSite=3; Card[6].CardNo=0; Card[6].State=0; Card[6].RecyBox=0;
+2017-12-28 13:38:49 走卡后开始结束状态：0x78  0x34

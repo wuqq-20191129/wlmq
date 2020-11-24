@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.opma.mapper.ReportQryCfgMapper">
+    <resultMap type="com.goldsign.acc.app.opma.entity.ReportQryCfg" id="rmReportQryCfg">
+        
+        <result column="report_module" property="report_module" /> 
+        <result column="qry_con_code" property="qry_con_code" /> 
+        <result column="qry_con_pos" property="qry_con_pos" /> 
+        
+        <result column="report_name" property="report_name" />
+        <result column="qryConCodeString" property="qryConCodeString" /> 
+        <result column="qryConPosString" property="qryConPosString" /> 
+    </resultMap>
+    
+    <resultMap type="com.goldsign.acc.app.opma.entity.ReportCfgModuleMapping" id="rmReportCfgModuleMapping">
+        
+        <result column="module_id" property="module_id" /> 
+        <result column="report_module" property="report_module" /> 
+        <result column="description" property="description" /> 
+    </resultMap>
+
+    <resultMap id="rmSysModuleMap" type="com.goldsign.acc.app.opma.entity.SysModule" >
+        <result column="module_id" property="moduleId" /> 
+        <result column="module_name" property="moduleName" /> 
+        <result column="menu_url" property="menuUrl" />
+      </resultMap>
+     
+    <select id="getReportQryCfgs"  parameterType="com.goldsign.acc.app.opma.entity.ReportQryCfg" resultMap="rmReportQryCfg">
+<!--        select report_module,report_name,
+            listagg(qry_con_code,';') within GROUP (order by qry_con_pos) as qryConCodeString,
+            listagg(qry_con_pos,';') within GROUP (order by qry_con_pos) as qryConPosString
+        from W_ACC_ST.W_OP_CFG_RP_QRY where 1=1-->
+         select a.report_module,
+            listagg(a.qry_con_code,';') within GROUP (order by a.qry_con_pos) as qryConCodeString,
+            listagg(a.qry_con_pos,';') within GROUP (order by a.qry_con_pos) as qryConPosString
+        from W_ACC_ST.W_OP_CFG_RP_QRY a, w_acc_st.w_rp_cfg_module_mapping b
+        where a.report_module = b.report_module(+) <!--左连接-->
+        <if test="report_module !=null and report_module !=''">
+            and a.report_module =#{report_module} 
+        </if> 
+        <if test="report_name !=null and report_name !=''">
+            and b.description like concat(#{report_name},'%')
+        </if>
+        group by a.report_module
+        order by a.report_module
+    </select>
+    <select id="getReportQryCfgById"  parameterType="com.goldsign.acc.app.opma.entity.ReportQryCfg" resultMap="rmReportQryCfg">
+        select report_module
+        from W_ACC_ST.W_OP_CFG_RP_QRY where report_module=#{report_module} 
+        
+    </select>
+    
+    <select id="getReportQryCfgsForGenFile"  parameterType="map" resultMap="rmReportQryCfg">
+        select report_module,
+            listagg(qry_con_code,';') within GROUP (order by qry_con_pos) as qryConCodeString,
+            listagg(qry_con_pos,';') within GROUP (order by qry_con_pos) as qryConPosString
+        from W_ACC_ST.W_OP_CFG_RP_QRY where report_module in 
+        <foreach item="reportQryCfg" index="index" collection="list" open="(" separator="," close=")">
+            #{reportQryCfg.report_module}
+        </foreach> 
+        group by report_module
+        order by report_module
+    </select>
+    
+    <select id="getReportModuleDess"  parameterType="map" resultMap="rmReportCfgModuleMapping">
+        select module_id,report_module,description
+        from W_ACC_ST.W_RP_CFG_MODULE_MAPPING where report_module in 
+        <foreach item="reportQryCfg" index="index" collection="list" open="(" separator="," close=")">
+            #{reportQryCfg.report_module}
+        </foreach> 
+        order by report_module
+    </select>
+    
+    <select id="getSysModulesForReportTitle" resultMap="rmSysModuleMap" >
+        select MODULE_ID, MODULE_NAME  from w_acc_st.W_OP_SYS_MODULE
+        where parent_id='05' order by module_id
+    </select>
+    
+    <select id="getSysModulesForActionName" resultMap="rmSysModuleMap" >
+        select MODULE_ID, MENU_URL  from w_acc_st.W_OP_SYS_MODULE
+        where parent_id in (select MODULE_ID  from w_acc_st.W_OP_SYS_MODULE
+                             where parent_id='05') 
+        order by module_id
+    </select>
+    
+    <insert id="addReportQryCfg" parameterType="com.goldsign.acc.app.opma.entity.ReportQryCfg" >
+<!--        insert into W_ACC_ST.W_OP_CFG_RP_QRY(report_module,report_name,qry_con_code,qry_con_pos)
+                                      values(#{report_module,jdbcType=VARCHAR},#{report_name,jdbcType=VARCHAR},#{qry_con_code,jdbcType=VARCHAR},#{qry_con_pos,jdbcType=VARCHAR})        -->
+        insert into W_ACC_ST.W_OP_CFG_RP_QRY(report_module,qry_con_code,qry_con_pos)
+                                      values(#{report_module,jdbcType=VARCHAR},#{qry_con_code,jdbcType=VARCHAR},#{qry_con_pos,jdbcType=VARCHAR})        
+        
+    </insert>
+    
+    <delete id="deleteReportQryCfg" parameterType="com.goldsign.acc.app.opma.entity.ReportQryCfg">
+            delete from W_ACC_ST.W_OP_CFG_RP_QRY where report_module=#{report_module}
+        
+    </delete>
+   
+    
+    
+     
+    
+</mapper>

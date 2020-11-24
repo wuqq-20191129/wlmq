@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Config> 
+    <Common>
+        <StationId>9900</StationId>
+        <DeviceType>09</DeviceType>
+        <DeviceNo>110</DeviceNo>
+        <SystemFlag>08</SystemFlag>
+        
+    </Common>
+    <DataConnectionPool>
+        <Driver>oracle.jdbc.driver.OracleDriver</Driver>
+        <URL>jdbc:oracle:thin:@(description=
+            (load_balance=yes)
+            (failover=yes)
+            (connect_data=
+                (service_name=waccdb)
+            )
+            (address_list=
+                (address=
+                    (protocol=tcp)
+                    (host=10.99.10.15)
+                    (port=1521)
+                )
+            )
+    	)</URL>
+        <User encrypt="true">30102D2730163325182E3C34</User>
+        <Password encrypt="true">063F3C67657133257779</Password>
+        <MaxActive>40</MaxActive>
+        <MaxIdle>20</MaxIdle>
+        <MaxWait>7000</MaxWait>
+    </DataConnectionPool>
+    <KmsCommu>
+        <KmIp>10.99.10.51</KmIp>
+        <KmPort>8</KmPort>
+        <KmPin>83000991</KmPin>
+        <KmVersion>00</KmVersion> 
+    </KmsCommu>
+    <SamIssue>
+        <KeyVerstion>00</KeyVerstion>
+        <PsamCardVersion>00</PsamCardVersion>
+        <KeyIndex>01</KeyIndex>
+        <IssuerId>4100073100000000</IssuerId>
+        <ReceiverId>4100073100000000</ReceiverId>
+        <StartDate>20171109</StartDate>
+        <ValidDate>20271109</ValidDate>
+    </SamIssue>
+    <Backup>
+        <MakeCard>/data/backup/markcard</MakeCard>
+    </Backup>
+</Config>

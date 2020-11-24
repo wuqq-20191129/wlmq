@@ -1,0 +1,20 @@
+-- 设备控制参数
+select * from lop_prm_dev_contrl t where t.record_flag='3';
+-- 车站表
+select * from lop_prm_line t where t.record_flag='0';
+select * from lop_prm_station t where t.record_flag='0';
+-- 车站配置表 (Station Configuration Table)
+select * from lop_prm_dev_code t where t.record_flag='0';
+-- SAM卡对照表
+select * from lop_cod_pub_flag t where t.type='43';
+select * from lop_prm_sam_list t where t.record_flag='3';
+-- 车站对照表
+select * from lop_prm_station_compare t where t.record_flag='0';
+-- 车辆车站对照表
+select * from lop_prm_train_station t where t.record_flag='0';
+-- 列车配置表
+select * from lop_prm_train_dev_code t where t.record_flag='0';
+-- 票卡参数 (Ticket Parameter)
+select * from lop_prm_card_main t where t.record_flag='0';
+select * from lop_prm_card_sub t where t.record_flag='0';
+select * from lop_prm_card_para t where t.record_flag='0';

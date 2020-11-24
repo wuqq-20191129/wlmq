@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.samout.mapper.IssueSamOutMapper">
+    
+    <resultMap type="com.goldsign.acc.app.samout.entity.IssueSamOut" id="rmIssueSamOut">
+        <result column="order_no" property="order_no" /> 
+        <result column="sam_type" property="sam_type" /> 
+        <result column="order_num" property="order_num" /> 
+        <result column="make_order_oper" property="make_order_oper" /> 
+        <result column="make_order_time" property="make_order_time" /> 
+        <result column="order_state" property="order_state" /> 
+        <result column="start_logic_no" property="start_logic_no" /> 
+        <result column="audit_order_oper" property="audit_order_oper" /> 
+        <result column="audit_order_time" property="audit_order_time" /> 
+        <result column="finish_num" property="finish_num" /> 
+        <result column="make_card_oper" property="make_card_oper" /> 
+        <result column="make_card_time" property="make_card_time" /> 
+        <result column="remark" property="remark" /> 
+        <result column="finish_flag" property="finish_flag" /> 
+        <result column="is_bad" property="is_bad" />  
+    </resultMap>
+    
+    
+    <select id="queryPlan"  parameterType="IssueSamOut" resultMap="rmIssueSamOut">
+        SELECT a.order_no,a.pdu_order_no,a.out_stock_oper,b.is_bad,a.out_stock_time, a.get_card_oper,a.order_state,a.sam_type,a.start_logic_no, 
+            a.order_num,a.audit_order_oper,a.audit_order_time,a.in_stock_state,a.remark
+        FROM w_acc_tk.w_ic_sam_out_issue a,W_ACC_TK.W_IC_SAM_STOCK b where a.start_logic_no=b.logic_no
+        <if test="sam_type != null and sam_type !=''" >  
+            and sam_type = #{sam_type}
+        </if> 
+        <if test="order_state != null and order_state !=''" >  
+            and order_state = #{order_state}
+        </if> 
+        <if test="order_no != null and order_no !=''" >  
+            and order_no like #{order_no}
+        </if>
+         <if test="is_bad != null and is_bad !=''" >  
+            and b.is_bad = #{is_bad}
+        </if>
+        order by audit_order_time desc
+    </select>
+    
+    <select id="queryPlanForModify"  parameterType="IssueSamOut" resultMap="rmIssueSamOut">
+        SELECT a.order_no,a.pdu_order_no,a.out_stock_oper,b.is_bad,a.out_stock_time, a.get_card_oper,a.order_state,a.sam_type,a.start_logic_no, 
+            a.order_num,a.audit_order_oper,a.audit_order_time,a.in_stock_state,a.remark
+        FROM w_acc_tk.w_ic_sam_out_issue a,W_ACC_TK.W_IC_SAM_STOCK b where a.start_logic_no=b.logic_no
+        <if test="sam_type != null and sam_type !=''" >  
+            and sam_type = #{sam_type}
+        </if> 
+        <if test="order_state != null and order_state !=''" >  
+            and order_state = #{order_state}
+        </if> 
+        <if test="order_no != null and order_no !=''" >  
+            and order_no like #{order_no}
+        </if>
+         
+        order by audit_order_time desc
+    </select>
+    
+    <select id="saveResultProduceOrder"  parameterType="IssueSamOut" resultMap="rmIssueSamOut">
+        SELECT a.order_no FROM w_acc_tk.w_ic_sam_order_plan a WHERE a.order_state =#{order_state} AND a.order_no NOT IN(SELECT b.pdu_order_no FROM w_acc_tk.w_ic_sam_out_issue b)
+        order by a.order_no desc
+    </select>
+    
+    <insert id="addPlan" parameterType="IssueSamOut" >
+        INSERT INTO w_acc_tk.w_ic_sam_out_issue (
+        order_no, pdu_order_no, out_stock_oper, out_stock_time, get_card_oper, 
+        order_state, sam_type, start_logic_no, order_num, in_stock_state, remark) 
+        SELECT #{order_no}, #{pdu_order_no}, #{out_stock_oper}, SYSDATE, #{get_card_oper}, #{order_state}, a.sam_type, a.start_logic_no, a.order_num, #{in_stock_state}, #{remark} 
+         FROM w_acc_tk.w_ic_sam_order_plan a,w_acc_tk.w_ic_sam_type b 
+         WHERE a.order_no = #{pdu_order_no} AND a.sam_type = b.sam_type_code
+         and not exists ( select 1 from w_acc_tk.w_ic_sam_out_issue where pdu_order_no = #{pdu_order_no})
+    </insert>
+    
+    <delete id="deletePlan" parameterType="IssueSamOut" >
+        DELETE FROM w_acc_tk.w_ic_sam_out_issue WHERE order_no = #{order_no} and order_state = #{order_state}                       
+    </delete>
+    
+    <update id="modifyPlan" parameterType="IssueSamOut" >
+        UPDATE w_acc_tk.w_ic_sam_out_issue SET get_card_oper = #{get_card_oper}, remark = #{remark} 
+        WHERE order_no = #{order_no} AND order_state=#{order_state}             
+    </update>
+    
+    <update id="auditPlan" parameterType="IssueSamOut" >
+       UPDATE w_acc_tk.w_ic_sam_out_issue SET order_state = #{order_state}, audit_order_oper=#{audit_order_oper}, audit_order_time = SYSDATE 
+        WHERE order_no = #{order_no} and order_state = #{order_state_text} and exists
+        (SELECT 1 FROM w_acc_tk.w_ic_sam_stock b 
+            WHERE b.sam_type=#{sam_type} and b.stock_state=#{stockState} and b.produce_type=#{produceType} and b.is_instock=#{isInstock}
+            GROUP BY b.sam_type HAVING COUNT(b.logic_no) &gt;= #{order_num})
+    </update>
+    
+    <update id="updateLogicNosForPlanOrder" parameterType="IssueSamOut" >
+        UPDATE w_acc_tk.w_ic_sam_stock SET stock_state=#{order_state}, is_instock=#{order_state_text}
+        WHERE produce_type=#{produceType} AND is_instock=#{isInstock} AND stock_state=#{stockState} 
+        AND logic_no IN (
+        SELECT DISTINCT i.logic_no FROM w_acc_tk.w_ic_sam_logic_nos s,w_acc_tk.w_ic_sam_stock i
+        WHERE s.order_no=#{order_no}
+        AND to_number(substr(i.logic_no,12,5)) &gt;=to_number(substr(s.start_logic_no,12,5))
+        AND to_number(substr(i.logic_no,12,5)) &lt;=to_number(substr(s.end_logic_no,12,5))
+        AND substr(i.logic_no,1,11) = substr(s.start_logic_no,1,11))
+    </update>
+</mapper>

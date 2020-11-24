@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases> 
+        <typeAlias alias="PubFlag" type="com.goldsign.acc.frame.entity.PubFlag"/>
+        <typeAlias alias="OperationLog" type="com.goldsign.acc.frame.entity.OperationLog"/>
+        <typeAlias alias="Config" type="com.goldsign.acc.app.config.entity.Config"/>
+        <typeAlias alias="ConfigKey" type="com.goldsign.acc.app.config.entity.ConfigKey"/>
+        <typeAlias alias="DistanceOD" type="com.goldsign.acc.app.basicparams.entity.DistanceOD"/>
+        <typeAlias alias="DistanceDetail" type="com.goldsign.acc.app.basicparams.entity.DistanceDetail"/>
+        <typeAlias alias="LineStation" type="com.goldsign.acc.app.basicparams.entity.LineStation"/>
+        <typeAlias alias="DistanceProportion" type="com.goldsign.acc.app.weight.entity.DistanceProportion"/>
+        <typeAlias alias="ParamsStation" type="com.goldsign.acc.app.basicparams.entity.ParamsStation"/>
+
+        <typeAlias alias="GenerateData" type="com.goldsign.acc.app.weight.entity.GenerateData"/>
+        <typeAlias alias="TransferStation" type="com.goldsign.acc.app.weight.entity.TransferStation"/>
+        <typeAlias alias="ParamsStation" type="com.goldsign.acc.app.weight.entity.ParamsStation"/>
+        <typeAlias alias="DistanceOd" type="com.goldsign.acc.app.weight.entity.DistanceOd"/>
+        <typeAlias alias="DistanceChange" type="com.goldsign.acc.app.weight.entity.DistanceChange"/>
+    </typeAliases> 
+
+    <mappers>
+        <!--软件版本 -->
+        <mapper resource="com/goldsign/acc/frame/entity/Version.xml"/> 
+        <!--公共参数 -->
+        <mapper resource="com/goldsign/acc/frame/entity/PubFlag.xml"/> 
+        <mapper resource="com/goldsign/acc/app/password/entity/SysOperator.xml"/> 
+        <!--系统配置 -->
+        <mapper resource="com/goldsign/acc/app/config/entity/ConfigMapper.xml"/> 
+        <!--操作日志 参数操作日志 -->
+        <mapper resource="com/goldsign/acc/frame/entity/OperationLog.xml"/> 
+        <!--OD路径查询 -->
+        <mapper resource="com/goldsign/acc/app/basicparams/entity/DistanceDetail.xml"/>
+        <!--OD换乘路径查询 -->
+        <mapper resource="com/goldsign/acc/app/basicparams/entity/DistanceOD.xml"/>  
+        <!--站线查询 -->
+        <mapper resource="com/goldsign/acc/app/basicparams/entity/LineStation.xml"/> 
+        <!--阀值参数设置 -->
+        <mapper resource="com/goldsign/acc/app/basicparams/entity/ParamsThres.xml"/> 
+        <!--系统参数设置 -->
+        <mapper resource="com/goldsign/acc/app/basicparams/entity/ParamsSys.xml"/> 
+        <!--下载权重 -->
+        <mapper resource="com/goldsign/acc/app/weight/entity/DistanceProportion.xml"/>
+        <mapper resource="com/goldsign/acc/app/weight/entity/GenerateData.xml"/> 
+        <!--站点参数设置 -->
+        <mapper resource="com/goldsign/acc/app/basicparams/entity/ParamsStation.xml"/> 
+    </mappers>
+</configuration>

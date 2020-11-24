@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Config> 
+    <Common>
+        <StationId>0000</StationId>
+        <DeviceType>09</DeviceType>
+        <DeviceNo>120</DeviceNo>
+        <!-- 0:正常，1：手工，2：空跑 -->
+        <RunMode>0</RunMode>
+    </Common>
+    <EsCommu>
+        <ServerIp>172.20.16.244</ServerIp>
+        <ServerPort>5002</ServerPort>
+    </EsCommu>
+    <EsDevice>
+        <PkChannelPort>3</PkChannelPort>
+        <PkBoxPort>1</PkBoxPort>
+        <PtPort>9</PtPort>
+        <PtComRate>9600</PtComRate>
+    </EsDevice>
+    <RwDevice>
+        <RwPort>COM2</RwPort>
+        <ExRwPort>COM4</ExRwPort>
+    </RwDevice>
+    <KmsCommu>
+        <KmIp>172.20.16.53</KmIp>
+        <KmPort>8</KmPort>
+        <KmPin>83000991</KmPin>
+    </KmsCommu>
+    <Download>
+        <FtpServerIp>172.20.16.244</FtpServerIp>
+        <FtpServerPort>21</FtpServerPort>
+        <FtpUserName>mh</FtpUserName>
+        <FtpUserPassword>123456</FtpUserPassword>
+        <!--<FtpServerIp>127.0.0.1</FtpServerIp>
+        <FtpUserName>ES_ACC</FtpUserName>
+        <FtpUserPassword>ES_ACC0000</FtpUserPassword>-->
+        <FtpTimeout>5000</FtpTimeout>
+        <FtpRetryTimes>3</FtpRetryTimes>
+        <FtpRetryWaiting>5000</FtpRetryWaiting>
+        <FtpAuditRemotePath>audit</FtpAuditRemotePath>
+        <FtpParamRemotePath>param</FtpParamRemotePath>
+        <FtpPhyLogicRemotePath>phyLogic</FtpPhyLogicRemotePath>
+        <FtpPhyLogicLocalPath>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/download/phyLogic</FtpPhyLogicLocalPath>
+        <FtpAuditLocalPath>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/download/audit</FtpAuditLocalPath>
+        <FtpParamLocalPath>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/download/param</FtpParamLocalPath> 
+    </Download>
+    <Upload>
+        <LocalFtpServerIp>172.20.16.210</LocalFtpServerIp>
+        <LocalFtpServerPort>21</LocalFtpServerPort>
+        <LocalFtpUserName>ACCES000</LocalFtpUserName>
+        <LocalFtpUserPassword>ACCES000</LocalFtpUserPassword>
+        <MakingPath>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/upload/making</MakingPath>
+        <FinishPath>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/upload/finish</FinishPath>
+        <OrderPath>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/upload/order</OrderPath>
+        <BadCardPath>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/upload/badcard</BadCardPath>
+        <GoodCardPath>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/upload/goodcard</GoodCardPath>
+        <AuditFile>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/upload/audit</AuditFile>
+        <ErrorFile>D:/project/csMetro/程序开发/ES票卡生产系统/代码/ESPKMCS/data/upload/error</ErrorFile>
+    </Upload>
+</Config>

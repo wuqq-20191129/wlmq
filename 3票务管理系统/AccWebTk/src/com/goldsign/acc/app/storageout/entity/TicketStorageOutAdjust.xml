@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.storageout.mapper.TicketStorageOutAdjustMapper">
+    
+    <resultMap type="com.goldsign.acc.app.storageout.entity.TicketStorageOutAdjustBill" id="rmOutAdjustBill">
+        
+        <result column="bill_no" property="bill_no" /> 
+        <result column="related_bill_no" property="related_bill_no" /> 
+        <result column="operator" property="operator" /> 
+        <result column="administer" property="administer" /> 
+        <result column="bill_date" property="bill_date" /> 
+        <result column="record_flag" property="record_flag" /> 
+        <result column="verify_date" property="verify_date" /> 
+        <result column="verify_person" property="verify_person" /> 
+        <result column="remark" property="remark" /> 
+
+    </resultMap>
+    
+    <resultMap type="com.goldsign.acc.app.storageout.entity.TicketStorageOutAdjustBillDetail" id="rmOutAdjustBillDetail">
+        
+        <result column="water_no" property="water_no" />
+        <result column="bill_no" property="bill_no" /> 
+        <result column="storage_id" property="storage_id" /> 
+        <result column="area_id" property="area_id" /> 
+        <result column="ic_main_type" property="ic_main_type" /> 
+        <result column="ic_sub_type" property="ic_sub_type" /> 
+        <result column="draw_quantity" property="draw_quantity" /> 
+        <result column="real_quantity" property="real_quantity" />
+        <result column="error_quantity" property="error_quantity" />
+        <result column="valid_date" property="valid_date" /> 
+        <result column="card_money" property="card_money" /> 
+        <result column="line_id" property="line_id" /> 
+        <result column="station_id" property="station_id" /> 
+        
+        <result column="start_box_id" property="start_box_id" /> 
+        <result column="end_box_id" property="end_box_id" />
+        <result column="start_logical_id" property="start_logical_id" />
+        
+        <result column="end_logical_id" property="end_logical_id" />
+        <result column="adjust_id" property="adjust_id" />
+        <result column="storey_id" property="storey_id" />
+        <result column="base_id" property="base_id" />
+        <result column="chest_id" property="chest_id" />
+        
+        <result column="exit_line_id" property="exit_line_id" />
+        <result column="exit_station_id" property="exit_station_id" />
+        <result column="model" property="model" />
+    </resultMap>
+    
+    <parameterMap type="map" id="AddOutBillMap">  
+        <parameter property="pi_related_bill_no" jdbcType="VARCHAR" mode="IN"/>  
+        <parameter property="pi_operator" jdbcType="VARCHAR" mode="IN"/> 
+        <parameter property="pi_administer" jdbcType="VARCHAR" mode="IN"/> 
+        <parameter property="pi_remark" jdbcType="VARCHAR" mode="IN"/>
+       
+        <parameter property="po_bill_no" jdbcType="VARCHAR" mode="OUT"/> 
+        <parameter property="po_retMsg" jdbcType="VARCHAR" mode="OUT"/>  
+        <parameter property="po_retCode" jdbcType="INTEGER" mode="OUT"/>  
+    </parameterMap>
+    
+    <parameterMap type="map" id="AuditOutBillMap">  
+        <parameter property="pi_bill_no" jdbcType="VARCHAR" mode="IN"/>  
+        <parameter property="pi_operator_id" jdbcType="VARCHAR" mode="IN"/> 
+        <!--<parameter property="pi_module_id" jdbcType="VARCHAR" mode="IN"/>--> 
+       
+        <parameter property="po_retMsg" jdbcType="VARCHAR" mode="OUT"/> 
+        <parameter property="po_retCode" jdbcType="INTEGER" mode="OUT"/>  
+        <parameter property="po_bill_no" jdbcType="VARCHAR" mode="OUT"/>  
+    </parameterMap>
+    
+    <resultMap id="rmOutAdjustCheck" type="com.goldsign.acc.app.storagein.entity.TicketStorageIcChkStorageForCheckIn">    
+    <!--盘点表-->
+    <result column="CHECK_BILL_NO" property="checkBillNo" /> 
+    <result column="CHECK_PERSON" property="checkPerson" /> 
+    <result column="CHECK_DATE" property="checkDate" /> 
+    <result column="VERIFY_DATE" property="verifyDate" /> 
+    <result column="VERIFY_PERSON" property="verifyPerson" /> 
+    <result column="RECORD_FLAG" property="recordFlag" /> 
+    <result column="LOCKED" property="locked" /> 
+    <result column="IN_LOCKED" property="inLocked" /> 
+    
+    <!--盘点明细表-->
+    <result property="storageId" column="STORAGE_ID"/>
+    <result property="areaId" column="AREA_ID"/>
+    <result property="icMainType" column="IC_MAIN_TYPE"/>
+    <result property="icSubType" column="IC_SUB_TYPE"/>
+    <result property="storageId" column="STORAGE_ID"/>
+
+    <result property="waterNo" column="WATER_NO"/>
+    <result property="chestId" column="CHEST_ID"/>
+    <result property="storeyId" column="STOREY_ID"/>
+    <result property="baseId" column="BASE_ID"/>
+    <result property="boxId" column="BOX_ID"/>
+    <result property="sysAmount" column="SYS_AMOUNT"/>
+    <result property="realAmount" column="REAL_AMOUNT"/>
+    <result property="cardMoney" column="CARD_MONEY"/>
+
+    <result property="diffAmount" column="diffAmount"/>
+    
+    <result property="lineId" column="LINE_ID"/>
+    <result property="stationId" column="STATION_ID"/>
+    <result property="exitLineId" column="EXIT_LINE_ID"/>
+    <result property="exitStationId" column="EXIT_STATION_ID"/>
+    <result property="model" column="MODEL"/>
+
+  </resultMap>
+
+    
+   
+    
+     <!--出库单 -->
+    <select id="queryOutBill"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutAdjustBill" resultMap="rmOutAdjustBill">
+        select A.bill_no,A.related_bill_no,A.operator,A.administer,A.bill_date,A.record_flag,A.remark,A.verify_date,A.verify_person
+        from w_acc_tk.w_ic_out_adjust_bill A 
+        where  1=1
+        <!--主表查询条件-->
+        <if test="bill_no !=null and bill_no !=''">
+            and A.bill_no like concat('%',concat(#{bill_no},'%'))
+        </if>  
+                
+        <if test="record_flag !=null and record_flag !=''">
+            and A.record_flag =#{record_flag}
+        </if>
+                
+        <if test="bill_date_begin !=null and bill_date_begin !=''">
+            and A.bill_date &gt;= to_date(concat(#{bill_date_begin},' 00:00:00'),'yyyy-mm-dd  hh24:mi:ss')
+        </if>
+                
+        <if test="bill_date_end !=null and bill_date_end !=''">
+            and A.bill_date &lt;= to_date(concat(#{bill_date_end}, ' 23:59:59 '),'yyyy-mm-dd  hh24:mi:ss')
+        </if>
+        
+        <if test="administer !=null and administer !=''">
+            and A.administer =#{administer}
+        </if>
+        
+        and (  
+             exists (select B.bill_no from w_acc_tk.w_ic_out_adjust_bill_detail B
+                     where A.bill_no=B.Bill_No
+        
+                    <if test="ic_main_type !=null and ic_main_type !=''">
+                        and trim(B.ic_main_type) =#{ic_main_type}
+                    </if>
+
+                    <if test="ic_sub_type !=null and ic_sub_type !=''">
+                        and trim(B.ic_sub_type) =#{ic_sub_type}
+                    </if>
+
+                    <if test="adjust_id !=null and adjust_id !=''">
+                        and trim(B.adjust_id) =#{adjust_id}
+                    </if>
+
+                    and b.storage_id  in
+                    <foreach item="storageId" index="index" collection="storageIdList" open="(" separator="," close=")">
+                        #{storageId}
+                    </foreach> 
+             )
+        or not exists (select B.bill_no from w_acc_tk.w_ic_out_adjust_bill_detail B 
+                       where A.bill_no=B.Bill_No )
+        )
+        
+        
+         
+        order by A.bill_no desc
+        
+    </select>
+    
+    
+    
+    <!--调账出库单增加--> 
+    <select id="addOutBill" parameterMap="AddOutBillMap" statementType="CALLABLE">
+        {call w_acc_tk.w_up_ic_out_add_tc(?,?,?,?,?,?,?)}
+                                  
+    </select>
+    
+    <select id="getOutDetailCountForDeleteOutBill"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutAdjustBill" resultType="int">
+        
+        select count(*) from w_acc_tk.w_ic_out_adjust_bill_detail where bill_no in
+        <foreach item="outBill" index="index" collection="list" open="(" separator="," close=")">
+             #{outBill.bill_no}
+        </foreach>
+         
+    </select>
+    
+    <update id="modifyChkStorageForDeleteOutBill" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutAdjustBill" >      
+        <!--locked 应改为 out_locked-->
+        update w_acc_tk.w_ic_chk_storage A set A.locked='0' 
+        where exists (select 1 from w_acc_tk.w_ic_out_adjust_bill B where A.check_bill_no= B.related_bill_no and B.bill_no=#{bill_no})
+        <!--where check_bill_no= (select b.related_bill_no from w_acc_tk.w_ic_in_store_bill b where b.bill_no=#{bill_no})-->
+
+    </update>
+    
+    <delete id="deleteOutBill" parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutAdjustBill" >
+        delete from  w_acc_tk.w_ic_out_adjust_bill where bill_no=#{bill_no} and record_flag='3'
+                                  
+    </delete>
+    
+    <!--调账出库单审核--> 
+    <select id="auditOutBill" parameterMap="AuditOutBillMap" statementType="CALLABLE">
+        {call w_acc_tk.w_up_ic_out_audit_tc(?,?,?,?,?)}
+                                  
+    </select>
+    
+    
+    <select id="queryOutBillDetail"  parameterType="com.goldsign.acc.app.storageout.entity.TicketStorageOutAdjustBillDetail" resultMap="rmOutAdjustBillDetail">
+        <!--A.record_flag,-->
+        select B.water_no,B.bill_no,B.storage_id,B.area_id,B.chest_id,
+               B.storey_id,B.base_id,B.ic_main_type,B.ic_sub_type,
+               B.draw_quantity,B.real_quantity,B.error_quantity,
+               (case when B.valid_date= to_date('1970-01-01' ,'yyyy-mm-dd')  then '' 
+                else to_char(B.valid_date,'yyyy-mm-dd')  end) valid_date,
+               B.card_money,B.line_id,B.station_id,B.exit_line_id,B.exit_station_id,B.model,
+               B.start_box_id,B.end_box_id,B.start_logical_id,B.end_logical_id,B.adjust_id
+        from w_acc_tk.w_ic_out_adjust_bill_detail B
+        where B.bill_no =#{bill_no}
+         
+        order by B.water_no
+        
+    </select>
+    
+    <delete id="deleteOutAdjustDetail" parameterType="String" >
+        delete from  w_acc_tk.w_ic_out_adjust_bill_detail where bill_no=#{bill_no}
+                                  
+    </delete>
+    
+    <!--b.sys_amount>b.real_amount-->
+    <select id="getChkStoragesList" parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageIcChkStorageForCheckIn" resultMap="rmOutAdjustCheck">
+        select 
+            b.water_no,b.check_bill_no,b.storage_id,b.area_id,b.chest_id,b.storey_id,b.base_id,b.box_id,
+            b.ic_main_type,b.ic_sub_type,b.sys_amount,b.real_amount,b.card_money,nvl(b.real_amount,0)-nvl(b.sys_amount,0) diffAmount,
+            a.check_person,a.check_date,a.verify_date,a.verify_person,a.record_flag
+        from w_acc_tk.W_IC_CHK_STORAGE a,w_acc_tk.W_IC_CHK_STORAGE_DETAIL b
+        where a.CHECK_BILL_NO = b.CHECK_BILL_NO and b.sys_amount &gt; b.real_amount
+        and a.CHECK_BILL_NO = #{checkBillNo,jdbcType=CHAR} 
+        order by check_bill_no
+
+    </select>
+  
+  <select id="getChkStoragesListForSelect" parameterType="com.goldsign.acc.app.storagein.entity.TicketStorageIcChkStorageForCheckIn" resultMap="rmOutAdjustCheck">
+        select b.water_no,b.check_bill_no,b.storage_id,b.area_id,b.chest_id,b.storey_id,b.base_id,b.box_id,
+               b.ic_main_type,b.ic_sub_type,b.card_money,b.sys_amount,b.real_amount,nvl(b.real_amount,0)-nvl(b.sys_amount,0) diffAmount,a.check_person,a.check_date,
+               a.verify_date,a.verify_person,b.line_id,b.station_id,b.exit_line_id,b.exit_station_id,b.model 
+        from w_acc_tk.w_ic_chk_storage A,w_acc_tk.w_ic_chk_storage_detail B where b.sys_amount &gt; b.real_amount
+        and b.check_bill_no=a.check_bill_no and a.locked='0' and a.record_flag='0'
+        and b.storage_id  in
+        <foreach item="storageId" index="index" collection="storageIdList" open="(" separator="," close=")">
+            #{storageId}
+        </foreach>   
+
+        order by b.check_bill_no,b.water_no
+                 
+                
+    
+  </select>
+    
+    
+    
+    
+</mapper>

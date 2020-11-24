@@ -1,0 +1,55 @@
+a.top:link {
+	font-size: 9pt;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+a.top:visited {
+	font-size: 9pt;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+a.top:hover {
+	font-size: 9pt;
+	color: #CC0000;
+	text-decoration: none;
+}
+a.left:link {
+	font-size: 9pt;
+	color: #CC0000;
+	text-decoration: none;
+}
+a.left:visited {
+	font-size: 9pt;
+	color: #CC0000;
+	text-decoration: none;
+}
+a.left:hover {
+	font-size: 9pt;
+	color: #CC0000;
+	text-decoration: underline;
+}
+a.left2:link {
+	font-size: 9pt;
+	color: #666666;
+	text-decoration: none;
+}
+a.left2:visited {
+	font-size: 9pt;
+	color: #666666;
+	text-decoration: none;
+}
+a.left2:hover {
+	font-size: 9pt;
+	color: #666666;
+	text-decoration: underline;
+}
+.down {
+	font-size: 9pt;
+	color: #006599;
+	text-decoration: none;
+}
+.simple {
+	font-size: 9pt;
+	color: #FFFFFF;
+	text-decoration: none;
+}

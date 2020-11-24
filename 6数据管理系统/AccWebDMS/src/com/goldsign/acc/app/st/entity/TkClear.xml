@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.st.mapper.TkClearMapper">
+    <resultMap type="com.goldsign.acc.app.st.entity.TkClear" id="rmTkClear">
+        <result column="origin_table_name" property="originTableName" />
+        <result column="dest_table_name" property="destTableName" />
+        <result column="begin_bill_no" property="beginBillNo" />
+        <result column="begin_clear_datetime" property="beginClearDateTime" />
+        <result column="end_clear_datetime" property="endClearDateTime" />
+        <result column="spent_time" property="spentTime" />
+        <result column="clear_recd_count" property="clearRecdCount" />
+        <result column="err_discribe" property="errDiscribe" />
+        <result column="sql_label" property="sqlLabel" />
+        <result column="end_bill_no" property="endBillNo" />
+    </resultMap>
+    <select id="queryPlan" parameterType="com.goldsign.acc.app.st.entity.TkClear" resultMap="rmTkClear">
+        select origin_table_name,dest_table_name,begin_clear_datetime,end_clear_datetime,spent_time,clear_recd_count,
+        err_discribe,begin_bill_no,end_bill_no from w_acc_tk.w_ic_log_clear_table
+        <where>
+            1=1
+            <if test="originTableName != null and originTableName != ''">
+                and origin_table_name like concat(concat('%',#{originTableName}),'%')
+            </if>
+            <if test="destTableName != null and destTableName !=''">
+                and dest_table_name like concat(concat('%',#{destTableName}),'%')
+            </if>
+            <if test="beginClearDateTime != null and beginClearDateTime !=''">
+                and begin_clear_datetime &gt;= #{beginClearDateTime}
+            </if>
+            <if test="endClearDateTime != null and endClearDateTime !=''">
+                and end_clear_datetime &lt;= #{endClearDateTime}
+            </if>
+        </where>       
+    </select>
+</mapper>

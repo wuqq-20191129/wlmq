@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.storagechk.mapper.TicketStorageIcChkStorageDetailCardMapper" >
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetailCard" >
+    <constructor >
+      <arg column="WATER_NO" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="CHECK_BILL_NO" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="STORAGE_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="AREA_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CHEST_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="STOREY_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="BASE_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="BOX_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IC_MAIN_TYPE" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IC_SUB_TYPE" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="START_LOGICAL_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="END_LOGICAL_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetailCard" >
+    insert into W_IC_CHK_STORAGE_DETAIL_CARD (WATER_NO, CHECK_BILL_NO, STORAGE_ID, 
+      AREA_ID, CHEST_ID, STOREY_ID, BASE_ID, 
+      BOX_ID, IC_MAIN_TYPE, IC_SUB_TYPE, 
+      START_LOGICAL_ID, END_LOGICAL_ID)
+    values (#{waterNo,jdbcType=DECIMAL}, #{checkBillNo,jdbcType=CHAR}, #{storageId,jdbcType=CHAR}, 
+      #{areaId,jdbcType=CHAR}, #{chestId,jdbcType=CHAR}, #{storeyId,jdbcType=CHAR}, #{baseId,jdbcType=CHAR}, 
+      #{boxId,jdbcType=CHAR}, #{icMainType,jdbcType=CHAR}, #{icSubType,jdbcType=CHAR}, 
+      #{startLogicalId,jdbcType=VARCHAR}, #{endLogicalId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetailCard" >
+    insert into W_ACC_TK.W_IC_CHK_STORAGE_DETAIL_CARD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+     WATER_NO,
+      <if test="checkBillNo != null" >
+        CHECK_BILL_NO,
+      </if>
+      <if test="storageId != null" >
+        STORAGE_ID,
+      </if>
+      <if test="areaId != null" >
+        AREA_ID,
+      </if>
+      <if test="chestId != null" >
+        CHEST_ID,
+      </if>
+      <if test="storeyId != null" >
+        STOREY_ID,
+      </if>
+      <if test="baseId != null" >
+        BASE_ID,
+      </if>
+      <if test="boxId != null" >
+        BOX_ID,
+      </if>
+      <if test="icMainType != null" >
+        IC_MAIN_TYPE,
+      </if>
+      <if test="icSubType != null" >
+        IC_SUB_TYPE,
+      </if>
+      <if test="startLogicalId != null" >
+        START_LOGICAL_ID,
+      </if>
+      <if test="endLogicalId != null" >
+        END_LOGICAL_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+     W_ACC_TK.W_SEQ_W_IC_CHK_DETAIL_CARD.NEXTVAL,
+      <if test="checkBillNo != null" >
+        #{checkBillNo,jdbcType=CHAR},
+      </if>
+      <if test="storageId != null" >
+        #{storageId,jdbcType=CHAR},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=CHAR},
+      </if>
+      <if test="chestId != null" >
+        #{chestId,jdbcType=CHAR},
+      </if>
+      <if test="storeyId != null" >
+        #{storeyId,jdbcType=CHAR},
+      </if>
+      <if test="baseId != null" >
+        #{baseId,jdbcType=CHAR},
+      </if>
+      <if test="boxId != null" >
+        #{boxId,jdbcType=CHAR},
+      </if>
+      <if test="icMainType != null" >
+        #{icMainType,jdbcType=CHAR},
+      </if>
+      <if test="icSubType != null" >
+        #{icSubType,jdbcType=CHAR},
+      </if>
+      <if test="startLogicalId != null" >
+        #{startLogicalId,jdbcType=VARCHAR},
+      </if>
+      <if test="endLogicalId != null" >
+        #{endLogicalId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+   
+     <select id="count" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetailCard" resultType="int">
+       select count(*)  from W_ACC_TK.W_IC_CHK_STORAGE_DETAIL_CARD
+                where box_id= #{boxId,jdbcType=CHAR} 
+                and check_bill_no=#{checkBillNo,jdbcType=CHAR}
+                and  ((rtrim(start_logical_id)<![CDATA[>=]]> #{startLogicalId,jdbcType=CHAR}
+                and rtrim(start_logical_id)<![CDATA[<=]]> #{endLogicalId,jdbcType=CHAR}) 
+                or (rtrim(start_logical_id)<![CDATA[<=]]> #{startLogicalId,jdbcType=CHAR} 
+                and rtrim(end_logical_id)<![CDATA[>=]]> #{endLogicalId,jdbcType=CHAR}) 
+                or (rtrim(end_logical_id)<![CDATA[>=]]> #{startLogicalId,jdbcType=CHAR}
+                 and rtrim(end_logical_id)<![CDATA[<=]]> #{endLogicalId,jdbcType=CHAR}) )
+   </select>
+   <select id="select" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetailCard" resultMap="BaseResultMap">
+       select *  from W_ACC_TK.W_IC_CHK_STORAGE_DETAIL_CARD 
+                where box_id= #{boxId,jdbcType=CHAR} 
+                and check_bill_no=#{checkBillNo,jdbcType=CHAR}
+            
+   </select>
+   <delete id="delete" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetailCard">
+    delete from W_ACC_TK.W_IC_CHK_STORAGE_DETAIL_CARD
+    where WATER_NO= #{waterNo,jdbcType=DECIMAL} 
+                and check_bill_no=#{checkBillNo,jdbcType=CHAR}
+  </delete>
+  <select id="selectByPrimaryKey" parameterType="com.goldsign.acc.app.storagechk.entity.TicketStorageIcChkStorageDetailCard" resultMap="BaseResultMap">
+       select *  from W_ACC_TK.W_IC_CHK_STORAGE_DETAIL_CARD 
+                where WATER_NO= #{waterNo,jdbcType=DECIMAL} 
+            
+   </select>
+   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from W_ACC_TK.W_IC_CHK_STORAGE_DETAIL_CARD
+    where CHECK_BILL_NO = #{checkBillNo,jdbcType=CHAR}
+  </delete>
+ 
+</mapper>

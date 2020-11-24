@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Config>	
+    <Common>
+          <!-- 刷新的时间间隔 -->
+          <FreshInterval>60000</FreshInterval>
+          <isLocked>false</isLocked>
+
+          <!-- 线路颜色 -->
+          <ColorLine>01,249,207,0#02,0,92,162#03,228,103,19#04,0,146,65#05,255,0,0#06,0,172,160#07,228,103,19#08,185,211,52#20,0,158,231</ColorLine>
+          
+          <!-- 票卡类型颜色（id为票卡主类型||子类型） -->
+          <ColorCard>0100,255,85,85#0200,0,128,0#0201,228,103,19#0201,0,146,65#0202,255,0,0#0203,0,172,160#0300,228,103,19#0400,185,211,52#0401,0,158,231#0500,200,0,0#0600,255,128,255#0601,128,255,0#0602,128,255,128#0603,128,0,128#0315,128,128,192#0177,128,0,255</ColorCard>
+          
+          <!-- 屏幕分辨率 -->
+          <ScreenW>1366</ScreenW>
+          <ScreenH>768</ScreenH>
+    </Common>
+    
+    <!--To set user and password, please add "@@" before it. Eg: <User>@@user</User>, <Password>@@password</Password> -->
+    <DataConnectionPool>
+        <!-- acc_st database -->
+        <Driver1>oracle.jdbc.driver.OracleDriver</Driver1>
+        <!-- <URL1>jdbc:oracle:thin:@10.99.1.40:1521:acctest</URL1>  -->
+        <URL1>jdbc:oracle:thin:@172.20.19.203:1521:epay1</URL1> 
+        <User1 encrypt="true">262C2F1B203D</User1>
+        <Password1 encrypt="true">262C2F1B203D</Password1>
+        
+        <!-- acc_commu database -->
+        <Driver2>oracle.jdbc.driver.OracleDriver</Driver2>
+        <URL2>jdbc:oracle:thin:@172.20.19.203:1521:epay1</URL2> 
+        <User2 encrypt="true">262C2F1B30262A2332</User2>
+        <Password2 encrypt="true">262C2F1B30262A2332</Password2>
+        
+        <MaxActive>40</MaxActive>
+        <MaxIdle>20</MaxIdle>
+        <MaxWait>20000</MaxWait>
+    </DataConnectionPool>
+</Config>

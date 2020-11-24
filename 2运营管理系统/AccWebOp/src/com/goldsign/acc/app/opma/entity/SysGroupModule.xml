@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldsign.acc.app.opma.mapper.SysGroupModuleMapper" >
+  <resultMap id="BaseResultMap" type="com.goldsign.acc.app.opma.entity.SysGroupModuleKey" >
+    <constructor >
+      <idArg column="MODULE_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <idArg column="SYS_GROUP_ID" jdbcType="CHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.goldsign.acc.app.opma.entity.SysGroupModuleKey" >
+    delete from w_acc_st.W_OP_SYS_GROUP_MODULE
+    where MODULE_ID = #{moduleId,jdbcType=VARCHAR}
+      and SYS_GROUP_ID = #{sysGroupId,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByCondition" parameterType="map" >
+	delete from w_acc_st.W_OP_SYS_GROUP_MODULE
+	where SYS_GROUP_ID = #{sysGroupId,jdbcType=CHAR}
+	<if test="menuIds != null">
+		and MODULE_ID not in
+		<foreach item="item" index="index" collection="menuIds" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</if>     
+    and MODULE_ID in 
+    <foreach item="item" index="index" collection="moduleIds" open="("  
+            separator="," close=")">  
+            #{item}  
+    </foreach>      
+  </delete>
+  <insert id="insert" parameterType="com.goldsign.acc.app.opma.entity.SysGroupModuleKey" >
+    insert into w_acc_st.W_OP_SYS_GROUP_MODULE (MODULE_ID, SYS_GROUP_ID)
+    values (#{moduleId,jdbcType=VARCHAR}, #{sysGroupId,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldsign.acc.app.opma.entity.SysGroupModuleKey" >
+    insert into w_acc_st.W_OP_SYS_GROUP_MODULE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="moduleId != null" >
+        MODULE_ID,
+      </if>
+      <if test="sysGroupId != null" >
+        SYS_GROUP_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="moduleId != null" >
+        #{moduleId,jdbcType=VARCHAR},
+      </if>
+      <if test="sysGroupId != null" >
+        #{sysGroupId,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+   <select id="findModuleByGroupId" parameterType="map" resultMap="BaseResultMap">      
+        select * from w_acc_st.W_OP_SYS_GROUP_MODULE 
+        where SYS_GROUP_ID=#{sysGroupId,jdbcType=CHAR}
+       order by MODULE_ID
+    </select>
+    <select id="countModuleByGroupIdAndModuleId" parameterType="map" resultType="int">      
+        select count(*) from w_acc_st.W_OP_SYS_GROUP_MODULE 
+        where SYS_GROUP_ID=#{sysGroupId,jdbcType=CHAR}
+        and MODULE_ID=#{moduleId,jdbcType=VARCHAR}
+    </select>
+</mapper>

@@ -1,0 +1,7 @@
+CardType#0501
+Background#APicSmall.jpg#254#400
+Image#BackPhoto##C:/Users/Administrator/Pictures/little.jpg#0#-6#640#1024
+Image#IDPhoto##C:/Users/Administrator/Pictures/little.jpg#206#340#230#310
+Text#Name#姓名#黑体#7#1#000000#221#720#265#45#4
+Text#Department#部门#黑体#7#1#000000#221#770#265#40#4
+Text#EmployeeID#工号#黑体#7#1#000000#221#824#265#40#4

@@ -1,0 +1,103 @@
+-1#Mechanical error
+1#Indicates a broken ribbon
+2#Print head temperature is too high
+3#Mechanical error
+4#Printer is out of cards, or unable to feed the card
+5#Unable to encode magnetic or smart card encoder
+6#Unable to encode the card because it is not in the encoder
+7#Print head is up
+8#Out of ribbon
+9#Ribbon needs to be removed
+10#Wrong number of parameters or a value is incorrect
+11#Invalid coordinates while trying to draw a barcode or graphics
+12#Undefined barcode type
+13#Text for magnetic encoding or bar code drawing is invalid
+14#Invalid command
+20#Syntax error in the barcode command or parameters
+21#General text data error
+22#Syntax error in the graphic command data
+30#Unable to initialize the graphics buffer
+31#Graphic object to be drawn exceeds the X range
+32#Graphic object to be drawn exceeds the Y range
+33#Graphic data checksum error
+34#Data time-out error, usually happens when the USB cable is taken out while printing
+35#Incorrect ribbon installed
+40#Invalid magnetic encoding data
+41#Error while encoding a magnetic stripe
+42#Error while reading a magnetic stripe
+43#Magnetic encoder mechanical error
+44#Magnetic encoder not responding
+45#Magnetic encoder is missing or the card is jammed before reaching the encoder
+47#while trying to flip the card
+48#Feeder Cover Lid is open (P110 and P120 only)
+49#Error while trying to encode on a magnetic stripe
+50#Magnetic encoder error
+51#One or more of the tracks of the magnetic stripe are blank
+52#Flash memory error
+53#Cannot access the printer
+54#Reception timeout, protocol errors
+55#Reception timeout, protocol errors
+56#Parameter error
+57#Parameter error
+60#Printer not supported
+61#Unable to open handle to Zebra printer driver
+62#Cannot open printer driver
+63#One of the arguments is invalid
+64#Printer is in use
+65#Invalid printer handle
+66#Error closing printer driver handle
+67#Command failed due to communication error
+68#Response too large for buffer
+69#Error reading data
+70#Error writing data
+71#Error loading SDK
+72#Invalid structure alignment
+73#Unable to create the device context for the driver
+74#Print spooler error
+75#Operating system is out of memory
+76#Operating system is out of disk space
+77#Print job aborted by the user
+78#Application aborted
+79#Error creating file
+80#Error writing file
+81#Error reading file
+82#Invalid media
+83#Insufficient system resources to perform necessary memory allocation
+255#An unknown but serious exception has occurred
+8001#Window API error, call GetLastError() function from Win32 API for error information
+8002#One of the arguments is invalid
+8003#Operating system is out of memory
+8004#One of the objects specified in the API call is in use
+8005#A buffer specified as an argument in the API call is not large enough
+8006#Method is not implemented
+8007#Method generated a Win32 error, call GetLastError() function from Win32 API for error information
+8008#Object called by the API is in an invalid state
+8009#Method aborted
+8010#File not found
+8011#Arithmetic operation in the method caused a numeric overflow
+8012#Access denied to the specified file
+8013#Specified image file format is unknown
+8014#Specified font is not installed
+8015#Invalid font style
+8016#Specified font is not a True Type font and cannot be used with GDI+
+8017#Installed GDI+ version
+8018#The GDI+ API is not initialized
+8019#Specified property does not exist in the image
+8020#Specified property is not supported by the image format
+8021#Graphic buffer has already been initialized
+8022#No data in the graphic buffer to print
+8023#Graphics buffer has not been initialized
+8024#Unable to create the device context for the driver
+8025#User closed or canceled the DLG window
+8026#PrintDlg function failed to load the required resources
+8027#PrintDlg function failed to parse the strings in the [devices] section of the WIN.INI file
+8028#flag was specified in the Flags member of the PRINTDLG structure, but the hDevMode or hDevNames member was not NULL
+8029#PrintDlg function failed to load the device driver for the specified printer
+8030#Printer driver failed to initialize a DEVMODE structure
+8031#PrintDlg function failed during initialization, and there is no more specific extended error code to describe the failure
+8032#No printer drivers were found
+8033#A default printer does not exist
+8034#Data in the DEVMODE and DEVNAMES structures describes two different printers
+8035#PrintDlg function failed when it attempted to create an information context
+8036#The [devices] section of the WIN.INI file did not contain an entry for the requested printer
+8037#Error occurs when you store the DEVNAMES structure, and the user changes the default printer by using the Control Panel

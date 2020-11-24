@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.FareNameMapper">
+    <resultMap type="FareName" id="rmFareName">
+        
+        <result column="fare_id" property="fare_id" /> 
+        <result column="fare_name" property="fare_name" /> 
+    </resultMap>
+
+    
+     
+    <select id="getFareNames"  parameterType="FareName" resultMap="rmFareName">
+        select fare_id,fare_name
+        from W_ACC_ST.W_OP_PRM_FARE_NAME 
+        order by fare_id,fare_name
+    </select>
+    <select id="getFareNameById"  parameterType="FareName" resultMap="rmFareName">
+        select fare_id,fare_name
+        from W_ACC_ST.W_OP_PRM_FARE_NAME where fare_id=#{fare_id} 
+        
+    </select>
+    <select id="getFareNameByName"  parameterType="FareName" resultMap="rmFareName">
+        select fare_id,fare_name
+        from W_ACC_ST.W_OP_PRM_FARE_NAME where fare_name=#{fare_name}
+        
+    </select>
+    <select id="getFareNameByNameForModify"  parameterType="FareName" resultMap="rmFareName">
+        select fare_id,fare_name
+        from W_ACC_ST.W_OP_PRM_FARE_NAME where fare_id !=#{fare_id} and fare_name=#{fare_name}
+        
+    </select>
+    
+    <insert id="addFareName" parameterType="FareName" >
+        insert into W_ACC_ST.W_OP_PRM_FARE_NAME(fare_id,fare_name)
+                                      values(#{fare_id},#{fare_name})        
+        
+    </insert>
+    <update id="modifyFareName" parameterType="FareName" >
+        update W_ACC_ST.W_OP_PRM_FARE_NAME set fare_name=#{fare_name}
+                    where  fare_id=#{fare_id}                                        
+        
+    </update>
+    <delete id="deleteFareName" parameterType="FareName">
+            delete from W_ACC_ST.W_OP_PRM_FARE_NAME where  fare_id=#{fare_id} 
+        
+    </delete>
+    
+    <select id="getFareZoneCount"  parameterType="FareName" resultType="int">
+        select count(*) 
+        from W_ACC_ST.W_OP_PRM_FARE_ZONE where record_flag in ('3','0','1') and fare_zone in
+        
+        <foreach item="fareName" index="index" collection="list" open="(" separator="," close=")">
+             #{fareName.fare_id}
+        </foreach>
+    </select>
+    
+    <select id="getFareTableCount"  parameterType="FareName" resultType="int">
+        select count(*) 
+        from W_ACC_ST.W_OP_PRM_FARE_TABLE where record_flag in ('3','0','1') and fare_zone in
+        
+        <foreach item="fareName" index="index" collection="list" open="(" separator="," close=")">
+             #{fareName.fare_id}
+        </foreach>
+    </select>
+    
+    
+     
+    
+</mapper>

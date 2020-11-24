@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.prminfo.mapper.FareConfMapper">
+    <resultMap type="FareConf" id="rmFareConf">
+        
+        <result column="water_no" property="water_no" /> 
+        <result column="time_code" property="time_code" /> 
+        <result column="card_sub_id" property="card_sub_id" /> 
+        <result column="card_main_id" property="card_main_id" /> 
+        <result column="fare_table_id" property="fare_table_id" /> 
+        <result column="version_no" property="version_no" /> 
+        <result column="record_flag" property="record_flag" /> 
+        <result column="fare_time_id" property="fare_time_id" /> 
+        <result column="fare_deal_id" property="fare_deal_id" /> 
+    </resultMap>
+
+    
+     
+    <select id="getFareConfs"  parameterType="FareConf" resultMap="rmFareConf">
+        select water_no,time_code,card_sub_id,card_main_id,fare_table_id,
+            version_no,record_flag,fare_time_id,fare_deal_id
+        from W_ACC_ST.W_OP_PRM_FARE_CONF where record_flag=#{record_flag} and version_no=#{version_no}  
+        <if test="card_main_id !=null and card_main_id !=''">
+            and card_main_id =#{card_main_id} 
+        </if> 
+        <if test="card_sub_id !=null and card_sub_id !=''">
+            and card_sub_id =#{card_sub_id} 
+        </if>
+        <if test="time_code !=null and time_code !=''">
+            and time_code =#{time_code}
+        </if>
+        <if test="fare_table_id !=null and fare_table_id !=''">
+            and fare_table_id =#{fare_table_id}
+        </if>
+        <if test="fare_time_id !=null and fare_time_id !=''">
+            and fare_time_id =#{fare_time_id}
+        </if>
+        <if test="fare_deal_id !=null and fare_deal_id !=''">
+            and fare_deal_id =#{fare_deal_id}
+        </if>
+        order by card_main_id,card_sub_id,time_code
+    </select>
+    <select id="getFareConfById"  parameterType="FareConf" resultMap="rmFareConf">
+        select water_no,time_code,card_sub_id,card_main_id,fare_table_id,
+            version_no,record_flag,fare_time_id,fare_deal_id
+        from W_ACC_ST.W_OP_PRM_FARE_CONF where record_flag=#{record_flag} and version_no=#{version_no}  
+                                              and time_code =#{time_code} and card_main_id =#{card_main_id} 
+                                              and card_sub_id =#{card_sub_id} and fare_table_id =#{fare_table_id}
+                                              
+        
+    </select>
+    
+    <select id="getFareConfByFareTableId"  resultMap="rmFareConf">
+        select water_no,time_code,card_sub_id,card_main_id,fare_table_id,
+            version_no,record_flag,fare_time_id,fare_deal_id
+        from W_ACC_ST.W_OP_PRM_FARE_CONF where record_flag in ('3','0','1') and fare_table_id in 
+        <foreach item="fareTable" index="index" collection="list" open="(" separator="," close=")">
+            #{fareTable.fare_table_id}
+        </foreach>
+                                              
+        
+    </select>
+    
+    <insert id="addFareConf" parameterType="FareConf" >
+        insert into W_ACC_ST.W_OP_PRM_FARE_CONF(water_no,time_code,card_sub_id,card_main_id,fare_table_id,
+                                                version_no,record_flag,fare_time_id,fare_deal_id)
+                                      values(W_ACC_ST.W_SEQ_W_OP_PRM_FARE_CONF.nextval,#{time_code},#{card_sub_id},#{card_main_id},#{fare_table_id},
+                                             #{version_no},#{record_flag},#{fare_time_id},#{fare_deal_id})        
+        
+    </insert>
+    <update id="modifyFareConf" parameterType="FareConf" >
+        update W_ACC_ST.W_OP_PRM_FARE_CONF set 
+                    fare_time_id=#{fare_time_id},fare_deal_id=#{fare_deal_id}
+                    where  time_code=#{time_code} and card_main_id=#{card_main_id} and card_sub_id=#{card_sub_id} and fare_table_id=#{fare_table_id}
+                           and record_flag=#{record_flag} and version_no=#{version_no}                                          
+        
+    </update>
+    <delete id="deleteFareConf" parameterType="FareConf">
+            delete from W_ACC_ST.W_OP_PRM_FARE_CONF where time_code=#{time_code} and card_main_id=#{card_main_id} and card_sub_id=#{card_sub_id} 
+                                                      and fare_table_id=#{fare_table_id} and record_flag=#{record_flag} and version_no=#{version_no} 
+        
+    </delete>
+    <!--当前参数、未来参数作历史标识或删除标识 -->
+    
+    <update id="submitToOldFlag" parameterType="FareConf" >
+        update W_ACC_ST.W_OP_PRM_FARE_CONF set record_flag=#{record_flag_old}
+                    where   record_flag=#{record_flag_new}                                               
+    </update>
+    <!--草稿参数复制为当前或未来参数 -->
+     <insert id="submitFromDraftToCurOrFur" parameterType="FareConf" >
+        insert into  W_ACC_ST.W_OP_PRM_FARE_CONF(water_no,time_code,card_sub_id,card_main_id,fare_table_id,
+                                                version_no,record_flag,fare_time_id,fare_deal_id)
+               select W_ACC_ST.W_SEQ_W_OP_PRM_FARE_CONF.nextval,time_code,card_sub_id,card_main_id,fare_table_id,
+                      #{version_no_new},#{record_flag_new},fare_time_id,fare_deal_id
+               from   W_ACC_ST.W_OP_PRM_FARE_CONF  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    <!--草稿参数删除 -->
+     <delete id="deleteFareConfsForClone" parameterType="FareConf">
+            delete from W_ACC_ST.W_OP_PRM_FARE_CONF where  record_flag='3' and version_no='0000000000'                                                      
+    </delete>
+    <!--当前参数或未来参数克隆为草稿参数 -->
+    <insert id="cloneFromCurOrFurToDraft" parameterType="FareConf" >
+        insert into  W_ACC_ST.W_OP_PRM_FARE_CONF(water_no,time_code,card_sub_id,card_main_id,fare_table_id,
+                                                version_no,record_flag,fare_time_id,fare_deal_id)
+               select W_ACC_ST.W_SEQ_W_OP_PRM_FARE_CONF.nextval,time_code,card_sub_id,card_main_id,fare_table_id,
+                      '0000000000','3',fare_time_id,fare_deal_id
+               from   W_ACC_ST.W_OP_PRM_FARE_CONF  
+               where   record_flag=#{record_flag} and version_no=#{version_no}                                        
+    </insert>
+    
+    <select id="getFareConfForRepeatTimes"  parameterType="FareConf" resultType="int">
+        select count(*) 
+        from W_ACC_ST.W_OP_PRM_FARE_CONF where record_flag=#{record_flag} and version_no=#{version_no}  
+                                              and time_code =#{time_code} and card_main_id =#{card_main_id} 
+                                              and card_sub_id =#{card_sub_id}
+                                              and fare_time_id =#{fare_time_id}
+                                              and fare_deal_id =#{fare_deal_id}
+                                              
+                                              and fare_table_id !=#{fare_table_id}
+    </select>
+    
+    
+     
+    
+</mapper>

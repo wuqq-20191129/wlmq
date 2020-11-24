@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsign.acc.app.storagein.mapper.TicketStorageInDetailParentMapper">
+    
+    
+    <resultMap type="com.goldsign.acc.app.storagein.entity.TicketStorageInDetailBase" id="rmInDetailBase">
+        <result column="water_no" property="water_no" />
+        <result column="bill_no" property="bill_no" /> 
+        <result column="reason_id" property="reason_id" />
+        <result column="storage_id" property="storage_id" />
+        <result column="area_id" property="area_id" />
+        <result column="ic_main_type" property="ic_main_type" />
+        <result column="ic_sub_type" property="ic_sub_type" />
+        <result column="in_num" property="in_num" />
+        <result column="detail_place" property="detail_place" />
+        <result column="start_box_id" property="start_box_id" />
+        <result column="end_box_id" property="end_box_id" />
+        <result column="start_logical_id" property="start_logical_id" />
+        <result column="end_logical_id" property="end_logical_id" />
+        <result column="valid_date" property="valid_date" />
+        <result column="card_money" property="card_money" />
+        
+        <result column="line_id" property="line_id" />
+        <result column="station_id" property="station_id" />
+        <result column="use_flag" property="use_flag" />
+        <result column="report_date" property="report_date" />
+        <result column="tickettype_id" property="tickettype_id" />
+        <result column="card_ava_days" property="card_ava_days" />
+        <result column="line_id_reclaim" property="line_id_reclaim" />
+        <result column="station_id_reclaim" property="station_id_reclaim" />
+        <result column="exit_line_id" property="exit_line_id" />
+        <result column="exit_station_id" property="exit_station_id" />
+        <result column="model" property="model" />
+    </resultMap>
+    
+    <select id="getInDetailCount"  parameterType="String" resultType="int">
+        select count(*) from w_acc_tk.w_ic_in_store_detail where bill_no=#{billNo}
+         
+    </select>
+    
+    <select id="getInDetailList"  parameterType="Map" resultMap="rmInDetailBase">
+        select water_no,bill_no ,reason_id ,storage_id  ,area_id ,ic_main_type ,
+                ic_sub_type ,TICKETTYPE_ID,detail_place,start_box_id,end_box_id ,start_logical_id ,end_logical_id ,
+                <!--valid_date,-->
+                (case when valid_date = to_date('1970-01-01' ,'yyyy-mm-dd')  then '' 
+                         else to_char(valid_date,'yyyy-mm-dd')  end) valid_date,
+                card_money ,line_id ,station_id , in_num,use_flag,report_date,
+                card_ava_days,exit_line_id,exit_station_id,model,line_id_reclaim,station_id_reclaim 
+        from w_acc_tk.${tableName}
+        where bill_no= #{billNo} 
+        order by water_no,bill_no, use_flag,start_box_id,end_box_id,start_logical_id,end_logical_id
+    </select>    
+    
+    <select id="getHisTableFromIdxHistory"  parameterType="String"  resultType="map">
+        select distinct his_table
+        from w_acc_tk.w_ic_idx_history
+        where origin_table_name='w_ic_in_store_detail' and substr(#{billNo},3,10) between begin_recd and end_recd
+        order by his_table desc
+         
+    </select>
+    
+    
+    
+    
+    
+    
+    
+    
+</mapper>
